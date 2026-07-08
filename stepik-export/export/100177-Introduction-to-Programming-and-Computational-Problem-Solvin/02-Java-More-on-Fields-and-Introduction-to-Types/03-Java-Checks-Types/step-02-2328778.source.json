@@ -1,0 +1,110 @@
+{
+  "id": 2328778,
+  "lesson": 573387,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>A similar error occurs if we try the opposite, storing an <code>int</code> in a <code>String</code>-typed field:</p>\n\n<p><iframe height=\"450px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/b6bf759a164313c4cab47a2fff43aad549685/welcome/1084069/Mixing%20Strings%20and%20ints\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Look at the output of the program and use it to fill in the blanks. Make sure that you understand which parts of this output are different from the output we saw in the previous step.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code> <u>JavaChecksTypes.java:2:</u> error: incompatible types: </code>",
+          "options": []
+        },
+        {
+          "type": "select",
+          "text": "",
+          "options": [
+            {
+              "text": "String",
+              "is_correct": false
+            },
+            {
+              "text": "int",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": " <code> cannot be converted to </code>",
+          "options": []
+        },
+        {
+          "type": "select",
+          "text": "",
+          "options": [
+            {
+              "text": "String",
+              "is_correct": true
+            },
+            {
+              "text": "int",
+              "is_correct": false
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": false,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2328778",
+  "subscriptions": [
+    "31-77-2328778",
+    "30-77-2328778"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3344,
+  "passed_by": 3299,
+  "correct_ratio": 0.9583815028901734,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2307870,
+  "create_date": "2021-08-18T05:37:31Z",
+  "update_date": "2021-09-04T03:19:29Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

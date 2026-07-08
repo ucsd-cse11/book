@@ -1,0 +1,74 @@
+{
+  "id": 2328681,
+  "lesson": 573386,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>So far, all the fields we’ve defined have held <code>int</code>s, as have all the calculations we’ve done. But Java, and programming languages in general, support many other kinds of data. A common instance of data is a <code>String</code>, which is a sequence of characters. <code>String</code>s can represent a wide variety of information – names of people or places, addresses, passwords, usernames, web site addresses, the content of a paragraph like this one, and more.</p>\n\n<p>In Java, we create <code>String</code>s by putting a sequence of characters in between quotation marks. <code>String</code>s can be stored in fields, just as <code>int</code>s can, though there’s an important difference in how we write down those fields:</p>\n\n<pre><code class=\"language-java\">class StringExamples {\n  String name = \"Dorothy Vaughan\";\n  String password = \"s00peR_C_kret\";\n  String sentence = \"But Java, and programming languages in general, support many other kinds of data.\";\n}</code></pre>\n\n<p>See the difference? Instead of writing <code>int</code>, we write <code>String</code> before the name of the field.</p>\n\n<p><em>(You might have noticed that <code>String</code> starts with a capital <code>S</code>, but <code>int</code> starts with a lowercase <code>i</code>. We'll discuss why this is later on.)</em></p>\n\n<p>Much like for <code>int</code>s, if we run this program, it just prints the <code>String</code> values stored in these fields:</p>\n\n<p><iframe height=\"465px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/b6bf759a164313c4cab47a2fff43aad549685/welcome/1084065/String%20Examples\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> According to the output, what value is stored in <code>this.password</code>?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "pattern": "\"s00peR_C_kret\"",
+      "use_re": false,
+      "match_substring": false,
+      "case_sensitive": true,
+      "code": "def check(reply):\n    r = reply.strip()\n    if r == '\"s00peR_C_kret\"':\n        return True\n    elif r == \"'s00peR_C_kret'\":\n        return False, \"In Java, `String` values only use double-quotes (\\\"), not single-quotes (')\"\n    elif r == 's00peR_C_kret':\n        return False, \"Don't forget the quotation marks! The quotation marks are part of the way we write out `String` values\"\n    else:\n        return False\n\ndef solve():\n    return '\"s00peR_C_kret\"'",
+      "is_text_disabled": false,
+      "is_file_disabled": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2328681",
+  "subscriptions": [
+    "31-77-2328681",
+    "30-77-2328681"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3432,
+  "passed_by": 3323,
+  "correct_ratio": 0.5926971247133533,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2307773,
+  "create_date": "2021-08-18T00:06:16Z",
+  "update_date": "2021-09-17T21:40:55Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

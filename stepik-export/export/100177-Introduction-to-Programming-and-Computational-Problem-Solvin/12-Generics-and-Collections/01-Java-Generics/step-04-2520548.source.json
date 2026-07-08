@@ -1,0 +1,102 @@
+{
+  "id": 2520548,
+  "lesson": 614368,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>We could continue this exercise for the other examples. Before we do, let's notice something – the <code>find</code> method is, in many ways, the same method across the two classes. The loop header is the same except for using <code>sectionIds</code> instead of <code>pids</code>. The loop body is also the same except for which fields are used.</p>\n\n<p>Indeed, the idea of a <strong>generic</strong> directory that lets us look up values by string keys is a natural thing for us to want. Why can't we make <em>one</em> class that represents the idea of an array of strings and an array of <em>some kind of information</em> that supports this kind of lookup? Why should we have to keep repeating ourselves?</p>\n\n<p>Java has a feature for precisely this case, called, appropriately enough, <strong>generics</strong>. Here's how we could write a <strong>generic</strong> implementation of our string-and-array based directory of information:</p>\n\n<p><iframe height=\"900px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/1c42e56ad66a25540378326cea430dca20785/welcome/1094512/LookupTableExamples.java\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now! </strong></span>Fill in the two blanks with the types that make the examples pass.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "FILL1",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "StudentInfo",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br>\nFILL2",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "String",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2520548",
+  "subscriptions": [
+    "31-77-2520548",
+    "30-77-2520548"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2904,
+  "passed_by": 2854,
+  "correct_ratio": 0.4508752562687273,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2499640,
+  "create_date": "2021-11-11T05:36:22Z",
+  "update_date": "2021-11-11T10:33:02Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

@@ -1,0 +1,92 @@
+{
+  "id": 2379602,
+  "lesson": 579629,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p><img alt=\"\" height=\"214\" name=\"simple-array.png\" src=\"https://ucarecdn.stepik.net/0bdadab8-c644-48f3-a586-d5a9aeedeb7f/\" width=\"412\"></p>\n\n<p>We can access the elements of arrays by using the <strong>array index expression</strong> on a reference to an array. So, for example, we could print out the second element (the value at index <code>1</code>) of the array above by writing:</p>\n\n<pre><code class=\"language-java\">System.out.println(args[1]);</code></pre>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Paste this line into the main method and run the code with <code>java SampleMain 10 20 30</code>. Ensure that the output is <code>20</code>.</p>\n\n<p><iframe height=\"550px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/af3af2b4bfab7177f67bb186fe71d4be20785/welcome/1091340/SampleMain\" width=\"100%\"></iframe></p>\n\n<p>The expression <code>args[1]</code> first looks up the reference stored in <code>args</code> and then looks up the value in the index labeled <code>1</code>. As we learned earlier, we can put any expression that computes an <code>int</code> into the brackets. We could write <code>args[1 + 1]</code> and get the value at index <code>2</code> (<code>\"30\"</code> in this case), for example.</p>\n\n<p>What happens if you provide an index that isn’t in the range of 0-2 for this example?</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>In the code above, change the <code>1</code> in the brackets to an integer value that is not in that range. Run the program with <code>java SampleMain 10 20 30</code> and use the output to fill in the blanks.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>Exception in thread \"main\": </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "java.lang.ArrayIndexOutOfBoundsException",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>: Index [your index] out of bounds for length 3 <br>\n&nbsp;       at SampleMain.main(SampleMain.java:3) </code>",
+          "options": []
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": false,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379602",
+  "subscriptions": [
+    "31-77-2379602",
+    "30-77-2379602"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3000,
+  "passed_by": 2904,
+  "correct_ratio": 0.5976610586787033,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358694,
+  "create_date": "2021-09-09T23:34:38Z",
+  "update_date": "2021-10-23T20:40:53Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

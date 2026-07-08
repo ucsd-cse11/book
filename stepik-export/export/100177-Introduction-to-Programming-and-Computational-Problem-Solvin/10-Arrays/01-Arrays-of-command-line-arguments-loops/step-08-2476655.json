@@ -1,0 +1,50 @@
+{
+  "id": 2476655,
+  "lesson": 579629,
+  "position": 8,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p><iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/65cf185cbf0efc2d9635d5a5d1e5ccd220785/welcome/1091425/CalcMain\" width=\"100%\"></iframe></p>\n\n<p>If we run the above program with <code>java CalcMain sum 3 4 5</code>, the changes would look like:</p>\n\n<p><img alt=\"\" height=\"271\" name=\"loop2.gif\" src=\"https://ucarecdn.stepik.net/0349b4df-0f8b-46f8-88a1-18c88e05a409/\" width=\"462\"></p>\n\n<p>Again, in tabular form, we could write it as:</p>\n\n<table cellpadding=\"0\" cellspacing=\"0\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><strong>Iteration</strong></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><strong>Value of <code>i</code></strong></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><strong>Value of <code>args[i]</code></strong></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><strong><code>total</code> before</strong></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><strong><code>total</code> after</strong></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>1st</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>1</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>\"3\"</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>0</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>3</p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>2nd</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>2</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>\"4\"</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>3</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>7</p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>3rd</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>3</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>\"5\"</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>7</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>12</p>\n\t\t\t</td>\n\t\t</tr>\n\t</tbody>\n</table>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2476655",
+  "subscriptions": [
+    "31-77-2476655",
+    "30-77-2476655"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2946,
+  "passed_by": 2946,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2455747,
+  "create_date": "2021-10-22T04:23:45Z",
+  "update_date": "2021-10-22T04:23:57Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

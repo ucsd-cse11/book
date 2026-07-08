@@ -1,0 +1,120 @@
+{
+  "id": 2354935,
+  "lesson": 568133,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p><iframe height=\"670px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/e12ed0c6b9f92c80397397c9cb240e5820785/welcome/1085206/Using%20Conditions\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> There's another way to implement this method. Fill in the blank such that the method returns the same value as it did in the previous step. (Hint: The <code>&gt;=</code> and <code>&lt;=</code> operators are pronounced \"greater than or equal to\" and \"less than or equal to,\" respectively.)</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>if(</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "hours <= 40",
+              "is_correct": true
+            },
+            {
+              "text": "40 >= hours",
+              "is_correct": true
+            },
+            {
+              "text": "hours < 41",
+              "is_correct": true
+            },
+            {
+              "text": "41 > hours",
+              "is_correct": true
+            },
+            {
+              "text": "hours<=40",
+              "is_correct": true
+            },
+            {
+              "text": "40>=hours",
+              "is_correct": true
+            },
+            {
+              "text": "hours<41",
+              "is_correct": true
+            },
+            {
+              "text": "41>hours",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>) {<br>&emsp;return hours * rate;<br>}<br>else {<br>&emsp;return 40 * rate + ((hours - 40) * (rate * 2));<br>}</code>",
+          "options": []
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": false,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2354935",
+  "subscriptions": [
+    "31-77-2354935",
+    "30-77-2354935"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3181,
+  "passed_by": 3142,
+  "correct_ratio": 0.4439455591412937,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2334027,
+  "create_date": "2021-08-31T09:14:32Z",
+  "update_date": "2021-10-01T05:59:37Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

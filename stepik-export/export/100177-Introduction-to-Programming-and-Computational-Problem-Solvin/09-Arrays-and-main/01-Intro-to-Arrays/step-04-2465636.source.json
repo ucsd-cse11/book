@@ -1,0 +1,63 @@
+{
+  "id": 2465636,
+  "lesson": 579631,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>One way that we can represent a <strong>collection</strong> of data in Java is by using an <strong>Array</strong>.</li>\n\t<li>An <strong>array initialization statement</strong> includes a type with <code>[]</code> after it, and the name of the variable or field that will store a reference to the array. The right-hand side of the equals sign should have curly brackets with a list of values separated by commas inside it.</li>\n\t<li>Arrays, just like objects, are stored in memory, and the variables and fields will store their references.</li>\n\t<li>We can access an element in an array by using an <strong>array index expression</strong>. To do this, we will need the name of a variable or field that stores a reference to the array and the index we want to access.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2465636",
+  "subscriptions": [
+    "31-77-2465636",
+    "30-77-2465636"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3001,
+  "passed_by": 3001,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2444728,
+  "create_date": "2021-10-18T06:48:04Z",
+  "update_date": "2021-10-18T06:48:04Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

@@ -1,0 +1,50 @@
+{
+  "id": 2327675,
+  "lesson": 573068,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>With this in mind, we can implement a method <code>passing()</code> that takes two numbers — one representing an overall average and another representing the score on the final — and returns whether or not they make up a passing performance.</p>\n\n<pre><code class=\"language-java\">// Returns true if the grades are sufficient to pass, false otherwise\nboolean passing(int overallAverage, int finalScore) {\n  return (overallAverage &gt;= 60) &amp;&amp; (finalScore &gt;= 50);\n}\nboolean goodGradeBadFinal = this.passing(80, 40); // should be false\nboolean goodGradeGoodFinal = this.passing(80, 60); // should be true\nboolean badGradeGoodFinal = this.passing(40, 80); // should be false\nboolean badGradeBadFinal = this.passing(40, 40); // should be false</code></pre>\n\n<p>Note that here, the method is returning a <code>boolean</code> value. Using comparisons and operators like this gives us another way to write programs that answer a yes/no question. This method doesn’t use an <code>if</code> statement; instead, the yes/no answer is represented by the return value.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2327675",
+  "subscriptions": [
+    "31-77-2327675",
+    "30-77-2327675"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3148,
+  "passed_by": 3148,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2306767,
+  "create_date": "2021-08-17T08:57:41Z",
+  "update_date": "2021-10-01T06:52:55Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

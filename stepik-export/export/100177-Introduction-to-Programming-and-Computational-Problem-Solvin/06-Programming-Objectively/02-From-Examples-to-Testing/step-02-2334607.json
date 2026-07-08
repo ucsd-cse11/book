@@ -1,0 +1,54 @@
+{
+  "id": 2334607,
+  "lesson": 573912,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Below is what we get when we run the program. </p>\n\n<p>Let’s observe a few things about this:</p>\n\n<ul>\n\t<li>\n\t<p>We should be very happy that we have examples that double-check the work we did while coding the methods we wrote. It gives us a lot of confidence that our code is working as intended.</p>\n\t</li>\n\t<li>\n\t<p>It’s not ideal that we have to switch back and forth between the file we wrote and the output to verify that everything is as we expected. That is, we have to <em>visually inspect</em> that each output is correct, based on the comment we wrote with the example.</p>\n\t</li>\n\t<li>\n\t<p>There’s a weird message at the bottom that says <code>No test methods found.</code> that we haven’t talked about yet.</p>\n\t</li>\n</ul>\n\n<pre><code class=\"language-no-highlight\">⤇ ./run ExamplesBook\nTester Prima v.2.1\n-----------------------------------\nTests defined in the class: ExamplesBook:\n---------------------------\nExamplesBook:\n---------------\n new ExamplesBook:1(\n  this.schemer =\n   new Book:2(\n    this.title =  \"The Little Schemer\"\n    this.author =  \"Daniel P. Friedman\"\n    this.price = 40)\n  this.stick =\n   new Book:3(\n    this.title =  \"Make It Stick: The Science of Successful Learning\"\n    this.author =  \"Peter C. Brown\"\n    this.price = 13)\n  this.pLaw =\n   new Book:4(\n    this.title =  \"Parkinson's Law\"\n    this.author =  \"C. Northcote Parkinson\"\n    this.price = 30)\n  this.reason =\n   new Book:5(\n    this.title =  \"The Reasoned Schemer\"\n    this.author =  \"Daniel P. Friedman\"\n    this.price = 38)\n  this.sale1 = 30\n  this.sale2 = 7\n  this.sale3 = 27\n  this.truncate1 =  \"Make It Stick: ...\"\n  this.truncate2 =  \"The Little Schemer\"\n  this.truncate3 =  \"...\"\n  this.same1 = true\n  this.same2 = false\n  this.same3 = true)\n---------------\nNo test methods found.</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-2334607",
+  "subscriptions": [
+    "31-77-2334607",
+    "30-77-2334607"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3066,
+  "passed_by": 3066,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313699,
+  "create_date": "2021-08-20T09:43:42Z",
+  "update_date": "2021-10-08T07:30:16Z",
+  "discussions_count": 2,
+  "discussion_proxy": "77-2334607-1",
+  "discussion_threads": [
+    "77-2334607-1"
+  ]
+}

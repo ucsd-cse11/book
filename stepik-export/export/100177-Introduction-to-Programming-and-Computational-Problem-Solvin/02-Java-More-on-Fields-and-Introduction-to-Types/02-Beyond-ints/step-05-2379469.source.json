@@ -1,0 +1,74 @@
+{
+  "id": 2379469,
+  "lesson": 573386,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>Oh no! We wanted to add the numeric values of the prices, but by representing the prices as <code>String</code>s, using the + operator concatenated them instead! The + operator works as we desire for <code>int</code> fields, but the prices are not integers! What can we do?</p>\n\n<p>Fortunately, Java has many more data types we can utilize. Here's a brief summary of all <strong>primitive</strong> data types in Java:</p>\n\n<ul>\n\t<li><strong><code>byte</code>:</strong> Represent integers from -128 through 127</li>\n\t<li><strong><code>short</code>:</strong> Represent integers from -32,768 through 32,767</li>\n\t<li><strong><code>int</code>:</strong> Represent integers from -2,147,483,648 through 2,147,483,647</li>\n\t<li><strong><code>long</code>:</strong> Represent integers from -9,223,372,036,854,775,808 through 9,223,372,036,854,775,807</li>\n\t<li><strong><code>float</code>:</strong> Represent decimal numbers with up to 6 or 7 digits</li>\n\t<li><strong><code>double</code>:</strong> Represent decimal numbers with up to 15 or 16 digits</li>\n\t<li><strong><code>boolean</code>:</strong> Represent <code>true</code> or <code>false</code> values</li>\n\t<li><strong><code>char</code>:</strong> Represent a single character/letter (a <code>String</code> can be thought of as a collection of <code>char</code>s)</li>\n</ul>\n\n<p>For representing numbers, the Java documentation recommends using <code>int</code> to represent integer numbers and <code>double</code> to represent decimal numbers. If you're curious, you can read more about Java's <strong>primitive</strong> data types in the <a href=\"https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html\" rel=\"noopener noreferrer nofollow\"><em>Primitive Data Types</em></a> article of the Java documentation.</p>\n\n<p>Let's update our program to represent the game and DLC prices using <code>double</code>s instead of <code>String</code>s:</p>\n\n<p><iframe height=\"500px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/592f4d83a9bfdcaa354e206b7da46e9420785/welcome/1085533/Video%20Game%20Example%20Second%20Attempt\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> According to the output, what value is stored in <code>this.totalPrice</code>?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "pattern": "54.980000000000004",
+      "use_re": false,
+      "match_substring": false,
+      "case_sensitive": true,
+      "code": "def check(reply):\n    return abs(float(reply) - 54.98) < 0.00001\n\ndef solve():\n    return '54.980000000000004'",
+      "is_text_disabled": false,
+      "is_file_disabled": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379469",
+  "subscriptions": [
+    "31-77-2379469",
+    "30-77-2379469"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3348,
+  "passed_by": 3298,
+  "correct_ratio": 0.9418274687854711,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358561,
+  "create_date": "2021-09-09T20:57:25Z",
+  "update_date": "2021-09-15T20:38:17Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

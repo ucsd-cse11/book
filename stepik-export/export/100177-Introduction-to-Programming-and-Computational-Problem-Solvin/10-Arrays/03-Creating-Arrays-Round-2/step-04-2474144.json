@@ -1,0 +1,53 @@
+{
+  "id": 2474144,
+  "lesson": 605734,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>We can apply these two new features to fill in the body of <code>range()</code>:</p>\n\n<pre><code class=\"language-java\">int[] range(int start, int end) {\n  int[] result = new int[end - start];  // creates a new array of int of size (end - start)\n  for(int i = start; i &lt; end; i += 1) {\n    result[i - start] = i;              // assigns into the appropriate start field\n  }\n  return result;\n}</code></pre>\n\n<p>We can see the execution of this in tabular form. Let’s call <code>range(5, 9)</code>.</p>\n\n<table cellpadding=\"0\" cellspacing=\"0\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>Iteration</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>Value of <code>i</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>Value of <code>start</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>Value of <code>end</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>result</code> before</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>result</code> after</p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>1</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>5</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>5</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>9</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>{0, 0, 0, 0}</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>{5, 0, 0, 0}</code></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>2</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>6</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>5</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>9</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>{5, 0, 0, 0}</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>{5, 6, 0, 0}</code></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>3</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>7</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>5</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>9</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>{5, 6, 0, 0}</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>{5, 6, 7, 0}</code></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>4</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>8</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>5</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>9</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>{5, 6, 7, 0}</code></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><code>{5, 6, 7, 8}</code></p>\n\t\t\t</td>\n\t\t</tr>\n\t</tbody>\n</table>\n\n<p>There are a few interesting things going on here.</p>\n\n<ul>\n\t<li>First, we create an array of the correct size right at the beginning of the method. This is a common pattern in array-processing methods, which is to compute the correct size and create the resulting array first.</li>\n\t<li>Next, we loop the index <code>i</code> from <code>start</code> to <code>end</code>, so <code>i</code> will take on the values <code>5</code>, <code>6</code>, <code>7</code>, and <code>8</code> on the different iterations of the loop. When we perform the <strong>array assignment</strong>, we are careful to use <code>i - start</code> to make sure that we don’t use indices that are too large for the array and will always start at index <code>0</code>.</li>\n</ul>\n\n<p>The tabular description helps us see the values within the array at each step and how they are incrementally filled in – in each step, we can see that the index of <code>i - start</code> is filled in in the rightmost column.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Answer the questions below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2474144",
+  "subscriptions": [
+    "31-77-2474144",
+    "30-77-2474144"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2943,
+  "passed_by": 2903,
+  "correct_ratio": 0.5118733509234829,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2453236,
+  "create_date": "2021-10-20T18:44:07Z",
+  "update_date": "2021-10-20T18:44:07Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

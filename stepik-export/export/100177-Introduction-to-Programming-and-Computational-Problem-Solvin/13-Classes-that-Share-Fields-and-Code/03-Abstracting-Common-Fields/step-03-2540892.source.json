@@ -1,0 +1,63 @@
+{
+  "id": 2540892,
+  "lesson": 575951,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>A class can also use the fields of the class that it extends.</li>\n\t<li>In a constructor, the keyword <strong><code>super</code></strong> means “call the constructor of the class that this one extends.”</li>\n\t<li>For example, in the <code>OrQuery</code> constructor, <code>super(q1, q2)</code> meant \"call the constructor for <code>AComboQuery</code> with <code>q1</code> and <code>q2</code> as arguments\".</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2540892",
+  "subscriptions": [
+    "31-77-2540892",
+    "30-77-2540892"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2341,
+  "passed_by": 2341,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2519984,
+  "create_date": "2021-11-22T05:40:35Z",
+  "update_date": "2021-11-22T05:40:35Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

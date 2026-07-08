@@ -1,0 +1,50 @@
+{
+  "id": 2327576,
+  "lesson": 573069,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>We introduced several new ideas in this section:</p>\n\n<ul>\n\t<li>\n\t<p><strong>The <code>boolean</code> type</strong>: there are two <code>boolean</code> values, <code>true</code> and <code>false</code>, that are useful for representing computations that ask yes/no questions.</p>\n\t</li>\n\t<li>\n\t<p><strong>Comparison Operators</strong>: <code>&lt;</code>, <code>&gt;</code>, <code>==</code>, <code>&lt;=</code>, and <code>&gt;=</code> are all operators that take two numbers and return <code>true</code> or <code>false</code> depending on if the relationship holds.</p>\n\t</li>\n\t<li>\n\t<p><strong><code>if</code> statements</strong>: Comprised of <strong>conditions</strong> and <strong>branches</strong>, <code>if</code> statements use <code>boolean</code> values to select which of several expressions to evaluate.</p>\n\t</li>\n\t<li>\n\t<p><strong>Boolean Operators</strong>: <code>&amp;&amp;</code> and <code>||</code> (pronounced “and”, “or”) combine <code>boolean</code> values according to specific rules. These let us express conditions that combine several different answers.</p>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2327576",
+  "subscriptions": [
+    "31-77-2327576",
+    "30-77-2327576"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3187,
+  "passed_by": 3187,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2306668,
+  "create_date": "2021-08-17T07:47:34Z",
+  "update_date": "2021-08-20T09:39:38Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

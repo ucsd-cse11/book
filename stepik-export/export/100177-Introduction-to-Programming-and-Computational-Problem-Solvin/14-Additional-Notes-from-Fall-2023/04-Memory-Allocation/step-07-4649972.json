@@ -1,0 +1,54 @@
+{
+  "id": 4649972,
+  "lesson": 1120313,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>This is now what memory looks like after we've executed all the code in <code>FlightTest</code>, right before the program ends and everything gets deleted from memory.</p>\n\n<p>To summarize what goes on in memory:</p>\n\n<ul>\n\t<li>The stack contains stack frames that are created by method calls to store the values of parameters and local variables inside methods. These stack frames are deleted as methods finish execution, so you can imagine that the stack acts as temporary storage.</li>\n\t<li>The heap contains objects, which in turn contain fields. These objects continue to exist across method calls, so you can imagine that the heap acts as long-term storage.</li>\n</ul>\n\n<p><img alt=\"\" height=\"612\" name=\"frame6 (1).svg\" src=\"https://ucarecdn.stepik.net/048c45df-42dc-4fe6-9417-fd8046e0be2c/\" width=\"750\"></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649972",
+  "subscriptions": [
+    "31-77-4649972",
+    "30-77-4649972"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 422,
+  "passed_by": 422,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629069,
+  "create_date": "2023-10-28T23:47:52Z",
+  "update_date": "2023-11-12T19:50:12Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649972-1",
+  "discussion_threads": [
+    "77-4649972-1"
+  ]
+}

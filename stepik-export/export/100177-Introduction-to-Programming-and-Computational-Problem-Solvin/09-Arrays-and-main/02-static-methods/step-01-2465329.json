@@ -1,0 +1,53 @@
+{
+  "id": 2465329,
+  "lesson": 587826,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Consider the following program that uses a few methods on the <code>Math</code> class:</p>\n\n<p><iframe height=\"480px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/effd230e537082a4e3ae8b78716844b920785/welcome/1087997/MathExamples\" width=\"100%\"></iframe></p>\n\n<p>It turns out that these methods in <code>Math</code> are defined using a special keyword, <code>static</code>, whose entire purpose is to allow calling the method <em>without</em> creating an instance of the class.</p>\n\n<h3><strong><span style=\"color: #cc0000;\">Do Now!</span> Answer the following questions based on the information given above.</strong></h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2465329",
+  "subscriptions": [
+    "31-77-2465329",
+    "30-77-2465329"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3049,
+  "passed_by": 2993,
+  "correct_ratio": 0.5876490130936095,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2444421,
+  "create_date": "2021-10-17T21:50:58Z",
+  "update_date": "2021-10-17T22:12:59Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

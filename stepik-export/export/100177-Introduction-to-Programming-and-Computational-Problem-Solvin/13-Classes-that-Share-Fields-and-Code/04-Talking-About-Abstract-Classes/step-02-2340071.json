@@ -1,0 +1,55 @@
+{
+  "id": 2340071,
+  "lesson": 575953,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>It’s useful to use pictures to describe the <strong>class hierarchy</strong>. These pictures are distinct from the memory diagrams that include the stack and heap – they talk about the relationship between classes. For this example, we’d use the following class hierarchy diagram to describe it:</p>\n\n<p><img alt=\"\" height=\"516\" name=\"class-hierarchy.png\" src=\"https://ucarecdn.stepik.net/79ed8e1f-4404-434a-a444-f6b64f7468d7/\" width=\"691\"></p>\n\n<p> </p>\n\n<p>This captures the relationships between these classes by drawing an <code>extends</code> arrow between each pair of classes where one extends the other, and an <code>implements</code> arrow when a class implements another.</p>\n\n<p>This picture helps us understand what methods and fields are available on a particular class. For example, if we see a field access such as <code>this.q1</code> and know that <code>this</code> is a reference to an <code>AndQuery</code> object, we can use the diagram to trace the <code>extends</code> relationships to find that the <code>q1</code> field is defined on its parent class. And in a method call like <code>this.and(someOtherQuery)</code>, where <code>this</code> is a reference to an object of type <code>LongerThan</code>, we can trace the <code>extends</code> relationship to find the and method on <code>AQuery</code>.</p>\n\n<p><iframe height=\"600px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/889c85520367e6dd1595bbac472f6da320785/welcome/1095253/Class%20hierarchy\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Which of the following lines of code, if added to the end of the <code>ExamplesSearch</code> class above, would not produce an error? Try to figure it out first by referring to the picture, then run it to see if you were correct.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2340071",
+  "subscriptions": [
+    "31-77-2340071",
+    "30-77-2340071"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2366,
+  "passed_by": 2282,
+  "correct_ratio": 0.17330707468565368,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2319163,
+  "create_date": "2021-08-24T06:51:38Z",
+  "update_date": "2021-11-22T07:43:16Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

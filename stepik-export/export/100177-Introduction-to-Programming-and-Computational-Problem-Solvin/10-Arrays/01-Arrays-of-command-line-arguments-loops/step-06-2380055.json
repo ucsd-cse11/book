@@ -1,0 +1,53 @@
+{
+  "id": 2380055,
+  "lesson": 579629,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>The first part (choosing the operation to perform) is simple to accomplish by looking at the element at index 0. The second part (performing the aggregation) requires looking at all the remaining elements, starting at index 1. Here’s how we would write a program to tackle this:</p>\n\n<p><iframe height=\"600px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/65cf185cbf0efc2d9635d5a5d1e5ccd220785/welcome/1091425/CalcMain\" width=\"100%\"></iframe></p>\n\n<p>The key part of this is the new loop structure, which has the same beginning in both the sum and product cases:</p>\n\n<pre><code class=\"language-java\">for(int i = 1; i &lt; args.length; i = i + 1) { ... loop body ... }</code></pre>\n\n<p>Compile and run the program with <code>java CalcMain product 3 2 4</code></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> What output do you get, and which line in the program printed that output?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2380055",
+  "subscriptions": [
+    "31-77-2380055",
+    "30-77-2380055"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2968,
+  "passed_by": 2910,
+  "correct_ratio": 0.32618648799553324,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2359147,
+  "create_date": "2021-09-10T06:18:01Z",
+  "update_date": "2021-12-02T05:59:32Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

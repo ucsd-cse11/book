@@ -1,0 +1,55 @@
+{
+  "id": 2438799,
+  "lesson": 575927,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>Let's look at that method body again, with an answer filled in. That is one long line of code! </p>\n\n<pre><code class=\"language-java\">    String purchaseMessage(String customerName, int cost, double tipPercent) {\n        return \"Bill for \" + customerName + \": Cost $\" + cost + \", Total $\" + (cost + cost * tipPercent) + \", Tip $\" + (cost * tipPercent);\n    }</code></pre>\n\n<p> </p>\n\n<p>Not only is it long, but it has a <strong>repeated expression</strong>. The expression <code>cost * tipPercent</code> appears <em>twice</em>, once in the calculation of the total cost, and once to show the tip amount.</p>\n\n<p>Java (and all major programming languages) has a feature that helps make programs more readable in cases like these, called <strong>local variables</strong>, or just <strong>variables</strong> for short. A <strong>variable definition</strong> looks like a <strong>field definition</strong>, but it appears in the <strong>method body</strong> rather than in the <strong>class body</strong>. Here's what it would look like to create a local variable definition for the tip calculation in this program (we've left part blank to work through in a minute):</p>\n\n<iframe height=\"500px\" src=\"https://tech.io/playground-widget/ea249b335036fc3858670602cfd5076020785/welcome/1088754/Variable%20fill-in\" style=\"\" width=\"100%\"></iframe>\n\t\n\n<p>This will lead us to a version that's much more pleasant to read (at least to the authors of this book!).</p>\n\n<p>The <strong>variable definition</strong> gives a name (in this case <code>tip</code>) to the value on the right-hand side for the duration of this method call. So each time we call <code>purchaseMessage</code>, Java will evaluate <code>cost * tipPercent</code> and remember that during that method call, when the name <code>tip</code> is used, it means that value.</p>\n\n<p>Based on this description, what could we put in the two blanks, in order, to make this program have the same behavior as before, but use the <code>tip</code> variable?</p>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2438799",
+  "subscriptions": [
+    "31-77-2438799",
+    "30-77-2438799"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3130,
+  "passed_by": 3065,
+  "correct_ratio": 0.3405637524774279,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2417891,
+  "create_date": "2021-10-03T16:50:23Z",
+  "update_date": "2021-10-04T04:29:58Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

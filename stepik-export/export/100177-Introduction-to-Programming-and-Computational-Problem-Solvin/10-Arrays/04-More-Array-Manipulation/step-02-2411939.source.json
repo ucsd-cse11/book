@@ -1,0 +1,132 @@
+{
+  "id": 2411939,
+  "lesson": 579635,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>In the previous step, we noted that</p>\n\n<ul>\n\t<li>We can determine the size of the array that we want to return because it should be one greater than the size of the input array.</li>\n\t<li>We’ll be copying some number of elements from the input array to the array that will be returned.</li>\n</ul>\n\n<p>This helps us figure out the structure of the method:</p>\n\n<pre><code class=\"language-java\">String[] addAtEnd(String[] base, String toAdd) {\n  String[] result = new String[base.length + 1]; // There will be one more element in what we return\n  for(int i = 0; i &lt; base.length; i += 1) {\n    result[i] = base[i];\n  }\n  result[base.length] = toAdd;\n  return result;\n}</code></pre>\n\n<p>It’s important to note that in running <code>addAtEnd()</code>, the original array is completely unchanged. There is simply a new array created that happens to have much of the same contents, with an additional element.</p>\n\n<p><iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/718e8c16b10fecaf8145089a3c7b576e20785/welcome/1091823/AddAtEnd\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Answer the questions below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "Fill in the blanks in the program with the values the tests should produce.<br/>\nFILL 1: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "3",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br/>\nFILL 2: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "0",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br/>\nFILL 3: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "1",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br/>\nHow many <b>total</b> arrays are created on the heap when <code>testAddAtEnd</code> runs?",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "8",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2411939",
+  "subscriptions": [
+    "31-77-2411939",
+    "30-77-2411939"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2939,
+  "passed_by": 2867,
+  "correct_ratio": 0.14089549310970526,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2391031,
+  "create_date": "2021-09-22T06:08:13Z",
+  "update_date": "2021-10-23T20:56:20Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

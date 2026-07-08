@@ -1,0 +1,67 @@
+{
+  "id": 4683975,
+  "lesson": 1129704,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>One thing we notice when we wrote out all these union classes is that they all use the same <code>contains</code> method definition, which checks if the given point is contained by either <code>r1</code> or <code>r2</code>. We don't actually care whether or not <code>r1</code> and <code>r2</code> are specifically <code>CircleRegion</code> or <code>RectRegion</code>, just that they are <strong>some kind of region that can check if they contain a point</strong>. This similarity is key, because we use this to define our interface:</p>\n\n<pre><code class=\"language-java\">interface Region {\n    boolean contains(Point p);\n}</code></pre>\n\n<p>This looks similar to defining a class, with a few differences:</p>\n\n<ul>\n\t<li>We use the <code>interface</code> keyword, rather than the <code>class</code> keyword in the header</li>\n\t<li>We do not define any fields (interfaces cannot have fields!)</li>\n\t<li>We create a method header but do not create a method definition</li>\n</ul>\n\n<p>This interface tells us that a <code>Region</code> is something that is able to call a method called <code>contains</code>, which takes in a <code>Point</code> as a parameter and returns a boolean. Notice that we don't create a constructor for <code>Region</code>, because we're not supposed to use interfaces directly to create objects! Instead, we use <code>Region</code> to revise <code>CircleRegion</code> and <code>RectRegion</code>:</p>\n\n<pre><code class=\"language-java\">class CircleRegion implements Region {\n    Point center;\n    double radius;\n    CircleRegion(Point center, double radius) {\n        this.center = center;\n        this.radius = radius;\n    }\n    public boolean contains(Point p) {\n        return this.center.distance(p) &lt; this.radius;\n    }\n}\nclass RectRegion implements Region {\n    Point lowerLeft;\n    Point upperRight;\n    RectRegion(Point lowerLeft, Point upperRight) {\n        this.lowerLeft = lowerLeft;\n        this.upperRight = upperRight;\n    }\n    public boolean contains(Point p) {\n        return (this.lowerLeft.x &lt; p.x &amp;&amp; this.lowerLeft.y &lt; p.y) &amp;&amp;\n               (this.upperRight.x &gt; p.x &amp;&amp; this.upperRight.y &gt; p.y);\n    }\n}</code></pre>\n\n<p> Not much changed, but we added <code>implements Region</code> to the class headers for <code>CircleRegion</code> and <code>RectRegion</code>. This guarantees that <code>CircleRegion</code> and <code>RectRegion</code> will provide implementations (i.e. method definitions) for the <code>contains</code> method. If we did not provide implementations of <code>contains</code> in any class that <code>implements Region</code>, our code would not compile. Even though it may be obvious to us that <code>CircleRegion</code> and <code>RectRegion</code> both implemented <code>contains</code> to begin with, this needs to be made explicit for the Java compiler.</p>\n\n<p><em>We also add <code>public</code> to the method header of <code>contains</code> in both classes. We need to do this because methods in interfaces are <code>public</code> by default (at least in Java 8), and we cannot limit the scope of a <code>public</code> method.</em></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4683975",
+  "subscriptions": [
+    "31-77-4683975",
+    "30-77-4683975"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 388,
+  "passed_by": 388,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4663072,
+  "create_date": "2023-11-06T09:12:24Z",
+  "update_date": "2023-11-06T09:12:25Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4683975-1",
+  "discussion_threads": [
+    "77-4683975-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

@@ -1,0 +1,54 @@
+{
+  "id": 4649909,
+  "lesson": 1120309,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>So we’ll be using tools to run your Java code within this online textbook, but how would you actually run Java on your computer?</p>\n\n<p>Let’s say you’ve written some code in a file called <code>A.java</code>. This code is human-readable, meaning you can understand all the instructions in the code, and we call this <strong>source code</strong>. But a computer can only understand instructions in binary code. <strong>Binary code</strong> is a neatly compressed version of your code in binary (0s and 1s) that machines are able to execute, but it’s not very human-readable. The process of converting human-readable code to machine-readable code is called <strong>building </strong>or <strong>compiling</strong>, and the program that does this for you is called the Java <strong>compiler</strong>.</p>\n\n<p>To use the Java compiler to build your source code, we have to use the terminal. The <strong>terminal </strong>is a text-based interface that you can use to run different types of commands on your computer. The <code>$</code> symbol in the terminal is the prompt indicating that the terminal is ready for you to type a command into it. One example of a terminal command is the ls command, which we use to see what files there are in the current directory (folder). So typing this command into the terminal and pressing Enter:</p>\n\n<p><code>$ ls</code></p>\n\n<p>would show you that you have the <code>A.java</code> file in the current directory (along with some other files probably). </p>\n\n<p>The command for the Java compiler is the <code>javac</code> command. In order to use this command, we write out the name of the file we want to compile after the command. This is an example of an <strong>argument </strong>to the command. Think of arguments as inputs to the program that the command runs.</p>\n\n<p><code>$ javac A.java</code></p>\n\n<p>After this command runs, you will see that the compiler has created a file called <code>A.class</code>. You can use the ls command to verify that the <code>A.class</code> file is created. This file contains binary code corresponding to the source code in your <code>A.java</code> file. If you try to look into the file you might see a lot of nonsense or your file viewer might refuse to display the contents, because it can’t render the contents in any meaningful way.</p>\n\n<p>In order to run the compiled code, we need to feed the file into the <strong>Java Virtual Machine</strong> (JVM). To do this, you run the following <code>java</code> command in the terminal. Note that we do not give <code>A.class</code> as an argument to the command. We do this because the <code>java</code> command is looking to run the program corresponding to a class name, not the name of the <code>.class</code> file.</p>\n\n<p><code>$ java A</code></p>\n\n<p>Whenever we make changes to the code in <code>A.java</code>, these changes are not automatically updated in <code>A.class</code>, so we must recompile the code with <code>javac</code> again in order to run the program with these changes.</p>\n\n<p>In short, we use the <code>javac</code> command to compile a source code file into a binary code file, then we use the <code>java</code> command to run the binary code.</p>\n\n<p><img alt=\"\" height=\"290\" name=\"image.png\" src=\"https://ucarecdn.stepik.net/b406bd5c-9340-4440-bff6-85366314e51f/\" width=\"1132\"></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649909",
+  "subscriptions": [
+    "31-77-4649909",
+    "30-77-4649909"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 687,
+  "passed_by": 687,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629006,
+  "create_date": "2023-10-28T23:43:34Z",
+  "update_date": "2023-10-28T23:45:30Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649909-1",
+  "discussion_threads": [
+    "77-4649909-1"
+  ]
+}

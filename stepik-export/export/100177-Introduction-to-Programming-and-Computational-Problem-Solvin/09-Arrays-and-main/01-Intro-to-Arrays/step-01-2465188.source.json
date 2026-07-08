@@ -1,0 +1,107 @@
+{
+  "id": 2465188,
+  "lesson": 579631,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>We've seen how we can use classes to represent compound data – <code>Point</code>s for pairs of numbers, <code>Region</code>s that aggregated Point and size information, <code>Book</code>s with authors and titles and prices, and so on.</p>\n\n<p>There is another important kind of compound data in computing – a <strong>collection</strong>. A class could be used to represent, say, a <em>single</em> student in a class roster. But the class roster itself is a <strong>collection</strong> of students, which isn't something we've seen how to represent so far.</p>\n\n<p>There are several ways to represent <strong>collections</strong> of data in Java. We will start with one called an <strong>Array</strong>, but we will explore others.</p>\n\n<p>The most direct way to create a collection using arrays is to use an <strong>array initialization</strong> statement. This is written as a variable or field definition with a type that has <code>[]</code> at the end, with comma-separated values in between curly braces as the value. Here’s one for a collection of names of fruit:</p>\n\n<pre><code class=\"language-java\">String[] fruits = {\"apple\", \"orange\", \"banana\"};</code></pre>\n\n<p>Just like with other field definitions, we could put this into an examples class, for example:</p>\n\n<p><iframe height=\"500px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/7bbf6639bba4749e3b684a5712ba076220785/welcome/1090856/Arrays\" width=\"100%\"></iframe></p>\n\n<p>If we run this, we see some new output that shows the array shape.</p>\n\n<h3><span style=\"color: #cc0000;\"> <strong>Do Now!</strong> </span>Fill in the blanks based on what you see when running the program.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>\nnew ExamplesArrays:1(<br>\n&nbsp;this.fruits = new \n</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "java.lang.String",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>[</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "3",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>\n]:2{<br>\n&nbsp; [0] \"apple\",<br>\n&nbsp; [1] \"orange\",<br>\n&nbsp; [2] \"banana\"<br>\n&nbsp;}<br>\n&nbsp;this.valueAtIndex0 = \"apple\"<br>\n&nbsp;this.orange = \"orange\"<br>\n&nbsp;this.valueAtLastIndex = \"banana\")<br>\n</code>",
+          "options": []
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2465188",
+  "subscriptions": [
+    "31-77-2465188",
+    "30-77-2465188"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3073,
+  "passed_by": 2979,
+  "correct_ratio": 0.7698026147141759,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2444280,
+  "create_date": "2021-10-17T20:56:11Z",
+  "update_date": "2021-10-18T00:01:27Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

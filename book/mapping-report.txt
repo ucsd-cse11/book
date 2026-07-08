@@ -1,0 +1,126 @@
+widgets mapped: 122
+directives unused: 1
+unused: 'Creating Instances of Classes' -> 5.2/step4/ExamplesStudent.java
+
+ok  1.1 step1: 'First Example' -> 1.1/step1/FirstExample.java
+ok  1.1 step3: 'Second Example' -> 1.1/step3/SecondExample.java
+ok  1.2 step1: 'Operators' -> 1.2/step1/Operators.java
+ok  1.2 step2: (re-embed) -> 1.2/step1/Operators.java
+ok  1.2 step3: 'Operators' -> 1.2/step3/Operators.java
+ok  1.2 step4: 'Not Quite Math' -> 1.2/step4/widget1/NotQuiteMath.java
+ok  1.2 step4: 'Not Quite Math' -> 1.2/step4/widget2/NotQuiteMath.java
+ok  1.2 step5: 'Negative Results' -> 1.2/step5/NegativeResults.java
+ok  1.3 step1: 'Syntax' -> 1.3/step1/Syntax.java
+ok  1.3 step2: 'Syntax' -> 1.3/step2/Syntax.java
+ok  1.3 step3: 'Syntax' -> 1.3/step3/Syntax.java
+ok  2.1 step1: 'Using Fields' -> 2.1/step1/UsingFields.java
+ok  2.1 step2: 'Using Fields' -> 2.1/step2/UsingFields.java
+ok  2.1 step3: 'Getting Paid' -> 2.1/step3/widget1/Pay.java
+ok  2.1 step3: 'Calculating Revenue' -> 2.1/step3/widget2/Revenue.java
+ok  2.2 step1: 'String Examples' -> 2.2/step1/StringExamples.java
+ok  2.2 step2: 'Conctenating Strings' -> 2.2/step2/Name.java
+ok  2.2 step3: 'Conctenating Strings' -> 2.2/step3/Name.java
+ok  2.2 step4: 'Video Game Example Initial Attempt' -> 2.2/step4/VideoGame.java
+ok  2.2 step5: 'Video Game Example Second Attempt' -> 2.2/step5/VideoGame.java
+ok  2.2 step6: 'Number Precision' -> 2.2/step6/Numbers.java
+ok  2.2 step7: 'Rectangle' -> 2.2/step7/Rectangle.java
+ok  2.3 step1: 'Mixing Strings and ints' -> 2.3/step1/JavaChecksTypes.java
+ok  2.3 step2: 'Mixing Strings and ints' -> 2.3/step2/JavaChecksTypes.java
+ok  2.3 step3: 'Mixing Strings and ints' -> 2.3/step3/JavaChecksTypes.java
+ok  2.3 step4: (re-embed) -> 2.3/step3/JavaChecksTypes.java
+ok  3.1 step1: 'Using Methods' -> 3.1/step1/Distance.java
+ok  3.1 step1: 'Using Methods' -> 3.1/step1/Distance2.java
+ok  3.1 step5: 'Using Methods' -> 3.1/step5/Distance.java
+ok  3.2 step4: 'Implementing Tasks' -> 3.2/step4/MadLibs.java
+ok  3.2 step6: 'Following the Design Recipe' -> 3.2/step6/WeeklyPay.java
+ok  3.2 step6: 'Following the Design Recipe' -> 3.2/step6/Multiplication.java
+ok  3.3 step1: 'Understanding Errors' -> 3.3/step2/MadLibs.java
+ok  3.3 step2: 'Understanding Errors' -> 3.3/step3/MadLibs.java
+ok  3.3 step3: 'Understanding Errors' -> 3.3/step4/MadLibs.java
+ok  3.3 step7: 'Understanding Errors' -> 3.3/step8/MadLibs.java
+ok  4.1 step1: 'Using Conditions' -> 4.1/step1/Comparisons.java
+ok  4.1 step3: 'Using Conditions' -> 4.1/step3/WeeklyPay.java
+ok  4.1 step4: 'Using Conditions' -> 4.1/step4/WeeklyPay.java
+ok  4.1 step5: 'Using Conditions' -> 4.1/step6/WeeklyPay.java
+ok  4.2 step3: 'Using Conditions' -> 4.2/step3/Grades.java
+ok  4.2 step4: 'Using Conditions' -> 4.2/step4/Grades.java
+ok  4.2 step5: 'Using Conditions' -> 4.2/step5/Grades.java
+ok  5.1 step2: 'Combining Data into Classes' -> 5.1/step2/ExamplesStudent.java
+ok  5.1 step6: (re-embed) -> 5.1/step2/ExamplesStudent.java
+ok  5.3 step1: 'Total Cost Calculation' -> 5.3/step1/Receipt.java
+ok  5.3 step2: 'Variable fill-in' -> 5.3/step2/Receipt.java
+ok  5.3 step3: 'Bad Scope' -> 5.3/step3/Receipt.java
+ok  5.3 step4: 'Bad Scope Experimentation' -> 5.3/step3/Receipt.java
+ok  6.1 step3: 'ExamplesBook' -> 6.1/step3/ExamplesBook.java
+ok  6.1 step5: 'Same Author?' -> 6.1/step5/ExamplesBook.java
+ok  6.2 step1: 'Reviewing the Code' -> 6.2/step1/ExamplesBook.java
+ok  6.2 step3: 'Using Tester' -> 6.2/step4/ExamplesBook.java
+ok  6.2 step6: 'When Tester fails' -> 6.2/step6/ExamplesBook.java
+ok  7.1 step3: 'RectRegion' -> 7.1/step3/RectExamples.java
+ok  7.1 step4: 'RectRegion examples' -> 7.1/step4/RectExamples.java
+ok  7.1 step6: 'ExamplesRegion' -> 7.1/step6/ExamplesRegion.java
+ok  7.1 step7: 'contains' -> 7.1/step7/RectRegion.java
+ok  7.1 step8: 'belowLeftOf' -> 7.1/step8/PointExamples.java
+ok  7.1 step9: 'aboveRightOf' -> 7.1/step9/PointExamples.java
+ok  7.1 step10: 'contains' -> 7.1/step10/ExamplesRegion.java
+ok  7.2 step2: "Why did the math teacher's plants keep dying? --  Because they grew square roots." -> 7.2/step2/SquareRoot.java
+ok  7.2 step3: (re-embed) -> 7.2/step2/SquareRoot.java
+ok  7.2 step3: 'Square Roots' -> 7.2/step3/SquareRoot.java
+ok  7.2 step5: 'Square Roots' -> 7.2/step5/PointExamples.java
+ok  8.1 step1: 'Image Data' -> 8.1/step1/ExamplesSearch.java
+ok  8.1 step2: 'largerThan' -> 8.1/step2/ExamplesSearch.java
+ok  8.2 step2: 'matches' -> 8.2/step2/ExamplesSearch.java
+ok  8.2 step3: 'matches' -> 8.2/step3/ExamplesSearch.java
+ok  8.3 step2: 'Field access (or lack thereof)' -> 8.3/step2/ExamplesSearch.java
+ok  8.4 step1: 'AndQuery' -> 8.4/step1/ExamplesSearch.java
+ok  8.4 step2: 'ContainsKeyword' -> 8.4/step2/ExamplesSearch.java
+ok  8.4 step4: 'Combining AndQueries' -> 8.4/step4/ExamplesSearch.java
+ok  8.4 step5: 'OrQuery' -> 8.4/step5/ExamplesSearch.java
+ok  9.1 step1: 'Arrays' -> 9.1/step1/ExamplesArrays.java
+ok  9.1 step3: 'Arrays of numbers' -> 9.1/step3/ExamplesNumberArrays.java
+ok  9.2 step1: 'MathExamples' -> 9.2/step1/MathExamples.java
+ok  9.2 step2: 'MyMath' -> 9.2/step2/MyMath.java
+ok  9.3 step1: 'HasAMainMethod' -> 9.3/step1/widget1/HasAMainMethod.java
+ok  9.3 step1: 'HasAMainMethod (and an error!)' -> 9.3/step1/widget2/HasAMainMethod.java
+ok  9.3 step2: (re-embed) -> 9.3/step1/widget1/HasAMainMethod.java
+ok  9.3 step4: 'Hello, World!' -> 9.3/step4/HelloWorld.java
+ok  9.3 step5: 'Printing is fun' -> 9.3/step5/PrintingIsFun.java
+ok  10.1 step2: 'SampleMain' -> 10.1/step2/SampleMain.java
+ok  10.1 step3: 'SumMain' -> 10.1/step3/SumMain.java
+ok  10.1 step6: 'CalcMain' -> 10.1/step6/CalcMain.java
+ok  10.1 step8: (re-embed) -> 10.1/step6/CalcMain.java
+ok  10.2 step1: 'ExamplesArrays' -> 10.2/step1/ExamplesArrays.java
+ok  10.2 step3: 'Intersperse' -> 10.2/step3/Intersperse.java
+ok  10.2 step4: (re-embed) -> 10.2/step3/Intersperse.java
+ok  10.4 step2: 'AddAtEnd' -> 10.4/step2/AddAtEnd.java
+ok  10.4 step3: (re-embed) -> 10.4/step2/AddAtEnd.java
+ok  11.1 step1: 'TheaterExamples.java' -> 11.1/step1/TheaterExamples.java
+ok  11.1 step2: 'TheaterExamples.java' -> 11.1/step2/TheaterExamples.java
+ok  11.1 step4: 'TheaterExamples.java' -> 11.1/step3/TheaterExamples.java
+ok  11.1 step5: 'TheaterExamples.java' -> 11.1/step4/TheaterExamples.java
+ok  11.1 step7: 'TheaterExamples.java' -> 11.1/step5/TheaterExamples.java
+ok  12.1 step1: 'DirectoryExamples.java' -> 12/12.1/DirectoryExamples.java
+ok  12.1 step2: (re-embed) -> 12/12.1/DirectoryExamples.java
+ok  12.1 step3: 'ClassDatabaseExamples.java' -> 12/12.1/ClassDatabaseExamples.java
+ok  12.1 step4: 'LookupTableExamples.java' -> 12/12.1/LookupTableExamples.java
+ok  12.1 step5: (re-embed) -> 12/12.1/LookupTableExamples.java
+ok  12.1 step6: 'IntegerTableExamples.java' -> 12/12.1/IntegerTableExamples.java
+ok  12.1 step7: (re-embed) -> 12/12.1/IntegerTableExamples.java
+ok  12.2 step1: 'ArrayListExamples.java' -> 12.2/step1/ArrayListExamples.java
+ok  12.2 step2: 'ArrayListExamples.java' -> 12.2/step2/ArrayListExamples.java
+ok  12.2 step3: 'ArrayListExamples.java' -> 12.2/step3/ArrayListExamples.java
+ok  12.2 step4: 'ArrayListExamples.java' -> 12.2/step4/ArrayListExamples.java
+ok  12.2 step5: 'ArrayListExamples.java' -> 12.2/step5/ArrayListExamples.java
+ok  12.2 step6: 'SetExamples.java' -> 12.2/step6/SetExamples.java
+ok  12.2 step8: 'SetExamples.java' -> 12.2/step8/widget1/SetExamples.java
+ok  12.2 step8: 'SetExamples.java' -> 12.2/step8/widget2/SetExamples.java
+ok  12.2 step9: 'MapExamples.java' -> 12.2/step9/MapExamples.java
+ok  12.2 step10: 'MapExamples.java' -> 12.2/step10/MapExamples.java
+ok  12.2 step11: 'MapExamples.java' -> 12.2/step11/MapExamples.java
+ok  13.1 step1: 'ExamplesSearch.java' -> 13.1/step1/ExamplesSearch.java
+ok  13.1 step3: 'ExamplesSearch.java' -> 13.1/step3/ExamplesSearch.java
+ok  13.1 step4: 'ExamplesSearch.java' -> 13.1/step4/ExamplesSearch.java
+ok  13.2 step2: 'extends AQuery' -> 13.2/step2/ExamplesSearch.java
+ok  13.2 step3: 'extends AQuery' -> 13.2/step3/ExamplesSearch.java
+ok  13.3 step2: 'super' -> 13.3/step2/ExamplesSearch.java
+ok  13.4 step2: 'Class hierarchy' -> 13.4/step2/ExamplesSearch.java

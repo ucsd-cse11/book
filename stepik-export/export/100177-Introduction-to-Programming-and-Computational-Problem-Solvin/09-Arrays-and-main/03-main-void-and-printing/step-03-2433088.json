@@ -1,0 +1,55 @@
+{
+  "id": 2433088,
+  "lesson": 587829,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>Let's break down each of the pieces of the <code>main()</code> method declaration:</p>\n\n<ul>\n\t<li>The <code>main()</code> method is <strong><code>public</code></strong>, meaning it is accessible everywhere</li>\n\t<li>The <code>main()</code> method is <code><strong>static</strong></code>, meaning it belongs to the <em>class itself</em> rather than to any instance of the class</li>\n\t<li>The <code>main()</code> method has a <strong><code>void</code></strong> return type, meaning it doesn't return anything <strong>(NEW!)</strong></li>\n\t<li>The <code>main()</code> method is named \"<code>main</code>\"</li>\n\t<li>The <code>main()</code> method has a single parameter of type <code>String[]</code> (i.e., array of <code>String</code>)\n\t<ul>\n\t\t<li>It is customary to have this single parameter be named \"<code>args</code>\" (for \"arguments\"; we'll dive into this a bit later)</li>\n\t</ul>\n\t</li>\n\t<li>It doesn't have a return statement <strong>(NEW!)</strong></li>\n</ul>\n\n<p>It turns out the <code>./run</code> command was doing a <em>lot</em> of work for us to display output. We will need to use other tools to get meaningful results from our program when we use <code>java</code>, <code>javac</code>, and a <code>main()</code> method.</p>\n\n<p>First, an observation. The place where the main method says <code>void</code> is the position for its <strong>return type</strong>. A return type of <code>void</code> indicates that the method <em>doesn't return a value</em>. The fact that <code>main()</code> has a void return type helps us understand that the method itself isn't going to return a value that gets printed out for us; we'll need to find a way to do that in Java ourselves.</p>\n\n<h3><strong><span style=\"color: #cc0000;\">Do Now!</span> Which of the following are requirements of a valid <code>main()</code> method in a Java program? (Select all that apply)</strong></h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2433088",
+  "subscriptions": [
+    "31-77-2433088",
+    "30-77-2433088"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3004,
+  "passed_by": 2950,
+  "correct_ratio": 0.17562277580071176,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2412180,
+  "create_date": "2021-09-30T18:07:52Z",
+  "update_date": "2021-10-17T22:57:35Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

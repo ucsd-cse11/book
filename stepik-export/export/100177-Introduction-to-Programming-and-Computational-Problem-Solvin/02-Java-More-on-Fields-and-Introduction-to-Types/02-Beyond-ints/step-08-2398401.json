@@ -1,0 +1,50 @@
+{
+  "id": 2398401,
+  "lesson": 573386,
+  "position": 8,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>A <code>String</code> consists of a series of characters, and we represent Strings by placing these characters in between double-quotes.</li>\n\t<li>We can append two <code>String</code>s by using the <code>+</code> operator.</li>\n\t<li>If we want to represent non-integer numbers in Java, we can do this using a <code>double</code>. However, a <code>double</code> can only represent an approximation of a number and may not be entirely precise.</li>\n\t<li><a href=\"https://en.wikipedia.org/wiki/Dorothy_Vaughan\" rel=\"noopener noreferrer nofollow\">Dorothy Vaughan</a>, mathematician and human computer at NACA</li>\n\t<li><a href=\"https://en.wikipedia.org/wiki/Ada_Lovelace\" rel=\"noopener noreferrer nofollow\">Ada Lovelace</a>, “Grandmother of Computing”</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2398401",
+  "subscriptions": [
+    "31-77-2398401",
+    "30-77-2398401"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3334,
+  "passed_by": 3334,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2377493,
+  "create_date": "2021-09-16T06:19:28Z",
+  "update_date": "2021-09-25T03:57:15Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

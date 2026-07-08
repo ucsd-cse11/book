@@ -1,0 +1,54 @@
+{
+  "id": 4835577,
+  "lesson": 1164810,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>  Now let's look at the functionality of opening the file and using it's contents using new functions:</p>\n\n<pre><code class=\"language-java\">import java.nio.file.*;\nimport java.io.IOException;\n\nclass FileExample {\n    public static void main(String[] args) throws IOException {\n        String contents = Files.readString(Paths.get(\"quotes.txt\"));\n        System.out.println(contents);\n\n        String[] words = contents.split(\" \");\n        for (String word: words) {\n            System.out.println(word);\n        }\n    }\n}</code></pre>\n\n<p> quotes.txt has the following contents:</p>\n\n<pre><code class=\"language-no-highlight\">All is well!\nYou got this!\nThis too shall pass!</code></pre>\n\n<p>If we then run this code in the Lecture 18 11pm workspace on EdStem we see that it has, in fact, read in the entire file and not just 1 line. Here is the output:</p>\n\n<pre><code class=\"language-bash\">[user@sahara ~]$ java FileExample\nAll is well!\nYou got this!\nThis too shall pass!\n\nAll\nis\nwell!\nYou\ngot\nthis!\nThis\ntoo\nshall\npass!\n</code></pre>\n\n<p>If you're wondering why the first thing it does is print an entire copy of quotes, it is because the first thing we wrote in our code after setting contents to readString of our file was to println(contents).</p>\n\n<p>Also recall the description of readString was</p>\n\n<blockquote>\n<p>Reads all content from a file into a string</p>\n</blockquote>\n\n<p>and it has done exactly that. It reads the whole file, not stopping until End Of File (EOF) is reached. Then to print each word out on it's own line in the output we split on each space character and print.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4835577",
+  "subscriptions": [
+    "31-77-4835577",
+    "30-77-4835577"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 335,
+  "passed_by": 335,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4814674,
+  "create_date": "2023-12-07T00:50:55Z",
+  "update_date": "2023-12-07T00:50:55Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4835577-1",
+  "discussion_threads": [
+    "77-4835577-1"
+  ]
+}

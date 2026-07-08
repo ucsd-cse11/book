@@ -1,0 +1,53 @@
+{
+  "id": 2527514,
+  "lesson": 578016,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "number",
+    "text": "<p>In Java, if we want to store a collection of objects, we can use arrays. One problem with arrays is that they can store only a fixed number of elements, so we have to specify beforehand how many elements we plan to store.</p>\n\n<p>Most of the time, we won't know how many objects we will have to store. For example, if we were to read a list of students from a file and wanted to store each student's name in a collection, we may not know beforehand how many students there are in the list. Therefore, in  this scenario, we can instead use one of the data structures that Java provides, which is called an <code>ArrayList</code>. The documentation for <code>ArrayList</code> is <a href=\"https://docs.oracle.com/javase/9/docs/api/java/util/ArrayList.html\" rel=\"noopener noreferrer nofollow\">here</a>.</p>\n\n<p><code>ArrayList</code> uses generics, allowing us to specify the type of object we want to store in the list. To review, when creating an instance of a class that uses generics, the type should be specified between the <code>&lt;&gt;</code> after the name of the class. The initialization of an <code>ArrayList</code> of <code>String</code>s would look like this: <code>new ArrayList&lt;String&gt;();</code></p>\n\n<p>We can add elements by using an instance method defined for <code>ArrayList</code> named <code>add()</code>. <code>add()</code> is a void method that takes one argument and adds it as an element in the <code>ArrayList</code>. The argument should be of the type that the <code>ArrayList</code> stores.</p>\n\n<p>The following program creates an <code>ArrayList</code> of <code>Integers</code> and prints its elements.</p>\n\n<p><iframe height=\"700px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/6b3d954c9d15e024cb9589805f3d09b320785/welcome/1095025/ArrayListExamples.java\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> How many elements are in <code>nums</code> at the end of the program?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2527514",
+  "subscriptions": [
+    "31-77-2527514",
+    "30-77-2527514"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2949,
+  "passed_by": 2863,
+  "correct_ratio": 0.8658900836320191,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2506606,
+  "create_date": "2021-11-15T07:31:46Z",
+  "update_date": "2021-11-15T07:39:29Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

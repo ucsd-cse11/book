@@ -1,0 +1,13 @@
+*.class
+*.jar
+# ...but the book build needs these two jars in-repo (CI regenerates the site)
+!book/data/tester.jar
+!book/data/tools.jar
+
+node_modules/
+site/
+test-results/
+playwright-report/
+__pycache__/
+nohup.out
+.DS_Store

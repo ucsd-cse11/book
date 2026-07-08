@@ -1,0 +1,53 @@
+{
+  "id": 2434497,
+  "lesson": 568133,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>And it’s good to think through some examples next:</p>\n\n<p><iframe height=\"615px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/5f2c3a2153f951090ca666c1b3b7ae7720785/welcome/1086338/Using%20Conditions\" width=\"100%\"></iframe></p>\n\n<p>Note that we’ve added a default return statement as well. This way, even if we don’t have anything else in the method, we can still run the program without any errors.</p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Run the program and use its output to fill in the blanks below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2434497",
+  "subscriptions": [
+    "31-77-2434497",
+    "30-77-2434497"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3191,
+  "passed_by": 3152,
+  "correct_ratio": 0.8870832165872794,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2413589,
+  "create_date": "2021-09-30T22:48:15Z",
+  "update_date": "2021-10-01T05:50:38Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,97 @@
+{
+  "id": 2434799,
+  "lesson": 568133,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>The result from the previous step says that <code>fourIsLessThanFive</code> has the value <code>true</code>, and <code>fiveIsLessThanFour</code> has the value <code>false</code>. This seems quite reasonable; the first is, after all, a true statement, while the second isn’t. These two values, <code>true</code> and <code>false</code>, have the type <code>boolean</code>; in fact, they are the <em>only</em> two values of the type <code>boolean</code>. They represent computations that <em>ask a question</em>, where the answer can be yes (true) or no (false).</p>\n\n<p>To see how these new values are particularly useful in action, let’s go back to an example we’ve worked on <a href=\"https://stepik.org/lesson/571273/step/6?unit=565814\" rel=\"noopener noreferrer nofollow\">before</a> — calculating weekly pay with overtime. The past times we’ve addressed the problem, we’ve always made the assumption that the number of hours worked is greater than 40 because the calculation would produce nonsense for smaller numbers of hours. Armed with the ability to ask questions, along with one more piece we’ll add along the way, we’ll be able to make progress on this problem now. Let’s clearly state the problem:</p>\n\n<blockquote>\n<p><strong>Use the design recipe to write a program that, given an employee’s weekly hours worked and hourly wage, calculates their weekly pay. Any hours worked over 40 should count at double their hourly rate. An employee may work less than 40 hours a week.</strong></p>\n</blockquote>\n\n<p> </p>\n\n<p>To write this program, we first need to write the method header, which is the same as before:</p>\n\n<pre><code class=\"language-java\">int weekly(int hours, int rate)</code></pre>\n\n<p>We can add documentation:</p>\n\n<pre><code class=\"language-java\">// Calculate weekly pay at the given rate and number of hours worked.\n// If hours is above 40, pay at double the rate for hours beyond 40.  Pay at\n// rate for the first 40 hours.  If the number of hours is not more than 40,\n// don't add any overtime.\nint weekly(int hours, int rate)</code></pre>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Select the test cases below whose comments show the correct expected value.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "is_multiple_choice": true,
+      "is_always_correct": false,
+      "sample_size": 4,
+      "preserve_order": false,
+      "is_html_enabled": true,
+      "is_options_feedback": false,
+      "options": [
+        {
+          "is_correct": true,
+          "text": "<code>int aTestCase = this.weekly(48, 18); //should be 1008</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "<code>int someTestCase = this.weekly(36, 14); //should be 504</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>int myTestCase = this.weekly(40, 25); //should be 1025</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "<code>int theirTestCase = this.weekly(42, 17); //should be 748</code>",
+          "feedback": ""
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2434799",
+  "subscriptions": [
+    "31-77-2434799",
+    "30-77-2434799"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3202,
+  "passed_by": 3141,
+  "correct_ratio": 0.3716065342578446,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2413891,
+  "create_date": "2021-10-01T05:06:05Z",
+  "update_date": "2021-10-01T18:39:16Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

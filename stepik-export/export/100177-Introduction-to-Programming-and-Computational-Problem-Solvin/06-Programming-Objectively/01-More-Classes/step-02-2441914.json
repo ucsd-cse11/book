@@ -1,0 +1,53 @@
+{
+  "id": 2441914,
+  "lesson": 573911,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>We should also write some examples, both of <code>Book</code>s and of the <code>salePrice()</code> method’s use. Remember that  <code>salePrice()</code> takes in a number representing a percentage (i.e. between 0 and 100) and returns a number representing the price with that percentage subtracted.</p>\n\n<pre><code class=\"language-java\">class ExamplesBook {\n  Book schemer = new Book(\"The Little Schemer\", \"Daniel P. Friedman\", 40);\n  Book stick = new Book(\"Make It Stick: The Science of Successful Learning\", \"Peter C. Brown\", 13);\n  Book pLaw = new Book(\"Parkinson's Law\", \"C. Northcote Parkinson\", 30);\n\n  int sale1 = this.schemer.salePrice(25); // should be 30\n  int sale2 = this.stick.salePrice(50); // should be 7\n  int sale3 = this.pLaw.salePrice(10); // should be 27\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Fill in the expected values for the test cases below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2441914",
+  "subscriptions": [
+    "31-77-2441914",
+    "30-77-2441914"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3099,
+  "passed_by": 3057,
+  "correct_ratio": 0.5750984436527283,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2421006,
+  "create_date": "2021-10-05T08:47:09Z",
+  "update_date": "2021-10-06T04:58:26Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

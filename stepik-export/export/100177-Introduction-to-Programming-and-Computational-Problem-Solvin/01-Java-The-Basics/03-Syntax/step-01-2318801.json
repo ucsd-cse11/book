@@ -1,0 +1,53 @@
+{
+  "id": 2318801,
+  "lesson": 571200,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>In all of the examples in the previous lesson, the program was defined simply as a sequence of characters in a plain text file. Some of them, like <code>{</code>, <code>;</code>,  <code>=</code>, and the arithmetic operators, are special symbols that have specific meaning to Java. Other sequences of characters, like <code>class</code> and <code>int</code>, are normal English words that mean something specific to Java – we call these <strong>keywords</strong>. Other sequences, like <code>theNumberFive</code> and <code>x</code>, we picked, and we could have chosen many other words in those places.</p>\n\n<p>Java expects an extremely specific order for all of these words and symbols in a valid program. We call these rules the <strong>syntax</strong> of Java. For example, there must be a name after the keyword <code>class</code> . For now, that name will always be followed by an open curly brace (<code>{</code>). Then comes a sequence of fields, each separated by a semicolon. Then comes a closing curly brace (<code>}</code>). We can have any amount of <strong>whitespace</strong> between the fields or around the curly braces. By \"whitespace,\" we mean spaces, newlines, and tabs.</p>\n\n<p>It’s useful to see what Java does if we break these rules and write invalid syntax. For example, if we don't put an opening curly brace after <code>Syntax</code>, the program would look like:</p>\n\n<p><iframe height=\"370px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/252cd1fc1e4afeb7f06c682e3f1d2a5f20785/welcome/1084172/Syntax\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Run the program as-is and paste the entire output into the box below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2318801",
+  "subscriptions": [
+    "31-77-2318801",
+    "30-77-2318801"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3665,
+  "passed_by": 3358,
+  "correct_ratio": 0.5435095002395018,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2297893,
+  "create_date": "2021-08-13T04:29:06Z",
+  "update_date": "2021-09-27T22:39:57Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

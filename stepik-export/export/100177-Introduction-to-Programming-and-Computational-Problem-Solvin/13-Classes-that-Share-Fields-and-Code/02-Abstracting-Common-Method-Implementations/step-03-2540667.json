@@ -1,0 +1,53 @@
+{
+  "id": 2540667,
+  "lesson": 575943,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "number",
+    "text": "<p>We’d add the same <code>extends AQuery</code> clause to each query class, which allows us to remove the identical copies of the <code>and()</code> method and just use the one in <code>AQuery</code>. This way, we only need to write the <code>and()</code> method once, and we can get its benefits for all the classes that <strong>extend</strong> the <code>AQuery</code> class.</p>\n\n<p><iframe height=\"700px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/7d9480ec86daacc3524c40d5605c5dfa20785/welcome/1086015/extends%20AQuery\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Make each class extend <code>AQuery</code>. Then run the code to confirm that there are no error messages. In the box below, enter the number of objects created in the program. (That is, what is the largest reference number in the output?)</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2540667",
+  "subscriptions": [
+    "31-77-2540667",
+    "30-77-2540667"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2370,
+  "passed_by": 2321,
+  "correct_ratio": 0.3115874079035499,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2519759,
+  "create_date": "2021-11-22T04:25:11Z",
+  "update_date": "2021-11-22T04:25:11Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

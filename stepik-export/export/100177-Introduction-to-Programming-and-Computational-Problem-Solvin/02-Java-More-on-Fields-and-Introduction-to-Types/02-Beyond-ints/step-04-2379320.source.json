@@ -1,0 +1,74 @@
+{
+  "id": 2379320,
+  "lesson": 573386,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>We can now define fields that hold <code>int</code>s and <code>String</code>s, but is this sufficient to represent data in <em>every single</em> real-world scenario we may face? For example, many video game releases include the main game as well as \"downloadable content\" (or DLC) that can optionally be purchased to enhance the main game in some way. How would we represent the pricing of a video game that has a single DLC? Using the tools we currently have at our disposal, we might initially attempt the following:</p>\n\n<p><iframe height=\"500px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/592f4d83a9bfdcaa354e206b7da46e9420785/welcome/1085532/Video%20Game%20Example%20Initial%20Attempt\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> According to the output, what value is stored in <code>this.totalPrice</code>?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "pattern": "\"$49.99$4.99\"",
+      "use_re": false,
+      "match_substring": false,
+      "case_sensitive": true,
+      "code": "def check(reply):\n    r = reply.strip()\n    if r == '\"$49.99$4.99\"':\n        return True\n    elif r == \"'$49.99$4.99'\":\n        return False, \"In Java, `String` values only use double-quotes (\\\"), not single-quotes (')\"\n    elif r == '$49.99$4.99':\n        return False, \"Don't forget the quotation marks! The quotation marks are part of the way we write out `String` values\"\n    else:\n        return False\n\ndef solve():\n    return '\"$49.99$4.99\"'",
+      "is_text_disabled": false,
+      "is_file_disabled": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379320",
+  "subscriptions": [
+    "31-77-2379320",
+    "30-77-2379320"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3352,
+  "passed_by": 3302,
+  "correct_ratio": 0.760804939400869,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358412,
+  "create_date": "2021-09-09T19:47:21Z",
+  "update_date": "2021-09-15T20:37:04Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

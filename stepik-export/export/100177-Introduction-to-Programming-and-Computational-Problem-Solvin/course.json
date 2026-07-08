@@ -1,0 +1,233 @@
+{
+  "id": 100177,
+  "summary": "",
+  "workload": "",
+  "cover": "https://cdn.stepik.net/media/cache/images/courses/100177/cover_Z7ggqvm/e867faf879f853780603b35e2d22bfc1.png",
+  "intro": "",
+  "course_format": "",
+  "target_audience": "",
+  "certificate_footer": null,
+  "certificate_cover_org": null,
+  "is_certificate_issued": false,
+  "is_certificate_auto_issued": false,
+  "certificate_regular_threshold": null,
+  "certificate_distinction_threshold": null,
+  "instructors": [
+    66821438,
+    135777710,
+    167521454,
+    122467801,
+    214650
+  ],
+  "certificate": "",
+  "requirements": "",
+  "description": "<p>This book is an introduction to programming in Java in an object-first style. It emphasizes testing, interfaces, and data-driven design of methods.</p>\n\n<p>It owes a great debt to How to Design Programs (http://htdp.org/), How to Design Classes (https://felleisen.org/matthias/HtDC/htdc.pdf), and Ben Lerner's notes from Northeastern University (https://course.ccs.neu.edu/cs2510/).</p>\n\n<p>In many ways, this book is a Java-only and (sadly or not-so-sadly, depending on your parenophobia) Racket-free, from-scratch introduction using some of the style of How to Design Programs, and a Racket-reference-free set of examples in the style of HtDC. A reader could happily move on to continue their study using the curriculum from CS2510 at Northeastern University, for example.</p>\n",
+  "sections": [
+    195956,
+    201473,
+    195957,
+    201474,
+    201475,
+    201476,
+    201477,
+    201478,
+    201480,
+    201481,
+    209247,
+    211785,
+    201479,
+    359473
+  ],
+  "total_units": 56,
+  "enrollment": 100177,
+  "is_favorite": false,
+  "actions": {
+    "view_reports": {
+      "enabled": true
+    },
+    "edit_reports": {
+      "enabled": true
+    },
+    "view_grade_book_page": {
+      "enabled": true
+    },
+    "view_grade_book": {
+      "enabled": true
+    },
+    "edit_lti": {
+      "enabled": true
+    },
+    "edit_advanced_settings": {
+      "enabled": true
+    },
+    "manage_permissions": {
+      "enabled": true
+    },
+    "assist_course": "#",
+    "view_instructor_dashboard": "#",
+    "edit_course": "/course/100177/edit-info",
+    "edit_syllabus": "/course/100177/edit",
+    "view_statistics": "/course/100177/statistics/",
+    "attachments": "/course/100177/attachments/",
+    "create_announcements": "#",
+    "clone_course": "/course/100177/clone/",
+    "clone_module": "/course/100177/clone-module/",
+    "edit_certificates": "#",
+    "can_publish": {
+      "enabled": true,
+      "needs_plan": null
+    },
+    "can_be_private": {
+      "enabled": true,
+      "needs_plan": "enterprise"
+    },
+    "admin_course": "#",
+    "edit_permissions": "/course/100177/edit-permissions",
+    "edit_publish_settings": "#",
+    "view_revenue": {
+      "enabled": false
+    },
+    "can_be_enrolled": {
+      "enabled": true
+    },
+    "can_be_bought": {
+      "enabled": false
+    },
+    "can_be_price_changed": {
+      "enabled": true
+    },
+    "can_be_deleted": {
+      "enabled": false
+    },
+    "edit_tags": {
+      "enabled": true
+    }
+  },
+  "progress": "78-100177",
+  "first_lesson": 559661,
+  "first_unit": 553721,
+  "certificate_link": null,
+  "certificate_regular_link": "/api/courses/100177/regular",
+  "certificate_distinction_link": "/api/courses/100177/distinction",
+  "user_certificate": null,
+  "referral_link": "/a/100177",
+  "schedule_link": "/course/100177/schedule/07bc3be88daec83a684d8c441a391a774ba3b3e7/",
+  "schedule_long_link": "/course/100177/schedule/long/07bc3be88daec83a684d8c441a391a774ba3b3e7/",
+  "first_deadline": null,
+  "last_deadline": null,
+  "subscriptions": [
+    "31-78-100177",
+    "30-78-100177"
+  ],
+  "announcements": [],
+  "is_contest": false,
+  "is_self_paced": true,
+  "is_adaptive": false,
+  "is_idea_compatible": false,
+  "is_in_wishlist": false,
+  "last_step": "78-100177",
+  "intro_video": null,
+  "social_providers": [],
+  "authors": [
+    66821438,
+    135777710,
+    167521454,
+    122467801,
+    214650
+  ],
+  "tags": [
+    1,
+    42
+  ],
+  "has_tutors": false,
+  "is_enabled": true,
+  "is_proctored": false,
+  "proctor_url": null,
+  "review_summary": 99648,
+  "schedule_type": "self_paced",
+  "certificates_count": 0,
+  "learners_count": 7560,
+  "lessons_count": 56,
+  "quizzes_count": 136,
+  "challenges_count": 0,
+  "peer_reviews_count": 0,
+  "instructor_reviews_count": 0,
+  "videos_duration": 0,
+  "time_to_complete": 22877,
+  "is_popular": true,
+  "is_processed_with_paddle": false,
+  "is_unsuitable": false,
+  "is_paid": false,
+  "price": null,
+  "currency_code": null,
+  "display_price": "-",
+  "default_promo_code_name": null,
+  "default_promo_code_price": null,
+  "default_promo_code_discount": null,
+  "default_promo_code_is_percent_discount": null,
+  "default_promo_code_expire_date": null,
+  "continue_url": "/course/100177/continue",
+  "readiness": 0.9090909090909091,
+  "is_archived": false,
+  "options": {},
+  "price_tier": null,
+  "position": 1,
+  "is_censored": false,
+  "difficulty": null,
+  "acquired_skills": [],
+  "acquired_assets": [],
+  "learning_format": "",
+  "content_details": [],
+  "issue": 57537,
+  "course_type": "enterprise",
+  "possible_type": "enterprise",
+  "is_certificate_with_score": false,
+  "preview_lesson": null,
+  "preview_unit": null,
+  "possible_currencies": [],
+  "commission_basic": "7.00",
+  "commission_promo": "40.00",
+  "with_certificate": false,
+  "child_courses": [],
+  "child_courses_count": 0,
+  "parent_courses": [],
+  "became_published_at": "2021-09-14T16:38:17Z",
+  "became_paid_at": null,
+  "title_en": "Introduction to Programming and Computational Problem-Solving",
+  "last_update_price_date": null,
+  "learners_limit": null,
+  "owner": 214650,
+  "language": "en",
+  "is_featured": false,
+  "is_public": true,
+  "canonical_url": "https://stepik.org/course/100177/",
+  "title": "Introduction to Programming and Computational Problem-Solving",
+  "slug": "Introduction-to-Programming-and-Computational-Problem-Solving-100177",
+  "begin_date": null,
+  "end_date": null,
+  "soft_deadline": null,
+  "hard_deadline": null,
+  "grading_policy": "no_deadlines",
+  "begin_date_source": null,
+  "end_date_source": null,
+  "soft_deadline_source": null,
+  "hard_deadline_source": null,
+  "grading_policy_source": "no_deadlines",
+  "is_active": true,
+  "create_date": "2021-07-09T18:19:31Z",
+  "update_date": "2023-12-07T11:31:28Z",
+  "learners_group": 3711790,
+  "testers_group": 3711791,
+  "moderators_group": 3711792,
+  "assistants_group": 3711793,
+  "teachers_group": 3711788,
+  "admins_group": 3711789,
+  "discussions_count": 36,
+  "discussion_proxy": "78-100177-1",
+  "discussion_threads": [
+    "78-100177-1"
+  ],
+  "lti_consumer_key": "",
+  "lti_secret_key": "",
+  "lti_private_profile": false
+}

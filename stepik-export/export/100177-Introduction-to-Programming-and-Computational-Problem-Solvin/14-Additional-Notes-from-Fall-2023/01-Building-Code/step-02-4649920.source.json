@@ -1,0 +1,67 @@
+{
+  "id": 4649920,
+  "lesson": 1120309,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>But to make things easier for you, we’ve created a script called <code>run</code> that you can use to compile and execute code in one command. The inside of this script looks like this:</p>\n\n<pre><code class=\"language-bash\">#!/bin/bash\nif [ $# -eq 0 ]; then\n  echo \"Please provide the class name. For instance: ./run DesignRecipeExamples\";\n  exit;\nfi;\nCLASSNAME=$(echo $1 | cut -f 1 -d '.')\nrm *.class &amp;&gt; /dev/null;\njavac -cp lib/tester.jar *.java &amp;&amp;\njava -Djava.security.manager=disallow -classpath lib/tester.jar:. tester.Main $CLASSNAME\n</code></pre>\n\n<p>This is mostly complete nonsense at this point, and we won’t be covering what most of these things actually mean in this textbook. But you can see in the last two lines where we use the <code>javac</code> command to compile code, and then use the <code>java</code> command to run code.</p>\n\n<p>If you have a source code file called <code>A.java</code> that you want to compile and execute with the <code>run</code> script, you can use this command:</p>\n\n<p><code>$ ./run A.java</code></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649920",
+  "subscriptions": [
+    "31-77-4649920",
+    "30-77-4649920"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 470,
+  "passed_by": 470,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629018,
+  "create_date": "2023-10-28T23:45:30Z",
+  "update_date": "2023-10-28T23:45:30Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649920-1",
+  "discussion_threads": [
+    "77-4649920-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

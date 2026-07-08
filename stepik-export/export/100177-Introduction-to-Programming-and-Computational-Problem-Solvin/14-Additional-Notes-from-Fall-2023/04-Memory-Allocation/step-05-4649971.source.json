@@ -1,0 +1,67 @@
+{
+  "id": 4649971,
+  "lesson": 1120313,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Now that we're done executing the code in the constructor, we return to <code>FlightTest</code> to continue executing the line of code we were looking at before. The stack frame for the <code>Flight</code> constructor gets deleted because we're done executing that code, so we don't need to keep its memory around and take up space. After calling the <code>Flight</code> constructor and creating the <code>Flight</code> object on the heap, we assign the memory address of this object to <code>united1</code>, which updates the reference variable in the <code>FlightTest</code> object on the heap.</p>\n\n<p><img alt=\"\" height=\"612\" name=\"frame4 (1).svg\" src=\"https://ucarecdn.stepik.net/8197eab1-bf64-4f33-8873-b1d3dd94e717/\" width=\"750\"></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649971",
+  "subscriptions": [
+    "31-77-4649971",
+    "30-77-4649971"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 431,
+  "passed_by": 431,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629068,
+  "create_date": "2023-10-28T23:47:52Z",
+  "update_date": "2023-11-12T19:50:12Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649971-1",
+  "discussion_threads": [
+    "77-4649971-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

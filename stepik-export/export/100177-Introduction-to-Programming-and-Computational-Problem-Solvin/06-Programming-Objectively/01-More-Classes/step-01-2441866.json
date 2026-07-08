@@ -1,0 +1,53 @@
+{
+  "id": 2441866,
+  "lesson": 573911,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p><em>This example is from Ben Lerner (<a href=\"http://www.ccs.neu.edu/course/cs2510/lecture3.html\" rel=\"noopener noreferrer nofollow\">http://www.ccs.neu.edu/course/cs2510/lecture3.html</a>).</em></p>\n\n<p>As we mentioned in the last module, there is a wide variety of data in the world that is composed of multiple simple values. We’ve talked about <code>Point</code>s and about <code>Student</code> records in the past. Now, let’s talk about another example: modeling an inventory of books. A simple representation of a book would need to cover at least its title, author, and price. That’s pretty straightforward to describe as a class.</p>\n\n<pre><code class=\"language-java\">class Book {\n  String title;\n  String author;\n  int price;\n\n  Book(String title, String author, int price) {\n    this.title = title;\n    this.author = author;\n    this.price = price;\n  }\n}</code></pre>\n\n<p>The type <code>String</code> is a natural starting point for title and author, and the price is certainly some kind of number. Again, we see that we write the field definitions for <code>title</code>, <code>author</code>, and <code>price</code> without any values (i.e. as uninitialized field definitions), and we include the same shape of <strong>constructor</strong> that we’ve previously discussed: one that has a <code>this.someName = someName</code> line for each field/parameter.</p>\n\n<p>Let’s write some methods for <code>Book</code>. Imagine that a bookstore has periodic sales, in which everything is discounted at particular rates. We can write a method, <code>salePrice()</code>, that takes in a number representing a percentage (i.e. between 0 and 100) and returns a number representing the price with that percentage subtracted.</p>\n\n<p>Following the recipe, we’ll first specify the method header, which will go inside the <code>Book</code> class.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Fill in the method header below for the <code>salePrice()</code> method. </h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2441866",
+  "subscriptions": [
+    "31-77-2441866",
+    "30-77-2441866"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3167,
+  "passed_by": 3051,
+  "correct_ratio": 0.3990128588128328,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2420958,
+  "create_date": "2021-10-05T08:12:55Z",
+  "update_date": "2021-10-06T03:27:00Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

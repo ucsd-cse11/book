@@ -1,0 +1,54 @@
+{
+  "id": 4683976,
+  "lesson": 1129704,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>These classes work perfectly fine on their own, so why do we need interfaces? (something something \"if it ain't broke...\")</p>\n\n<p>The problem arises when we want to compose new regions from these existing regions. For example, the union of two regions is the region that contains all points covered by either of the two regions. Since we have circle regions and rectangle regions, we can take the union of two circles, two rectangles, or one circle and one rectangle. In our current implementation, <code>CircleRegion</code> and <code>RectangleRegion</code> are unrelated types, so we have to define each of these possible unions:</p>\n\n<pre><code class=\"language-java\">class UnionRegionCircleCircle {\n    CircleRegion r1, r2;\n\n    UnionRegionCircleCircle(CircleRegion r1, CircleRegion r2) {\n        this.r1 = r1;\n        this.r2 = r2;\n    }\n\n    boolean contains(Point p) {\n        return this.r1.contains(p) || this.r2.contains(p);\n    }\n}\nclass UnionRegionRectRect {\n    RectRegion r1, r2;\n\n    UnionRegionRectRect(RectRegion r1, RectRegion r2) {\n        this.r1 = r1;\n        this.r2 = r2;\n    }\n\n    boolean contains(Point p) {\n        return this.r1.contains(p) || this.r2.contains(p);\n    }\n}\nclass UnionRegionCircleRect {\n    CircleRegion r1;\n    RectRegion r2;\n\n    UnionRegionCircleRect(CircleRegion r1, RectRegion r2) {\n        this.r1 = r1;\n        this.r2 = r2;\n    }\n\n    boolean contains(Point p) {\n        return this.r1.contains(p) || this.r2.contains(p);\n    }\n}</code></pre>\n\n<p>Phew, my fingers are a little sore... It was kinda tedious to type basically the same code over and over again, but we finally have our union region classes defined!</p>\n\n<p>Hmm? What's that? You also want me to implement the intersection of two regions? And you want more region shapes? The amount of classes we have is going to explode (as well as my hands)! There has to be a better way to do this...</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4683976",
+  "subscriptions": [
+    "31-77-4683976",
+    "30-77-4683976"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 395,
+  "passed_by": 395,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4663073,
+  "create_date": "2023-11-06T09:12:24Z",
+  "update_date": "2023-11-06T09:12:25Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4683976-1",
+  "discussion_threads": [
+    "77-4683976-1"
+  ]
+}

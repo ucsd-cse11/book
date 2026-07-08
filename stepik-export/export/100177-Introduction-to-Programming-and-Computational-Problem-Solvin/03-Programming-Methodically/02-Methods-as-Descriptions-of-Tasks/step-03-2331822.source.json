@@ -1,0 +1,112 @@
+{
+  "id": 2331822,
+  "lesson": 571273,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>Next, it’s useful to come up with some <em>examples</em> of using the method before filling in the <strong>method body</strong>. This helps us double-check our work once we implement the body, because we’ll have some tests ready to run. We should pick meaningful inputs that match the types of the parameters:</p>\n\n<pre><code class=\"language-java\">class MadLibs {\n  /*\n    Places the given adjective and number into the sentence template to\n    create a full sentence.\n  */\n  String fillIn(String adjective, int number) {\n    // Still need to fill in this method body\n  }\n\n  String example1 = this.fillIn(\"useless\", 2);\n  String example2 = this.fillIn(\"relevant\", 3);\n  String example3 = this.fillIn(\"wise\", 22);\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Which of the following are good examples for how to use the <code>fillIn()</code> method?</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "is_multiple_choice": true,
+      "is_always_correct": false,
+      "sample_size": 7,
+      "preserve_order": false,
+      "is_html_enabled": true,
+      "is_options_feedback": false,
+      "options": [
+        {
+          "is_correct": true,
+          "text": "<code>String example = this.fillIn(\"relatable\", 5);</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "<code>String example = this.fillIn(\"interesting\", 18);</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "<code>String example = this.fillIn(\"odd\", 50);</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>String example = this.fillIn(\"confusing\", \"four\");</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>int example = this.fillIn(\"logical\", 10);</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>String example = this.fillIn(14, \"amusing\");</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>String example = this.fillIn(\"easy to follow\");</code>",
+          "feedback": ""
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2331822",
+  "subscriptions": [
+    "31-77-2331822",
+    "30-77-2331822"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3311,
+  "passed_by": 3261,
+  "correct_ratio": 0.596325268328179,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2310914,
+  "create_date": "2021-08-19T08:45:05Z",
+  "update_date": "2021-09-22T04:56:46Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

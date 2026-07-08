@@ -1,0 +1,117 @@
+{
+  "id": 2374011,
+  "lesson": 559662,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>For the past few sections, we’ve mainly used Java as a calculator. For example, we calculated the distance of a falling object at several different points in time:</p>\n\n<p><iframe height=\"476px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/8b55f467b8c7f8d68af16920846c9cd920785/welcome/1084493/Using%20Methods\" width=\"100%\"></iframe></p>\n\n<p>We noted that it was useful to store the value of gravity in a field, and use <code>this.gravity</code> in its place. However, there’s still something frustrating about this program. In particular, we are repeating the <em>shape</em> of the computation over and over again. This shape is repeated for each of the <code>distAfter___</code> fields:</p>\n\n<pre><code class=\"language-java\">(this.gravity / 2) * (__ * __)</code></pre>\n\n<p>In all three cases, the segment containing <code>this.gravity</code> and <code>2</code> is the same, as is the arrangement of the * and / operators. The <em>only</em> thing that changes is the number of elapsed seconds. It would be useful if we could somehow capture the idea of this distance-travelled calculation and re-use that instead of repeating the multiplication-and-division pattern over and over.</p>\n\n<p>Java (like every other modern programming language) has a feature that does this! In Java, the programming feature is called a <strong>method</strong>. We can think of simple methods as calculations with holes in them, where the holes can be filled in with different values to complete the calculation, just like in a mathematical function. Here’s what it looks like to define a method for the distance-travelled calculation:</p>\n\n<p><iframe height=\"570px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/592f4d83a9bfdcaa354e206b7da46e9420785/welcome/1085539/Using%20Methods\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> What are the values of the <code>int</code>s in the above program? (Hint: Run the program.)</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>distAfter2sec</code>: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "20",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><code>distAfter4sec</code>: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "80",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><code>distAfter6sec</code>: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "180",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2374011",
+  "subscriptions": [
+    "31-77-2374011",
+    "30-77-2374011"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3441,
+  "passed_by": 3281,
+  "correct_ratio": 0.9230341761600445,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2353103,
+  "create_date": "2021-09-08T10:06:41Z",
+  "update_date": "2021-09-19T20:28:04Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

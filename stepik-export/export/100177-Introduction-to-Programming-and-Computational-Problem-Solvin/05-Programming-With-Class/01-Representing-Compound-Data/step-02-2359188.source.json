@@ -1,0 +1,73 @@
+{
+  "id": 2359188,
+  "lesson": 573908,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "number",
+    "text": "<p>In Java, we use <strong>classes</strong> to represent these shapes of compound data. A class for a simple student record might look like this:</p>\n\n<pre><code class=\"language-java\">class Student {\n  String studentID;\n  boolean inState;\n  int birthYear;\n\n  Student(String studentID, boolean inState, int birthYear) {\n    this.studentID = studentID;\n    this.inState = inState;\n    this.birthYear = birthYear;\n  }\n}</code></pre>\n\n<p>We can use the class to create sets of data that describe several different students. To test it out, we can put the <code>Student</code> class definition above into the same file as an <code>Examples</code> class. Then, in the <code>Examples</code> class, we define several examples using the <code>new</code> operator (which we haven’t seen before):</p>\n\n<p><iframe height=\"700px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/26ce7b6283b8ae26d39a4bdfa32cd85e20785/welcome/1085330/Combining%20Data%20into%20Classes\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> How many times does the word <code>new</code> appear in the output of the above program? Enter the correct answer in the box below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "options": [
+        {
+          "answer": "4",
+          "max_error": "0"
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2359188",
+  "subscriptions": [
+    "31-77-2359188",
+    "30-77-2359188"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3174,
+  "passed_by": 3118,
+  "correct_ratio": 0.5889931897662434,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2338280,
+  "create_date": "2021-09-01T21:13:32Z",
+  "update_date": "2021-10-04T10:01:21Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

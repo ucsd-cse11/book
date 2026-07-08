@@ -1,0 +1,50 @@
+{
+  "id": 2334124,
+  "lesson": 573908,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<pre><code class=\"language-java\">//code from before, for reference\n\nclass Student {\n  String studentID;\n  boolean inState;\n  int birthYear;\n\n  Student(String studentID, boolean inState, int birthYear) {\n    this.studentID = studentID;\n    this.inState = inState;\n    this.birthYear = birthYear;\n  }\n}\n\nclass ExamplesStudent {\n  Student s1 = new Student(\"A12345678\", true, 1996);\n  Student s2 = new Student(\"A98765432\", false, 1993);\n  Student s3 = new Student(\"A18273645\", true, 1999);\n}</code></pre>\n\n<p>Third, to the left of the <code>=</code> operators in the <code>ExamplesStudent</code> class, we use <code>Student</code> in the position where we have previously written types like <code>int</code> or <code>boolean</code>. Just like how the keyword <code>int</code> refers to the set of integers, the name of a class also refers to a distinct set of values. A field with a class type, like <code>Student</code>, can only hold <strong>references</strong> to <strong>objects</strong> of that type. We’ll define objects and references in the next step.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2334124",
+  "subscriptions": [
+    "31-77-2334124",
+    "30-77-2334124"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3149,
+  "passed_by": 3149,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313216,
+  "create_date": "2021-08-20T06:04:04Z",
+  "update_date": "2021-10-04T10:13:17Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

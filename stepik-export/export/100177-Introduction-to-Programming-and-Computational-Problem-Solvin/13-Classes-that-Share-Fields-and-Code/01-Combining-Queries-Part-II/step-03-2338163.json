@@ -1,0 +1,53 @@
+{
+  "id": 2338163,
+  "lesson": 575460,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Of course, we have more types of queries than just <code>ContainsKeyword</code>, so it isn't sufficient to just implement the <code>and()</code> method in one place. We need to add it to all the classes that we want to use <code>and()</code> on, and we'll also generalize the return type to <code>ImageQuery</code>.</p>\n\n<pre><code class=\"language-java\">class MatchesExtension implements ImageQuery {\n  ...\n  public ImageQuery and(ImageQuery other) {\n    return new AndQuery(this, other);\n  }\n}\nclass LargerThan implements ImageQuery {\n  ...\n  public ImageQuery and(ImageQuery other) {\n    return new AndQuery(this, other);\n  }\n}\nclass AndQuery implements ImageQuery {\n  ...\n  public ImageQuery and(ImageQuery other) {\n    return new AndQuery(this, other);\n  }\n}</code></pre>\n\n<p>We could try to run an example like this:</p>\n\n<pre><code class=\"language-java\">class ExamplesSearch {\n  ImageQuery lg1 = new LargerThan(600, 400);\n  ImageQuery me1 = new MatchesExtension(\"png\");\n  ImageQuery ck1 = new ContainsKeyword(\"ucsd\");\n  ImageQuery ck2 = new ContainsKeyword(\"data\");\n  ImageQuery all5 = this.lg1.and(this.me1).and(this.ck1).and(this.ck2);\n}</code></pre>\n\n<p>However, this still isn’t quite enough to make it run. Try it, and look at the error message:</p>\n\n<p><iframe height=\"770px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/889c85520367e6dd1595bbac472f6da320785/welcome/1095248/ExamplesSearch.java\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Use the code above to answer the following questions.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2338163",
+  "subscriptions": [
+    "31-77-2338163",
+    "30-77-2338163"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2379,
+  "passed_by": 2355,
+  "correct_ratio": 0.8932874354561101,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2317255,
+  "create_date": "2021-08-22T22:50:20Z",
+  "update_date": "2021-11-22T07:36:49Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

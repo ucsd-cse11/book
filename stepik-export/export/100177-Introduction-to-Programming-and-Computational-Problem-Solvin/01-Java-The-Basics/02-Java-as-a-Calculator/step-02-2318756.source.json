@@ -1,0 +1,63 @@
+{
+  "id": 2318756,
+  "lesson": 571195,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>(Here's the code from the previous step. You may run it to see the output again for reference.)</p>\n\n<p><iframe height=\"450px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/d63c8ea4d9711ea2b312ad570ff6069a49685/welcome/1084053/Operators\" width=\"100%\"></iframe></p>\n\n<p>This used multiplication (with the <code>*</code> operator) and addition (with the <code>+</code> operator) to calculate the value 95 for the field <code>theAnswer</code>. It’s worth noting a few things with this simple example:</p>\n\n<ul>\n\t<li>\n\t<p>Java correctly processes the order of operations according to the multiplication-before-addition rule – we didn’t get <code>315</code> (the result of <code>7 * 45</code>) as an answer, for example</p>\n\t</li>\n\t<li>\n\t<p>There’s a difference between the program, which specified the operations to perform <code>(5 + 2 * 45)</code>, and the resulting <strong>value</strong>, which is <code>95</code>. Only the resulting value is stored in the field and shown in the output, not the whole program or calculation.</p>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2318756",
+  "subscriptions": [
+    "31-77-2318756",
+    "30-77-2318756"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3577,
+  "passed_by": 3577,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2297848,
+  "create_date": "2021-08-12T23:59:44Z",
+  "update_date": "2021-09-02T04:50:11Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

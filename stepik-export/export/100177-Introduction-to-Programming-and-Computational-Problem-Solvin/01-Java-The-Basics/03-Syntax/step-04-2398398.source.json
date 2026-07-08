@@ -1,0 +1,63 @@
+{
+  "id": 2398398,
+  "lesson": 571200,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>It is important to write all of the words and the symbols in the correct order. Java has certain rules regarding things such as the placement of curly braces and the inclusion of semicolons. We refer to these rules as the <strong>syntax </strong>of Java.</li>\n\t<li>When a program with incorrect syntax is run, the output will include an error message. The error message may contain useful information that will help you figure out what the error is.</li>\n\t<li>It’s important to get some practice in responding to error messages like these. Programmers get used to seeing these dozens or hundreds of times per week as they work through programming projects. Don’t be intimidated by them, but use them to figure out your mistakes, misconceptions, and typos.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2398398",
+  "subscriptions": [
+    "31-77-2398398",
+    "30-77-2398398"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3433,
+  "passed_by": 3433,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2377490,
+  "create_date": "2021-09-16T06:14:43Z",
+  "update_date": "2021-09-16T06:14:49Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

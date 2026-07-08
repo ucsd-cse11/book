@@ -1,0 +1,55 @@
+{
+  "id": 2379538,
+  "lesson": 574433,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "parsons",
+    "text": "<p>What we have so far means that any time we want to make multiple queries at once, we can construct a new <code>AndQuery</code> and use it to make the query. This moves the work from writing a custom method for every combination of queries to constructing and using an <code>AndQuery</code> object. We can add new kinds of queries, like searching based on a particular keyword, without changing any existing code – we just write a new <code>ImageQuery</code>-implementing class.</p>\n\n<p><iframe height=\"750px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/2a13e51e70ee291d4c662ee22e53c7c120785/welcome/1089190/ContainsKeyword\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Write a class called <code>ContainsKeyword</code> that implements the <code>ImageQuery</code> interface. It should have one <code>String</code> field that represents the keyword to search for, and its <code>matches</code> method should return <code>true</code> when the string appears somewhere in the given <code>ImageData</code>'s <code>keywords</code> field.</h3>\n\n<p>(Hint: the <code>&lt;</code> and <code>&gt;</code> buttons will change the amount of indentation for that line of code. Think of 1 indentation as 2 spaces. The correct answer will have indentations that are consistent with the code written above and throughout this book.)</p>",
+    "video": null,
+    "options": {
+      "language": "java"
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379538",
+  "subscriptions": [
+    "31-77-2379538",
+    "30-77-2379538"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2787,
+  "passed_by": 2606,
+  "correct_ratio": 0.18082172893974907,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358630,
+  "create_date": "2021-09-09T22:00:43Z",
+  "update_date": "2021-10-17T20:49:37Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,73 @@
+{
+  "id": 2379623,
+  "lesson": 571273,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "number",
+    "text": "<p>After adding the examples, we can fill in the method body, using the names <code>adjective</code> and <code>number</code> for the different values that will be filled in:</p>\n\n<p><iframe height=\"640px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/5ae0a3cf42095b6a5a42701518af99c320785/welcome/1084776/Implementing%20Tasks\" width=\"100%\"></iframe></p>\n\n<p>If we run this, we can see that the examples print out as expected.</p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> How many times does MadLibs appear in the output of the above program? Fill in the correct answer in the box below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "options": [
+        {
+          "answer": "3",
+          "max_error": "0"
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379623",
+  "subscriptions": [
+    "31-77-2379623",
+    "30-77-2379623"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3303,
+  "passed_by": 3257,
+  "correct_ratio": 0.6849487125811179,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358715,
+  "create_date": "2021-09-10T00:47:26Z",
+  "update_date": "2021-09-22T04:58:28Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

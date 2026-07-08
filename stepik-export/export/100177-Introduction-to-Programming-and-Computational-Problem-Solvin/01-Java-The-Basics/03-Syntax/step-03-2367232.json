@@ -1,0 +1,53 @@
+{
+  "id": 2367232,
+  "lesson": 571200,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p><span style=\"color: #cc0000;\"><strong>Do Now! </strong></span>Take the previous example again (provided below) and add the semicolon back. Run it to make sure that it works. Then delete the equals sign, run the program, and check the error message you get.</p>\n\n<p><iframe height=\"370px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/252cd1fc1e4afeb7f06c682e3f1d2a5f20785/welcome/1084174/Syntax\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>The program should produce an error message when it is run without an equals sign. Use this program and this output to answer the questions below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2367232",
+  "subscriptions": [
+    "31-77-2367232",
+    "30-77-2367232"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3439,
+  "passed_by": 3356,
+  "correct_ratio": 0.7058700647587215,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2346324,
+  "create_date": "2021-09-06T00:55:49Z",
+  "update_date": "2021-09-17T21:36:17Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,67 @@
+{
+  "id": 4835579,
+  "lesson": 1164810,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>One of the most important features of a programming language is support for file manipulation, i.e., reading from and writing to files. Java provides extensive support for a wide range of file operations through <em>streams</em>. We use the word “stream” here to describe the flow of data either from a file to a Java program (reading) or vice versa (writing).</p>\n\n<p>There are many different ways to work with streams in Java. We will not include all of them here. Our very simple code snippet below shows how we can read all lines in a text file and print them out to the terminal using the <code>Scanner</code> class:</p>\n\n<pre><code class=\"language-java\">File file = new File(\"input.txt\");\n\nScanner sc = new Scanner(file);\n\nwhile (sc.hasNextLine()) {\n    String line = sc.nextLine();\n    System.out.println(line);\n}</code></pre>\n\n<p>To begin with, we create a <code>File</code> object for the file that we want to read: input.txt. Note that this is not the same as creating the file on our hard drive: The file already exists, and we are just creating a Java object associated with it.</p>\n\n<p>Next, we create a <code>Scanner</code> object, and give it the file object we created earlier. This file object will serve as our input stream from which the scanner will get its data.</p>\n\n<p>Finally, in a while loop, we use the <code>hasNextLine</code> method to see if there are more lines in the file left to be read, if so, we read the line by calling the <code>nextLine</code> method on the scanner object, and print it out using <code>System.out.println</code>.</p>\n\n<p>As we mentioned above, this is only a very simple example of file operations in Java. There are many other classes that can be used other than the <code>Scanner</code> class, which you are welcome to explore after you become more familiar with the Java language.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4835579",
+  "subscriptions": [
+    "31-77-4835579",
+    "30-77-4835579"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 324,
+  "passed_by": 324,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4814676,
+  "create_date": "2023-12-07T00:51:21Z",
+  "update_date": "2023-12-07T00:51:21Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4835579-1",
+  "discussion_threads": [
+    "77-4835579-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

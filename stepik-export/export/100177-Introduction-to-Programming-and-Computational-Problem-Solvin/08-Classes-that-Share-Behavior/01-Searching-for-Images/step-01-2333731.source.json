@@ -1,0 +1,114 @@
+{
+  "id": 2333731,
+  "lesson": 574307,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Many search engines support an advanced search mode, where the user can type in a specific query based on combining many parameters. Here’s Google’s <a href=\"https://www.google.com/advanced_image_search\" rel=\"noopener noreferrer nofollow\">interface for searching for images</a>:</p>\n\n<p><img alt=\"\" height=\"543\" name=\"image-search.png\" src=\"https://ucarecdn.stepik.net/bec1bd2f-d51a-4052-bb88-710757eaa07c/\" width=\"813\"></p>\n\n<p>Let’s try to model a simple version of this to see what a query like this might look like. Let's start with a class to represent the images themselves; we’ll pick just a few fields that will serve as good examples:</p>\n\n<pre><code class=\"language-java\">class ImageData {\n  String keywords; // All the keywords, separated by spaces\n  String filetype; // gif, png, jpg, and so on\n  int width;       // the width in pixels\n  int height;      // the height in pixels\n  ImageData(String keywords, String filetype, int width, int height) {\n    this.keywords = keywords;\n    this.filetype = filetype;\n    this.width = width;\n    this.height = height;\n  }\n}</code></pre>\n\n<p>As a first try, we could add some methods to this class for the various search types. One way to think about a “search” method is that the parameters could be the values we would need for the search, and then the method would use boolean operations to check whether <code>this</code> image should be part of the search results or not.</p>\n\n<p>For example, we could add a method that takes a <code>String</code> that represents a file type and checks if the image has that file extension:</p>\n\n<p><iframe height=\"930px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/e444242433f91b326320045480d737cc20785/welcome/1084618/Image%20Data\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Replace ____BLANK1____ with code that uses <code>matchesExtension</code> to check if <code>\"jpg\"</code> is an extension for the image represented by <code>i1</code>. Replace ___BLANK2____ with the expected result of this call. (Hint: follow the format of the example test case given in <code>testMatchesExtension()</code>)</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "____BLANK1____",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "i1.matchesExtension(\"jpg\")",
+              "is_correct": true
+            },
+            {
+              "text": "i1.matchesExtension( \"jpg\" )",
+              "is_correct": true
+            },
+            {
+              "text": "i1.matchesExtension( \"jpg\")",
+              "is_correct": true
+            },
+            {
+              "text": "i1.matchesExtension(\"jpg\" )",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br>____BLANK2____",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "false",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": true,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2333731",
+  "subscriptions": [
+    "31-77-2333731",
+    "30-77-2333731"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3107,
+  "passed_by": 2998,
+  "correct_ratio": 0.5186888163749629,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2312823,
+  "create_date": "2021-08-19T19:03:42Z",
+  "update_date": "2021-11-29T02:24:35Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

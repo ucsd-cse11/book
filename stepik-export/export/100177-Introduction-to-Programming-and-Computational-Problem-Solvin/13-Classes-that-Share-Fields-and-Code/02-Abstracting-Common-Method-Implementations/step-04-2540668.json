@@ -1,0 +1,50 @@
+{
+  "id": 2540668,
+  "lesson": 575943,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>To avoid repeating code when the implementation is exactly the same across classes, we can use an <strong>abstract class</strong>.</li>\n\t<li>We use the keyword <code><strong>extends</strong></code> in the header of a class to indicate that the class should be able to use any of the methods or fields defined in the abstract class.</li>\n\t<li>For example, the header <code>class ContainsKeyword extends AQuery</code> indicates that any <code>ContainsKeyword</code> object can use the <code>and()</code> method, which is defined in the <code>AQuery</code> abstract class.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2540668",
+  "subscriptions": [
+    "31-77-2540668",
+    "30-77-2540668"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2358,
+  "passed_by": 2358,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2519760,
+  "create_date": "2021-11-22T04:25:11Z",
+  "update_date": "2021-11-22T04:25:11Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

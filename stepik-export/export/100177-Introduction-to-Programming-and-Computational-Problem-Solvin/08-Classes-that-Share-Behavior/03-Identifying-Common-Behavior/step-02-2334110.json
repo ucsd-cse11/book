@@ -1,0 +1,53 @@
+{
+  "id": 2334110,
+  "lesson": 574398,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Note that we cannot look up fields, like <code>minWidth</code>, using the field <code>lg1</code>. When the type of the variable is an interface, Java will only let us access the <em>methods</em> <em>listed in the interface definition</em>. The interface definition does not contain any fields.</p>\n\n<p><iframe height=\"720px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/487b8c1cc8796b8ab9d0f87474a8ac9420785/welcome/1085956/Field%20access%20(or%20lack%20thereof)\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Paste <code>int queryMinWidth = this.lg1.minWidth;</code> onto line 48. Run the code and fill in the blanks for the error message it produces. </h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2334110",
+  "subscriptions": [
+    "31-77-2334110",
+    "30-77-2334110"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3026,
+  "passed_by": 2989,
+  "correct_ratio": 0.9782372143634385,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313202,
+  "create_date": "2021-08-20T05:54:11Z",
+  "update_date": "2021-09-14T00:18:13Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

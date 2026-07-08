@@ -1,0 +1,91 @@
+{
+  "id": 2280986,
+  "lesson": 559661,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "matching",
+    "text": "<p>In the last step you ran this program:</p>\n\n<pre><code class=\"language-java\">class FirstExample {\n  int theNumberFive = 5;\n}</code></pre>\n\n<p>and saw this as the result:</p>\n\n<pre><code class=\"language-no-highlight\">Tester Prima v.2.3\n-----------------------------------\nTests defined in the class: FirstExample:\n---------------------------\nFirstExample:\n---------------\nnew FirstExample:1(\n this.theNumberFive = 5)\n---------------\nNo test methods found.</code></pre>\n\n<p>Let's break down what this means and how that output was produced.</p>\n\n<p>The first line is just telling us the name of the tool we are using (it was developed at Northeastern University [REF]).</p>\n\n<p>The next few lines with dashes and the text “Tests defined in the class: FirstExample:”, and the last line “No test methods found” are unimportant for our understanding right now; we will talk about them in more detail in [REF section with tests].</p>\n\n<p>The output that corresponded meaningfully to our first program was the part that reads</p>\n\n<pre><code class=\"language-no-highlight\">new FirstExample:1(\n this.theNumberFive = 5)</code></pre>\n\n<p>This fragment of the output is printing back to us, in a slightly different format, the information we wrote in the original program. In particular, this output is saying that a single <strong>object</strong> was created and its <strong>class</strong> was <code>FirstExample</code>. The number after the <span style=\"color: #000000;\">:</span> is a unique identifier for this object which we call its <strong>reference </strong>(like your student PID, the number itself has no special meaning, it just matters that it is unique to this object). It has a single <strong>field</strong>, which we can refer to with <code>this.theNumberFive</code>, whose value is <code>5</code>.</p>\n\n<p>That's a lot of new vocabulary! We’ll define the terms <strong>object</strong>, <strong>class</strong>, <strong>reference</strong>, and <strong>field</strong> in detail later, and see many more examples of their use. For now, we're using them just to talk about the pieces of output we see when running these short programs.</p>\n\n<p><em>(If you’ve programmed in Java before and are wondering how we ran a program without <code>main()</code>, we'll see it soon enough. Later on in the book, we’ll learn how to make more standalone applications, and this will include running programs from <code>main()</code>.)</em></p>\n\n<h3><strong><span style=\"color: #cc0000;\">Do Now!</span> </strong>Below, match up the vocabulary terms we just introduced with the code they correspond to in the first example.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "preserve_firsts_order": false,
+      "is_html_enabled": true,
+      "pairs": [
+        {
+          "first": "field name",
+          "second": "<code>theNumberFive</code>"
+        },
+        {
+          "first": "object",
+          "second": "<code>new FirstExample:1(<br/>&nbsp;this.theNumberFive = 5)</code>"
+        },
+        {
+          "first": "class name",
+          "second": "<code>FirstExample</code>"
+        },
+        {
+          "first": "field value",
+          "second": "<code>5</code>"
+        },
+        {
+          "first": "reference",
+          "second": "<code>:1</code>"
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2280986",
+  "subscriptions": [
+    "31-77-2280986",
+    "30-77-2280986"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 4274,
+  "passed_by": 3515,
+  "correct_ratio": 0.5439552125888939,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2260078,
+  "create_date": "2021-07-23T19:15:23Z",
+  "update_date": "2021-09-16T04:28:49Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

@@ -1,0 +1,117 @@
+{
+  "id": 2359269,
+  "lesson": 573911,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>To introduce another few <code>String</code> methods and practice with them, let’s write one more method. Sometimes, when printing an inventory, we might have long titles (like the full title of <code>\"Make It Stick\"</code>) that don’t fit in a column width-wise. A common trick is to truncate the string down to a certain length, and replace the end with <code>\"...\"</code>. If the string is below the given length, we leave it alone. So let’s write <code>truncateTitle()</code>, which will take in a length to cut the title down to, and return the truncated title.</p>\n\n<pre><code class=\"language-java\">class Book {\n  /*\n    @param length The number of characters to appear before \"...\"\n    @return A new string containing length characters followed by \"...\" if the\n    string was too long, or the original string otherwise\n  */\n  String truncateTitle(int length) {\n    \n  }\n}\n\nclass ExamplesBook {\n\n  Book schemer = new Book(\"The Little Schemer\", \"Daniel P. Friedman\", 40);\n  Book stick = new Book(\"Make It Stick: The Science of Successful Learning\", \"Peter C. Brown\", 13);\n\n  String truncate1 = this.stick.truncateTitle(15);\n  String truncate2 = this.schemer.truncateTitle(20);\n  String truncate3 = this.schemer.truncateTitle(0);\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Determine the expected output for the following calls to <code>truncateTitle()</code>.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>String truncate1 = this.stick.truncateTitle(15); // should be</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "\"Make It Stick: ...\"",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><code>String truncate2 = this.schemer.truncateTitle(20); //should be </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "\"The Little Schemer\"",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><code>String truncate3 = this.schemer.truncateTitle(0); //should be</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "\"...\"",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2359269",
+  "subscriptions": [
+    "31-77-2359269",
+    "30-77-2359269"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3081,
+  "passed_by": 2969,
+  "correct_ratio": 0.112173095014111,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2338361,
+  "create_date": "2021-09-01T21:52:11Z",
+  "update_date": "2021-10-14T00:21:46Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

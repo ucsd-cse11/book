@@ -1,0 +1,63 @@
+{
+  "id": 2375723,
+  "lesson": 584473,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>As you may recall from <a href=\"https://stepik.org/lesson/573386/step/6?unit=567978\" rel=\"noopener noreferrer nofollow\">earlier</a>, due to the way Java (and many languages) approximate values, inaccuracies with <code>double</code>s are unavoidable. This is a consequence of the fact that in order to represent numbers like the square root of 5, which are non-repeating and non-terminating decimals, some finite approximation is needed. As a result, when we work with doubles, we need to be careful about expecting exact results. Usually, we’ll need to use <code>&lt;</code> and <code>&gt;</code> to check for double values being within certain ranges, rather than checking for exact equality.</p>\n\n<p><em>(This may seem like a small error. However, if you’re writing code for a bank that makes errors on a fraction of a penny billions of times a day, you’ll start to care an awful lot. In addition, in a long-running program, errors can stack up, with <a href=\"http://www-users.math.umn.edu/~arnold/disasters/patriot.html\" rel=\"noopener noreferrer nofollow\">literally deadly consequences</a>. The summary of that article is that the accumulated error from repeated addition of 1/10 became large enough to cause a targeting error. Our stakes are a little lower, but the importance of understanding that doubles are only approximate cannot be overstated. Physics and math applications of computing often study numerical methods for quantifying and accounting for such inaccuracies.)</em></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2375723",
+  "subscriptions": [
+    "31-77-2375723",
+    "30-77-2375723"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3022,
+  "passed_by": 3022,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2354815,
+  "create_date": "2021-09-09T05:06:24Z",
+  "update_date": "2021-09-15T20:56:43Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

@@ -1,0 +1,67 @@
+{
+  "id": 4838696,
+  "lesson": 1165813,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Let's take a look at what a memory model would look like for methods and arrays.</p>\n\n<pre><code class=\"language-java\">class TestMatrix {\n    int[][] transpose(int[][] array) {\n        int rows = array.length;\n        int cols = array[0].length;\n        int[][] result = new int[cols][rows];\n        for (int i = 0; i &lt; rows; i++) {\n            for (int j = 0; j &lt; cols; j++) {\n                result[j][i] = array[i][j];\n            }\n        }\n        return result;\n    }\n    int[][] matrix = {{1, 2, 3},\n                      {4, 5, 6}};\n    int[][] transposed = this.transpose(matrix);\n}</code></pre>\n\n<p>If we were to run this code with the tester library, we would get the memory model below.</p>\n\n<ul>\n\t<li>When we initialize <code>matrix</code>, we first create an array of length 2, then we create two arrays of length 3 which contain <code>int</code> values. The addresses of these two length 3 arrays are stored as elements of the length 2 array.</li>\n\t<li>When we call <code>transpose()</code>, we implicitly (meaning secretly) pass in a reference to the calling object as a hidden parameter called <code>this</code>. In this case, the the calling object is the <code>TestMatrix</code> object.</li>\n\t<li>Similar to <code>matrix</code>, when we initialize <code>result</code>, we first create an array of length 3, then we create three arrays of length 2 which contain <code>int</code> values. The addresses of these three length 2 arrays are stored as elements of the length 3 array.</li>\n\t<li>As we iterate through the for loop, the values of <code>i</code> and <code>j</code> change. At the end of the for loop, <code>i = 2</code> and <code>j = 3</code>, since these are the conditions to end the for loops. The memory model of the stack here shows the state of the method stack frame right before it returns.\n\t<ul>\n\t\t<li>When we return from the method call, the method stack frame is actually completely deleted. For the memory model though, we want to draw what it looks like right before it is deleted, just so we have something to show.</li>\n\t</ul>\n\t</li>\n</ul>\n\n<p><img alt=\"\" height=\"683\" name=\"Method and array model.png\" src=\"https://ucarecdn.stepik.net/b8a83ebd-f367-4ca7-a278-1a1dcbf8bc98/\" width=\"648\"></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4838696",
+  "subscriptions": [
+    "31-77-4838696",
+    "30-77-4838696"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 342,
+  "passed_by": 342,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4817793,
+  "create_date": "2023-12-07T11:30:27Z",
+  "update_date": "2023-12-07T11:31:03Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4838696-1",
+  "discussion_threads": [
+    "77-4838696-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

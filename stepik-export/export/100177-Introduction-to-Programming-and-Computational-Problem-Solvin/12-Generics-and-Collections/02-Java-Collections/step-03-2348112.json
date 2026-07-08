@@ -1,0 +1,53 @@
+{
+  "id": 2348112,
+  "lesson": 578016,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "matching",
+    "text": "<p>What if we want to remove an element? There is a handy method for this: <code>remove()</code>. <code>remove()</code> takes one argument, of type <code>int</code>. It represents the index of the element to remove. For example, for an <code>ArrayList</code> named <code>nums</code>, <code>nums.remove(1);</code> would remove the element in <code>nums</code> at index 1.</p>\n\n<p>There is also another version of the <code>add()</code> method defined for <code>ArrayList</code>, and it allows us to add an element at a specific index in the list, rather than at the end. It takes two arguments instead of one. The first argument, an <code>int</code>, represents the index to add the element at, and the second argument is the element to add. For example, for an <code>ArrayList</code> named <code>nums</code>, <code>nums.add(1, 40);</code> would add the value <code>40</code> at index 1 in the list.</p>\n\n<p>The following program removes the element at index 1 in the <code>ArrayList</code> and adds two new elements at indices 1 and 0.</p>\n\n<p><iframe height=\"700px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/744c81ddad89049c5243e2f61563d4e520785/welcome/1094814/ArrayListExamples.java\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Assuming that these 3 lines of code are run as shown in the example above, match each line of code with the contents of <code>nums</code> after that line is run.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2348112",
+  "subscriptions": [
+    "31-77-2348112",
+    "30-77-2348112"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2889,
+  "passed_by": 2846,
+  "correct_ratio": 0.7833012908541609,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2327204,
+  "create_date": "2021-08-26T23:32:05Z",
+  "update_date": "2021-11-15T06:55:42Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,231 @@
+# File IO
+
+
+---
+
+<!-- step 4835559 | type: text -->
+
+<p>Being able to write to and read from a file is a very important skill. The ability to save information or get data more than what you can simple put in args when running a program is incredibly useful.</p>
+
+<p>We will take a good look at the following code.</p>
+
+<pre><code class="language-java">import java.nio.file.*;
+import java.io.IOException;
+
+class FileExample {
+    public static void main(String[] args) throws IOException {
+        String contents = Files.readString(Paths.get("quotes.txt"));
+        System.out.println(contents);
+
+        String[] words = contents.split(" ");
+        for (String word: words) {
+            System.out.println(word);
+        }
+    }
+}</code></pre>
+
+---
+
+<!-- step 4835574 | type: text -->
+
+<p> First note that we have</p>
+
+<pre><code class="language-java">import java.nio.file.*;</code></pre>
+
+<p> which is necessary as it is what provides our file methods like Files.readString and Paths.get so we can handle files. If we do not import this we will get the following error when attempting to compile the rest of the code.</p>
+
+<pre><code class="language-brainfuck">[user@sahara ~]$ javac FileExample.java
+FileExample.java:7: error: cannot find symbol
+        String contents = Files.readString(Paths.get("quotes.txt"));
+                          ^
+  symbol:   variable Files
+  location: class FileExample
+FileExample.java:7: error: cannot find symbol
+        String contents = Files.readString(Paths.get("quotes.txt"));
+                                           ^
+  symbol:   variable Paths
+  location: class FileExample
+2 errors</code></pre>
+
+<p> It knows neither the static Files or Paths class so it cannot compile.</p>
+
+<pre><code class="language-java">import java.nio.file.*;
+import java.io.IOException;
+
+class FileExample {
+    public static void main(String[] args) throws IOException {
+        String contents = Files.readString(Paths.get("quotes.txt"));
+        System.out.println(contents);
+
+        String[] words = contents.split(" ");
+        for (String word: words) {
+            System.out.println(word);
+        }
+    }
+}</code></pre>
+
+---
+
+<!-- step 4835575 | type: text -->
+
+<p>The next important line we have is</p>
+
+<pre><code class="language-java">        String contents = Files.readString(Paths.get("quotes.txt"));</code></pre>
+
+<p>which has 2 important function calls to functions we did not ourselves write so to javadocs we go.</p>
+
+<p>First up is readString:</p>
+
+<table>
+	<tbody>
+		<tr>
+			<td><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" rel="noopener noreferrer nofollow" title="class in java.lang">String</a></code></td>
+			<th><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Files.html#readString(java.nio.file.Path)" rel="noopener noreferrer nofollow">readString</a>​(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Path.html" rel="noopener noreferrer nofollow" title="interface in java.nio.file">Path</a> path)</code></th>
+			<td>
+			<p>Reads all content from a file into a string, decoding from bytes to characters using the <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/StandardCharsets.html#UTF_8" rel="noopener noreferrer nofollow"><code>UTF-8</code></a> <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html" rel="noopener noreferrer nofollow" title="class in java.nio.charset"><code>charset</code></a>.</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p> We see that it takes a path, and how do we get this? We have another method to help us:</p>
+
+<table border="0" cellpadding="3" cellspacing="0">
+	<tbody>
+		<tr>
+			<td><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html" rel="noopener noreferrer nofollow" title="interface in java.nio.file">Path</a></code></td>
+			<td><code><a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Paths.html#get-java.lang.String-java.lang.String...-" rel="noopener noreferrer nofollow">get</a>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" rel="noopener noreferrer nofollow" title="class in java.lang">String</a> first, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" rel="noopener noreferrer nofollow" title="class in java.lang">String</a>... more)</code>
+			<p>Converts a path string, or a sequence of strings that when joined form a path string, to a <code>Path</code>.</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Now that we have gotten our Path object and called readString with it as the parameter, we have the string from the file! (stored in "contents").</p>
+
+<pre><code class="language-java">import java.nio.file.*;
+import java.io.IOException;
+
+class FileExample {
+    public static void main(String[] args) throws IOException {
+        String contents = Files.readString(Paths.get("quotes.txt"));
+        System.out.println(contents);
+
+        String[] words = contents.split(" ");
+        for (String word: words) {
+            System.out.println(word);
+        }
+    }
+}</code></pre>
+
+---
+
+<!-- step 4835577 | type: text -->
+
+<p>  Now let's look at the functionality of opening the file and using it's contents using new functions:</p>
+
+<pre><code class="language-java">import java.nio.file.*;
+import java.io.IOException;
+
+class FileExample {
+    public static void main(String[] args) throws IOException {
+        String contents = Files.readString(Paths.get("quotes.txt"));
+        System.out.println(contents);
+
+        String[] words = contents.split(" ");
+        for (String word: words) {
+            System.out.println(word);
+        }
+    }
+}</code></pre>
+
+<p> quotes.txt has the following contents:</p>
+
+<pre><code class="language-no-highlight">All is well!
+You got this!
+This too shall pass!</code></pre>
+
+<p>If we then run this code in the Lecture 18 11pm workspace on EdStem we see that it has, in fact, read in the entire file and not just 1 line. Here is the output:</p>
+
+<pre><code class="language-bash">[user@sahara ~]$ java FileExample
+All is well!
+You got this!
+This too shall pass!
+
+All
+is
+well!
+You
+got
+this!
+This
+too
+shall
+pass!
+</code></pre>
+
+<p>If you're wondering why the first thing it does is print an entire copy of quotes, it is because the first thing we wrote in our code after setting contents to readString of our file was to println(contents).</p>
+
+<p>Also recall the description of readString was</p>
+
+<blockquote>
+<p>Reads all content from a file into a string</p>
+</blockquote>
+
+<p>and it has done exactly that. It reads the whole file, not stopping until End Of File (EOF) is reached. Then to print each word out on it's own line in the output we split on each space character and print.</p>
+
+---
+
+<!-- step 4835578 | type: text -->
+
+<p> The last thing to focus on in this file is the <code>throws IOException</code> that is found after the method header of main just after the parameters and before the opening of the body of the function.</p>
+
+<p>If we fail to include this, the following will occur as we attempt to compile our code.</p>
+
+<pre><code class="language-brainfuck">[user@sahara ~]$ javac FileExample.java
+FileExample.java:7: error: unreported exception IOException; must be caught or declared to be thrown
+        String contents = Files.readString(Paths.get("quotes.txt"));
+                                          ^
+1 error</code></pre>
+
+<p> To fix this we simply add our <code>throws IOException</code> and now it compiles and runs as we expect. This is the first kind of exception and you can find out more about it in the next section which is on Exceptions.</p>
+
+<pre><code class="language-java">import java.nio.file.*;
+import java.io.IOException;
+
+class FileExample {
+    public static void main(String[] args) throws IOException {
+        String contents = Files.readString(Paths.get("quotes.txt"));
+        System.out.println(contents);
+
+        String[] words = contents.split(" ");
+        for (String word: words) {
+            System.out.println(word);
+        }
+    }
+}</code></pre>
+
+---
+
+<!-- step 4835579 | type: text -->
+
+<p>One of the most important features of a programming language is support for file manipulation, i.e., reading from and writing to files. Java provides extensive support for a wide range of file operations through <em>streams</em>. We use the word “stream” here to describe the flow of data either from a file to a Java program (reading) or vice versa (writing).</p>
+
+<p>There are many different ways to work with streams in Java. We will not include all of them here. Our very simple code snippet below shows how we can read all lines in a text file and print them out to the terminal using the <code>Scanner</code> class:</p>
+
+<pre><code class="language-java">File file = new File("input.txt");
+
+Scanner sc = new Scanner(file);
+
+while (sc.hasNextLine()) {
+    String line = sc.nextLine();
+    System.out.println(line);
+}</code></pre>
+
+<p>To begin with, we create a <code>File</code> object for the file that we want to read: input.txt. Note that this is not the same as creating the file on our hard drive: The file already exists, and we are just creating a Java object associated with it.</p>
+
+<p>Next, we create a <code>Scanner</code> object, and give it the file object we created earlier. This file object will serve as our input stream from which the scanner will get its data.</p>
+
+<p>Finally, in a while loop, we use the <code>hasNextLine</code> method to see if there are more lines in the file left to be read, if so, we read the line by calling the <code>nextLine</code> method on the scanner object, and print it out using <code>System.out.println</code>.</p>
+
+<p>As we mentioned above, this is only a very simple example of file operations in Java. There are many other classes that can be used other than the <code>Scanner</code> class, which you are welcome to explore after you become more familiar with the Java language.</p>

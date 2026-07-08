@@ -1,0 +1,73 @@
+{
+  "id": 2375714,
+  "lesson": 584473,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "number",
+    "text": "<p><iframe height=\"370px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/1b53fd87485f3b11eb935849337e657520785/welcome/1086703/Why%20did%20the%20math%20teacher's%20plants%20keep%20dying%3F%20--%20%20Because%20they%20grew%20square%20roots.\" width=\"100%\"></iframe></p>\n\n<p>The error message from the code in the previous step (included again above for reference) refers to a type called <code>double</code>, which we saw in <a href=\"https://stepik.org/lesson/573386/step/5?unit=567978\" rel=\"noopener noreferrer nofollow\">2.2</a>. Similar to many other languages, Java has two different kinds of numbers that it works with. <code>int</code>s (along with a few other types) represent exact integers. The other kind represents approximations of numbers, and <code>double</code> is the most common type we’ll see for approximate numbers. As a reminder, here are some examples:</p>\n\n<pre><code class=\"language-java\">double d1 = 5.5;\ndouble d2 = -3.33333;</code></pre>\n\n<p><code>sqrt()</code> returns the type <code>double</code>, so we should use that here instead of <code>int</code> in our earlier example:</p>\n\n<p><iframe height=\"470px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/1b53fd87485f3b11eb935849337e657520785/welcome/1086704/Square%20Roots\" width=\"100%\"></iframe></p>\n\n<p>Now, we get an actual answer, which is an approximation of √5.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Enter the value of <code>sqrt1</code> below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "options": [
+        {
+          "answer": "2.23606797749979",
+          "max_error": "0"
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2375714",
+  "subscriptions": [
+    "31-77-2375714",
+    "30-77-2375714"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3032,
+  "passed_by": 2968,
+  "correct_ratio": 0.6796714579055442,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2354806,
+  "create_date": "2021-09-09T04:55:00Z",
+  "update_date": "2021-09-17T04:40:59Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

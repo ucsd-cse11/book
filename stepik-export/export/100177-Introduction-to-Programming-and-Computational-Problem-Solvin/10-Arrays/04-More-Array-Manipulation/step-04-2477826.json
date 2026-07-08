@@ -1,0 +1,50 @@
+{
+  "id": 2477826,
+  "lesson": 579635,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<p>We've now seen how we can create <em>new</em> arrays inside of a method, based on the length of an existing array. This is a typical pattern we use when we want to do computation that involves creating an array of a different size than one we are using as input.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2477826",
+  "subscriptions": [
+    "31-77-2477826",
+    "30-77-2477826"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2913,
+  "passed_by": 2913,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2456918,
+  "create_date": "2021-10-22T15:39:08Z",
+  "update_date": "2021-10-22T15:39:09Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

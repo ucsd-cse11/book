@@ -1,0 +1,63 @@
+{
+  "id": 2331711,
+  "lesson": 573908,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>So far, we’ve seen several kinds of data:</p>\n\n<ul>\n\t<li>Numbers, represented in Java as <code>int</code>s and <code>double</code>s</li>\n\t<li>Sequences of characters, represented in Java as <code>String</code>s</li>\n\t<li>Yes/no answers, represented in Java as <code>boolean</code>s</li>\n</ul>\n\n<p>But there are many more kinds of information in the world than just these simple datatypes. Here are a few real-world examples:</p>\n\n<ul>\n\t<li>A record of student information can’t be represented as just a single string, or a number, or a boolean. Rather, it’s several pieces of related data, each of which might individually be one of these types: a <code>boolean</code> for whether the student is from within the state or not, a <code>String</code> for the student ID and username, an <code>int</code> for birth year, and so on. Each of these pieces of information means little on its own, but when put together, they fully describe a student record that might be saved in a database.</li>\n\t<li>In the context of math and graphing, we often talk about points, which (in two dimensions), aren’t represented as single numbers, but as <em>pairs</em> of numbers. A point is defined as having an x- and y-coordinate, and from the perspective of defining a point, both are necessary.</li>\n\t<li>A song in a music playlist (like in iTunes or Spotify), has a number of fields for data: the title (a <code>String</code>), the length of the song in seconds (an <code>int</code>), the file the song data is stored in (a <code>String</code>), and album and artist information. The album information might be a compound of other data as well, like the year it was released and the title.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2331711",
+  "subscriptions": [
+    "31-77-2331711",
+    "30-77-2331711"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3240,
+  "passed_by": 3240,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2310803,
+  "create_date": "2021-08-19T08:08:51Z",
+  "update_date": "2021-10-04T10:00:41Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

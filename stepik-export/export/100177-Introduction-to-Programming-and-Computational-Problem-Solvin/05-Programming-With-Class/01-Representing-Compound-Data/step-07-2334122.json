@@ -1,0 +1,50 @@
+{
+  "id": 2334122,
+  "lesson": 573908,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>We can also represent objects through pictures. As we will demonstrate in this course, the ability to draw pictorial representations of objects is a useful skill that will allow us to work through the relationships between different values and objects. For example, the object created and stored in the field <code>s1</code> can be represented like this:</p>\n\n<p style=\"text-align: center;\"><img alt=\"\" height=\"180\" name=\"step8.png\" src=\"https://ucarecdn.stepik.net/8b912c5d-60a1-4488-818e-f3f995c4bc33/\" width=\"290\"></p>\n\n<p style=\"text-align: center;\"><sup>A representation of the <code>s1</code> instance of the <code>Student</code> class</sup></p>\n\n<p>The <code>Student</code> in the top right is the name of the object’s class, and the three fields’ values are listed in boxes within the class.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2334122",
+  "subscriptions": [
+    "31-77-2334122",
+    "30-77-2334122"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3144,
+  "passed_by": 3144,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313214,
+  "create_date": "2021-08-20T06:04:04Z",
+  "update_date": "2021-10-04T10:07:38Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

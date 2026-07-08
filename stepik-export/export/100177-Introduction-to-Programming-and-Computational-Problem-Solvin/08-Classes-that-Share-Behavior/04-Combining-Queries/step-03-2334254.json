@@ -1,0 +1,50 @@
+{
+  "id": 2334254,
+  "lesson": 574433,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>There’s a slight annoyance remaining, though. Let’s say we wanted to combine three, rather than two, queries together in this way. It seems we would have to write another class, <code>AndQuery3</code>, with three <code>ImageQuery</code> fields, and a new <code>matches()</code> method. Since a user may want, in general, <em>many</em> conditions, we would need an <code>AndQuery4</code>, <code>AndQuery5</code>, and so on.</p>\n\n<p>There’s a useful observation we can make about the <code>AndQuery</code> class that will help us here: it has the same method signature for the <code>matches()</code> method as the <code>ImageQuery</code> interface does! That immediately suggests that we could make <code>AndQuery</code> implement that interface. Let’s do it:</p>\n\n<pre><code class=\"language-java\">class AndQuery implements ImageQuery {\n  ImageQuery iq1, iq2;\n  AndQuery(ImageQuery iq1, ImageQuery iq2) {\n    this.iq1 = iq1;\n    this.iq2 = iq2;\n  }\n  public boolean matches(ImageData id) {\n    return this.iq1.matches(id) &amp;&amp; this.iq2.matches(id);\n  }\n}</code></pre>\n\n<p><em>(Note that we also made the method <code>public</code>.)</em></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2334254",
+  "subscriptions": [
+    "31-77-2334254",
+    "30-77-2334254"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2731,
+  "passed_by": 2731,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313346,
+  "create_date": "2021-08-20T08:06:59Z",
+  "update_date": "2021-09-09T22:03:06Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

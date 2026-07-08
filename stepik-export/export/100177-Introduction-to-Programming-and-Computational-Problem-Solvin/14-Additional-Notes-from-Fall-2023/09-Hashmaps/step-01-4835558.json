@@ -1,0 +1,54 @@
+{
+  "id": 4835558,
+  "lesson": 1164809,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Hashmaps store values associated with unique keys. For Example:</p>\n\n<pre><code class=\"language-java\">class FunWithHashMaps {\n    public static void main(String[] args) {\n        HashMap&lt;String, Integer&gt; hRank = new HashMap&lt;&gt;();\n        hRank.put(\"USA\", 15);\n        hRank.put(\"India\", 126);\n        hRank.put(\"Mexico\", 36);\n        hRank.put(\"China\", 64);\n        hRank.put(\"Mexico\", 12);\n        System.out.println(\"Hash Map: \" + hRank);\n    }\n}\n</code></pre>\n\n<p>In this we can see that at the key \"USA\" we are storing the value 15, for \"India\" we store 126 and so on. When we write to the key \"Mexico\" for the second time and put 12, the 36 that was there is overridden to 12 and 36 is no longer in the hash map. This results in each key being unique because if a key is written to twice, the first value is simply lost.</p>\n\n<p>Everything beyond this point is out of the scope of Fall 23 CSE 11 but is slightly more in depth on how hash maps work.</p>\n\n<p>A hashmap uses a hash function, which you will learn about later in CSE12 should you take it, to convert any given key to an index in an array. Then it will store the value at this index. To find the value of a known key, we plug the key into the hash function as we did to put the element into the array and the function must return the same index given the same key so it will again return the original index. We can then find the desired value at this index.</p>\n\n<p>Values at a given key can be overriden as each key must be unique. </p>\n\n<p>If multiple keys return the same index, there are multiple ways we have with addressing this issue including linear probing and seperate chaining which you do not need to worry about now. For now we can simply assume that our hash table will handle collisions and always return a value stored with a given key when it is told to retrieve the value that was prior stored with said key.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4835558",
+  "subscriptions": [
+    "31-77-4835558",
+    "30-77-4835558"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 350,
+  "passed_by": 350,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4814655,
+  "create_date": "2023-12-07T00:48:09Z",
+  "update_date": "2023-12-07T00:50:45Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4835558-1",
+  "discussion_threads": [
+    "77-4835558-1"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": 2436647,
+  "lesson": 596554,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>In this section, we covered the following:</p>\n\n<ul>\n\t<li>\n\t<p>We saw another example of a <code>class</code> with <code>Book</code>, and some more methods.</p>\n\t</li>\n\t<li>\n\t<p>We learned that <code>String</code> is a <code>class</code>, and that it has many useful methods defined for it (e.g. <code>equals()</code>, which is used to compare <code>String</code>s for equality).</p>\n\t</li>\n\t<li>\n\t<p>We saw how we can turn our examples into <strong>tests</strong>, which have some nice features for summarizing our examples and reporting mistakes.</p>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2436647",
+  "subscriptions": [
+    "31-77-2436647",
+    "30-77-2436647"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3083,
+  "passed_by": 3083,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2415739,
+  "create_date": "2021-10-02T06:46:49Z",
+  "update_date": "2021-10-02T06:47:02Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

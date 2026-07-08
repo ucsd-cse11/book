@@ -1,0 +1,50 @@
+{
+  "id": 2399355,
+  "lesson": 571273,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>We can turn concrete problem statements into actual programs by following the <strong>design recipe</strong>, which is a several-step process that produces a method that will give us the solution:\n\n\t<ul>\n\t\t<li>First, we write the <strong>method header</strong> and default return value.</li>\n\t\t<li>Second, we write a comment describing how the method works.</li>\n\t\t<li>Third, we write several examples of calling the method correctly.</li>\n\t\t<li>Fourth, we write the <strong>method body</strong> such that it returns the solution.</li>\n\t\t<li>Finally, we run the method to check whether it was written correctly.</li>\n\t</ul>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2399355",
+  "subscriptions": [
+    "31-77-2399355",
+    "30-77-2399355"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3259,
+  "passed_by": 3259,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2378447,
+  "create_date": "2021-09-16T18:09:50Z",
+  "update_date": "2021-09-16T18:09:51Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

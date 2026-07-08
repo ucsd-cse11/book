@@ -1,0 +1,54 @@
+{
+  "id": 4649973,
+  "lesson": 1120313,
+  "position": 8,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Wait, aren't <code>String</code>s also objects? Why isn't there a <code>String</code> object on the heap? Good questions, me!</p>\n\n<p>In the <code>FlightTest</code> code example, we use a <code>String</code> literal to define the name of the <code>Passenger</code>. A <strong>literal</strong> is some constant value that we use to define variables. Literals include integer values (1, 2, 3), real number values (3.14, 73.011), boolean values (true, false), and <code>String</code> values (\"hello\", \"world\"). Literals are immutable, meaning that their value cannot be changed.</p>\n\n<p><code>String</code> literals are stored in another part of memory (separate from the stack and the heap) called the <strong>data</strong> segment. When we initialize a <code>String</code> variable with a <code>String</code> literal, it references a literal that exists in the data segment. If another <code>String</code> variable were to be initialized with the same <code>String</code> literal, this second variable would refer to the same literal in the data segment.</p>\n\n<p>For example, if we were to define these <code>String</code> variables:</p>\n\n<pre><code class=\"language-java\">String a = \"hello\";\nString b = \"hello\";\nString c = new String(\"hello\");</code></pre>\n\n<p><code>a</code> and <code>b</code> would have the same memory address; i.e. <code>a == b</code> (remember that <code>==</code> compares the memory addresses of reference variables) would evaluate to <code>true</code>. However, <code>a</code> and <code>c</code> do not have the same memory address; i.e. <code>a == c</code> would evaluate to <code>false</code>. In memory, <code>c</code> points to a <code>String</code> object on the heap, which in turn points to the <code>\"hello\"</code> <code>String</code> literal in data.</p>\n\n<p>If we want to compare the actual value of <code>String</code>s, we need to use the <code>.equals()</code> method. For <code>String</code>s, <code>.equals()</code> ignores memory addresses and directly compares the sequences of characters that the two <code>String</code>s have. In this example, <code>a.equals(c)</code> would evaluate to <code>true</code>.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649973",
+  "subscriptions": [
+    "31-77-4649973",
+    "30-77-4649973"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 416,
+  "passed_by": 416,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629070,
+  "create_date": "2023-10-28T23:47:52Z",
+  "update_date": "2023-10-28T23:47:53Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649973-1",
+  "discussion_threads": [
+    "77-4649973-1"
+  ]
+}

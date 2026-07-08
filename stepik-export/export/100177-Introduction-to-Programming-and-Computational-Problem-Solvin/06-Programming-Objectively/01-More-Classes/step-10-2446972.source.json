@@ -1,0 +1,63 @@
+{
+  "id": 2446972,
+  "lesson": 573911,
+  "position": 10,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>We can use a class to represent something that is made up of multiple different pieces of data, and we can write methods in that class to ask different questions and perform calculations related to what the class represents.\n\t<ul>\n\t\t<li>For example, in this lesson, we wrote a class called <code>Book</code>, which contained information about a book's title, author, and price. One of the methods in this class allowed us to get the cost of the book when it was on sale.</li>\n\t</ul>\n\t</li>\n\t<li><code>String</code>s are objects, so we should use <code>.equals()</code> instead of <code>==</code> to check for equality for <code>String</code>s.</li>\n\t<li>There are methods defined in the <code>String</code> class, such as <code>length()</code> and <code>indexOf()</code>, that we can call on <code>String</code>s. You can find more of these methods <a href=\"https://docs.oracle.com/javase/7/docs/api/java/lang/String.html\" rel=\"noopener noreferrer nofollow\">here</a>.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2446972",
+  "subscriptions": [
+    "31-77-2446972",
+    "30-77-2446972"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3053,
+  "passed_by": 3053,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2426064,
+  "create_date": "2021-10-08T08:34:19Z",
+  "update_date": "2021-10-08T08:34:20Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

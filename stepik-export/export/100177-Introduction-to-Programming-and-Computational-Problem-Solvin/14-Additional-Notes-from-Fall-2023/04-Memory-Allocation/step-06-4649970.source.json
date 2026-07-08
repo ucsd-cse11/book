@@ -1,0 +1,67 @@
+{
+  "id": 4649970,
+  "lesson": 1120313,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>On the next line, we do mostly the same thing as the previous one, but this time we're calling the <code>Passenger</code> constructor and creating a <code>Passenger</code> object on the heap.</p>\n\n<p><img alt=\"\" height=\"612\" name=\"frame5 (2).svg\" src=\"https://ucarecdn.stepik.net/679f6436-e912-4ac0-8a16-256c803f3edb/\" width=\"750\"></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649970",
+  "subscriptions": [
+    "31-77-4649970",
+    "30-77-4649970"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 424,
+  "passed_by": 424,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629067,
+  "create_date": "2023-10-28T23:47:52Z",
+  "update_date": "2023-11-12T19:50:13Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649970-1",
+  "discussion_threads": [
+    "77-4649970-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

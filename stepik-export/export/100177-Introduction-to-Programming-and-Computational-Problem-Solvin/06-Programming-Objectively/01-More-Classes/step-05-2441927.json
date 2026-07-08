@@ -1,0 +1,55 @@
+{
+  "id": 2441927,
+  "lesson": 573911,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>Now, we just need to write the body for the method. We need to compare the <code>author</code> fields (which are <code>String</code>s) of this book and the other book. Since <code>+</code> works on both numbers and <code>String</code>s, it’s natural to wonder whether another operator, like <code>==</code>, will work on both. It turns out that it won’t, for a very specific reason.</p>\n\n<p><code>String</code> is actually a class, and the values we’ve been using as <code>String</code>s are actually objects! The <code>==</code> won’t work the way we expect here on objects (we’ll talk more about why later). This explains why we write <code>String</code> with a capital S — the convention for class names is that they start with a capital letter (as opposed to simple, or primitive, types like <code>int</code> and <code>boolean</code>).</p>\n\n<p>It also helps explain how we can go about performing operations other than <code>+</code> on <code>String</code>s. Since they are objects, we ought to be able to call methods on them! The <code>String</code> class defines a method, <code>equals()</code>, which can be used to compare one string to another and check whether they have the same contents. That gives us what we need to finish the method body of <code>sameAuthor()</code>:</p>\n\n<p><iframe height=\"767px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/2e1d7e9302912f1301de20c7d64d4b1820785/welcome/1098109/Same%20Author%3F\" width=\"100%\"></iframe></p>\n\n<p>If we run it, we get the answers that we expect.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Select all of the statements below that are true.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2441927",
+  "subscriptions": [
+    "31-77-2441927",
+    "30-77-2441927"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3082,
+  "passed_by": 3033,
+  "correct_ratio": 0.19562708386765837,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2421019,
+  "create_date": "2021-10-05T09:02:23Z",
+  "update_date": "2021-12-02T06:35:41Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

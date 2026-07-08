@@ -1,0 +1,53 @@
+{
+  "id": 2465258,
+  "lesson": 579631,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Arrays can also contain values other than <code>String</code>s. For example, they can contain <code>int</code> or <code>double</code> values:</p>\n\n<p><iframe height=\"500px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/7bbf6639bba4749e3b684a5712ba076220785/welcome/1090857/Arrays%20of%20numbers\" width=\"100%\"></iframe></p>\n\n<pre><code class=\"language-java\">//code with blanks, for reference\nint num40 = _____BLANK1_____;\ndouble num9p5 = ____BLANK2_____;</code></pre>\n\n<p> Assume that this program, with the blanks filled in, should produce this output:</p>\n\n<pre><code class=\"language-no-highlight\">new ExamplesNumberArrays:1(\n this.someNumbers = new int[3]:2{\n  [0] 40,\n  [1] 50,\n  [2] 60\n }\n this.someMoreNumbers = new double[4]:3{\n  [0] 100.5,\n  [1] 0.3,\n  [2] 9.5,\n  [3] 4.4\n }\n this.num40 = 40\n this.num9p5 = 9.5)</code></pre>\n\n<h3><span style=\"color: #cc0000;\"> <strong>Do Now!</strong></span> What array index expressions can we put into the blanks to produce this output?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2465258",
+  "subscriptions": [
+    "31-77-2465258",
+    "30-77-2465258"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3014,
+  "passed_by": 2955,
+  "correct_ratio": 0.4393670511682934,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2444350,
+  "create_date": "2021-10-17T21:12:57Z",
+  "update_date": "2021-10-19T18:34:38Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

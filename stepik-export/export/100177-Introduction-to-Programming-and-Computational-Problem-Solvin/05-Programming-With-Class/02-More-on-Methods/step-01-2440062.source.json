@@ -1,0 +1,87 @@
+{
+  "id": 2440062,
+  "lesson": 597266,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "matching",
+    "text": "<p>We saw before that a method is a useful way to describe a computation. Method definitions appeared within the classes we were working with. Methods can be defined in any class, including classes like <code>Student</code>. For example, we could write a method that answers whether a student was born before a certain year. We write this method <em>in the class that has the data we care about</em>. In the case below, the method needs to know the <code>birthYear</code> of a student, so the method will be defined in that class.</p>\n\n<p>The first thing we need to do is figure out the header of this new method. The input is the year we’re comparing against. The name <code>bornBefore()</code> makes sense, and since it’s a yes/no question, it should return a <code>boolean</code>. We typically write methods after the field definitions and the constructor. Here is the setup:</p>\n\n<pre><code class=\"language-java\">class Student {\n  String studentID;\n  boolean inState;\n  int birthYear;\n\n  Student(String studentID, boolean inState, int birthYear) {\n    this.studentID = studentID;\n    this.inState = inState;\n    this.birthYear = birthYear;\n  }\n\n  /*\n    @param year The year to check against, which should be less than the\n    current year and greater than 0\n\n    @return true if this student's birth year is less than the given year,\n    false otherwise\n  */\n  boolean bornBefore(int year) {\n\n  }\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Match each piece of code from the method header with the vocabulary term that describes it.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "preserve_firsts_order": false,
+      "is_html_enabled": true,
+      "pairs": [
+        {
+          "first": "<code>boolean</code>",
+          "second": "return type"
+        },
+        {
+          "first": "<code>bornBefore</code>",
+          "second": "method name"
+        },
+        {
+          "first": "<code>int year</code>",
+          "second": "parameter"
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#",
+    "comment": "#"
+  },
+  "progress": "77-2440062",
+  "subscriptions": [
+    "31-77-2440062",
+    "30-77-2440062"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3189,
+  "passed_by": 3106,
+  "correct_ratio": 0.8386496544391281,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2419154,
+  "create_date": "2021-10-04T09:44:24Z",
+  "update_date": "2021-10-04T09:56:51Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-2440062-1",
+  "discussion_threads": [
+    "77-2440062-1",
+    "77-2440062-2"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

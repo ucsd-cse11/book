@@ -1,0 +1,67 @@
+{
+  "id": 4835574,
+  "lesson": 1164810,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p> First note that we have</p>\n\n<pre><code class=\"language-java\">import java.nio.file.*;</code></pre>\n\n<p> which is necessary as it is what provides our file methods like Files.readString and Paths.get so we can handle files. If we do not import this we will get the following error when attempting to compile the rest of the code.</p>\n\n<pre><code class=\"language-brainfuck\">[user@sahara ~]$ javac FileExample.java\nFileExample.java:7: error: cannot find symbol\n        String contents = Files.readString(Paths.get(\"quotes.txt\"));\n                          ^\n  symbol:   variable Files\n  location: class FileExample\nFileExample.java:7: error: cannot find symbol\n        String contents = Files.readString(Paths.get(\"quotes.txt\"));\n                                           ^\n  symbol:   variable Paths\n  location: class FileExample\n2 errors</code></pre>\n\n<p> It knows neither the static Files or Paths class so it cannot compile.</p>\n\n<pre><code class=\"language-java\">import java.nio.file.*;\nimport java.io.IOException;\n\nclass FileExample {\n    public static void main(String[] args) throws IOException {\n        String contents = Files.readString(Paths.get(\"quotes.txt\"));\n        System.out.println(contents);\n\n        String[] words = contents.split(\" \");\n        for (String word: words) {\n            System.out.println(word);\n        }\n    }\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4835574",
+  "subscriptions": [
+    "31-77-4835574",
+    "30-77-4835574"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 349,
+  "passed_by": 349,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4814671,
+  "create_date": "2023-12-07T00:50:29Z",
+  "update_date": "2023-12-07T00:50:30Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4835574-1",
+  "discussion_threads": [
+    "77-4835574-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

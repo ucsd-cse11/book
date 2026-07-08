@@ -1,0 +1,55 @@
+{
+  "id": 2465686,
+  "lesson": 587829,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>We can include as many print statements in our program as we want. The expression inside the parentheses does not have to be a <code>String</code>; it can be the name of a variable, an arithmetic expression, a method call, and many other things. The expression will be evaluated and its value will be printed.</p>\n\n<p><iframe height=\"600px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/15f5cbab1beddd0d592b54ccb67990e820785/welcome/1090942/Printing%20is%20fun\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Assume that this code is saved in a file called PrintingIsFun.java. Run the appropriate <code>javac</code> and <code>java</code> commands to run the program. Select all of the options below that appear as part of the output.</h3>\n\n<p>(Hint: consider each option as a sequence of characters that must appear together in the output to be part of it.)</p>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2465686",
+  "subscriptions": [
+    "31-77-2465686",
+    "30-77-2465686"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2994,
+  "passed_by": 2952,
+  "correct_ratio": 0.6352688172043011,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2444778,
+  "create_date": "2021-10-18T07:29:44Z",
+  "update_date": "2021-10-18T07:45:22Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

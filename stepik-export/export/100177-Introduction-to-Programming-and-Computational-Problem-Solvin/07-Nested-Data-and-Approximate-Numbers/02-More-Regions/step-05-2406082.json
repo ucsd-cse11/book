@@ -1,0 +1,53 @@
+{
+  "id": 2406082,
+  "lesson": 584473,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "number",
+    "text": "<p>For our purposes in region calculation, we can happily rely on the result of the <code>sqrt()</code> operation to check for a point being contained in a <code>CircRegion</code>. It requires changing the return type of distance to be <code>double</code> rather than <code>int</code>, to match the return type of <code>Math.sqrt()</code>:</p>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Change the return type for <code>distance()</code> to a <code>double</code>.</p>\n\n<p><iframe height=\"790px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/ce4f71610c01d0d01fa6ada52242b09020785/welcome/1086859/Square%20Roots\" width=\"100%\"></iframe></p>\n\n<p>With this, our whole solution runs through without issues. Note that we used another method on <code>Math</code>, the <code>pow()</code> method, which takes two numeric arguments, and returns the value of the first raised to the power of the second. So in the example above, the <code>2</code> indicates squaring the argument.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Paste the value of <code>dist</code> into the text box below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2406082",
+  "subscriptions": [
+    "31-77-2406082",
+    "30-77-2406082"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3022,
+  "passed_by": 2982,
+  "correct_ratio": 0.7913135593220338,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2385174,
+  "create_date": "2021-09-18T23:18:19Z",
+  "update_date": "2021-09-18T23:24:24Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

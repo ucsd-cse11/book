@@ -1,0 +1,63 @@
+{
+  "id": 2459965,
+  "lesson": 579631,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Here's the output we saw:</p>\n\n<pre><code class=\"language-no-highlight\">new ExamplesArrays:1(\n this.fruits = new java.lang.String[3]:2{\n  [0] \"apple\",\n  [1] \"orange\",\n  [2] \"banana\"\n }\n this.valueAtIndex0 = \"apple\"\n this.orange = \"orange\"\n this.valueAtLastIndex = \"banana\")</code></pre>\n\n<p>The <code>new java.lang.String[3](){</code> printout is how the tester library prints array values; <code>3</code> indicates the length. The values are printed in order with the corresponding index next to each.</p>\n\n<p> </p>\n\n<h4>Arrays and Memory</h4>\n\n<p>Just like objects, arrays have their contents stored in memory. Just like objects, each array has a reference (the <code>:2</code> in the output above).</p>\n\n<p>We can draw them in a memory diagram, just like we can draw objects:</p>\n\n<p><img alt=\"\" height=\"262\" name=\"ExamplesArrays.png\" src=\"https://ucarecdn.stepik.net/3bea40df-76e2-4d86-ad39-12664415ffd9/\" width=\"559\"></p>\n\n<p> </p>\n\n<h4>Array Indexing</h4>\n\n<p>In addition, we also saw <strong>array index expressions</strong> or <strong>array lookup expressions</strong>, which looked like <code>this.fruits[0]</code>. Much like the characters in a <code>String</code>, we refer to the contents of arrays by their <strong>index</strong>. The first element is at index 0, the second at index 1, and so on.</p>\n\n<p>The expression before the open bracket <code>[</code> can be any expression that evaluates to an array (like <code>this.fruits</code>), and the index can be any expression that evaluates to an <code>int</code>. For example, in the array lookup expression <code>this.fruits[this.fruits.length - 1]</code>, the index is the expression <code>this.fruits.length - 1</code>, which evaluates to <code>2</code>.</p>\n\n<p>This also demonstrates the <code>length</code> field of arrays, which holds the number of elements in the array.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2459965",
+  "subscriptions": [
+    "31-77-2459965",
+    "30-77-2459965"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3013,
+  "passed_by": 3013,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2439057,
+  "create_date": "2021-10-14T21:24:21Z",
+  "update_date": "2021-10-18T06:27:56Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

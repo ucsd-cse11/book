@@ -1,0 +1,55 @@
+{
+  "id": 2465380,
+  "lesson": 587829,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p> We see that the <code>javac</code> command fails if we make a syntax error:</p>\n\n<pre><code class=\"language-no-highlight\">$ javac HasAMainMethod.java\nHasAMainMethod.java:2: error: ';' expected\n  public static void main(String[] args) // removed a curly brace\n                                        ^\nHasAMainMethod.java:5: error: class, interface, or enum expected\n}\n^\n2 errors</code></pre>\n\n<p>Let's go back to the program that “worked”, which is still a bit odd, because it didn't produce any output at all when we ran it:</p>\n\n<p><iframe height=\"580px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/7bbf6639bba4749e3b684a5712ba076220785/welcome/1090860/HasAMainMethod\" width=\"100%\"></iframe></p>\n\n<pre><code>$ javac HasAMainMethod.java \n$ java HasAMainMethod\n$</code></pre>\n\n<p>Let's reflect on this code a little bit.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Which of the following pieces of the <code>main()</code> method have we <em>not</em> seen before in this book?</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2465380",
+  "subscriptions": [
+    "31-77-2465380",
+    "30-77-2465380"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3013,
+  "passed_by": 2966,
+  "correct_ratio": 0.26744499326448135,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2444472,
+  "create_date": "2021-10-17T22:55:53Z",
+  "update_date": "2021-10-19T18:39:38Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,117 @@
+{
+  "id": 2491799,
+  "lesson": 609849,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>The last step is to figure out how to implement this method. Fill in the blanks to make all the tests pass!</p>\n\n<p><iframe height=\"1000px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/ea48a311079e71b55fc74b37005ffb5220785/welcome/1093431/TheaterExamples.java\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "FILL1",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "true",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "FILL2",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "0",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "FILL3",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "false",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2491799",
+  "subscriptions": [
+    "31-77-2491799",
+    "30-77-2491799"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2905,
+  "passed_by": 2792,
+  "correct_ratio": 0.26590693257359926,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2470891,
+  "create_date": "2021-10-29T05:48:48Z",
+  "update_date": "2021-10-29T19:10:35Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

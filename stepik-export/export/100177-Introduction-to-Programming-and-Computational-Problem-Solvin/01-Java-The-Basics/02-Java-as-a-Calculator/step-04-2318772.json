@@ -1,0 +1,53 @@
+{
+  "id": 2318772,
+  "lesson": 571195,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>The examples in the previous steps mention addition with <code>+</code>, multiplication with <code>*</code>, and subtraction with <code>-</code>. Division is conspicuously missing; at first it seems straightforward if we know the operator for division in Java is forward-slash (<code>/</code>), as in this example:</p>\n\n<p><iframe height=\"460px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/d63c8ea4d9711ea2b312ad570ff6069a49685/welcome/1084055/Not%20Quite%20Math\" width=\"100%\"></iframe></p>\n\n<p>Since we’re calculating 8 / 2, the results ought to be what we expect. But, if we alter the example slightly:</p>\n\n<p><iframe height=\"470px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/d63c8ea4d9711ea2b312ad570ff6069a49685/welcome/1084056/Not%20Quite%20Math\" width=\"100%\"></iframe></p>\n\n<p>We get a surprising result!</p>\n\n<p>So far, we’ve avoided describing anything about the word <code>int</code> (short for integer) that appears before each field name. It turns out that this is an important detail, and has to do with a key way that Java works, and differs from actual math. In particular, when dividing <code>int</code> values, Java simply <em>removes</em> the decimal part so that the answer is always an integer. Note that it does not round the number, it simply removes (truncates) any decimal portion of the number entirely (even if it would be 0.9999).</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Fill in the results stored in the variables after running these 2 programs.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2318772",
+  "subscriptions": [
+    "31-77-2318772",
+    "30-77-2318772"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3523,
+  "passed_by": 3392,
+  "correct_ratio": 0.9641950944460107,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2297864,
+  "create_date": "2021-08-13T03:33:04Z",
+  "update_date": "2021-09-17T21:31:10Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

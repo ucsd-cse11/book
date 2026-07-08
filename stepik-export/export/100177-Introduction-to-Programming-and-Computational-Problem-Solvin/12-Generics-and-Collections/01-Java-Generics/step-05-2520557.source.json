@@ -1,0 +1,63 @@
+{
+  "id": 2520557,
+  "lesson": 614368,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>With this version of the program, we can avoid writing individual classes for each different kind of lookup table we want to create. In exchange, when we create a new <code>LookupTable</code> with <code>new</code>, we provide (in angle brackets <code>&lt;&gt;</code>) the type that we want<br>\nto use for <code>Contents</code> .</p>\n\n<iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/1c42e56ad66a25540378326cea430dca20785/welcome/1094512/LookupTableExamples.java\" style=\"\" width=\"100%\"></iframe>\n\t\n\n<p><br>\nWe think of a type like <code>LookupTable&lt;String&gt;</code> as if it were <code>LookupTable</code>, but with <code>String</code> <em>substituted for</em> <code>Contents</code> everywhere it appears. With this in mind, the return type of <code>find</code> for <code>studentTable</code> is <code>StudentInfo</code>, while the return type of <code>find</code> for <code>classTable</code> is <code>String</code>.</p>\n\n<p>This is the power of <strong>generics</strong> in Java – with one <strong>generic class definition</strong>, we can describe an entire family of lookup tables based on string keys and any value type we choose.</p>\n\n<p>In terms of definitions and vocabulary:</p>\n\n<ul>\n\t<li>We call <code>Contents</code> a <strong>type variable</strong>. Inside the body of the LookupTable class, we have to program as if it could be any type, because it could be! So we can't use most methods on values of type <code>Contents</code> or try to access their fields, because the actual values could be many different types when the program runs.</li>\n\t<li>We call <code>LookupTable&lt;String&gt;</code> or <code>LookupTable&lt;StudentInfo&gt;</code> <strong>type instantiations</strong>.</li>\n\t<li>Overall, this feature is called <strong>generics</strong> in Java, and most generally this idea is called <strong>parametric polymorphism</strong>. Parametric polymorphism has a specific meaning – \"polymorphism\" means \"many shapes,\" alluding to <code>LookupTable</code> having many different possible type instantiations. \"Parameteric\" means that the type is provided like a parameter – indeed we can think of <code>LookupTable&lt;String&gt;</code> as analogous to a method call, but instead of providing a value as an argument for a method parameter, we are providing a type as an argument for a generic type parameter.</li>\n</ul>\n\n<p>Nearly all serious modern type systems support some form of parametric polymorphism (C and Go are notable exceptions).</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2520557",
+  "subscriptions": [
+    "31-77-2520557",
+    "30-77-2520557"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2896,
+  "passed_by": 2896,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2499649,
+  "create_date": "2021-11-11T05:45:23Z",
+  "update_date": "2021-11-11T05:45:24Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

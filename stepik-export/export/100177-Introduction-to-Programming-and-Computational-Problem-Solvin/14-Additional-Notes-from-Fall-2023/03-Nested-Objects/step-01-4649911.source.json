@@ -1,0 +1,67 @@
+{
+  "id": 4649911,
+  "lesson": 1120311,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>When we create objects to represent things and relationships between things in real-life, it may become helpful for these objects to have references to other objects.</p>\n\n<p>For example, let’s say we have a <code>Flight</code> class and a <code>Passenger</code> class:</p>\n\n<pre><code class=\"language-java\">class Flight {\n  int flightNo;\n  String airline;\n  Flight(int flightNo, String airline) {\n    this.flightNo = flightNo;\n    this.airline = airline;\n  }\n}\nclass Passenger {\n  String name;\n  Flight upcomingFlight;\n  Passenger(String name, Flight upcomingFlight) {\n    this.name = name;\n    this.upcomingFlight = upcomingFlight;\n  }\n}</code></pre>\n\n<p>Both of these classes have fields that represent attributes of flights and passengers in the real world, and most of these attributes can be represented by types built into Java, like <code>int</code> and <code>String</code>. But if we want to create a field representing an attribute that itself has multiple attributes, we can’t really do that with just the built-in types. Sure, we could break it down into multiple fields; in the example above we could also have defined <code>int upcomingFlightNo</code> and <code>String upcomingFlightAirline</code> as fields of <code>Passenger</code>. However, in a more complicated set of classes, taking this approach might leave us with a really long list of fields that’s difficult to work with.</p>\n\n<p>Instead, we can take advantage of the fact that the <code>Flight</code> class exists and has already defined what fields a <code>Flight</code> is supposed to have. We can define a field in <code>Passenger</code> of type <code>Flight</code> that represents this passenger’s upcoming flight. This field will then store a reference to a <code>Flight</code> object.<br>\n </p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649911",
+  "subscriptions": [
+    "31-77-4649911",
+    "30-77-4649911"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 486,
+  "passed_by": 486,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629008,
+  "create_date": "2023-10-28T23:43:54Z",
+  "update_date": "2023-10-28T23:46:14Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649911-1",
+  "discussion_threads": [
+    "77-4649911-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

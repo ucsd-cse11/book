@@ -1,0 +1,73 @@
+{
+  "id": 2373831,
+  "lesson": 584041,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "number",
+    "text": "<p>Another way is that we could create the <code>Point</code>s, and then use them in the creation of <code>r2</code> by using field access:</p>\n\n<pre><code>Point p1 = new Point(10, 10);\nPoint p2 = new Point(50, 50);\nRectRegion r2 = new RectRegion(p1, p2);</code></pre>\n\n<p>Now, let’s put all these examples together (and rename the last one to <code>r3</code>), so we can see them all in one place:</p>\n\n<pre><code class=\"language-java\">class ExamplesRegion {\n  RectRegion r1 = new RectRegion(new Point(30, 40), new Point(100, 200));\n  RectRegion r2 = new RectRegion(new Point(10, 10), new Point(50, 50));\n  Point p1 = new Point(10, 10);\n  Point p2 = new Point(50, 50);\n  RectRegion r3 = new RectRegion(p1, p2);\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> How many total <code>Point</code> objects are created in the program above?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "options": [
+        {
+          "answer": "6",
+          "max_error": "0"
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2373831",
+  "subscriptions": [
+    "31-77-2373831",
+    "30-77-2373831"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3050,
+  "passed_by": 3023,
+  "correct_ratio": 0.47032388036572137,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2352923,
+  "create_date": "2021-09-08T09:12:34Z",
+  "update_date": "2021-09-08T09:18:31Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

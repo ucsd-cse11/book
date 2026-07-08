@@ -1,0 +1,74 @@
+{
+  "id": 2379575,
+  "lesson": 579629,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>One of the most common places we confront Arrays in Java is in the <code>main()</code> method. Recall from <a href=\"https://stepik.org/lesson/587829/?unit=582668\" rel=\"noopener noreferrer nofollow\">before</a> the structure of the <code>main()</code> method:</p>\n\n<pre><code class=\"language-java\">class SampleMain {\n  public static void main(String[] args) {\n    // The java command starts running here, with any values provided\n  }\n}</code></pre>\n\n<p>When we run the <code>java</code> command, the Java system collects the values provided on the command line, puts them all into an Array of <code>Strings</code>, and passes a reference to that Array as the argument to the <code>main()</code> method (<code>args</code> in the above example). So, for example, if we compile the above class and run it:</p>\n\n<pre><code class=\"language-no-highlight\">$ java SampleMain 10 20 30</code></pre>\n\n<p>The parameter args will contain a reference to an array containing the strings <code>\"10\"</code>, <code>\"20\"</code>, and <code>\"30\"</code>. Pictorially, we’d draw this as:</p>\n\n<p><img alt=\"\" height=\"237\" name=\"simple-array.png\" src=\"https://ucarecdn.stepik.net/b208669e-e417-4ee4-a937-f6eafba6880d/\" width=\"457\"></p>\n\n<p>Arrays, just like objects, take up space on the heap (not on the stack), and parameters, variables, and fields store <strong>references</strong> to them. The components of an array are stored at <strong>indices</strong> counting up from <code>0</code>.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> According to the image above, what value is stored in the array at index <code>0</code>?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "pattern": "\"10\"",
+      "use_re": false,
+      "match_substring": false,
+      "case_sensitive": false,
+      "code": "# def check(reply):\n#     \"\"\"Evaluate the learner's reply.\n#\n#     It should return 1 or True for the correct reply and 0 or False\n#     for the incorrect one.\n#\n#     A partial solution may be scored using a float number from the\n#     interval (0, 1). In such a case the learner total score for the\n#     problem will be 'step cost' * 'score'.\n#\n#     :param reply: a string that is the learner's reply to the problem\n#     :return: a score number (int or float) in range [0, 1]\n#\n#     \"\"\"\n#     return reply == \"Hello\"\n\n# def solve():\n#     \"\"\"Return a correct reply. This function is *optional*.\n#\n#     It is used to test the correctness of the 'check' function.\n#\n#     :return: a string that is a correct reply to the problem\n#\n#     \"\"\"\n#     return \"Hello\"",
+      "is_text_disabled": false,
+      "is_file_disabled": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379575",
+  "subscriptions": [
+    "31-77-2379575",
+    "30-77-2379575"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3047,
+  "passed_by": 2965,
+  "correct_ratio": 0.5646836638338055,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358667,
+  "create_date": "2021-09-09T22:52:53Z",
+  "update_date": "2021-10-24T21:12:58Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

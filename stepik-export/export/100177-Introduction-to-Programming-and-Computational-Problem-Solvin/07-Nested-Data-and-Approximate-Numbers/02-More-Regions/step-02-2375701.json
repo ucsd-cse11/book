@@ -1,0 +1,53 @@
+{
+  "id": 2375701,
+  "lesson": 584473,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Now all we need to do is implement <code>distance()</code>. To do that, we need to do a calculation like the following, where x1, x2, y1, and y2 are the corresponding fields on <code>this</code> point and the <code>other</code> point:</p>\n\n<p>√(x1 - x2)<sup>2</sup> + (y1 - y2)<sup>2</sup></p>\n\n<p>We know how to do the squaring operator through multiplication, but we don’t know how to ask Java to perform a square root yet. This is provided as a method on a built-in called <code>Math</code>. The method is called <code>sqrt()</code>, which takes a number and returns its square root. Let's try to make an example out of this and store its result in an <code>int</code> field.</p>\n\n<p><iframe height=\"370px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/1b53fd87485f3b11eb935849337e657520785/welcome/1086703/Why%20did%20the%20math%20teacher's%20plants%20keep%20dying%3F%20--%20%20Because%20they%20grew%20square%20roots.\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Run the program and fill in the blanks based on the output.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2375701",
+  "subscriptions": [
+    "31-77-2375701",
+    "30-77-2375701"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3039,
+  "passed_by": 2983,
+  "correct_ratio": 0.7424317617866005,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2354793,
+  "create_date": "2021-09-09T04:39:35Z",
+  "update_date": "2021-09-17T04:32:05Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

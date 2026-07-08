@@ -1,0 +1,54 @@
+{
+  "id": 4649913,
+  "lesson": 1120313,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Whenever you define a variable or create an object in a Java program, that data gets stored in parts of a computer’s memory called the <strong>stack </strong>and the <strong>heap</strong>. When we designate some memory for data to be stored in, we say that the memory has been <strong>allocated</strong>. The stack and the heap are both contiguous, meaning that they each exist as one continuous stretch of memory in one place rather than smaller chunks of memory in various places.</p>\n\n<p><em>There are more places where memory can be allocated but for now the stack and the heap are the main ones we’ll be interacting with.</em></p>\n\n<p>When you create objects using the <code>new</code> keyword, these objects are allocated on the heap. Each object has a <strong>memory address</strong> that is used to access the object. Reference variables contain the memory addresses of objects. When you make method calls, a <strong>stack frame</strong> is allocated on the stack to make space for the parameters and local variables defined in the method.</p>\n\n<p>For example, let's say we have these <code>Flight</code> and <code>Passenger</code> classes, along with a <code>FlightTest</code> class that creates some objects.</p>\n\n<pre><code class=\"language-java\">class Flight {\n  int flightNo;\n  String airline;\n  Flight(int flightNo, String airline) {\n    this.flightNo = flightNo;\n    this.airline = airline;\n  }\n}\nclass Passenger {\n  String name;\n  Flight upcomingFlight;\n  Passenger(String name, Flight upcomingFlight) {\n    this.name = name;\n    this.upcomingFlight = upcomingFlight;\n  }\n}\nclass FlightTest {\n  Flight united1 = new Flight(2247, \"UAL\");\n  Passenger pax1 = new Passenger(\"Gerald\", united1);\n}</code></pre>\n\n<p>If we were to run this code using our tester library, we would find that following are allocated in memory:</p>\n\n<ul>\n\t<li>a <code>FlightTest</code> object on the heap with <code>united1</code> and <code>pax1</code> fields.</li>\n\t<li>a <code>Flight</code> object on the heap with <code>flightNo</code> and <code>airline</code> fields.</li>\n\t<li>a <code>Passenger</code> object on the heap with <code>name</code> and <code>upcomingFlight</code> fields.</li>\n</ul>\n\n<p>Note how some fields contain literal values (e.g. <code>flightNo</code>, <code>airline</code>, <code>name</code> which contain integer and String values), while others contain addresses (e.g. <code>upcomingFlight</code>, <code>united1</code>, <code>pax1</code>).</p>\n\n<p><img alt=\"\" height=\"584\" name=\"Heap diagram (1).svg\" src=\"https://ucarecdn.stepik.net/bdcccafe-4a79-48d2-b7f4-1006eb0f9048/\" width=\"300\"></p>\n\n<p><strong>Huh, where's the stack?</strong> This is a memory model of what exists in memory after we've executed all lines of code in <code>FlightTest</code>. But code execution happens step-by-step, so to get the full picture of what happens in memory and how we got to this memory model, we have to follow the execution step-by-step...</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649913",
+  "subscriptions": [
+    "31-77-4649913",
+    "30-77-4649913"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 497,
+  "passed_by": 497,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629010,
+  "create_date": "2023-10-28T23:44:04Z",
+  "update_date": "2023-11-12T19:50:12Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649913-1",
+  "discussion_threads": [
+    "77-4649913-1"
+  ]
+}

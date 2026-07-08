@@ -1,0 +1,53 @@
+{
+  "id": 2491791,
+  "lesson": 609849,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>This is often called a <em>nested loop</em>, because the loop that works with <code>row</code> is “nested” inside the outer loop that works with <code>seats</code>. This is another case where the program structure matches our data structure -- a nested loop is natural for our array of arrays. This is a good time to mention that sometimes arrays of arrays are called nested arrays! They are also called 2D (for 2-dimensional) arrays.</p>\n\n<p>Let's consider a slightly more sophisticated method, that might be part of a reservation system. We'd like to answer the following question: Given a number of people, where are there that many seats in a row available next to each other somewhere in the theater?<img alt=\"\" height=\"296\" name=\"IMG_0057.jpg\" src=\"https://ucarecdn.stepik.net/0a01be76-b8cc-4b41-adc0-3a8505bf8846/\" width=\"585\"></p>\n\n<p>To turn that into a method, let's think specifically about what we could represent. Let's say we'll return the index of the first row that works, if there is such a row, and return -1 otherwise (this is kind of like finding an element in an array!)</p>\n\n<p>We can break this problem down a bit. First, let's <em>imagine</em> we have a method <code>boolean rowHasEnoughAdjacentSeats(boolean[] row, int howMany)</code>. This is our “wish list” for a method to help us out. <strong>If</strong> we have that method, we can use it in a similar loop to what we've seen so far:</p>\n\n<pre><code class=\"language-java\">static int firstRowWithEnoughAdjacentSeats(boolean[][] seats, int howMany) {\n  for(int i = 0; i &lt; seats.length; i += 1) {\n    if(rowHasEnoughAdjacentSeats(seats[i], howMany)) { \n      return i;\n    }\n  }\n  return -1;\n}</code></pre>\n\n<p>Now we just need to implement that method! There are a lot of ways to do it. Before we get there, let's make sure we understand what the function above ought to do once we implement it.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Fill in the expected values for these tests.</h3>\n\n<pre><code class=\"language-java\">boolean[] row1 = {true, true, false, false};\nboolean[] row2 = {true, false, false, false, true};\nboolean[] row3 = {true, false, true, true, true, true};\nboolean[][] seats = {row1, row2, row3};\n\nvoid testEnoughAdjacent(Tester t) {\n  t.checkExpect(firstRowWithEnoughAdjacentSeats(seats, 4), ______FILL1______);\n  t.checkExpect(firstRowWithEnoughAdjacentSeats(seats, 5), ______FILL2______);\n  t.checkExpect(firstRowWithEnoughAdjacentSeats(seats, 1), ______FILL3______);\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2491791",
+  "subscriptions": [
+    "31-77-2491791",
+    "30-77-2491791"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2913,
+  "passed_by": 2850,
+  "correct_ratio": 0.16142356003168495,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2470883,
+  "create_date": "2021-10-29T05:40:30Z",
+  "update_date": "2021-10-29T19:09:31Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,162 @@
+{
+  "id": 2407292,
+  "lesson": 568133,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<pre><code>//code from before, for reference\n\nint weekly(int hours, int rate) {\n  if(hours &gt; 40) {\n    return (40 * rate) + ((hours - 40) * (rate * 2));\n  }\n  else {\n    return hours * rate;\n  }\n}</code></pre>\n\n<p>Let’s see that definition in action. When we introduced methods, we said that to evaluate a <strong>method call</strong> we need to do the calculation in the body of the method with the <strong>parameters</strong> replaced with the <strong>argument</strong> values. So, for example, in the method call <code>this.weekly(30, 25)</code>, <code>hours</code> would be replaced with <code>30</code>, and <code>rate</code> would be replaced with <code>25</code>. That would look like this:</p>\n\n<pre><code>if(30 &gt; 40) {\n  return 40 * 25 + ((30 - 40) * (25 * 2));\n}\nelse {\n  return 30 * 25;\n}</code></pre>\n\n<p>The <strong>condition</strong> (which is <code>30 &gt; 40</code> in this case) evaluates to <code>false</code>, because <code>30</code> isn’t greater than <code>40</code>. That means Java will evaluate the <strong>else branch</strong> and <em>ignore</em> the <strong>then branch</strong>. This causes the result (or <strong>return value</strong>) of this method to be <code>750</code>, the value of <code>30 * 25</code>.</p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Refer to the <code>weekly()</code> method at the top of the page to fill in the blanks below for the body of the method call <code>this.weekly(50, 20)</code>. You should replace the parameters with the argument values.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>if(</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "50",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code> > 40) {<br>&nbsp;&nbsp;return 40 * </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "20",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code> + ((</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "50",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code> - 40) * (</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "20",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code> * 2));<br>}<br>else {<br>&nbsp;&nbsp;return </code>",
+          "options": []
+        },
+        {
+          "type": "text",
+          "text": "<code> 50 * 20</code>",
+          "options": []
+        },
+        {
+          "type": "text",
+          "text": "<code>;<br>}</code><br>The expected return value is ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "1200",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": ".",
+          "options": []
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2407292",
+  "subscriptions": [
+    "31-77-2407292",
+    "30-77-2407292"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3177,
+  "passed_by": 3127,
+  "correct_ratio": 0.5380658436213992,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2386384,
+  "create_date": "2021-09-19T21:25:54Z",
+  "update_date": "2021-10-01T04:58:57Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

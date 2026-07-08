@@ -1,0 +1,67 @@
+{
+  "id": 4649915,
+  "lesson": 1120314,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Suppose we want to write a method to convert a month number into a month name. Suppose also that only the first three months of the year exist (so we don't have to write so much code). That method might look like this:</p>\n\n<pre><code class=\"language-java\">String getMonthName(int num){\n  String month = \"\";\n  if(num == 1) {\n    month = \"Jan\";\n  } else if(num == 2) {\n    month = \"Feb\";\n  } else if(num == 3) {\n    month = \"Mar\";\n  } else {\n    month = \"invalid\";\n  }\n  return month;\n}</code></pre>\n\n<p>This will work just fine, but in terms of the written code itself, it's a little repetitive: we have to keep writing out if <code>num</code> is equal to some value in every condition. Programmers love making ways to do things in an easier and cleaner way, and there happens to be an alternative way to implement conditional statements like the one above in Java, called the <strong>switch statement</strong>. This is what <code>getMonthName</code> would look like if we used a switch statement instead:</p>\n\n<pre><code class=\"language-java\">String getMonthName(int num) {\n  String month = \"\";\n  switch(num) {\n    case 1:\n      month = \"Jan\";\n      break;\n    case 2:\n      month = \"Feb\";\n      break;\n    case 3:\n      month = \"Mar\";\n      break;\n    default:\n      month = \"invalid\";\n      break;\n  }\n  return month;\n}</code></pre>\n\n<p>Unlike the if statement, which is accepts a <code>boolean</code> value, the switch statement accepts variables of other types (<code>int</code>, <code>double</code>, <code>String</code>, etc). In this case the variable we give to the switch statement is <code>num</code>. Inside the switch statement, we define <code>case</code> labels with values that we want to compare <code>num</code> to. When <code>num</code> matches one of the label values, the program jumps to that label (skipping over all lines before the label), and continuing execution from there. If <code>num</code> matches none of the label values, we jump to the <code>default</code> label.</p>\n\n<p>This is slightly different from an if-else-if statement chain, where as soon as we fulfill the first condition in the chain, we execute the code in the block corresponding to that condition, and then skip over the rest of the chain. In a switch statement, we continue to execute the code after the label we jumped to, even if there’s another <code>case</code> label. If that’s not what we want to happen, we can use <code>break</code> to immediately skip the rest of the switch statement.</p>\n\n<p>There are different situations in which you might want to use switch statements over if statements, or vice versa. In general, switch statements are useful when you want to execute different pieces of code based on what the value of a single variable is. However, switch statements can be difficult to use when you want to execute a piece of code if a value falls within a large range.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649915",
+  "subscriptions": [
+    "31-77-4649915",
+    "30-77-4649915"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 455,
+  "passed_by": 455,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629012,
+  "create_date": "2023-10-28T23:44:14Z",
+  "update_date": "2023-10-28T23:48:16Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649915-1",
+  "discussion_threads": [
+    "77-4649915-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

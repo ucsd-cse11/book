@@ -1,0 +1,102 @@
+{
+  "id": 2439373,
+  "lesson": 575927,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>There are specific rules about how <strong>local variables</strong> can be used. We'll look at one such rule now, and revisit others in future sections.</p>\n\n<p>Consider this example:</p>\n\n<p><iframe height=\"480px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/ea249b335036fc3858670602cfd5076020785/welcome/1088755/Bad%20Scope\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Which of the following are parts of the error you get when you run this program?</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "is_multiple_choice": true,
+      "is_always_correct": false,
+      "sample_size": 5,
+      "preserve_order": false,
+      "is_html_enabled": true,
+      "is_options_feedback": false,
+      "options": [
+        {
+          "is_correct": true,
+          "text": "<code>cannot find symbol</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "<code>double example1Tip = tip;</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>double tip = cost * tipPercent</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>(cost + tip)</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>purchaseMessage</code>",
+          "feedback": ""
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2439373",
+  "subscriptions": [
+    "31-77-2439373",
+    "30-77-2439373"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3120,
+  "passed_by": 3078,
+  "correct_ratio": 0.534277326886548,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2418465,
+  "create_date": "2021-10-04T03:50:17Z",
+  "update_date": "2021-10-04T09:21:00Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

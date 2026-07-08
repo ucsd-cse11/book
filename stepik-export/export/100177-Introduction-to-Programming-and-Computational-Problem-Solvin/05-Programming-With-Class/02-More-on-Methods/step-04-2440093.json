@@ -1,0 +1,54 @@
+{
+  "id": 2440093,
+  "lesson": 597266,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>If we write a method inside a class, the method can use the data that is stored in the fields of that class.</li>\n\t<li>When a method is defined in a class, it is only defined for objects of that class. We must call a method using a <strong>reference</strong> to an <strong>object</strong> whose class has the method that is being called.</li>\n\t<li>In the body of a method, the value of <code>this</code> refers to the object that was used to call the method. Therefore, when accessing fields with <code>this</code> (for example, <code>this.birthYear</code>), the expression evaluates to the value of the field for the object that was used to call the method.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-2440093",
+  "subscriptions": [
+    "31-77-2440093",
+    "30-77-2440093"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3127,
+  "passed_by": 3127,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2419185,
+  "create_date": "2021-10-04T09:56:51Z",
+  "update_date": "2021-10-04T09:57:21Z",
+  "discussions_count": 4,
+  "discussion_proxy": "77-2440093-1",
+  "discussion_threads": [
+    "77-2440093-1"
+  ]
+}

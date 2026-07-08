@@ -1,0 +1,97 @@
+{
+  "id": 2354904,
+  "lesson": 559662,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>The same rule is used to evaluate the next two method calls, which are</p>\n\n<pre><code class=\"language-java\">this.distanceAfter(4);\nthis.distanceAfter(6);</code></pre>\n\n<p>and perform the calculations:</p>\n\n<pre><code class=\"language-java\">(this.gravity / 2) * (4 * 4);\n(this.gravity / 2) * (6 * 6);</code></pre>\n\n<p>There are several reasons why it is useful to write this program with a method definition and method calls instead of doing three different calculations directly (as we did in the original example):</p>\n\n<ul>\n\t<li>\n\t<p>Performing any more distance calculations will now be simpler, since we would only need to add a single method call for each one.</p>\n\t</li>\n\t<li>\n\t<p>Understanding the code that defines the <code>distAfter___</code> fields is easier, since the method name helps describe the reason for, and result of, the calculations.</p>\n\t</li>\n\t<li>\n\t<p>If, later on, we want to change the distance formula (e.g. to ask what would happen if we <em>cubed</em>, rather than squared, the elapsed time), we would only need to change the one method instead of multiple individual calculations.</p>\n\t</li>\n</ul>\n\n<h3><strong><span style=\"color: #cc0000;\">Do Now!</span> </strong>Which of the following are true? Select all of the correct options below.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "is_multiple_choice": true,
+      "is_always_correct": false,
+      "sample_size": 4,
+      "preserve_order": false,
+      "is_html_enabled": true,
+      "is_options_feedback": false,
+      "options": [
+        {
+          "is_correct": true,
+          "text": "Writing a method gives us the ability to perform the same calculation multiple times.",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "The argument is the value that gets passed to the method, while the parameter is the value that is used in the actual method.",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "Each time we want to use a method, we add another method definition.",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "A method's return value is listed within the parentheses following the method name.",
+          "feedback": ""
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2354904",
+  "subscriptions": [
+    "31-77-2354904",
+    "30-77-2354904"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3309,
+  "passed_by": 3259,
+  "correct_ratio": 0.35248097738720396,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2333996,
+  "create_date": "2021-08-31T08:52:32Z",
+  "update_date": "2021-09-18T22:12:14Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

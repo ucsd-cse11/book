@@ -1,0 +1,50 @@
+{
+  "id": 2441865,
+  "lesson": 573911,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>This gives us a pretty good sense of how we’ll get to the result: we’ll have a subtraction and a multiplication. Since we’re using <code>int</code>s, we need to be a bit careful about the order of operations:</p>\n\n<pre><code class=\"language-java\">/*\n@param percentage A percent (between 0 and 100) of the discount to subtract\n@return The price with the discount subtracted\n*/\nint salePrice(int percentage) {\n  return this.price - (this.price * percentage) / 100;\n}</code></pre>\n\n<p>We can save all of this in a file called <code>ExamplesBook.java</code>, run it, and confirm for ourselves that it runs as we expect.</p>\n\n<p><iframe height=\"910px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/2a13e51e70ee291d4c662ee22e53c7c120785/welcome/1089171/ExamplesBook\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2441865",
+  "subscriptions": [
+    "31-77-2441865",
+    "30-77-2441865"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3092,
+  "passed_by": 3092,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2420957,
+  "create_date": "2021-10-05T08:12:55Z",
+  "update_date": "2021-10-06T04:33:56Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

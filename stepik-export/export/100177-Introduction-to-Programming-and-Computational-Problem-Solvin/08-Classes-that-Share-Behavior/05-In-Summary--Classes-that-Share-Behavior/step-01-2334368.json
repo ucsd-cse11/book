@@ -1,0 +1,54 @@
+{
+  "id": 2334368,
+  "lesson": 574530,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<ul>\n\t<li>\n\t<p>When we see multiple classes that implement the same method with the same signature, it’s an opportunity to use an <strong>interface</strong> to define a type that specifies their shared behavior. Then, other contexts can accept objects of any class, as long as the class implements that interface.</p>\n\t</li>\n\t<li>\n\t<p>When we use an interface type for a field or parameter, Java will only let us use the methods specified in the interface on that name.</p>\n\t</li>\n\t<li>\n\t<p>We write <code>implements InterfaceName</code> on each class that we want to use via the interface type.</p>\n\t</li>\n\t<li>\n\t<p>Java uses the class of the underlying object (the class used with new to construct it) in order to decide which method to call.</p>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-2334368",
+  "subscriptions": [
+    "31-77-2334368",
+    "30-77-2334368"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2795,
+  "passed_by": 2795,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313460,
+  "create_date": "2021-08-20T08:36:05Z",
+  "update_date": "2021-08-20T08:38:41Z",
+  "discussions_count": 15,
+  "discussion_proxy": "77-2334368-1",
+  "discussion_threads": [
+    "77-2334368-1"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": 2474142,
+  "lesson": 605734,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>The size of the array we want to create will be different depending on the argument values. We need two new Java features to write this method body because we don't know of any array initializer that will create a different array depending on the arguments. That is, how can we fill in the ??? below with an array that always has the right size based on <code>start</code> and <code>end</code>?</p>\n\n<pre><code class=\"language-java\">int[] range(int start, int end) {\n  int[] result = ???\n  ...\n}</code></pre>\n\n<p>Here’s the first of the new features we need: we can create an array of a specified size with the following syntax:</p>\n\n<pre><code class=\"language-java\">new Type[size]</code></pre>\n\n<p>where <code>size</code> is some expression that calculates an <code>int</code>. For example, before going back to the <code>range()</code> method, we can think about this as an example:</p>\n\n<pre><code class=\"language-java\">class ExamplesArrays {\n  int[] nums = new int[3];\n}</code></pre>\n\n<p>In memory diagram form, here’s what this creates: </p>\n\n<p><img alt=\"\" height=\"181\" name=\"Screen Shot 2021-09-17 at 8.18.15 PM.png\" src=\"https://ucarecdn.stepik.net/851a2f5d-8ee4-4193-8f8c-206e0b548896/-/crop/915x374/11,25/-/preview/\" width=\"442\"></p>\n\n<p>Note that the values of all the elements of the newly created array are <code>0</code>! When we create an array using the <code>new</code> operator, all the elements get a specific default value. For <code>int</code> and <code>double</code> arrays, that value is 0. There are 3 elements in this array because we specified the size <code>3</code> in <code>new int[3]</code>.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Fill in the blanks in the code based on the memory diagram below.</h3>\n\n<p><img alt=\"\" height=\"352\" name=\"Screen Shot 2021-09-17 at 8.28.27 PM.png\" src=\"https://ucarecdn.stepik.net/8f36b6ea-f698-42b8-a4f6-0f6b4b589269/-/crop/962x546/22,13/-/preview/\" width=\"620\"></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2474142",
+  "subscriptions": [
+    "31-77-2474142",
+    "30-77-2474142"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2947,
+  "passed_by": 2886,
+  "correct_ratio": 0.19954460774166838,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2453234,
+  "create_date": "2021-10-20T18:44:07Z",
+  "update_date": "2021-10-22T06:11:14Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,63 @@
+{
+  "id": 2339778,
+  "lesson": 575943,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Java (as well as many other languages that support objects and classes) has a feature for precisely this situation, where multiple classes could share an implementation of a method. Note that this situation is more specific than the situation that we identified with interfaces, where multiple classes shared a common method header but had different implementations. Here, the method header and the implementation—the <em>entire </em>method definition—is the same across these classes.</p>\n\n<p>When this situation comes up, we can declare an <code>abstract class</code> that contains the shared implementations. An <code>abstract class</code> is written like a class with <code>abstract</code> at the beginning, and it lists fields and methods (we’ll just use methods for now). Methods can also be started with <code>abstract</code>, which means they don’t have a shared implementation, or they can be written out normally. Here’s an <code>abstract class</code> that defines the <code>and()</code> method:</p>\n\n<pre><code class=\"language-java\">abstract class AQuery implements ImageQuery {\n  public ImageQuery and(ImageQuery other) {\n    return new AndQuery(this, other);\n  }\n}</code></pre>\n\n<p><em>(Note that we declared that the <code>AQuery</code> <code>abstract class</code> <code>implements</code> the <code>ImageQuery</code> interface.)</em></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2339778",
+  "subscriptions": [
+    "31-77-2339778",
+    "30-77-2339778"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2462,
+  "passed_by": 2462,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2318870,
+  "create_date": "2021-08-24T01:14:55Z",
+  "update_date": "2021-09-14T04:05:58Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

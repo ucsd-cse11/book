@@ -1,0 +1,53 @@
+{
+  "id": 2348124,
+  "lesson": 578016,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>The program below creates an <code>ArrayList</code> of <code>String</code>s for storing the names of students. There are several methods used here:</p>\n\n<ul>\n\t<li>The <code>contains()</code> method determines if a particular element is present in the list. It returns <code>true</code> if the element is present and <code>false</code> if not.</li>\n\t<li>The <code>get()</code> method is used to retrieve an element at a particular index in the <code>ArrayList</code>.</li>\n\t<li>The <code>remove()</code> method removes an element at the given index.</li>\n</ul>\n\n<p><iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/744c81ddad89049c5243e2f61563d4e520785/welcome/1094815/ArrayListExamples.java\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Fill in the values that are stored in the following variables at the end of the program.</h3>\n\n<p>(Hint: remember that <code>String</code> values are not shown in quotes when printed with <code>System.out.println()</code>, but when we want to talk about a String value, we write it with the double-quotes.)</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2348124",
+  "subscriptions": [
+    "31-77-2348124",
+    "30-77-2348124"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2886,
+  "passed_by": 2830,
+  "correct_ratio": 0.8253029568589433,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2327216,
+  "create_date": "2021-08-27T00:09:06Z",
+  "update_date": "2021-11-15T07:03:51Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

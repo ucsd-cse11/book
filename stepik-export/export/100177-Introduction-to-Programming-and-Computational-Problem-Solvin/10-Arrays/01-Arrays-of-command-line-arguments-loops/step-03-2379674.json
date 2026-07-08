@@ -1,0 +1,53 @@
+{
+  "id": 2379674,
+  "lesson": 579629,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>So far, we’ve just seen how to access elements with a number we knew ahead of time when writing the program. We can also use an element-wise loop, also known as a <strong>for-each loop</strong>, along with a <strong>variable</strong>, to get access to each of the elements of the array in turn, and aggregate their values together:</p>\n\n<p><iframe height=\"550px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/af3af2b4bfab7177f67bb186fe71d4be20785/welcome/1091341/SumMain\" width=\"100%\"></iframe></p>\n\n<p>There are a few ideas happening here:</p>\n\n<ul>\n\t<li>\n\t<p>The variable <code>total</code> is created with the starting value <code>0</code>, and then it gets updated by the <strong>variable assignment</strong> in the body of the loop.</p>\n\t</li>\n\t<li>\n\t<p>The loop, started with <code>for</code>, runs the <strong>loop body</strong>—the expressions in between the curly braces—once for each element in the Array that is referenced by <code>args</code>.</p>\n\t</li>\n\t<li>\n\t<p>Each time the loop body is run, the variable <code>s</code> gets its current value set to the next element, starting with the element at index <code>0</code>.</p>\n\t</li>\n</ul>\n\n<p>As the program runs, we could visualize the changes like this:</p>\n\n<p><img alt=\"\" height=\"264\" name=\"loop1.gif\" src=\"https://ucarecdn.stepik.net/c276f2c6-8798-481f-ad87-72d1881b36ec/\" width=\"450\"></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Use the information given in this step to answer the questions below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379674",
+  "subscriptions": [
+    "31-77-2379674",
+    "30-77-2379674"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2985,
+  "passed_by": 2937,
+  "correct_ratio": 0.4752219531880549,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358766,
+  "create_date": "2021-09-10T01:49:30Z",
+  "update_date": "2021-10-21T23:36:55Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

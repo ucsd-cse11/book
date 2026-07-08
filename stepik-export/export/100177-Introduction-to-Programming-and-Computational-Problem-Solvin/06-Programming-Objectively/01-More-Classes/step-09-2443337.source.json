@@ -1,0 +1,97 @@
+{
+  "id": 2443337,
+  "lesson": 573911,
+  "position": 9,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>By using these two methods together, we can write the body of <code>truncateTitle()</code>:</p>\n\n<pre><code class=\"language-java\">String truncateTitle(int length) {\n  if(this.title.length() &gt; length) {\n    return this.title.substring(0, length) + \"...\";\n  }\n  else {\n    return this.title;\n  }\n}</code></pre>\n\n<p>We put a few pieces together to make this happen. First, the description of the problem was <em>conditional</em> — we were to give one answer if the string was too long, and another if it was short enough. Second, we used <code>length()</code> on the <code>title</code> field to compare it to the parameter to check which case needed to be processed. Third, we used the <code>substring()</code> method to pick out the part of the string from the beginning (position <code>0</code>) up to the specified length.</p>\n\n<p>We often call the positions in a <code>String</code> the <strong>indices</strong> in the string. So the first character is at <strong>index</strong> <code>0</code>. What index is the last character at?</p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Choose the Java expression that would evaluate to the index of the last character in a <code>String</code>. Assume the <code>String</code> is stored in a variable called <code>str</code>.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": false
+    },
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "is_multiple_choice": false,
+      "is_always_correct": false,
+      "sample_size": 4,
+      "preserve_order": false,
+      "is_html_enabled": true,
+      "is_options_feedback": false,
+      "options": [
+        {
+          "is_correct": false,
+          "text": "<code>str.length - 1</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "<code>str.length() - 1</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>str.length()</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>str.length</code>",
+          "feedback": ""
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2443337",
+  "subscriptions": [
+    "31-77-2443337",
+    "30-77-2443337"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3070,
+  "passed_by": 3042,
+  "correct_ratio": 0.7075034738304771,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2422429,
+  "create_date": "2021-10-06T03:04:44Z",
+  "update_date": "2021-10-06T04:58:27Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

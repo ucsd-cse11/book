@@ -1,0 +1,53 @@
+{
+  "id": 2331824,
+  "lesson": 571274,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>In the first section, we saw how we needed to be careful with syntax to avoid syntactic mistakes. In the second, we saw that <em>types</em> could be mismatched, causing errors. Now that we’ve introduced methods, we have several new errors that can come up. It’s useful to see them in a controlled environment and understand their cause.</p>\n\n<p>In the <code>fillIn()</code> example, we always called the <code>fillIn()</code> method with two arguments. What if we don't, and instead call it with just one?</p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Run the following code and copy the first line of the resulting error message into the box below.</h3>\n\n<p><iframe height=\"560px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/635ceffb77413a0842dfed60dceff71020785/welcome/1085015/Understanding%20Errors\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2331824",
+  "subscriptions": [
+    "31-77-2331824",
+    "30-77-2331824"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3319,
+  "passed_by": 3221,
+  "correct_ratio": 0.5522006141248721,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2310916,
+  "create_date": "2021-08-19T08:50:57Z",
+  "update_date": "2021-09-22T05:11:19Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,63 @@
+{
+  "id": 2399415,
+  "lesson": 573068,
+  "position": 8,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>We can write more than two branches of an <code>if</code> statement. However, the statement needs to be written such that the program will always return a value that matches the return type.</li>\n\t<li>It is possible to combine multiple comparisons by using the <code>&amp;&amp;</code> (pronounced “and”) and <code>||</code> (pronounced “or”) operators.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2399415",
+  "subscriptions": [
+    "31-77-2399415",
+    "30-77-2399415"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3149,
+  "passed_by": 3149,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2378507,
+  "create_date": "2021-09-16T18:37:47Z",
+  "update_date": "2021-09-16T18:37:47Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

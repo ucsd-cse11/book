@@ -1,0 +1,55 @@
+{
+  "id": 2476739,
+  "lesson": 579633,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>When the array is empty, the line <code>result += strs[strs.length - 1];</code> runs with <code>strs.length</code> equal to <code>0</code>. That produces the index <code>-1</code> for the array lookup, which produces the error. The body of the method doesn’t work for empty arrays! We could try to re-work the logic around this case. We could also just add a single line at the beginning. Think about this! What line of code could we add at the beginning to return the empty string if the array is empty?</p>\n\n<p><iframe height=\"1000px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/90c00bc69c16a6fd595d970b9971ad8c20785/welcome/1091596/Intersperse\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Which of the following lines, when added to the beginning of the method, will make all the tests pass? Choose all that apply.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2476739",
+  "subscriptions": [
+    "31-77-2476739",
+    "30-77-2476739"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2955,
+  "passed_by": 2798,
+  "correct_ratio": 0.21164300815463608,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2455831,
+  "create_date": "2021-10-22T06:07:57Z",
+  "update_date": "2021-10-24T21:43:22Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

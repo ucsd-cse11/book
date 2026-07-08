@@ -1,0 +1,132 @@
+{
+  "id": 2476666,
+  "lesson": 579633,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>There are many other patterns for iterating over arrays, especially using counted for loops rather than for-each loops. For example, we could sum every other element in an array:</p>\n\n<pre><code class=\"language-java\">double sumEveryOther(double[] numbers) {\n  double total = 0;\n  for(int i = 0; i &lt; numbers.length; i = i + 2) {\n    total = total + numbers[i];\n  }\n  return total;\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> In the program above, only every other index is visited. Consider calling it <code>sumEveryOther</code> with the array <code>{4, 1, 9, 7, 6}</code>. What values will be stored in <code>i</code> as this program runs, and what will the return value be?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "Values of i: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "0",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "2",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "4",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "6",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br/>Return value:",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "19",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2476666",
+  "subscriptions": [
+    "31-77-2476666",
+    "30-77-2476666"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2958,
+  "passed_by": 2913,
+  "correct_ratio": 0.23890617324381858,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2455758,
+  "create_date": "2021-10-22T04:33:55Z",
+  "update_date": "2021-10-23T20:54:34Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

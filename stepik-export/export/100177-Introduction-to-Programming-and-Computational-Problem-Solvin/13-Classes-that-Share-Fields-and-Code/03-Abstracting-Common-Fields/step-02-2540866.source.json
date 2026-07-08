@@ -1,0 +1,147 @@
+{
+  "id": 2540866,
+  "lesson": 575951,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<pre><code class=\"language-java\">//code from the previous step, for reference\n\nabstract class AComboQuery extends AQuery {\n  ImageQuery q1, q2;\n  AComboQuery(ImageQuery q1, ImageQuery q2) {\n    this.q1 = q1;\n    this.q2 = q2;\n  }\n}\nclass AndQuery extends AComboQuery {\n  AndQuery(ImageQuery q1, ImageQuery q2) {\n    super(q1, q2);\n  }\n  public boolean matches(ImageData id) {\n    return this.q1.matches(id) &amp;&amp; this.q2.matches(id);\n  }\n}\nclass OrQuery extends AComboQuery {\n  OrQuery(ImageQuery q1, ImageQuery q2) {\n    super(q1, q2);\n  }\n  public boolean matches(ImageData id) {\n    return this.q1.matches(id) || this.q2.matches(id);\n  }\n}</code></pre>\n\n<p>This introduces a new keyword, <code>super</code>. Within constructors, <code>super</code> means “call the constructor of the class that this one extends.” So when the constructor for <code>AndQuery</code> runs, it will immediately call the constructor in the <code>AComboQuery</code> abstract class, since <code>AndQuery</code> extends it. The other new behavior we see here is that all the fields declared in <code>AComboQuery</code> are present in <code>AndQuery</code> and <code>OrQuery</code> objects – this was the point of moving them into a shared abstract class, so we could write them once and use them in both places.</p>\n\n<p><em>(We may see other uses of <code>super</code> outside of constructors in the future.)</em></p>\n\n<p><iframe height=\"920px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/889c85520367e6dd1595bbac472f6da320785/welcome/1095252/super\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> In the code above, the line <code>super(q1, q2);</code> in the <code>OrQuery</code> constructor has been commented out. Run the code as-is and fill in the blanks based on the output.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>\n<u>ExamplesSearch.java:25</u>: error: constructor\n</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "AComboQuery",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>\nin class AComboQuery \n</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "cannot be applied",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>\nto given types;<br>...<br>\nrequired: \n</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "ImageQuery",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>, </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "ImageQuery",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><code>\nfound:\n</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "no arguments",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "It turns out that when no explicit call to `super` is included in the constructor, Java uses a default no-arg call `super()`. That's what causes this error: it tries to call a no-arg constructor for `AComboQuery`, but the constructor defined for `AComboQuery` takes 2 args.",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2540866",
+  "subscriptions": [
+    "31-77-2540866",
+    "30-77-2540866"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2366,
+  "passed_by": 2335,
+  "correct_ratio": 0.8542731921110299,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2519958,
+  "create_date": "2021-11-22T05:15:08Z",
+  "update_date": "2021-11-22T07:40:57Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

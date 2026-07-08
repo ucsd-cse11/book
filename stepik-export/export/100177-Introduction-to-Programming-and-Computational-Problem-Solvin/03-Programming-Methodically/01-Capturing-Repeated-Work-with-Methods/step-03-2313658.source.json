@@ -1,0 +1,63 @@
+{
+  "id": 2313658,
+  "lesson": 559662,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>In addition to the method definition being added, our new example contains another difference. In each of the <code>distAfter___</code> field definitions, the right-hand side has been changed to a use of the <code>this.distanceAfter()</code> method name, followed by the number of elapsed seconds in parentheses. We call this type of expression a <strong style=\"font-size: inherit;\">method call</strong>.</p>\n\n<p>We can run this program and see that we get the same values as before:</p>\n\n<pre><code class=\"language-no-highlight\">Distance:\n---------------\n new Distance:1(\n  this.gravity = 10\n  this.distAfter2sec = 20\n  this.distAfter4sec = 80\n  this.distAfter6sec = 180)</code></pre>\n\n<p>So how does this end up giving us the same answer? The key is the interaction between the <strong>method definition</strong> and the <strong>method call</strong>. When Java looks at the method call, it proceeds to do the following:</p>\n\n<ol>\n\t<li>Replaces the parameter name with the values provided in the method call.</li>\n\t<li>Performs the calculation in the method body (the part after <code>return</code>, in this case).</li>\n\t<li>Returns the calculated value.</li>\n</ol>\n\n<p>So in the case of the first method call:</p>\n\n<pre><code class=\"language-no-highlight\">this.distanceAfter(2);</code></pre>\n\n<p>The calculation that is performed actually looks like the following:</p>\n\n<pre><code class=\"language-no-highlight\">(this.gravity / 2) * (2 * 2);</code></pre>\n\n<p>As we can see, the calculation is actually just a version of the <code>distanceAfter()</code> method body, in which all uses of <code>seconds</code> have been replaced by <code>2</code>. We say that we used the value <code>2</code> as an <strong>argument</strong>, which became the value of the <strong>parameter</strong> <code>seconds</code> in the actual method.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2313658",
+  "subscriptions": [
+    "31-77-2313658",
+    "30-77-2313658"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3322,
+  "passed_by": 3322,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2292750,
+  "create_date": "2021-08-09T23:22:56Z",
+  "update_date": "2021-09-18T23:31:34Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

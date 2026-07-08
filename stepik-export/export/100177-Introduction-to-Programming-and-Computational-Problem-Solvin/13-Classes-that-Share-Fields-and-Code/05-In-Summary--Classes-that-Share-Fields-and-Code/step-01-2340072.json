@@ -1,0 +1,50 @@
+{
+  "id": 2340072,
+  "lesson": 575959,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>We saw that:</p>\n\n<ul>\n\t<li>\n\t<p><code>abstract</code> classes and<strong> inheritance</strong> allow us to share implementations of methods and definitions of fields and constructors across multiple classes.</p>\n\t</li>\n\t<li>\n\t<p>The <code>super</code> keyword, when used in a constructor, calls the <strong>superclass</strong>’s constructor, which can help share initialization.</p>\n\t</li>\n\t<li>\n\t<p>We can draw diagrams of class relationships to show the <strong>class hierarchy</strong> of the program.</p>\n\t</li>\n\t<li>\n\t<p>We can use the words <strong>parent/child</strong> and <strong>superclass/subclass</strong> to describe the relationship between classes when speaking and writing.</p>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2340072",
+  "subscriptions": [
+    "31-77-2340072",
+    "30-77-2340072"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2397,
+  "passed_by": 2397,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2319164,
+  "create_date": "2021-08-24T06:53:55Z",
+  "update_date": "2021-08-24T06:55:19Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

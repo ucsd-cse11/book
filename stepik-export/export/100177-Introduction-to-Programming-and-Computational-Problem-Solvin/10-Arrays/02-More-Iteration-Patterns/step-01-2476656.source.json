@@ -1,0 +1,87 @@
+{
+  "id": 2476656,
+  "lesson": 579633,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Just as we can use references to objects as arguments to methods, we can use references to arrays. So, for example, we could write a <code>sum()</code> method over arrays of <code>double</code>s, and use it on one of the examples we just created:</p>\n\n<p><iframe height=\"700px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/6737198012875249501ac72f81b51b0f20785/welcome/1091908/ExamplesArrays\" width=\"100%\"></iframe></p>\n\n<p>There are no new Java constructs involved here. The for-each loop is the same as in the last section, where the type of the element variable is <code>double</code>, the name of the element variable is <code>num</code>, and the array is an array of <code>double</code>s. Just as we wrote <code>String[]</code> for the parameter type of <code>main()</code>, we write <code>double[]</code> for the parameter type of <code>sum()</code>. In addition, we made sure that this method would work for <em>empty</em> arrays by adding an example for that case.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "What is the result stored in <code>sum1</code>?",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "114.7",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": false,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2476656",
+  "subscriptions": [
+    "31-77-2476656",
+    "30-77-2476656"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2990,
+  "passed_by": 2934,
+  "correct_ratio": 0.8996020814202632,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2455748,
+  "create_date": "2021-10-22T04:24:43Z",
+  "update_date": "2021-10-24T21:30:48Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

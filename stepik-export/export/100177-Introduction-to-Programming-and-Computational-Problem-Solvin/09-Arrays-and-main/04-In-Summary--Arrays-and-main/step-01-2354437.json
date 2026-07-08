@@ -1,0 +1,50 @@
+{
+  "id": 2354437,
+  "lesson": 579630,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>In this module, we learned that:</p>\n\n<ul>\n\t<li>\n\t<p>We can represent a <strong>collection</strong> of data using an <strong>Array</strong>. An array can contain multiple values, and its contents are stored in memory.</p>\n\t</li>\n\t<li>\n\t<p>A <strong><code>static</code></strong> method is not called on an instance of the class that it's in. Rather, it is called by <code>&lt;Class name&gt;.methodName()</code></p>\n\t</li>\n\t<li>\n\t<p>A program that has a <strong><code>main()</code></strong> method can be run using <code>javac</code> and <code>java</code>, and the program will start running at the beginning of the <code>main()</code> method.</p>\n\t</li>\n\t<li>\n\t<p>A return type of <strong><code>void</code></strong> in Java indicates that the method does not return any value.</p>\n\t</li>\n\t<li>\n\t<p>Including the line <code>System.out.println(&lt;some value&gt;);</code> in our program allows us to print some output to the terminal.</p>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2354437",
+  "subscriptions": [
+    "31-77-2354437",
+    "30-77-2354437"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3000,
+  "passed_by": 3000,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2333529,
+  "create_date": "2021-08-30T18:22:57Z",
+  "update_date": "2021-10-18T08:08:42Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

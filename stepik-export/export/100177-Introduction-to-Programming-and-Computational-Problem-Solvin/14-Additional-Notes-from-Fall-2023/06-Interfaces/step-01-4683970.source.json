@@ -1,0 +1,67 @@
+{
+  "id": 4683970,
+  "lesson": 1129704,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Let's consider another example where creating an interface will make our coding work a lot easier.</p>\n\n<p>Suppose we want to create classes that represent things in a Cartesian coordinate plane (a really fancy way to say \"the plots with x and y axes that you might have had to draw for math class\"). Perhaps the most basic thing we can define in this plane is a point, which has an x-coordinate and a y-coordinate. We can calculate distance between two points using the distance formula: <span class=\"math-tex\">\\(\\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}\\)</span></p>\n\n<pre><code class=\"language-java\">class Point {\n    int x;\n    int y;\n    Point(int x, int y) {\n        this.x = x;\n        this.y = y;\n    }\n    double distance(Point other) {\n        return Math.sqrt(Math.pow((other.x - this.x), 2) + Math.pow((other.y - this.y), 2));\n    }\n}</code></pre>\n\n<p>The next thing that might be useful to define are regions of space, like circles and rectangles. We describe these regions using points (e.g. center of a circle, corners of a rectangle), so these classes will contain <code>Point</code>s as fields. Suppose also that we're interested in checking whether or not a given point is inside of a region. This kind of problem is relevant to computer graphics, geographic information systems, robotics, and game development, just to name a few.</p>\n\n<pre><code class=\"language-java\">class CircleRegion {\n    Point center;\n    double radius;\n    CircleRegion(Point center, double radius) {\n        this.center = center;\n        this.radius = radius;\n    }\n    boolean contains(Point p) {\n        return this.center.distance(p) &lt; this.radius;\n    }\n}\nclass RectRegion {\n    Point lowerLeft;\n    Point upperRight;\n    RectRegion(Point lowerLeft, Point upperRight) {\n        this.lowerLeft = lowerLeft;\n        this.upperRight = upperRight;\n    }\n    boolean contains(Point p) {\n        return (this.lowerLeft.x &lt; p.x &amp;&amp; this.lowerLeft.y &lt; p.y) &amp;&amp;\n               (this.upperRight.x &gt; p.x &amp;&amp; this.upperRight.y &gt; p.y);\n    }\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4683970",
+  "subscriptions": [
+    "31-77-4683970",
+    "30-77-4683970"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 459,
+  "passed_by": 459,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4663067,
+  "create_date": "2023-11-06T09:11:04Z",
+  "update_date": "2023-11-06T09:12:25Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4683970-1",
+  "discussion_threads": [
+    "77-4683970-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

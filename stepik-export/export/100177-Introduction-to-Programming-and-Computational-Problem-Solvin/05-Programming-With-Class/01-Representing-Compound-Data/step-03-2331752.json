@@ -1,0 +1,50 @@
+{
+  "id": 2331752,
+  "lesson": 573908,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<pre><code class=\"language-java\">//code from before, for reference\n\nclass Student {\n  String studentID;\n  boolean inState;\n  int birthYear;\n\n  Student(String studentID, boolean inState, int birthYear) {\n    this.studentID = studentID;\n    this.inState = inState;\n    this.birthYear = birthYear;\n  }\n}\n\nclass ExamplesStudent {\n  Student s1 = new Student(\"A12345678\", true, 1996);\n  Student s2 = new Student(\"A98765432\", false, 1993);\n  Student s3 = new Student(\"A18273645\", true, 1999);\n}</code></pre>\n\n<p>There are several parts of this program that are new to us.</p>\n\n<p>First, in the <strong>class definition</strong> for <code>Student</code>, the first three lines are as follows:</p>\n\n<pre><code class=\"language-java\">String studentID;\nboolean inState;\nint birthYear;</code></pre>\n\n<p>These look like field definitions, but they are missing the part with the equals sign and the value. We call these <strong>uninitialized field definitions</strong>, and this is actually the most common variety of field definition we’ll see in the course. We’ll see shortly why they don’t have specific values associated with their definitions.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2331752",
+  "subscriptions": [
+    "31-77-2331752",
+    "30-77-2331752"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3157,
+  "passed_by": 3157,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2310844,
+  "create_date": "2021-08-19T08:24:21Z",
+  "update_date": "2021-10-04T10:07:38Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

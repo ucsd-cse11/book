@@ -1,0 +1,50 @@
+{
+  "id": 2375695,
+  "lesson": 584041,
+  "position": 10,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Now that we have implemented the <code>belowLeftOf()</code> and <code>aboveRightOf()</code> methods, we can run the code from before and make sure that the <code>contains()</code> method properly returns true when the <code>Point</code> is contained within the region.</p>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now! </strong></span>Paste the implementations of <code>belowLeftOf()</code> and <code>aboveRightOf()</code> in the <code>Point</code> class. Run to code and ensure that <code>contains()</code> works as expected.</p>\n\n<p><iframe height=\"1140px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/f715b2929df81ecf8d03ea03ba1ed81420785/welcome/1085767/contains\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2375695",
+  "subscriptions": [
+    "31-77-2375695",
+    "30-77-2375695"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3036,
+  "passed_by": 3036,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2354787,
+  "create_date": "2021-09-09T03:30:58Z",
+  "update_date": "2021-10-10T21:42:19Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,162 @@
+{
+  "id": 2540601,
+  "lesson": 575460,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p><em>(Review the examples from <a href=\"https://stepik.org/lesson/574307/step/1?unit=568892\" rel=\"noopener noreferrer nofollow\">module 8</a> before proceeding with this module. Make sure that you understand interfaces.)</em></p>\n\n<p>In <a href=\"https://stepik.org/lesson/574433/step/1?unit=569019\" rel=\"noopener noreferrer nofollow\">a previous lesson</a>, we saw how we could combine search queries together using combiner-classes like <code>AndQuery</code> and <code>OrQuery</code>. This allowed us to write queries like <code>all3</code>:</p>\n\n<pre><code class=\"language-java\">class ExamplesSearch {\n  ImageData i1 = new ImageData(\"ucsd cse computer science\", \"png\", 600, 400);\n  ImageData i2 = new ImageData(\"data science ai artificial intelligence\", \"png\", 500, 400);\n  ImageQuery lg1 = new LargerThan(600, 400);\n  ImageQuery me1 = new MatchesExtension(\"png\");\n  ImageQuery ck1 = new ContainsKeyword(\"ucsd\");\n  ImageQuery all3 = new AndQuery(new AndQuery(this.lg1, this.me1), this.ck1);\n}</code></pre>\n\n<p>One thing that gets a bit verbose here is the <em>construction</em> of the combiners. If we make large queries, we end up repeating <code>new AndQuery</code> quite a few times, which is a lot of typing:</p>\n\n<pre><code class=\"language-java\">class ExamplesSearch {\n  ImageQuery ck1 = new ContainsKeyword(\"ucsd\");\n  ImageQuery ck2 = new ContainsKeyword(\"data\");\n  ImageQuery ck3 = new ContainsKeyword(\"science\");\n  ImageQuery ck4 = new ContainsKeyword(\"artificial\");\n  ImageQuery ck5 = new ContainsKeyword(\"intelligence\");\n  ImageQuery all5 = new AndQuery(new AndQuery(new AndQuery(new AndQuery(this.ck1, this.ck2), this.ck3), this.ck4), this.ck5);\n}\n</code></pre>\n\n<p>While this isn’t unusable, it’s often nice to find ways to shorten code like this. One idea is to have a method called <code>and()</code> for the various <code>ImageQuery</code> classes. It would take another <code>ImageQuery</code> and produce a new <code>AndQuery</code> of the two. In that case, for example, we could shorten <code>new AndQuery(this.ck1, this.ck2)</code> to <code>this.ck1.and(this.ck2)</code> , which would return an equivalent result.</p>\n\n<p>To implement <code>and()</code>, we’d write, in <code>ContainsKeyword</code>:</p>\n\n<pre><code class=\"language-java\">class ContainsKeyword implements ImageQuery {\n  ...\n  public AndQuery and(ImageQuery other) {\n    return new AndQuery(this, other);\n  }\n}</code></pre>\n\n<p><iframe height=\"820px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/889c85520367e6dd1595bbac472f6da320785/welcome/1095247/ExamplesSearch.java\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Based on the code above, fill in the references that the field values for <code>usingNew</code> and <code>usingAndMethod</code> contain according to the output. <code>usingNew.iq1</code> has been filled in as an example.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code> AndQuery usingNew = new AndQuery(this.ck1, this.ck2); </code><br>\n<code>&nbsp;usingNew.iq1 = ContainsKeyword:4</code><br>\n<code>&nbsp;usingNew.iq2 = </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "ContainsKeyword",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>:</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "5",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><br>\n<code> AndQuery usingAndMethod = this.ck1.and(this.ck2); </code><br>\n<code>&nbsp;usingAndMethod.iq1 = </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "ContainsKeyword",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>:</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "4",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br>\n<code>&nbsp;usingAndMethod.iq2 = </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "ContainsKeyword",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>:</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "5",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2540601",
+  "subscriptions": [
+    "31-77-2540601",
+    "30-77-2540601"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2776,
+  "passed_by": 2340,
+  "correct_ratio": 0.4784621578099839,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2519693,
+  "create_date": "2021-11-21T23:48:50Z",
+  "update_date": "2021-11-22T07:33:06Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

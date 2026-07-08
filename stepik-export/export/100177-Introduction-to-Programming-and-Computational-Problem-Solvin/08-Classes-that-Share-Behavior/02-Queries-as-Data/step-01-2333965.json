@@ -1,0 +1,50 @@
+{
+  "id": 2333965,
+  "lesson": 574391,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>To solve the problem from the previous lesson, let’s step back a bit. We created a class, <code>ImageData</code>, to represent the data for an image, and then we started representing queries with methods. <strong>What if, instead of thinking of each possible query type as a method, we thought of each query as a class?</strong> We could use the data that a user enters for the various search terms to construct an object, and then we can write methods to manipulate those query objects.</p>\n\n<p>Let’s start with something simple. A query for a minimum size can be represented as a class that stores the minimum width and height that we want to check for:</p>\n\n<pre><code class=\"language-java\">class LargerThan {\n  int minWidth, minHeight;\n  LargerThan(int minWidth, int minHeight) {\n    this.minWidth = minWidth;\n    this.minHeight = minHeight;\n  }\n}</code></pre>\n\n<p>Here, we took the parameters—the information from the query—of the <code>largerThan()</code> method from before (added below for reference) and made them into fields of the class that we created to represent the query.</p>\n\n<pre><code>// We learned in the previous lesson that this is not the best way\n// to represent image queries.\n\nclass ImageData {\n  int width;       // the width in pixels\n  int height;      // the height in pixels\n\n  //(default constructor here)\n\n  boolean largerThan(int minWidth, int minHeight) {\n    return this.width &gt;= minWidth &amp;&amp; this.height &gt;= minHeight;\n  }\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2333965",
+  "subscriptions": [
+    "31-77-2333965",
+    "30-77-2333965"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3081,
+  "passed_by": 3081,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313057,
+  "create_date": "2021-08-20T02:18:48Z",
+  "update_date": "2021-09-09T21:28:15Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

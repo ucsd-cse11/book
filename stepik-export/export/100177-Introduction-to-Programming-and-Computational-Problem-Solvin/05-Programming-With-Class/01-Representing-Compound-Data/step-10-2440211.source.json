@@ -1,0 +1,73 @@
+{
+  "id": 2440211,
+  "lesson": 573908,
+  "position": 10,
+  "status": "ready",
+  "block": {
+    "name": "number",
+    "text": "<p>As you might have noticed, the numbers <code>1</code> and <code>2</code> in the references are the same numbers that appear after the colons in the printout:</p>\n\n<pre><code class=\"language-no-highlight\">                    --------here!\n                    |\n                    v\nnew ExamplesStudent:1(\n this.s1 =\n  new Student:2( &lt;------------------and here!\n   this.studentID = \"A12345678\"\n   this.inState = true\n   this.birthYear = 1996)\n ...</code></pre>\n\n<p>The <code>tester</code> library keeps a count of created objects, and labels each object in sequence with the order it was created in. This helps us distinguish objects in the printout. The full printout was as follows:</p>\n\n<pre><code class=\"language-no-highlight\">ExamplesStudent:\n---------------\n new ExamplesStudent:1(\n  this.s1 =\n   new Student:2(\n    this.studentID = \"A12345678\"\n    this.inState = true\n    this.birthYear = 1996)\n  this.s2 =\n   new Student:3(\n    this.studentID = \"A98765432\"\n    this.inState = false\n    this.birthYear = 1993)\n  this.s3 =\n   new Student:4(\n    this.studentID = \"A18273645\"\n    this.inState = true\n    this.birthYear = 1999))</code></pre>\n\n<p>Which corresponds to this picture:</p>\n\n<p><img alt=\"\" height=\"420\" name=\"step11.png\" src=\"https://ucarecdn.stepik.net/1ed7795a-8bbc-4277-a8e2-ec0c627531a9/\" style=\"float: left;\" width=\"430\"></p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<p> </p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>According to the output and to the image that corresponds to the output, how many distinct objects are created in the program?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "options": [
+        {
+          "answer": "4",
+          "max_error": "0"
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2440211",
+  "subscriptions": [
+    "31-77-2440211",
+    "30-77-2440211"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3142,
+  "passed_by": 3104,
+  "correct_ratio": 0.5037084811351177,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2419303,
+  "create_date": "2021-10-04T10:42:58Z",
+  "update_date": "2021-10-04T10:44:11Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

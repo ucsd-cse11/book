@@ -1,0 +1,63 @@
+{
+  "id": 2340049,
+  "lesson": 575953,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Some definitions are useful at this point:</p>\n\n<ul>\n\t<li>\n\t<p>The general space of features where one class <code>extends</code> another and re-uses some methods and/or fields is called <strong>inheritance.</strong> For example, we say that <code>AndQuery</code> <strong>inherits</strong> the <code>and</code> method from the <code>AQuery</code> class, and <code>AndQuery</code> <strong>inherits</strong> the <code>q1</code> field from the <code>AComboQuery</code> class.</p>\n\t</li>\n\t<li>\n\t<p>We call the relationship between classes in a particular program the<strong> class hierarchy</strong> of the program.</p>\n\t</li>\n\t<li>\n\t<p>The relationship between a class and one that it <code>extends</code> has a few names.</p>\n\n\t<ul>\n\t\t<li>\n\t\t<p>One of the most common is to call <code>AComboQuery</code> the <strong>parent class</strong> of <code>AndQuery</code>, and <code>AndQuery</code> the <strong>child class</strong> of <code>AComboQuery</code>. This is commonly used when one class directly extends another.</p>\n\t\t</li>\n\t\t<li>\n\t\t<p>Another group of terms that’s used is <strong>subclass</strong> and <strong>superclass</strong>, corresponding to <code>AndQuery</code> and <code>AComboQuery</code> in this instance. To talk about the relationship between <code>AndQuery</code> and <code>AQuery</code>, which have <code>AComboQuery</code> “between” them in the class hierarchy, we’d say that <code>AndQuery</code> is a <strong>subclass</strong> of <code>AComboQuery</code>, and also that <code>AComboQuery</code> is a <strong>subclass</strong> of AQuery. So the <strong>subclass/superclass</strong> terms are often used for these relationships including more than one step of extension.</p>\n\t\t</li>\n\t</ul>\n\t</li>\n</ul>\n\n<p>Here is the code from before for reference:</p>\n\n<pre><code class=\"language-java\">abstract class AComboQuery extends AQuery {\n  ImageQuery q1, q2;\n  AComboQuery(ImageQuery q1, ImageQuery q2) {\n    this.q1 = q1;\n    this.q2 = q2;\n  }\n}\nclass AndQuery extends AComboQuery {\n  AndQuery(ImageQuery q1, ImageQuery q2) {\n    super(q1, q2);\n  }\n  public boolean matches(ImageData id) {\n    return this.q1.matches(id) &amp;&amp; this.q2.matches(id);\n  }\n}\nclass OrQuery extends AComboQuery {\n  OrQuery(ImageQuery q1, ImageQuery q2) {\n    super(q1, q2);\n  }\n  public boolean matches(ImageData id) {\n    return this.q1.matches(id) || this.q2.matches(id);\n  }\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2340049",
+  "subscriptions": [
+    "31-77-2340049",
+    "30-77-2340049"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2425,
+  "passed_by": 2425,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2319141,
+  "create_date": "2021-08-24T06:09:45Z",
+  "update_date": "2021-08-24T06:17:34Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>In-browser Java examples — prototype</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font-family: system-ui, sans-serif;
+    max-width: 860px; margin: 2rem auto; padding: 0 1rem;
+    line-height: 1.5;
+  }
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.1rem; margin-top: 2.5rem; }
+  #jvm-status {
+    position: sticky; top: 0; z-index: 10;
+    padding: .4rem .8rem; border-radius: .4rem;
+    background: #fdf3d0; color: #333; font-size: .9rem;
+  }
+  #jvm-status.ready { background: #d9f2d9; }
+  .widget { border: 1px solid #8884; border-radius: .5rem; margin: 1rem 0; overflow: hidden; }
+  .widget textarea {
+    display: block; width: 100%; box-sizing: border-box;
+    border: 0; padding: .8rem; resize: vertical;
+    font-family: ui-monospace, monospace; font-size: .9rem;
+    background: #1e1e2e; color: #cdd6f4; min-height: 8rem;
+  }
+  .widget .bar {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .4rem .8rem; background: #8881;
+  }
+  .widget button {
+    font: inherit; padding: .25rem 1.2rem; border-radius: .3rem;
+    border: 1px solid #8886; background: #2d7d46; color: white; cursor: pointer;
+  }
+  .widget button:disabled { opacity: .5; cursor: wait; }
+  .widget .state { font-size: .85rem; opacity: .8; }
+  .widget pre.out {
+    margin: 0; padding: .8rem; font-size: .85rem;
+    background: #11111b; color: #a6e3a1; min-height: 1.2rem;
+    white-space: pre-wrap; max-height: 20rem; overflow-y: auto;
+  }
+  .widget pre.out.err { color: #f38ba8; }
+  details.wrapper-view { font-size: .85rem; padding: .3rem .8rem; background: #8881; }
+  details.wrapper-view pre { opacity: .8; }
+  footer { margin-top: 3rem; font-size: .8rem; opacity: .7; }
+  /* CheerpJ writes stdout/stderr here; we relay it into the active widget */
+  #console { position: absolute; left: -9999px; width: 600px; height: 400px; }
+</style>
+</head>
+<body>
+
+<h1>In-browser Java examples — CheerpJ prototype</h1>
+<p>
+  Real examples from the Stepik/Tech.io course, compiled with <code>javac</code> and run
+  against <code>tester.jar</code> — entirely in your browser. No server-side execution.
+  First run downloads the CheerpJ runtime (~20&nbsp;MB), so give it a moment.
+</p>
+<div id="jvm-status">Loading JVM…</div>
+
+<h2>1. Runs out of the box (lesson 3.1 — “Using Methods”)</h2>
+<p>The tester prints every field of the class, so students see their computed values. Try changing <code>gravity</code>.</p>
+<div class="widget" data-main="Distance2" data-runner="tester">
+<textarea spellcheck="false">class Distance2 {
+  int gravity = 10;
+
+  int distanceAfter(int seconds) {
+    return (this.gravity / 2) * (seconds * seconds);
+  }
+
+  int distAfter2sec = this.distanceAfter(2);
+  int distAfter4sec = this.distanceAfter(4);
+  int distAfter6sec = this.distanceAfter(6);
+}</textarea>
+<div class="bar"><button>Run ▶</button><span class="state"></span></div>
+<pre class="out"></pre>
+</div>
+
+<h2>2. Fill-in-the-blanks exercise (lesson 8.1 — “Image Data”)</h2>
+<p>Straight from the course: replace the <code>____BLANK____</code>s with a test case, then run. (Running as-is shows a compile error, just like on Tech.io.)</p>
+<div class="widget" data-main="ExamplesSearch" data-runner="tester">
+<textarea spellcheck="false" rows="20">import tester.*;
+
+class ImageData {
+  String keywords; // All the keywords, separated by spaces
+  String filetype; // gif, png, jpg, and so on
+  int width;       // the width in pixels
+  int height;      // the height in pixels
+  ImageData(String keywords, String filetype, int width, int height) {
+    this.keywords = keywords;
+    this.filetype = filetype;
+    this.width = width;
+    this.height = height;
+  }
+
+  boolean matchesExtension(String ext) {
+    return this.filetype.equals(ext);
+  }
+}
+
+class ExamplesSearch {
+  ImageData i1 = new ImageData("ucsd cse computer science", "png", 600, 400);
+  boolean testMatchesExtension(Tester t) {
+    return t.checkExpect(i1.matchesExtension("png"), true) &&
+           t.checkExpect(____BLANK1____, ____BLANK2____);
+  }
+}</textarea>
+<div class="bar"><button>Run ▶</button><span class="state"></span></div>
+<pre class="out"></pre>
+</div>
+
+<h2>3. Hidden wrapper (the fa26 direction)</h2>
+<p>
+  The student sees and edits <em>only</em> the field definitions. The page wraps them in a class
+  before compiling — the same trick that will let compact fa26-style code run on a Java-17 (or
+  even Java-8) browser JVM, and lets us intercede around student code in general.
+</p>
+<div class="widget" data-main="Playground" data-runner="tester"
+     data-wrapper="class Playground {&#10;__STUDENT_CODE__&#10;}">
+<textarea spellcheck="false">int theNumberFive = 5;
+int theNumberEight = 8;
+int x = 58;
+int y = 73;
+int sum = x + y;</textarea>
+<div class="bar"><button>Run ▶</button><span class="state"></span></div>
+<details class="wrapper-view"><summary>What actually gets compiled</summary><pre></pre></details>
+<pre class="out"></pre>
+</div>
+
+<footer>
+  Prototype for the fa26 course-page pipeline. Java runs in-browser, powered by
+  <a href="https://cheerpj.com">CheerpJ</a> by Leaning Technologies.
+  Test harness: HtDC <code>tester.jar</code>.
+</footer>
+
+<pre id="console"></pre>
+
+<script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+<script>
+const statusEl = document.getElementById('jvm-status');
+const consoleEl = document.getElementById('console');
+const encoder = new TextEncoder();
+
+const jvmReady = (async () => {
+  await cheerpjInit({ status: 'none' });
+  statusEl.textContent = 'JVM ready — hit Run on any example.';
+  statusEl.classList.add('ready');
+})();
+
+let running = false;
+
+function assemble(widget) {
+  const student = widget.querySelector('textarea').value;
+  const wrapper = widget.dataset.wrapper;
+  const code = wrapper ? wrapper.replace('__STUDENT_CODE__', student) : student;
+  const view = widget.querySelector('details.wrapper-view pre');
+  if (view) view.textContent = code;
+  return code;
+}
+
+async function runWidget(widget) {
+  if (running) return;
+  running = true;
+  const button = widget.querySelector('button');
+  const state = widget.querySelector('.state');
+  const out = widget.querySelector('pre.out');
+  button.disabled = true;
+  out.textContent = '';
+  out.classList.remove('err');
+
+  // Relay CheerpJ console output into this widget's output pane as it appears.
+  consoleEl.textContent = '';
+  const relay = new MutationObserver(() => { out.textContent = consoleEl.innerText; });
+  relay.observe(consoleEl, { childList: true, subtree: true, characterData: true });
+
+  try {
+    await jvmReady;
+    const main = widget.dataset.main;
+    const source = `/str/${main}.java`;
+    cheerpjAddStringFile(source, encoder.encode(assemble(widget)));
+
+    state.textContent = 'compiling…';
+    const rc = await cheerpjRunMain(
+      'com.sun.tools.javac.Main', '/app/tools.jar',
+      '-cp', '/app/tester.jar:/files/', '-d', '/files/', '-nowarn', source);
+    if (rc !== 0) {
+      out.classList.add('err');
+      state.textContent = 'compile error';
+      return;
+    }
+
+    state.textContent = 'running…';
+    await cheerpjRunMain('tester.Main', '/app/tester.jar:/files/', main);
+    state.textContent = 'done';
+  } catch (e) {
+    out.classList.add('err');
+    out.textContent += '\n[page error] ' + e;
+    state.textContent = 'failed';
+  } finally {
+    relay.disconnect();
+    out.textContent = consoleEl.innerText;  // final flush
+    button.disabled = false;
+    running = false;
+  }
+}
+
+for (const widget of document.querySelectorAll('.widget')) {
+  widget.querySelector('button').addEventListener('click', () => runWidget(widget));
+}
+</script>
+</body>
+</html>

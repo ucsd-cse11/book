@@ -1,0 +1,129 @@
+{
+  "id": 2396679,
+  "lesson": 573911,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>There is also a number of ways we can extend this class. We might try to add more authors (the first two examples above actually have multiple authors). We might add a field called <code>subtitle</code>, since the full title of <code>\"Make It Stick\"</code> is a bit long.</p>\n\n<p>We could also add some new methods. We could ask, for instance, if two books have the same author. This would be a method in the <code>Book</code> class that takes in another <code>Book</code> reference and somehow compare the <code>author</code> fields. Let’s work through this next:</p>\n\n<pre><code class=\"language-java\">/*\n  @param other The Book to compare against\n  @return true if this book and other have the same author, false otherwise\n*/\nboolean sameAuthor(Book other) {\n\n}\n\nclass ExamplesBook {\n  Book schemer = new Book(\"The Little Schemer\", \"Daniel P. Friedman\", 40);\n  Book stick = new Book(\"Make It Stick: The Science of Successful Learning\", \"Peter C. Brown\", 13);\n  Book pLaw = new Book(\"Parkinson's Law\", \"C. Northcote Parkinson\", 30);\n  Book reason = new Book(\"The Reasoned Schemer\", \"Daniel P. Friedman\", 38);\n\n  boolean same1 = this.reason.sameAuthor(this.schemer); // should be ???\n  boolean same2 = this.reason.sameAuthor(this.stick); // should be ???\n  boolean same3 = this.schemer.sameAuthor(this.reason); // should be ???\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> What are the expected values for each of the <code>boolean</code>s above? Select the correct options below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>this.reason.sameAuthor(this.schemer)</code> should be ",
+          "options": []
+        },
+        {
+          "type": "select",
+          "text": "",
+          "options": [
+            {
+              "text": "true",
+              "is_correct": true
+            },
+            {
+              "text": "false",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": ".<br><code>this.reason.sameAuthor(this.stick)</code> should be ",
+          "options": []
+        },
+        {
+          "type": "select",
+          "text": "",
+          "options": [
+            {
+              "text": "true",
+              "is_correct": false
+            },
+            {
+              "text": "false",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": ".<br><code>this.schemer.sameAuthor(this.reason)</code> should be ",
+          "options": []
+        },
+        {
+          "type": "select",
+          "text": "",
+          "options": [
+            {
+              "text": "true",
+              "is_correct": true
+            },
+            {
+              "text": "false",
+              "is_correct": false
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2396679",
+  "subscriptions": [
+    "31-77-2396679",
+    "30-77-2396679"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3087,
+  "passed_by": 3057,
+  "correct_ratio": 0.7976066597294484,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2375771,
+  "create_date": "2021-09-14T21:06:12Z",
+  "update_date": "2021-10-05T09:14:42Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

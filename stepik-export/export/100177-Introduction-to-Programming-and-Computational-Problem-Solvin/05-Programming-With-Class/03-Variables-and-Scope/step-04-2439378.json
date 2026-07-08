@@ -1,0 +1,55 @@
+{
+  "id": 2439378,
+  "lesson": 575927,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>In the last step, we saw this program with its corresponding error:</p>\n\n<p><iframe height=\"480px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/ea249b335036fc3858670602cfd5076020785/welcome/1088756/Bad%20Scope%20Experimentation\" width=\"100%\"></iframe></p>\n\n<pre><code class=\"language-no-highlight\">Receipt.java:8: error: cannot find symbol\n    double example1Tip = tip;\n                         ^\n  symbol:   variable tip\n  location: class Receipt\n1 error</code></pre>\n\n<p>This error is telling us that Java cannot “see” the variable <code>tip</code> outside of the method <code>purchaseMessage()</code>, where it's defined.</p>\n\n<p>Variables in Java have what's called a <strong>scope</strong>, which is the part of the program where they can be written without error and refer back to a particular definition. For local variables, the <strong>scope</strong> is the rest of the method in which they are defined. <em>(This is a bit of a simplification, as we'll see later, but it's a good definition for now).</em></p>\n\n<p>This reinforces part of the definition of local variables, which is that they give a name to a value <strong>within a particular method</strong>, which is their <strong>scope</strong>.</p>\n\n<p>Experiment with the parameters <code>customerName</code>, <code>cost</code>, and <code>tipPercent</code>, and with the field name <code>example1</code>. Which of these names have the <strong>same</strong> scope as <code>tip</code>, and which have a different scope?</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Check the names that have the <strong>same</strong> scope as <code>tip</code> below.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2439378",
+  "subscriptions": [
+    "31-77-2439378",
+    "30-77-2439378"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3116,
+  "passed_by": 3064,
+  "correct_ratio": 0.32931126534970634,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2418470,
+  "create_date": "2021-10-04T04:02:24Z",
+  "update_date": "2021-10-04T09:23:12Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

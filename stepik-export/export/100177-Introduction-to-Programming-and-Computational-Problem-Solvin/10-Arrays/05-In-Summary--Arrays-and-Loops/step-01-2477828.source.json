@@ -1,0 +1,63 @@
+{
+  "id": 2477828,
+  "lesson": 606666,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Arrays and Loops</h2>\n\n<p>We've now seen two different styles of loops – element-wise for loops and counted for loops, and several ways to use them to process array data. We've seen how we can <em>access</em> data in arrays by using indices that are counted within a loop, to process command-line arguments or other array data. We've also seen how to <em>create</em> new arrays with a length that we compute with our program, to build arrays out of other values (like with <code>range</code>), or to copy arrays into new arrays with a different size and contents (like with <code>addAtEnd</code>).</p>\n\n<p>Building up computations with arrays, and with collections of data in general, using iteration is one of the most common tasks in programming. We will be seeing these patterns, practicing with them, and building more in future chapters!</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2477828",
+  "subscriptions": [
+    "31-77-2477828",
+    "30-77-2477828"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2966,
+  "passed_by": 2966,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2456920,
+  "create_date": "2021-10-22T15:39:52Z",
+  "update_date": "2021-10-22T15:42:43Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

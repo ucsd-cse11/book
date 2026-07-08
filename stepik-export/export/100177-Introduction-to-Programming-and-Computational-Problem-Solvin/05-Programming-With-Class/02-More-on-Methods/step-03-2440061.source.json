@@ -1,0 +1,101 @@
+{
+  "id": 2440061,
+  "lesson": 597266,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<pre><code class=\"language-java\">//code from the previous step, for reference\n\nclass ExamplesStudent {\n  Student s1 = new Student(\"A12345678\", true, 1996);\n  Student s2 = new Student(\"A98765432\", false, 1993);\n  Student s3 = new Student(\"A18273645\", true, 1999);\n\n  boolean bb1 = this.s1.bornBefore(1999); // should be true\n  boolean bb2 = this.s1.bornBefore(1995); // should be false\n  boolean bb3 = this.s2.bornBefore(1995); // should be true\n  boolean bb4 = this.s3.bornBefore(10); // should be false\n}</code></pre>\n\n<p>Note a key difference here — we don’t write <code>this</code> in front of the dot operator (i.e. <code>.</code>) for these method calls. We use the <strong>field</strong> containing a <strong>reference</strong> to a <code>Student</code> object. We must do this because the <code>bornBefore()</code> method is defined only for <code>Student</code> objects, since it is in the <code>Student</code> class. If we used <code>this.bornBefore()</code> instead, we’d get an error. This is a key point: we must call methods using a <strong>reference</strong> to an <strong>object</strong> whose class has the method that is being called.</p>\n\n<p>Note also that the four method calls use three different object references. The first two use the reference stored in <code>s1</code>, while the third and fourth use those stored in <code>s2</code> and <code>s3</code> respectively. The behavior of the method must somehow depend on the particular reference used, since we expect <code>bb2</code> and <code>bb3</code> to have different answers, even though the same argument is passed in.</p>\n\n<p>Here’s the key idea that makes this work out: when calling a method, the value of <code>this</code> used when calculating that method is always the same as the reference that was used to call the method. So in the call for <code>bb2</code>, for example, the reference used to call it is the reference stored in <code>s1</code>, while for <code>bb3</code>, the reference is the one stored in <code>s2</code>. This means that the uses of <code>this</code> within the <code>bornBefore()</code> method will reflect that difference for the two calls. With that in mind, let’s fill in the body of the <code>bornBefore()</code> method:</p>\n\n<pre><code class=\"language-java\">/*\n  @param year The year to check against, which should be less than the\n  current year and greater than 0\n\n  @return true if this student's birth year is less than the given year,\n  false otherwise\n*/\nboolean bornBefore(int year) {\n  return this.birthYear &lt; year;\n}</code></pre>\n\n<p>In each of the examples, we can use this rule about <code>this</code> to understand what value <code>this.birthYear</code> evaluates to. In the first two examples, it evaluates to <code>1996</code>. In the call for <code>bb3</code>, it evaluates to <code>1993</code>, and in the call for <code>bb4</code>, it evaluates to <code>1999</code>. All of this tells us that the answers should work out correctly, since the four method calls end up performing these four comparisons:</p>\n\n<pre><code class=\"language-java\">1996 &lt; 1999 // is true, using the value from the first student\n1996 &lt; 1995 // is false, using the value from the first student\n1993 &lt; 1995 // is true, using the value from the second student\n____ &lt; ____   // is false, using the value from the third student</code></pre>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Fill in the two blanks for the last comparison in the above example.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "1999",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "10",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#",
+    "comment": "#"
+  },
+  "progress": "77-2440061",
+  "subscriptions": [
+    "31-77-2440061",
+    "30-77-2440061"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3137,
+  "passed_by": 3087,
+  "correct_ratio": 0.4309530425118088,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2419153,
+  "create_date": "2021-10-04T09:44:24Z",
+  "update_date": "2021-10-04T09:44:24Z",
+  "discussions_count": 2,
+  "discussion_proxy": "77-2440061-1",
+  "discussion_threads": [
+    "77-2440061-1",
+    "77-2440061-2"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

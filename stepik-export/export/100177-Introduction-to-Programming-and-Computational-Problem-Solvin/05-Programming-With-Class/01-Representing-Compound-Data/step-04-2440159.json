@@ -1,0 +1,55 @@
+{
+  "id": 2440159,
+  "lesson": 573908,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<pre><code class=\"language-java\">//code from before, for reference\n\nclass Student {\n  String studentID;\n  boolean inState;\n  int birthYear;\n\n  Student(String studentID, boolean inState, int birthYear) {\n    this.studentID = studentID;\n    this.inState = inState;\n    this.birthYear = birthYear;\n  }\n}\n\nclass ExamplesStudent {\n  Student s1 = new Student(\"A12345678\", true, 1996);\n  Student s2 = new Student(\"A98765432\", false, 1993);\n  Student s3 = new Student(\"A18273645\", true, 1999);\n}</code></pre>\n\n<p>Second, the <strong>class definition</strong> for <code>Student</code> also has this block of code:</p>\n\n<pre><code class=\"language-java\">Student(String studentID, boolean inState, int birthYear) {\n  this.studentID = studentID;\n  this.inState = inState;\n  this.birthYear = birthYear;\n}</code></pre>\n\n<p>At first glance, this looks like a method — it has the name <code>Student</code>, a list of parameters, and what looks like a method body. Remember, though, that a method header has two components before the parameter list: a return type and a method name.</p>\n\n<p>Instead of having both of those components, however, here we only have the name <code>Student</code> before the parameters. This block of code is not a method definition (though it <em>is</em> related). We call this block of code a <strong>constructor</strong>. A constructor starts with the name of the class that it is in (in this case, <code>Student</code>). Then, it has a list of parameters and a constructor body. For now, we won’t go into detail about what this method body does. We’re just going to observe that the parameters match the names of the fields that were defined earlier in the class, and that there is a line in the method body for each field that looks like <code>this.fieldName = fieldName</code>. In each <strong>class</strong> that we write for the next few lectures, we’ll write a constructor that follows this pattern.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Select all the options below that are names of parameters in the constructor.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2440159",
+  "subscriptions": [
+    "31-77-2440159",
+    "30-77-2440159"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3148,
+  "passed_by": 3111,
+  "correct_ratio": 0.9047756874095514,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2419251,
+  "create_date": "2021-10-04T10:11:37Z",
+  "update_date": "2021-10-04T10:11:37Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,53 @@
+{
+  "id": 2434884,
+  "lesson": 568133,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>So far, we’ve used Java to do things that a calculator could do, with the notable exception of <code>String</code>s. We introduced methods mainly as a way to enhance our calculator-like behavior. In this section, we’ll go further and start doing work that’s unique to computation — making decisions based on data.</p>\n\n<p>We’ve used <code>+</code>, <code>-</code>, <code>/</code>, and <code>*</code> to perform arithmetic on numbers (and in the case of <code>+</code>, append <code>String</code>s). Mathematically, there’s a natural next set of operations to try on numbers — to compare them! Operators like <code>&lt;</code> have meaning in math, and they also have meaning in Java. We can try them out:</p>\n\n<pre><code class=\"language-java\">class Comparisons {\n  boolean fourIsLessThanFive = 4 &lt; 5;\n  boolean fiveIsLessThanFour = 5 &lt; 4;\n}</code></pre>\n\n<p>Here, we’re using the <code>&lt;</code> operator to compare <code>5</code> and <code>4</code>. Run the program to see the output.</p>\n\n<p><iframe height=\"470px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/42c0b09a650de9fe96daa5514f780afa20785/welcome/1088384/Using%20Conditions\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Fill in the blanks based on the output of the program.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2434884",
+  "subscriptions": [
+    "31-77-2434884",
+    "30-77-2434884"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3289,
+  "passed_by": 3171,
+  "correct_ratio": 0.9581714968628623,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2413976,
+  "create_date": "2021-10-01T07:04:32Z",
+  "update_date": "2021-10-01T07:21:23Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

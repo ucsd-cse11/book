@@ -1,0 +1,53 @@
+{
+  "id": 2359764,
+  "lesson": 573068,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Sometimes, we need to combine more than one comparison result. For example, in this course (and in many other courses) you will need both a passing average grade <em>and</em> over half the credit on the final to pass overall. In order to write a function that calculates whether a student passed the course or not, we will need to consider both of these criteria.</p>\n\n<p>There are two operators we can use for combining booleans: <code>&amp;&amp;</code> and <code>||</code>.</p>\n\n<ul>\n\t<li>The <code>&amp;&amp;</code> operator (pronounced “and”) evaluates to <code>true</code> if both operands are <code>true</code>, and <code>false</code> otherwise.</li>\n\t<li>The <code>||</code> operator (pronounced “or”) evaluates to <code>true</code> if either or both operand(s) is <code>true</code>, and <code>false</code> otherwise.</li>\n</ul>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Fill in the blanks below based on whether the corresponding expression evaluates to <code>true</code> or <code>false</code>. (As an example, <code>true || false</code> evaluates to <code>true</code> because the operand on the left is <code>true</code>.)</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2359764",
+  "subscriptions": [
+    "31-77-2359764",
+    "30-77-2359764"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3155,
+  "passed_by": 3124,
+  "correct_ratio": 0.7328671328671329,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2338856,
+  "create_date": "2021-09-02T07:57:59Z",
+  "update_date": "2021-10-01T06:51:48Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

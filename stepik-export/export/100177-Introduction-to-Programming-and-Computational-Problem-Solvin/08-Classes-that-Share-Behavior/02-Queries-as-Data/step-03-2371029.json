@@ -1,0 +1,55 @@
+{
+  "id": 2371029,
+  "lesson": 574391,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<pre><code>//code from previous step\n\nclass LargerThan {\n  int minWidth, minHeight;\n  //(default constructor here)\n\n  boolean matches(ImageData id) {\n    return id.width &gt;= this.minWidth &amp;&amp; id.height &gt;= this.minHeight;\n  }\n}</code></pre>\n\n<p>We haven’t changed the actual calculation that’s happening. We just moved data around so it is first stored in the fields, and then we compared that data in the <code>matches()</code> method, rather than doing it in the <code>largerThan()</code> method of <code>ImageData</code>.</p>\n\n<p>We can repeat this process for the extension query:</p>\n\n<p><iframe height=\"600px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/487b8c1cc8796b8ab9d0f87474a8ac9420785/welcome/1085955/matches\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Select all the options to replace <code>/* FILL IN */</code> that would make the <code>matches()</code> method pass all of the tests. (Hint: when running these options, make sure to scroll down to see the entire output)</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2371029",
+  "subscriptions": [
+    "31-77-2371029",
+    "30-77-2371029"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3036,
+  "passed_by": 2956,
+  "correct_ratio": 0.21726734410410117,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2350121,
+  "create_date": "2021-09-07T08:37:17Z",
+  "update_date": "2021-10-13T02:48:21Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

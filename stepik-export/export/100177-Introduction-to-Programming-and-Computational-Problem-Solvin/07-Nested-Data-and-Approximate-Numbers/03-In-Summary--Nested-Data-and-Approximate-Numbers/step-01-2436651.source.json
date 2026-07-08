@@ -1,0 +1,63 @@
+{
+  "id": 2436651,
+  "lesson": 596555,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>In this module, we saw:</p>\n\n<ul>\n\t<li>\n\t<p>Examples of classes that contain fields of the types of other classes we wrote – <em>nested data</em>.</p>\n\t</li>\n\t<li>\n\t<p>Using <strong>wish lists</strong> to keep track of methods we should implement next, in order to break down a larger problem.</p>\n\t</li>\n\t<li>\n\t<p>Examples of <code>double</code>s, which can represent fractional numbers, but only approximately.</p>\n\t</li>\n\t<li>\n\t<p>The built-in module <code>Math</code> (see the documentation <a href=\"https://docs.oracle.com/javase/9/docs/api/java/lang/Math.html\" rel=\"noopener noreferrer nofollow\">here</a>), which has methods that we can call to perform calculations such as square root.</p>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2436651",
+  "subscriptions": [
+    "31-77-2436651",
+    "30-77-2436651"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3053,
+  "passed_by": 3053,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2415743,
+  "create_date": "2021-10-02T06:49:47Z",
+  "update_date": "2021-10-10T23:04:04Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

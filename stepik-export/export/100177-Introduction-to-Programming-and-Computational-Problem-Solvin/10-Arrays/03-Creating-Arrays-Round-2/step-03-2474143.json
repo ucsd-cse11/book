@@ -1,0 +1,53 @@
+{
+  "id": 2474143,
+  "lesson": 605734,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>This leaves us with a question. If the arrays get created full of default values, how can we create an array that contains the values we want? The answer is the second new feature we need, which is <strong>array assignment</strong>. This assigns values into the indices in an array, and the syntax is:</p>\n\n<pre><code class=\"language-java\">someArray[index] = newVal;</code></pre>\n\n<p>We can see this in action with a simple method that creates a fixed-size array and sets its contents:</p>\n\n<pre><code class=\"language-java\">int[] simpleArrayCreator() {\n  int[] nums = new int[3];\n  nums[0] = 88;\n  nums[1] = 95;\n  nums[2] = 1000;\n  return nums;\n}</code></pre>\n\n<p>As this method runs, here’s what happens:</p>\n\n<p><img alt=\"\" height=\"242\" name=\"create-array.gif\" src=\"https://ucarecdn.stepik.net/87f19659-629f-4903-b3c3-a110e807c33d/\" width=\"464\"></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Fill in the values that will be in the nums array after the program below runs.</h3>\n\n<pre><code>class ArrayExample {\n  int[] nums = new int[5];\n  nums[0] = 9;\n  nums[2] = -1;\n  nums[3] = 5;\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2474143",
+  "subscriptions": [
+    "31-77-2474143",
+    "30-77-2474143"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2945,
+  "passed_by": 2910,
+  "correct_ratio": 0.47306943543153795,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2453235,
+  "create_date": "2021-10-20T18:44:07Z",
+  "update_date": "2021-10-20T18:44:07Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

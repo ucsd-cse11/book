@@ -1,0 +1,74 @@
+{
+  "id": 2334156,
+  "lesson": 574433,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>So far, we’ve represented queries themselves as data and have identified their common behavior: the <code>matches()</code> method. We expressed this in Java by defining an interface named <code>ImageQuery</code> . We indicated that both <code>LargerThan</code> and <code>MatchesExtension</code> use this interface by using <code>implements</code>. Next, we’ll use this idea to build a new class that represents combining two queries to make a new query, which will return true only if both subqueries return true.</p>\n\n<p>We’ll call it <code>AndQuery</code>:</p>\n\n<pre><code class=\"language-java\">class AndQuery {\n  ImageQuery iq1, iq2;\n  AndQuery(ImageQuery iq1, ImageQuery iq2) {\n    this.iq1 = iq1;\n    this.iq2 = iq2;\n  }\n  boolean matches(ImageData id) {\n    return this.iq1.matches(id) &amp;&amp; this.iq2.matches(id);\n  }\n}\n</code></pre>\n\n<p>Let’s try it in an example:</p>\n\n<p><iframe height=\"715px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/2a13e51e70ee291d4c662ee22e53c7c120785/welcome/1089189/AndQuery\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>What is the expected value of <code>this.aq2.matches(i1)</code>?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "pattern": "false",
+      "use_re": false,
+      "match_substring": false,
+      "case_sensitive": true,
+      "code": "# def check(reply):\n#     \"\"\"Evaluate the learner's reply.\n#\n#     It should return 1 or True for the correct reply and 0 or False\n#     for the incorrect one.\n#\n#     A partial solution may be scored using a float number from the\n#     interval (0, 1). In such a case the learner total score for the\n#     problem will be 'step cost' * 'score'.\n#\n#     :param reply: a string that is the learner's reply to the problem\n#     :return: a score number (int or float) in range [0, 1]\n#\n#     \"\"\"\n#     return reply == \"Hello\"\n\n# def solve():\n#     \"\"\"Return a correct reply. This function is *optional*.\n#\n#     It is used to test the correctness of the 'check' function.\n#\n#     :return: a string that is a correct reply to the problem\n#\n#     \"\"\"\n#     return \"Hello\"",
+      "is_text_disabled": false,
+      "is_file_disabled": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2334156",
+  "subscriptions": [
+    "31-77-2334156",
+    "30-77-2334156"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3018,
+  "passed_by": 2732,
+  "correct_ratio": 0.5360202492211839,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313248,
+  "create_date": "2021-08-20T07:05:33Z",
+  "update_date": "2021-10-13T07:12:17Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

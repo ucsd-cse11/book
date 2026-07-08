@@ -1,0 +1,54 @@
+{
+  "id": 2446417,
+  "lesson": 573912,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Let's look at that output again:</p>\n\n<pre><code>Ran 7 tests.\n1 test failed.\n\nFailed test results: \n--------------\n\nError in test number 7\n\ntester.ErrorReport: Error trace:\n        at ExamplesBook.testSalePrice(ExamplesBook.java:36)\n        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n        at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)\nactual:...........................................expected:\n\n40................................................30\n\n\n--- END OF TEST RESULTS ---</code></pre>\n\n<p>The failed test prints the result of calling the method on the left, and on the right, the result we originally wrote down as the expected answer in the test appears. This helps us quickly see which test has failed.</p>\n\n<p>It’s important to note the number of tests that ran — the message says that 7 tests ran and 1 failed (so 6 of them passed), but we wrote 9 uses of <code>checkExpect</code>! This happened because while all test methods always run, an individual test method stops when the first <code>checkExpect</code> within it fails. In this case, the first check inside one of the test methods failed, so the other two didn’t <code>checkExpect</code>s did not run. That accounts for the difference.</p>\n\n<p>This is often useful because it prevents the test output from being overwhelming and reporting all of the different ways things are failing, since multiple tests often fail for the same reason. But if we really want tests to run even when others fail, we can always put them into separate <code>test</code> methods.</p>\n\n<p>(Oh, and what was the bug? It was a change in the order of operations in the <code>salePrice</code> method that did integer division on <code>(percentage / 100)</code>, which always produced 0.)</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-2446417",
+  "subscriptions": [
+    "31-77-2446417",
+    "30-77-2446417"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3045,
+  "passed_by": 3045,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2425509,
+  "create_date": "2021-10-08T03:34:58Z",
+  "update_date": "2021-10-08T07:56:01Z",
+  "discussions_count": 1,
+  "discussion_proxy": "77-2446417-1",
+  "discussion_threads": [
+    "77-2446417-1"
+  ]
+}

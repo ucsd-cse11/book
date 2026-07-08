@@ -1,0 +1,53 @@
+{
+  "id": 2434876,
+  "lesson": 568133,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "matching",
+    "text": "<p>Notice that in the previous step, the output of the method was always 0, which is expected, given that we set the return value to 0. It's nice that we can run the program, see all <code>0</code>s, and know our program doesn't have any bad typos so far.</p>\n\n<p>With that, we just need to work on the method body. We know now that we can compare numbers, but that on its own isn’t enough to solve the problem. We need to have the program make a <em>decision</em> based on the result of the comparison. To do this, we’re going to introduce a new kind of syntax that we can use in method bodies: the <code>if</code> statement. An <code>if</code> statement takes the following form:</p>\n\n<pre><code class=\"language-java\">if(someBooleanCalculation) {\n  ... someResultIfTrue ...\n}\nelse {\n  ... someResultIfFalse ...\n}</code></pre>\n\n<p>In our case, the boolean calculation we need to check is if the number of hours is greater or less than 40, which we get from the problem description. So we can start the method body like this:</p>\n\n<pre><code class=\"language-java\">// Calculate weekly pay at the given rate and number of hours worked.\n// If hours is above 40, pay at double the rate for hours beyond 40.  Pay at\n// rate for the first 40 hours.  If the number of hours is not more than 40,\n// don't add any overtime.\nint weekly(int hours, int rate) {\n  if(hours &gt; 40) {\n    // ... answer if greater than 40 ...\n  }\n  else {\n    // ... answer if not more than 40 ...\n  }\n}\n\nint exactly40 = this.weekly(40, 10); // Should be 400\nint someOvertime = this.weekly(45, 10); // Should be 400 + 100, total 500\nint lessThan40 = this.weekly(30, 20); // Should be 600</code></pre>\n\n<p>Now, we can use what we know about getting results from methods by using <code>return</code> to fill in the two comments above:</p>\n\n<p><iframe height=\"785px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/991fc40260fa23a8040a867c0c8d28ff20785/welcome/1088457/Using%20Conditions\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Run the program above and match the test cases with their values.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2434876",
+  "subscriptions": [
+    "31-77-2434876",
+    "30-77-2434876"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3181,
+  "passed_by": 3144,
+  "correct_ratio": 0.9666258420085732,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2413968,
+  "create_date": "2021-10-01T06:38:48Z",
+  "update_date": "2021-10-02T06:32:35Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,50 @@
+{
+  "id": 2331838,
+  "lesson": 571274,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<pre><code class=\"language-java\">class MadLibs {\n  /*\n    Places the given adjective and number into the sentence template to\n    create a full sentence.\n  */\n  // NOTE: String has been changed to int in the return type below.\n  int fillIn(String adjective, int number) {\n    return \"The professor's explanation was \" + adjective +\n        \", probably because he's been teaching for \" + number + \" years.\";\n  }\n}</code></pre>\n\n<p>The actual error here is that the body of the method is returning a <code>String</code>, and the <strong>return type</strong> says that the method must return an <code>int</code>. Java reports an error because of this mismatch, but it doesn’t have any information about whether we made a mistake in the method body, or if we wrote down the wrong return type. It’s simply reporting that there’s an inconsistency.</p>\n\n<p>This means it is crucial that when we see an error message, we carefully read the area that’s pointed to by the error, but also that we keep in mind that Java, when reporting errors, is not particularly sophisticated. Recall that the error we introduced here is a mismatch between the <strong>return type</strong> and the <strong>method body</strong>, and the fix is to change the <strong>return type</strong> back to <code>String</code>. You might think, “That’s obvious, we just made that small change.” However, it’s quite easy to make a small mistake or typo, and then be led astray by the error messages. This is why it’s very important to have tools like the design recipe, so we can go back and check our work with our own process, rather than relying on error messages that aren’t always reliable indicators of our mistake.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2331838",
+  "subscriptions": [
+    "31-77-2331838",
+    "30-77-2331838"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3244,
+  "passed_by": 3244,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2310930,
+  "create_date": "2021-08-19T08:59:24Z",
+  "update_date": "2021-09-22T05:05:37Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

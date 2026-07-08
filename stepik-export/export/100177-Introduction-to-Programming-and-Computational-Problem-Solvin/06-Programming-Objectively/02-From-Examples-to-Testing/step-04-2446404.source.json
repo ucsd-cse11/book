@@ -1,0 +1,78 @@
+{
+  "id": 2446404,
+  "lesson": 573912,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>We can add more tests in two ways. First, we can use multiple calls to <code>checkExpect()</code> together in the test method and combine them together with <code>&amp;&amp;</code>:</p>\n\n<pre><code class=\"language-java\">// We can write this instead of all the salePrice() examples:\nboolean testSalePrice(Tester t) {\n  return t.checkExpect(this.schemer.salePrice(25), 30) &amp;&amp;\n         t.checkExpect(this.stick.salePrice(50), 7) &amp;&amp;\n         t.checkExpect(this.pLaw.salePrice(10), 27);\n}</code></pre>\n\n<p>This produces the following:</p>\n\n<pre><code class=\"language-no-highlight\">---------------\n\nRan 3 tests.\nAll tests passed.\n\n--- END OF TEST RESULTS ---</code></pre>\n\n<h3><span style=\"color: #ff4363;\"><strong>Do Now!</strong></span> Based on what you see here, what must the return type of <code>checkExpect</code> be? </h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "pattern": "boolean",
+      "use_re": false,
+      "match_substring": true,
+      "case_sensitive": true,
+      "code": "# def check(reply):\n#     \"\"\"Evaluate the learner's reply.\n#\n#     It should return 1 or True for the correct reply and 0 or False\n#     for the incorrect one.\n#\n#     A partial solution may be scored using a float number from the\n#     interval (0, 1). In such a case the learner total score for the\n#     problem will be 'step cost' * 'score'.\n#\n#     :param reply: a string that is the learner's reply to the problem\n#     :return: a score number (int or float) in range [0, 1]\n#\n#     \"\"\"\n#     return reply == \"Hello\"\n\n# def solve():\n#     \"\"\"Return a correct reply. This function is *optional*.\n#\n#     It is used to test the correctness of the 'check' function.\n#\n#     :return: a string that is a correct reply to the problem\n#\n#     \"\"\"\n#     return \"Hello\"",
+      "is_text_disabled": false,
+      "is_file_disabled": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#",
+    "comment": "#"
+  },
+  "progress": "77-2446404",
+  "subscriptions": [
+    "31-77-2446404",
+    "30-77-2446404"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3055,
+  "passed_by": 3010,
+  "correct_ratio": 0.6321308724832215,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2425496,
+  "create_date": "2021-10-08T02:46:03Z",
+  "update_date": "2021-10-08T07:35:54Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-2446404-1",
+  "discussion_threads": [
+    "77-2446404-1",
+    "77-2446404-2"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

@@ -1,0 +1,50 @@
+{
+  "id": 2348128,
+  "lesson": 578016,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>A list can contain elements that have the same value. For example, the list below contains duplicate elements.</p>\n\n<p><iframe height=\"700px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/744c81ddad89049c5243e2f61563d4e520785/welcome/1094816/ArrayListExamples.java\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2348128",
+  "subscriptions": [
+    "31-77-2348128",
+    "30-77-2348128"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2878,
+  "passed_by": 2878,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2327220,
+  "create_date": "2021-08-27T00:35:35Z",
+  "update_date": "2021-11-15T07:05:00Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

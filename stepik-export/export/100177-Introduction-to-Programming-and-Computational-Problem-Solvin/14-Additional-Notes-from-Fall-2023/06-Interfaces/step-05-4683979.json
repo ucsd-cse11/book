@@ -1,0 +1,54 @@
+{
+  "id": 4683979,
+  "lesson": 1129704,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>When we create objects of <code>UnionRegion</code> or <code>IntersectRegion</code>, we can either provide arguments of any type that <code>implements Region</code>, or provide arguments of type <code>Region</code>. When we create an object of a type that <code>implements Region</code>, but assign it to a variable of type <code>Region</code>, it is implicitly type casted to <code>Region</code>.</p>\n\n<pre><code class=\"language-java\">CircleRegion cr = new CircleRegion(new Point(3, 4), 5);\nRectRegion rr = new RectRegion(new Point(5, 5), new Point(20, 20));\nUnionRegion ur = new UnionRegion(cr, rr);\n\nRegion cr1 = new CircleRegion(new Point(0, 0), 5);\nRegion rr1 = new RectRegion(new Point(0, 0), new Point(10, 5));\nRegion ir1 = new IntersectRegion(cr1, rr1);</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4683979",
+  "subscriptions": [
+    "31-77-4683979",
+    "30-77-4683979"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 369,
+  "passed_by": 369,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4663076,
+  "create_date": "2023-11-06T09:12:25Z",
+  "update_date": "2023-11-06T09:12:25Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4683979-1",
+  "discussion_threads": [
+    "77-4683979-1"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": 2348200,
+  "lesson": 578016,
+  "position": 9,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>One of the most useful data structures in Java (and in most other programming languages) is a map. A map is a data structure that can store mappings between keys and values. There are two generic types for the HashMap class, the first being the type of the keys and the second being the type of the values.</p>\n\n<p>The method <code>put()</code> is used to add a new key-value pair to the map. The first argument is the key and the second is the value.</p>\n\n<p>The following program creates a <code>HashMap</code> of a student directory where a key is the student's id (<code>Integer</code>) and the value associated with it is the student's name (<code>String</code>). </p>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now! </strong></span>Run the following code and observe its output.</p>\n\n<p><iframe height=\"700px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/744c81ddad89049c5243e2f61563d4e520785/welcome/1094820/MapExamples.java\" width=\"100%\"></iframe></p>\n\n<p>In the above output, <code>67890=Navya</code> means that <code>67890</code> is the key and <code>\"Navya\"</code> is the value associated with it. The same interpretation applies for the other keys and values.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2348200",
+  "subscriptions": [
+    "31-77-2348200",
+    "30-77-2348200"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2870,
+  "passed_by": 2870,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2327292,
+  "create_date": "2021-08-27T04:48:49Z",
+  "update_date": "2021-11-15T06:55:42Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

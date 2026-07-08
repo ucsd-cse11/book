@@ -1,0 +1,126 @@
+{
+  "id": 2370765,
+  "lesson": 574398,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>The key insight from the last 2 lessons is that we’ve defined two different methods with exactly the same signature:</p>\n\n<pre><code class=\"language-java\">class MatchesExtension {\n  ...\n  boolean matches(ImageData id) { ... }\n}\nclass LargerThan {\n  ...\n  boolean matches(ImageData id) { ... }\n}</code></pre>\n\n<p>Whenever we see this situation come up, we have the opportunity to create an <strong>interface</strong> that captures this shared functionality. In this case, the interface should describe the <code>matches</code> method. To write an interface, we use the <code>interface</code> keyword, followed by the name of the interface, and then write a series of method headers between curly braces:</p>\n\n<pre><code class=\"language-java\">interface ImageQuery {\n  boolean matches(ImageData id);\n}</code></pre>\n\n<p>This definition gives us the ability to use <code>ImageQuery</code> as a new type that describes objects that implement the <code>matches</code> method with this signature. Or rather, it almost does – we have to explicitly mark on all the classes we want to use in this way that they implement the interface. To mark the classes as such, we use the <code>implements</code> keyword:</p>\n\n<pre><code class=\"language-java\">class MatchesExtension implements ImageQuery {\n  ...\n  public boolean matches(ImageData id) { ... }\n}\nclass LargerThan implements ImageQuery {\n  ...\n  public boolean matches(ImageData id) { ... }\n}\n</code></pre>\n\n<p><em>(Notice that we also marked the method itself as <code>public</code>, which, in contrast to <code>private</code>, makes the method available in any context. We’ll have a dedicated lesson later on about <code>public</code> and <code>private</code>. For now, <code>public</code> doesn’t change anything from our point of view, since it would only change visibility of fields in projects that used lots of files organized across different directories.)</em></p>\n\n<p>This tells Java that we want to be able to use <code>ImageQuery</code> as the type for the fields that store these objects, for example:</p>\n\n<pre><code class=\"language-java\">class ExamplesSearch {\n  ImageData i1 = new ImageData(\"ucsd cse computer science\", \"png\", 600, 400);\n  ImageQuery lg1 = new LargerThan(600, 400);\n  ImageQuery me1 = new MatchesExtension(\"jpg\");\n  boolean testQuery(Tester t) {\n    return t.checkExpect(this.lg1.matches(i1), true) &amp;&amp;\n           t.checkExpect(this.me1.matches(i1), false);\n  }\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Answer the questions according to the code given above.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "What is the type for the field <code>lg1</code>?",
+          "options": []
+        },
+        {
+          "type": "select",
+          "text": "",
+          "options": [
+            {
+              "text": "ImageData",
+              "is_correct": false
+            },
+            {
+              "text": "ImageQuery",
+              "is_correct": true
+            },
+            {
+              "text": "LargerThan",
+              "is_correct": false
+            },
+            {
+              "text": "MatchesExtension",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br>\nWhat is the type for the field <code>me1</code>?",
+          "options": []
+        },
+        {
+          "type": "select",
+          "text": "",
+          "options": [
+            {
+              "text": "ImageData",
+              "is_correct": false
+            },
+            {
+              "text": "ImageQuery",
+              "is_correct": true
+            },
+            {
+              "text": "LargerThan",
+              "is_correct": false
+            },
+            {
+              "text": "MatchesExtension",
+              "is_correct": false
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2370765",
+  "subscriptions": [
+    "31-77-2370765",
+    "30-77-2370765"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3063,
+  "passed_by": 3004,
+  "correct_ratio": 0.6463780540077154,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2349857,
+  "create_date": "2021-09-07T03:06:26Z",
+  "update_date": "2021-09-07T09:36:36Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

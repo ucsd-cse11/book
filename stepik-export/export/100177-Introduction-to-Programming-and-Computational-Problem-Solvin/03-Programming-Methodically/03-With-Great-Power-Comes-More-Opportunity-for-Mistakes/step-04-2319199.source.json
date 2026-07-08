@@ -1,0 +1,63 @@
+{
+  "id": 2319199,
+  "lesson": 571274,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Let’s repeat that, because it’s very important:</p>\n\n<h3><strong>The location that Java reports in the error message is not always the location that needs to be fixed.</strong></h3>\n\n<p>No, seriously, let’s really make sure that we don’t gloss over this important point.</p>\n\n<h2>The location that Java reports in the error message is not always the location that needs to be fixed.</h2>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2319199",
+  "subscriptions": [
+    "31-77-2319199",
+    "30-77-2319199"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3247,
+  "passed_by": 3247,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2298291,
+  "create_date": "2021-08-13T09:45:33Z",
+  "update_date": "2021-09-22T05:05:37Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

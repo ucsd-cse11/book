@@ -1,0 +1,67 @@
+{
+  "id": 4649969,
+  "lesson": 1120313,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>We move into the next line, where we initialize the <code>Flight</code> object. Remember how the stack contains stack frames allocated by method calls? Remember how the constructor of a class is considered a method and is called when we create an object? So, the expression <code>new Flight(2247, \"UAL\");</code> does two things:</p>\n\n<ol>\n\t<li>it creates a <code>Flight</code> object on the heap, with its fields initialized to their default values.</li>\n\t<li>it creates a stack frame for the <code>Flight</code> constructor on the stack, with the arguments passed into its parameters. The stack frame also contains a reference (<code>this</code>) to the calling object.</li>\n</ol>\n\n<p>Note how the arrows have changed on the left. We're drawing it this way to show that we are now executing code in the <code>Flight</code> constructor, while execution in <code>FlightTest</code> is paused until the constructor finishes.</p>\n\n<p><img alt=\"\" height=\"612\" name=\"frame2 (2).svg\" src=\"https://ucarecdn.stepik.net/0bc3d953-392c-4606-9fb8-e402d627f1bc/\" width=\"750\"></p>\n\n<ol>\n</ol>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649969",
+  "subscriptions": [
+    "31-77-4649969",
+    "30-77-4649969"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 438,
+  "passed_by": 438,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629066,
+  "create_date": "2023-10-28T23:47:52Z",
+  "update_date": "2023-11-12T19:50:12Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649969-1",
+  "discussion_threads": [
+    "77-4649969-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

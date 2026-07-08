@@ -1,0 +1,97 @@
+{
+  "id": 2318755,
+  "lesson": 571195,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>Of course, just naming a bunch of numbers with fields is useful as an introduction, but it isn’t very exciting; we aren’t using the program for much other than printing information we already had. The next program is a little more interesting because it uses some <strong>operators</strong> to do some calculation:</p>\n\n<p><iframe height=\"450px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/d63c8ea4d9711ea2b312ad570ff6069a49685/welcome/1084053/Operators\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #ff0000;\">Do Now!</span> Run the program and observe the output. Select all the options that contain text that appeared as part of the output.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "is_multiple_choice": true,
+      "is_always_correct": false,
+      "sample_size": 4,
+      "preserve_order": false,
+      "is_html_enabled": true,
+      "is_options_feedback": false,
+      "options": [
+        {
+          "is_correct": false,
+          "text": "5 + 2 * 45",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "theAnswer",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "95",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "315",
+          "feedback": ""
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2318755",
+  "subscriptions": [
+    "31-77-2318755",
+    "30-77-2318755"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3948,
+  "passed_by": 3456,
+  "correct_ratio": 0.5254008691742844,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2297847,
+  "create_date": "2021-08-12T23:45:26Z",
+  "update_date": "2021-09-03T06:29:11Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

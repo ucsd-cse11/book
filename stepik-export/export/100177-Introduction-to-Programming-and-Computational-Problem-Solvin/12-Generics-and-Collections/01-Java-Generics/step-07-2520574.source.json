@@ -1,0 +1,82 @@
+{
+  "id": 2520574,
+  "lesson": 614368,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>How weird! We just said that we were supposed to be able to fill in types in to the <code>&lt;&gt;</code> for generic classes, but now we get an error message that says <code>unexpected type</code>.</p>\n\n<p>The rest of the message, about <code>reference</code> vs <code>int</code>, is a little more illuminating. It gets at a distinction that we've seen but not had to deal with much, between the <strong>primitive types</strong>, like <code>int</code> , <code>double</code>, and <code>boolean</code>, and <strong>reference types</strong>, which include <code>String</code> and all array, class, and interface types.</p>\n\n<p>Generics (in Java, this is a frustrating limitation for historical technical reasons not present in other languages) can <strong>only</strong> be instantiated with <strong>reference types</strong>. So this is why <code>String</code> and <code>StudentInfo</code> work in this position, but <code>int</code> does not.</p>\n\n<p>To accommodate programs like this, Java defines an entire set of <strong>wrapper classes</strong> for the primitives. We've even seen a few of them and used their static methods – <code>Integer</code> and <code>Double</code>. It turns out that these are genuine classes with constructors and more, for example:</p>\n\n<p><a href=\"https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Integer.html\" rel=\"noopener noreferrer nofollow\">java.lang.Integer</a></p>\n\n<p>Most of the time, we can seamlessly switch between the wrapper classes and their corresponding primitive. For example, this program runs without error and stores values we'd expect – <code>c</code> ends up storing the primitive value <code>20</code>. What's happening here is that behind the scenes, Java is converting from one to the other on our behalf so we don't usually see the difference.</p>\n\n<pre><code class=\"language-java\">  int a = new Integer(10);\n  Integer b = 10;\n  int c = b + a; </code></pre>\n\n<p>This is confusing, and enumerating all the rules for how wrapper classes and primitives convert from one to another is daunting and probably not worth it.</p>\n\n<p>The main thing we need to remember about the wrapper classes is to use them when we use generics. For example, we can update our program to use an Integer array and <code>Integer</code> as the type for <code>Contents</code>, and then the tests will run successfully.</p>\n\n<p><iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/4c7d4430d85b8bc4339dbdf3b680d11820785/welcome/1094716/IntegerTableExamples.java#generics\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now! </strong></span>Change the test to use <code>Integer</code> instead of <code>int</code>. How many places did you have to change it?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "3",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": false,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2520574",
+  "subscriptions": [
+    "31-77-2520574",
+    "30-77-2520574"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2883,
+  "passed_by": 2850,
+  "correct_ratio": 0.5298590504451038,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2499666,
+  "create_date": "2021-11-11T06:07:46Z",
+  "update_date": "2021-11-11T10:29:29Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

@@ -1,0 +1,63 @@
+{
+  "id": 2515310,
+  "lesson": 614368,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>A common application for programs is looking up information by a string key.</p>\n\n<p>For example, we might look up information about a student given their PID, or information about a book or movie in a store's inventory based on a barcode, or information about a class based on its section ID, or information about Tweets discovered by their Tweet id.</p>\n\n<p>There are lots of ways to represent directories of information like this. We'll pick one here that's particularly useful for introducing a new, important topic.</p>\n\n<p>Let's first take the example of student information. There are lots of ways we could represent this, but one is to have a class that stores one array of student ids, and another array of student information, where the information at a particular index corresponds to the PID at the index in the first array.</p>\n\n<p>One of the key methods we would want on such a structure is the ability to find some student information by PID.</p>\n\n<p>Here's the start of such a program:</p>\n\n<p><iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/ef2e918b7fbd9650df820f73d4a0e65c20785/welcome/1094210/DirectoryExamples.java\" width=\"100%\"></iframe></p>\n\n<p> </p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Fill in the blanks to make the examples pass.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2515310",
+  "subscriptions": [
+    "31-77-2515310",
+    "30-77-2515310"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3005,
+  "passed_by": 3005,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2494402,
+  "create_date": "2021-11-08T10:10:17Z",
+  "update_date": "2021-11-11T10:29:29Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

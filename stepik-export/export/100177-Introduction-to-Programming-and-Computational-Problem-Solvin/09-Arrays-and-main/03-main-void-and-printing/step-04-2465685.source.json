@@ -1,0 +1,74 @@
+{
+  "id": 2465685,
+  "lesson": 587829,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>Now, let's figure out how we can get our program to produce some sort of output when we run it.</p>\n\n<p>We can insert a line of code that outputs, or \"prints\", some value to the terminal. A <strong>print statement</strong> in Java looks like this:</p>\n\n<pre><code class=\"language-java\">System.out.println();</code></pre>\n\n<p>Inside the parentheses, we can put some value that we want to output, and that value will be printed in the output of the program.</p>\n\n<p>Let's try writing our own <a href=\"https://en.wikipedia.org/wiki/%22Hello,_World!%22_program\" rel=\"noopener noreferrer nofollow\">\"Hello, World!\" program</a>! We'll run it using the commands <code>javac HelloWorld.java</code> and then <code>java HelloWorld</code>, since this code is stored in a file named HelloWorld.java.</p>\n\n<p><iframe height=\"600px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/15f5cbab1beddd0d592b54ccb67990e820785/welcome/1090941/Hello%2C%20World!\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Change the value inside the parentheses to <code>\"Notice that the output does not include quotes!\"</code> and run the program. Paste the output below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "pattern": "Notice that the output does not include quotes!",
+      "use_re": false,
+      "match_substring": false,
+      "case_sensitive": false,
+      "code": "# def check(reply):\n#     \"\"\"Evaluate the learner's reply.\n#\n#     It should return 1 or True for the correct reply and 0 or False\n#     for the incorrect one.\n#\n#     A partial solution may be scored using a float number from the\n#     interval (0, 1). In such a case the learner total score for the\n#     problem will be 'step cost' * 'score'.\n#\n#     :param reply: a string that is the learner's reply to the problem\n#     :return: a score number (int or float) in range [0, 1]\n#\n#     \"\"\"\n#     return reply == \"Hello\"\n\n# def solve():\n#     \"\"\"Return a correct reply. This function is *optional*.\n#\n#     It is used to test the correctness of the 'check' function.\n#\n#     :return: a string that is a correct reply to the problem\n#\n#     \"\"\"\n#     return \"Hello\"",
+      "is_text_disabled": false,
+      "is_file_disabled": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2465685",
+  "subscriptions": [
+    "31-77-2465685",
+    "30-77-2465685"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3003,
+  "passed_by": 2946,
+  "correct_ratio": 0.5962858296326201,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2444777,
+  "create_date": "2021-10-18T07:29:44Z",
+  "update_date": "2021-10-18T07:45:22Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

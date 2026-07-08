@@ -1,0 +1,50 @@
+{
+  "id": 2456211,
+  "lesson": 574433,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>We can combine multiple queries by writing the <code>AndQuery</code> and <code>OrQuery</code> classes.</li>\n\t<li>The <code>AndQuery</code> and <code>OrQuery</code> classes both only contain 2 <code>ImageQuery</code> fields, so on its own, an <code>AndQuery</code> or <code>OrQuery</code> object can only handle 2 queries at a time.</li>\n\t<li>Because <code>AndQuery</code> contained a <code>matches()</code> method that had the same header as the one included in the <code>ImageQuery</code> interface, <code>AndQuery</code> could implement the <code>ImageQuery</code> interface, thus allowing us to use an <code>AndQuery</code> object as a field.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2456211",
+  "subscriptions": [
+    "31-77-2456211",
+    "30-77-2456211"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2701,
+  "passed_by": 2701,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2435303,
+  "create_date": "2021-10-13T07:52:19Z",
+  "update_date": "2021-10-13T07:52:26Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

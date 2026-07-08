@@ -1,0 +1,74 @@
+{
+  "id": 2396738,
+  "lesson": 573386,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>You may be confused: we introduced the <code>double</code> variable type to tackle problems we can't solve with just <code>String</code> and <code>int</code> variable types, yet the problem we faced (currency) was one in which limited <code>double</code> precision is actually problematic! Are there any problems in which the <code>double</code> variable type is sufficient?</p>\n\n<p>In general, the <code>double</code> variable type is useful for representing continuous numeric values when having thorough precision is not necessary. For example, imagine we want to compute the perimeter and area of a rectangle. Assuming we're comfortable with the precision of a <code>double</code> to represent these values (i.e., we don't need them to be infinitely precise), we could do the following:</p>\n\n<p><iframe height=\"500px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/f8aba856489660d61f468b5eea5c0de720785/welcome/1085580/Rectangle\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> According to the output, what value is stored in <code>this.area</code>?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "pattern": "6.300000000000001",
+      "use_re": false,
+      "match_substring": false,
+      "case_sensitive": true,
+      "code": "def check(reply):\n    return abs(float(reply) - 6.3) < 0.00001\n\ndef solve():\n    return '6.300000000000001'",
+      "is_text_disabled": false,
+      "is_file_disabled": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2396738",
+  "subscriptions": [
+    "31-77-2396738",
+    "30-77-2396738"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3340,
+  "passed_by": 3294,
+  "correct_ratio": 0.986579182821354,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2375830,
+  "create_date": "2021-09-14T22:58:22Z",
+  "update_date": "2021-09-15T20:43:47Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

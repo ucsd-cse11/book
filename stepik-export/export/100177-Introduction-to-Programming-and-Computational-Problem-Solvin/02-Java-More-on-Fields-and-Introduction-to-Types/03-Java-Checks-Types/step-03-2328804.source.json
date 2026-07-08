@@ -1,0 +1,112 @@
+{
+  "id": 2328804,
+  "lesson": 573387,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>We might think that error messages about types are particular to storing values in fields, but Java will check the types of values wherever they appear in the program. For example, we could try to divide an <code>int</code> by a <code>String</code>:</p>\n\n<p><iframe height=\"450px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/b6bf759a164313c4cab47a2fff43aad549685/welcome/1084070/Mixing%20Strings%20and%20ints\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Which of the following options contain text that is part of the output? </h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "is_multiple_choice": true,
+      "is_always_correct": false,
+      "sample_size": 7,
+      "preserve_order": false,
+      "is_html_enabled": true,
+      "is_options_feedback": false,
+      "options": [
+        {
+          "is_correct": true,
+          "text": "<code>error: bad operand types for binary operator '/'</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>this.answer</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "<code><pre>first type:  int</pre></code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>error: bad operand types for binary operator '+'</code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code> error: String cannot be converted to int </code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code> error: ';' expected </code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code>second type: int</code>",
+          "feedback": ""
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2328804",
+  "subscriptions": [
+    "31-77-2328804",
+    "30-77-2328804"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3340,
+  "passed_by": 3297,
+  "correct_ratio": 0.7289925208974923,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2307896,
+  "create_date": "2021-08-18T06:27:39Z",
+  "update_date": "2021-09-27T00:49:01Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

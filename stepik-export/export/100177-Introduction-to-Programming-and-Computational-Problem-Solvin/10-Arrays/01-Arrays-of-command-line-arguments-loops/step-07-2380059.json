@@ -1,0 +1,53 @@
+{
+  "id": 2380059,
+  "lesson": 579629,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "matching",
+    "text": "<pre><code class=\"language-java\">for(int i = 1; i &lt; args.length; i = i + 1) { ... loop body ... }</code></pre>\n\n<p>The way such a loop runs is as follows:</p>\n\n<ul>\n\t<li>\n\t<p>Run the <strong>initialization statement</strong> – the one before the first semicolon.</p>\n\t</li>\n\t<li>\n\t<p>Evaluate the <strong>condition</strong> – the expression before the second semicolon. If it evaluates to <code>false</code>, stop running the loop. Note that this means the loop could run zero times if the condition is <code>false</code> at the start.</p>\n\t</li>\n\t<li>\n\t<p>Evaluate the <strong>loop body</strong>.</p>\n\t</li>\n\t<li>\n\t<p>Evaluate the <strong>update expression</strong> – the last of the three parts of the loop header.</p>\n\t</li>\n\t<li>\n\t<p>Go back to the step in this list checking the condition expression, and proceed from there.</p>\n\t</li>\n</ul>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Match each portion of the code with the part of the loop that it corresponds to.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2380059",
+  "subscriptions": [
+    "31-77-2380059",
+    "30-77-2380059"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2959,
+  "passed_by": 2932,
+  "correct_ratio": 0.8724414120439039,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2359151,
+  "create_date": "2021-09-10T06:28:18Z",
+  "update_date": "2021-09-18T23:53:38Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

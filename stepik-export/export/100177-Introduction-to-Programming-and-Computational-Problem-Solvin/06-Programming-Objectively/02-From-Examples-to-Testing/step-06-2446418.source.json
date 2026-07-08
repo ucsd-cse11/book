@@ -1,0 +1,141 @@
+{
+  "id": 2446418,
+  "lesson": 573912,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Additionally, if we get something wrong, the <code>tester</code> library is quite helpful in pointing out how. For example, we've introduced a mistake in this version of the program:</p>\n\n<p><iframe height=\"1100px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/2e1d7e9302912f1301de20c7d64d4b1820785/welcome/1098112/When%20Tester%20fails\" width=\"100%\"></iframe></p>\n\n<p>Try running it to see what output you get.</p>\n\n<h3><span style=\"color: #ff4363;\"><strong>Do Now! </strong></span>Answer the questions below about the output you see from the tester.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "How many tests ran?",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "7",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br/>Which part of the output indicates the <b>line number</b> of the failing test?",
+          "options": []
+        },
+        {
+          "type": "select",
+          "text": "",
+          "options": [
+            {
+              "text": "new Book:2",
+              "is_correct": false
+            },
+            {
+              "text": "Error in test number 7",
+              "is_correct": false
+            },
+            {
+              "text": "actual:...expected:",
+              "is_correct": false
+            },
+            {
+              "text": "ExamplesBook.java:36",
+              "is_correct": true
+            },
+            {
+              "text": "Error in test number 1",
+              "is_correct": false
+            },
+            {
+              "text": "Error in test number 4",
+              "is_correct": false
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br/>What value did our test <em>expect</em> the method to produce?",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "30",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#",
+    "comment": "#"
+  },
+  "progress": "77-2446418",
+  "subscriptions": [
+    "31-77-2446418",
+    "30-77-2446418"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3054,
+  "passed_by": 3009,
+  "correct_ratio": 0.437862950058072,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2425510,
+  "create_date": "2021-10-08T03:34:58Z",
+  "update_date": "2021-12-02T06:40:37Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-2446418-1",
+  "discussion_threads": [
+    "77-2446418-1",
+    "77-2446418-2"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

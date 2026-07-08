@@ -1,0 +1,50 @@
+{
+  "id": 2398399,
+  "lesson": 571216,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>Rather than typing out the same value multiple times, we can create a field to store that value. Each time we want to use this value, we can access the field using <code>this.fieldName</code>.</li>\n\t<li>If we want to change this value, we would only need to change the value of the field, rather than having to change the value every single time it is used in the program.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2398399",
+  "subscriptions": [
+    "31-77-2398399",
+    "30-77-2398399"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3381,
+  "passed_by": 3381,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2377491,
+  "create_date": "2021-09-16T06:16:27Z",
+  "update_date": "2021-09-16T06:16:27Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

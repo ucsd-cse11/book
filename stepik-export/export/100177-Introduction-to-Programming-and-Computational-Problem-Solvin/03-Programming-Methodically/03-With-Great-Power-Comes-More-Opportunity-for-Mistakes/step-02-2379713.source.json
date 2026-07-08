@@ -1,0 +1,130 @@
+{
+  "id": 2379713,
+  "lesson": 571274,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>For reference, here is the error message from the code in the previous step:</p>\n\n<pre><code class=\"language-no-highlight\">MadLibs.java:12: error: method fillIn in class MadLibs cannot be applied to given types;\n  String example1 = this.fillIn(\"useless\");\n                        ^\n  required: String,int\n  found: String\n  reason: actual and formal argument lists differ in length</code></pre>\n\n<p>The key part of this error is the line starting with “required” which is telling us that the <code>fillIn()</code> method was specified, in its <strong>method header</strong>, to take two <strong>parameters</strong> (which Java calls “formal arguments”). In the <strong>method call</strong>, only one <strong>argument</strong> (which Java calls “actual arguments”) was provided. Java will refuse to run this program because it is nonsense to use a method with the wrong number of arguments. Notice that in the code example below, the method call takes two arguments and runs without any errors.</p>\n\n<h3><iframe height=\"565px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/635ceffb77413a0842dfed60dceff71020785/welcome/1085016/Understanding%20Errors\" width=\"100%\"></iframe></h3>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Change the code above so that the <strong>method call</strong> (not the method header) uses three <strong>arguments</strong> instead of two. For the purposes of the question below, make the 3rd argument an <code>int</code> value. Then run the program. What is the resulting error message?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>MadLibs.java:11: error: method fillIn in class MadLibs cannot be applied to given types;<br>&nbsp;&nbsp;...<br><br>&nbsp;&nbsp;required: </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "String,int",
+              "is_correct": true
+            },
+            {
+              "text": "String, int",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code><br>&nbsp;&nbsp;found: </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "String,int,int",
+              "is_correct": true
+            },
+            {
+              "text": "String, int, int",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code><br>&nbsp;&nbsp;reason: </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "actual and formal argument lists differ in length",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code><br>1 error</code>",
+          "options": []
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379713",
+  "subscriptions": [
+    "31-77-2379713",
+    "30-77-2379713"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3263,
+  "passed_by": 3182,
+  "correct_ratio": 0.3525330396475771,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358805,
+  "create_date": "2021-09-10T02:37:07Z",
+  "update_date": "2021-09-29T01:20:24Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

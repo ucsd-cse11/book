@@ -1,0 +1,57 @@
+{
+  "id": 2446403,
+  "lesson": 573912,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>Before we handle that last point, there’s one step we could take to make it easier to double-check our work right away. Instead of putting the answer to the method call directly in the example, we could use <code>==</code> (in the case of <code>int</code> and <code>boolean</code>), or <code>equals()</code> (in the case of <code>String</code>s) to check if the answer is what we expect. Then we would only need to make sure that all the examples evaluate to <code>true</code>, which is easier than manually comparing them with our comments on what the return values should be.</p>\n\n<p>Ideally, we’d like a system that can <em>check for equality</em>, <em>summarize successes</em>, and <em>show us the reason for failures</em>. Systems that do this are known as <strong>testing frameworks</strong> or <strong>testing libraries</strong>, and one comes built in to the libraries we’re using for the course.</p>\n\n<p>The way that testing works in this course is that we can write any number of methods starting with the word <code>test</code> that have the return type <code>boolean</code> and take in a reference to an object of type <code>Tester</code> as a parameter. The <code>Tester</code> object has a particular method that we’ll use extensively called <code>checkExpect()</code>, which takes any two values of the same type, compares them for equality, and prints useful messages if they aren’t equal.</p>\n\n<p>It’s useful to write this all out and describe the pieces. Here’s a method that we could add to replace the first example we wrote, <code>sale1</code>:</p>\n\n<pre><code class=\"language-java\">// Originally, we wrote this:\nint sale1 = this.schemer.salePrice(25); // Should be 30\n\n// We can write this instead:\nboolean testSalePrice(Tester t) {\n  return t.checkExpect(this.schemer.salePrice(25), 30);\n}</code></pre>\n\n<p>We also have to tell Java that we want to use the <code>Tester</code> class, since it isn’t built into Java (it’s part of a library we’re using). So this line is necessary at the <em>top</em> of the file whenever we mention <code>Tester</code>:</p>\n\n<pre><code class=\"language-java\">import tester.*;</code></pre>\n\n<p>Here's the program all together:</p>\n\n<p><iframe height=\"900px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/2e1d7e9302912f1301de20c7d64d4b1820785/welcome/1098111/Using%20Tester\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #ff4363;\"><strong>Do Now!</strong></span> Run the program. What's the line of output right <strong>before</strong> \"All tests passed\"? Put it into the box below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#",
+    "comment": "#"
+  },
+  "progress": "77-2446403",
+  "subscriptions": [
+    "31-77-2446403",
+    "30-77-2446403"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3065,
+  "passed_by": 3021,
+  "correct_ratio": 0.8564958958392301,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2425495,
+  "create_date": "2021-10-08T02:42:26Z",
+  "update_date": "2021-12-02T06:38:58Z",
+  "discussions_count": 1,
+  "discussion_proxy": "77-2446403-1",
+  "discussion_threads": [
+    "77-2446403-1",
+    "77-2446403-2"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": 2375617,
+  "lesson": 571273,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p><strong><span style=\"color: #ffa500;\">Exercise</span></strong></p>\n\n<p>Try using the design recipe to write methods for the following problems:</p>\n\n<p><strong>Problem 1:</strong></p>\n\n<blockquote>\n<p>Calculate the weekly pay for an employee given their hours worked and their hourly rate, given that any hours over 40 are counted at double the hourly rate. Assume that the employee worked over 40 hours.</p>\n</blockquote>\n\n<p><iframe height=\"570px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/be3f51ef4b30161482bc63d57b40754720785/welcome/1084908/Following%20the%20Design%20Recipe\" width=\"100%\"></iframe></p>\n\n<p><strong>Problem 2:</strong></p>\n\n<blockquote>Imagine you’re writing a program to help write a textbook for math. Write a method that takes in two numbers, and produces a string that shows the multiplication expression and the result separated by an equals sign. For example, for the inputs 4 and 5, the output should be \"4 * 5 = 20\".</blockquote>\n\n<p><iframe height=\"570px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/be3f51ef4b30161482bc63d57b40754720785/welcome/1084909/Following%20the%20Design%20Recipe\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2375617",
+  "subscriptions": [
+    "31-77-2375617",
+    "30-77-2375617"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3287,
+  "passed_by": 3287,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2354709,
+  "create_date": "2021-09-08T20:44:06Z",
+  "update_date": "2021-09-10T02:49:15Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

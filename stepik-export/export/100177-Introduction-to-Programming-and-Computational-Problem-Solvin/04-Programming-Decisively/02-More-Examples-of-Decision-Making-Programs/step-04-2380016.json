@@ -1,0 +1,53 @@
+{
+  "id": 2380016,
+  "lesson": 573068,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p><iframe height=\"750px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/a303a147097ae31949910dfbabea3c1f20785/welcome/1085128/Using%20Conditions\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Change the program so that the condition and branch for the <code>\"D\"</code> case come before the condition and branch for the <code>\"C\"</code> case. With this change, what is an argument that could be supplied for <code>score</code> that would make the method return <code>\"C\"</code>? Enter a possible answer (or N/A if none exists) in the box below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2380016",
+  "subscriptions": [
+    "31-77-2380016",
+    "30-77-2380016"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3162,
+  "passed_by": 3112,
+  "correct_ratio": 0.5292827004219409,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2359108,
+  "create_date": "2021-09-10T05:47:23Z",
+  "update_date": "2021-10-01T06:46:31Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

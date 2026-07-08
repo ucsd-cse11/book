@@ -1,0 +1,63 @@
+{
+  "id": 2375698,
+  "lesson": 584473,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>In the previous lesson, we defined rectangular regions. A natural next step is to define circular ones. A simple definition might consider the circle’s center point and its radius:</p>\n\n<pre><code class=\"language-java\">class CircRegion {\n  Point center;\n  int radius;\n  CircRegion(Point center, int radius) {\n    this.center = center;\n    this.radius = radius;\n  }\n}</code></pre>\n\n<p>Let’s try implementing <code>contains()</code> for <code>CircRegion</code> as well:</p>\n\n<pre><code>class CircRegion {\n  // ... fields and constructor ...\n \n  /*\n    @param p the point to check for containment within the circle\n    @return true if the point is within radius units of the center of the circle\n  */\n  boolean contains(Point p) {\n \n  }\n}\n \nclass ExamplesRegion {\n  // ... rectangle examples and test ...\n \n  CircRegion c1 = new CircRegion(new Point(200, 50), 10);\n  CircRegion c2 = new CircRegion(new Point(20, 300), 25);\n \n  Point circleTest1 = new Point(210, 50);\n  Point circleTest2 = new Point(20, 315);\n \n  boolean testContainsCirc(Tester t) {\n    return t.checkExpect(this.c1.contains(this.circleTest1), true) &amp;&amp;\n           t.checkExpect(this.c1.contains(this.circleTest2), false) &amp;&amp;\n           t.checkExpect(this.c2.contains(this.circleTest1), false) &amp;&amp;\n           t.checkExpect(this.c2.contains(this.circleTest2), true);\n  }\n}</code></pre>\n\n<p>Again, we can fill in the implementation while wishing for a function to exist. In this case, if we can calculate the distance from the center point to the given point, we could then compare that distance to the radius. If that distance is less than the radius, the point is inside, otherwise it isn’t.</p>\n\n<pre><code class=\"language-java\">/*\n  @param p the point to check for containment within the circle\n  @return true if the point is within radius units of the center of the circle\n*/\nboolean contains(Point p) {\n  return this.center.distance(p) &lt; this.radius;\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2375698",
+  "subscriptions": [
+    "31-77-2375698",
+    "30-77-2375698"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3070,
+  "passed_by": 3070,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2354790,
+  "create_date": "2021-09-09T03:59:12Z",
+  "update_date": "2021-10-10T21:46:19Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

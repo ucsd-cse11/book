@@ -1,0 +1,53 @@
+{
+  "id": 2520499,
+  "lesson": 614368,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>What if instead we wanted to get class titles based on section ID? If all we needed to store were the titles, we might write a class like this:</p>\n\n<p><iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/eabd23ad33f41d76134d71a67b0ecc9020785/welcome/1094310/ClassDatabaseExamples.java#generics\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong> </span>What type fills in all the blanks to make the tests pass?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2520499",
+  "subscriptions": [
+    "31-77-2520499",
+    "30-77-2520499"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2907,
+  "passed_by": 2862,
+  "correct_ratio": 0.6836832061068703,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2499591,
+  "create_date": "2021-11-11T05:29:12Z",
+  "update_date": "2021-11-11T10:29:29Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

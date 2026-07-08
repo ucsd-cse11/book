@@ -1,0 +1,122 @@
+{
+  "id": 2328761,
+  "lesson": 573387,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>A natural next question to ask is what happens if we try to use the word <code>int</code> in place of <code>String</code>, or more generally, how we can mix <code>String</code>s and <code>int</code>s. This is a kind of exploration that’s useful to do when we learn a programming language, especially on small examples. This can help us to understand what certain parts of the language do when combined together, so if we encounter the error in a larger program later on, we will have a better understanding.</p>\n\n<p>Let’s start with this simple program:</p>\n\n<p><iframe height=\"350px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/67b5617f4e1d76c169925374c6e63a2d49685/welcome/1084112/Mixing%20Strings%20and%20ints\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Run the code and use the output to fill in the blanks.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code><u>JavaChecksTypes.java:2:</u> error: </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "incompatible types",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code> : </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "String",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code> cannot be converted to int </code> <br>\n  <code>&nbsp;&nbsp;int firstName = </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "\"Dorothy\"",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>;</code> <br>\n<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^</code><br>\n<code>1 error</code>",
+          "options": []
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2328761",
+  "subscriptions": [
+    "31-77-2328761",
+    "30-77-2328761"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3391,
+  "passed_by": 3306,
+  "correct_ratio": 0.7923627684964201,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2307853,
+  "create_date": "2021-08-18T05:16:33Z",
+  "update_date": "2021-09-04T03:18:27Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

@@ -1,0 +1,57 @@
+{
+  "id": 2362515,
+  "lesson": 573912,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Second, we can define as many test methods as we like. So we could define another that captures all the truncate tests, and another that captures all the same author tests:</p>\n\n<pre><code class=\"language-java\">boolean testSalePrice(Tester t) {\n  return t.checkExpect(this.schemer.salePrice(25), 30) &amp;&amp;\n         t.checkExpect(this.stick.salePrice(50), 6) &amp;&amp;\n         t.checkExpect(this.pLaw.salePrice(10), 27);\n}\n\nboolean testTruncateTitle(Tester t) {\n  return t.checkExpect(this.stick.truncateTitle(15), \"Make It Stick: ...\") &amp;&amp;\n         t.checkExpect(this.schemer.truncateTitle(20), \"The Little Schemer\") &amp;&amp;\n         t.checkExpect(this.schemer.truncateTitle(0), \"...\");\n}\n\nboolean testSameAuthor(Tester t) {\n  return t.checkExpect(this.reason.sameAuthor(this.schemer), true) &amp;&amp;\n         t.checkExpect(this.reason.sameAuthor(this.stick), false) &amp;&amp;\n         t.checkExpect(this.schemer.sameAuthor(this.reason), true);\n}</code></pre>\n\n<p>This produces the following:</p>\n\n<pre><code class=\"language-no-highlight\">---------------\n\nRan 9 tests.\nAll tests passed.\n\n--- END OF TEST RESULTS ---</code></pre>\n\n<p>The test output nicely summarizes all the successes; in addition, the testing library is smart enough to correctly compare <code>String</code>s with <code>equals()</code> and <code>int</code>s with <code>==</code>, so we don’t have to worry about that detail.</p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Say that we write another method, <code>titleContains()</code>, that receives a <code>String</code> argument and returns <code>true</code> if the title of the book it was called on contains the <code>String</code> in question (and returns <code>false</code> if it doesn't). Fill in the blanks for the test method that we would write for this method below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#",
+    "comment": "#"
+  },
+  "progress": "77-2362515",
+  "subscriptions": [
+    "31-77-2362515",
+    "30-77-2362515"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3056,
+  "passed_by": 3009,
+  "correct_ratio": 0.5263524091146287,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2341607,
+  "create_date": "2021-09-03T10:31:49Z",
+  "update_date": "2021-10-23T20:51:38Z",
+  "discussions_count": 3,
+  "discussion_proxy": "77-2362515-1",
+  "discussion_threads": [
+    "77-2362515-1",
+    "77-2362515-2"
+  ]
+}

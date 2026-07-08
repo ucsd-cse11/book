@@ -1,0 +1,117 @@
+{
+  "id": 2379633,
+  "lesson": 559662,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p><iframe height=\"556px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/e233da1b89d915afbd001a3533ac865820785/welcome/1084840/Using%20Methods\" width=\"100%\"></iframe></p>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Change the <code>distanceAfter()</code> method to calculate the answer using the cube of seconds, rather than the square of seconds. Then, run the program to get the new field values and enter them into the boxes below.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>distAfter2sec</code>: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "40",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><code>distAfter4sec</code>: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "320",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><code>distAfter6sec</code>: ",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "1080",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379633",
+  "subscriptions": [
+    "31-77-2379633",
+    "30-77-2379633"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3303,
+  "passed_by": 3257,
+  "correct_ratio": 0.7765376395155545,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358725,
+  "create_date": "2021-09-10T01:00:39Z",
+  "update_date": "2021-09-19T20:53:48Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

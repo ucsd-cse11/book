@@ -1,0 +1,53 @@
+{
+  "id": 2334261,
+  "lesson": 574433,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "string",
+    "text": "<p>Now, we have three different classes that implement <code>ImageQuery</code>: the original two queries, <code>LargerThan</code> and <code>MatchesExtension</code>, and the one we just noticed, <code>AndQuery</code>. All of these are candidates that we could use when combining queries together – including <code>AndQuery</code> itself! This suggests a way forward to combining three queries together, using the pieces we’ve seen.</p>\n\n<p>The key idea is to think of it as two queries, one of which is an <code>AndQuery</code> itself. That is, we’ll first use an AndQuery to combine the first two conditions, and then we'll use another <code>AndQuery</code> to combine that result with the third. In code, that looks like:</p>\n\n<p><iframe height=\"650px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/2a13e51e70ee291d4c662ee22e53c7c120785/welcome/1089191/Combining%20AndQueries\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>What is the expected value of <code>(new AndQuery(this.lg1, new AndQuery(this.me1, this.ck1))).matches(i1)</code>?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2334261",
+  "subscriptions": [
+    "31-77-2334261",
+    "30-77-2334261"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2738,
+  "passed_by": 2673,
+  "correct_ratio": 0.7375515818431913,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313353,
+  "create_date": "2021-08-20T08:24:51Z",
+  "update_date": "2021-10-13T07:23:10Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

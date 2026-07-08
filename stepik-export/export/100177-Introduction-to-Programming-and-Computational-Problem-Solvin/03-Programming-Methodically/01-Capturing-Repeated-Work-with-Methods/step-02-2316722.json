@@ -1,0 +1,53 @@
+{
+  "id": 2316722,
+  "lesson": 559662,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "matching",
+    "text": "<pre><code>//code from the previous step\n\nint distanceAfter(int seconds) {\n  return (this.gravity / 2) * (seconds * seconds);\n}</code></pre>\n\n<p>The <code>distanceAfter()</code> method has a few components:</p>\n\n<ul>\n\t<li>\n\t<p>First, the method has a name, which we’ve chosen to be <code>distanceAfter()</code>.</p>\n\t</li>\n\t<li>\n\t<p>Second, it has a <strong>parameter</strong> (which is written as <code>int seconds</code>) in parentheses. The parameter will represent the value that we can change in order to get different answers.</p>\n\t</li>\n\t<li>\n\t<p>Third, it has a <strong>method body</strong>, which consists of the <code>return</code> keyword, followed by a calculation that uses the field access <code>this.fieldName</code> (like in the original, method-less calculation) and the name <code>seconds</code>.</p>\n\t</li>\n\t<li>\n\t<p>Finally, it has a <strong>return type</strong>, which is the word <code>int</code> that appears before <code>distanceAfter()</code>. Whatever type is listed before the method name must match the type of the value that is returned by the method.</p>\n\t</li>\n</ul>\n\n<p>Together, these four components — method name, parameter(s), method body, and return type — make up a <strong>method definition</strong>. We’ll see many more examples of methods over the rest of this textbook.</p>\n\n<h3><strong><span style=\"color: #cc0000;\">Do Now!</span> </strong>Based on this example of a method definition below, match the vocabulary terms that we just introduced with the parts that they correspond to in the definitions above.</h3>\n\n<pre><code class=\"language-java\">class MethodExample {\n  int squarePlusOne(int n) {\n    return n * n + 1;\n  }\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2316722",
+  "subscriptions": [
+    "31-77-2316722",
+    "30-77-2316722"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3333,
+  "passed_by": 3286,
+  "correct_ratio": 0.7957324382642053,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2295814,
+  "create_date": "2021-08-12T00:09:10Z",
+  "update_date": "2021-09-18T23:29:21Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

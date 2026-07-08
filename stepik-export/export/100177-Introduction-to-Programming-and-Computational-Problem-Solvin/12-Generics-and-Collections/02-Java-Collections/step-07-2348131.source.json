@@ -1,0 +1,102 @@
+{
+  "id": 2348131,
+  "lesson": 578016,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>The set below creates a set of students and performs some set operations.</p>\n\n<pre><code>public class SetExamples {\n  public static void main(String[] args) {\n    HashSet&lt;String&gt; students = new HashSet&lt;String&gt;();\n    students.add(\"Yunxian\");\n    students.add(\"Shungo\");\n    students.add(\"Tanh\");\n    students.add(\"Yunxian\");\n\n    int size_1 = students.size(); //should be 3\n    boolean containsShungo_1 = students.contains(\"Shungo\"); //should be true\n    boolean containsDarren_1 = students.contains(\"Darren\"); //should be false\n\n    students.remove(\"Shungo\");\n\n    int size_2 = students.size();\n    boolean containsShungo_2 = students.contains(\"Shungo\");\n  }\n}\n</code></pre>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Trace through to code to figure out the values that are stored in the following variables at the end of the program.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>size_2</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "2",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br>\n<code>containsSungo2</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "false",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2348131",
+  "subscriptions": [
+    "31-77-2348131",
+    "30-77-2348131"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2878,
+  "passed_by": 2842,
+  "correct_ratio": 0.8621745788667687,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2327223,
+  "create_date": "2021-08-27T01:17:11Z",
+  "update_date": "2021-11-15T06:07:51Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

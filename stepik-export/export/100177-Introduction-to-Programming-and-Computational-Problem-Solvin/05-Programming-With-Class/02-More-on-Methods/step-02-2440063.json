@@ -1,0 +1,57 @@
+{
+  "id": 2440063,
+  "lesson": 597266,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>Next, we need to write some examples. This brings up an important point about how we’ll write programs in this course — the examples will always go in the <code>Examples</code> class at the end of the file. So we don’t add them inside the <code>Student</code> class, but in the <code>Examples</code> class, where our example data is also defined:</p>\n\n<pre><code class=\"language-java\">class ExamplesStudent {\n  Student s1 = new Student(\"A12345678\", true, 1996);\n  Student s2 = new Student(\"A98765432\", false, 1993);\n  Student s3 = new Student(\"A18273645\", true, 1999);\n\n  boolean bb1 = this.s1.bornBefore(1999); // should be true\n  boolean bb2 = this.s1.bornBefore(1995); // should be false\n  boolean bb3 = this.s2.bornBefore(1995); // should be true\n  boolean bb4 = this.s3.bornBefore(10); // should be false\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> If the <code>bornBefore()</code> method works as intended, what would be the expected values for the following examples?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#",
+    "comment": "#"
+  },
+  "progress": "77-2440063",
+  "subscriptions": [
+    "31-77-2440063",
+    "30-77-2440063"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3148,
+  "passed_by": 3101,
+  "correct_ratio": 0.7593179049939098,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2419155,
+  "create_date": "2021-10-04T09:44:24Z",
+  "update_date": "2021-10-04T09:44:25Z",
+  "discussions_count": 1,
+  "discussion_proxy": "77-2440063-1",
+  "discussion_threads": [
+    "77-2440063-1",
+    "77-2440063-2"
+  ]
+}

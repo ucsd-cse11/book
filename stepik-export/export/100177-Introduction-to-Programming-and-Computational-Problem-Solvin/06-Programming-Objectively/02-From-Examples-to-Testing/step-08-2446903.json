@@ -1,0 +1,54 @@
+{
+  "id": 2446903,
+  "lesson": 573912,
+  "position": 8,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>Up until this lesson, we wrote tests by calling the method, commenting its expected return value, and manually checking the output of the program to see that it the expected value matched the value shown in the output.</li>\n\t<li>We can test our code in a more efficient way by using the <code>Tester</code> class, which helps us to <em>check for equality</em>, <em>summarize successes</em>, and <em>show the reason for failures</em>.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-2446903",
+  "subscriptions": [
+    "31-77-2446903",
+    "30-77-2446903"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3033,
+  "passed_by": 3033,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2425995,
+  "create_date": "2021-10-08T08:04:40Z",
+  "update_date": "2021-10-08T08:04:41Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-2446903-1",
+  "discussion_threads": [
+    "77-2446903-1"
+  ]
+}

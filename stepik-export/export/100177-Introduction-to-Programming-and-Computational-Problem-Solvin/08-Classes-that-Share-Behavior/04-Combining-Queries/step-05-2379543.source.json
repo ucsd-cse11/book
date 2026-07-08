@@ -1,0 +1,113 @@
+{
+  "id": 2379543,
+  "lesson": 574433,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "parsons",
+    "text": "<p>This idea isn’t limited to just three queries – we can combine an arbitrary number of queries together with this strategy. This gives us the ability to create quite complex queries by creating new query classes and combining them together. There’s a wealth of query types we could create to build on this idea and build quite a sophisticated set of matching checks for single images.</p>\n\n<p><em>(Later lessons will show us how to use this idea to process an entire list of images to find the ones that match a query.)</em></p>\n\n<p><iframe height=\"650px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/2a13e51e70ee291d4c662ee22e53c7c120785/welcome/1089192/OrQuery\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Write a class <code>OrQuery</code> that implements the <code>ImageQuery</code> interface, has two <code>ImageQuery</code> fields, and matches an <code>ImageData</code> if either or both of the two match.</h3>",
+    "video": null,
+    "options": {
+      "language": "java"
+    },
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "lines": [
+        {
+          "text": "class OrQuery implements ImageQuery {",
+          "level": 0
+        },
+        {
+          "text": "ImageQuery q1, q2;",
+          "level": 1
+        },
+        {
+          "text": "OrQuery(ImageQuery q1, ImageQuery q2) {",
+          "level": 1
+        },
+        {
+          "text": "this.q1 = q1;",
+          "level": 2
+        },
+        {
+          "text": "this.q2 = q2;",
+          "level": 2
+        },
+        {
+          "text": "}",
+          "level": 1
+        },
+        {
+          "text": "public boolean matches(ImageData id) {",
+          "level": 1
+        },
+        {
+          "text": "return this.q1.matches(id) || this.q2.matches(id);",
+          "level": 2
+        },
+        {
+          "text": "}",
+          "level": 1
+        },
+        {
+          "text": "}",
+          "level": 0
+        }
+      ],
+      "indent": 4,
+      "language": "java"
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379543",
+  "subscriptions": [
+    "31-77-2379543",
+    "30-77-2379543"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2728,
+  "passed_by": 2588,
+  "correct_ratio": 0.46679863235558755,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358635,
+  "create_date": "2021-09-09T22:11:07Z",
+  "update_date": "2021-10-13T07:23:10Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

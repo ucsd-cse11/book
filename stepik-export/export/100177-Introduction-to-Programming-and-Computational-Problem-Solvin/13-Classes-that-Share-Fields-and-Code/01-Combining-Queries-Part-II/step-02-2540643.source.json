@@ -1,0 +1,63 @@
+{
+  "id": 2540643,
+  "lesson": 575460,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<pre><code class=\"language-java\">class ExamplesSearch {\n  ImageQuery ck1 = new ContainsKeyword(\"ucsd\");\n  ImageQuery ck2 = new ContainsKeyword(\"data\");\n  ImageQuery ck3 = new ContainsKeyword(\"science\");\n  ImageQuery ck4 = new ContainsKeyword(\"artificial\");\n  ImageQuery ck5 = new ContainsKeyword(\"intelligence\");\n  ImageQuery all5 = new AndQuery(new AndQuery(new AndQuery(new AndQuery(this.ck1, this.ck2), this.ck3), this.ck4), this.ck5);\n}\n\nclass ContainsKeyword implements ImageQuery {\n  ...\n  public AndQuery and(ImageQuery other) {\n    return new AndQuery(this, other);\n  }\n}</code></pre>\n\n<p>Eventually, we want to modify this <code>and()</code> method so that we can use it to shorten <code>new AndQuery(new AndQuery(new AndQuery(new AndQuery(this.ck1, this.ck2), this.ck3), this.ck4), this.ck5)</code> to <code>this.ck1.and(this.ck2).and(this.ck3).and(this.ck4).and(this.ck5)</code>. The memory diagram to demonstrate the equivalence of these two expressions is shown below.</p>\n\n<p><img alt=\"\" height=\"925\" name=\"stepik13.png\" src=\"https://ucarecdn.stepik.net/e3b0b368-be98-4083-8218-b88b966efeea/\" width=\"1280\"></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2540643",
+  "subscriptions": [
+    "31-77-2540643",
+    "30-77-2540643"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2384,
+  "passed_by": 2384,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2519735,
+  "create_date": "2021-11-22T03:29:47Z",
+  "update_date": "2021-11-22T03:29:47Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

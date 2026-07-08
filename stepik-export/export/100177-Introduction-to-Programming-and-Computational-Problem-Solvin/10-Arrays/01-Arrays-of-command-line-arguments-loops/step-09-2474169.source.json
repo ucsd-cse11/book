@@ -1,0 +1,63 @@
+{
+  "id": 2474169,
+  "lesson": 579629,
+  "position": 9,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>We can run a block of code repeatedly using <strong>loops</strong></li>\n\t<li><strong>Loops</strong> are particularly useful for processing all of the elements of an array</li>\n\t<li>We've seen two kinds of loop:\n\t<ul>\n\t\t<li><strong>Element-wise for loops</strong> that let us visit each element in an array</li>\n\t\t<li><strong>Counted for loops</strong> that let us use a variable that gets updated on each iteration</li>\n\t</ul>\n\t</li>\n\t<li>Element-wise for loops are simpler, and counted for loops give us more flexibility.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2474169",
+  "subscriptions": [
+    "31-77-2474169",
+    "30-77-2474169"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2940,
+  "passed_by": 2939,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2453261,
+  "create_date": "2021-10-20T19:17:27Z",
+  "update_date": "2021-10-22T04:23:24Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

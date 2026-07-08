@@ -1,0 +1,53 @@
+{
+  "id": 2333988,
+  "lesson": 574391,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>To do the actual work of the query, we can define a method called <code>matches()</code> that takes an <code>ImageData</code> object and returns <code>true</code> if it matches the query:</p>\n\n<p><iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/fe6cf9cdc68f18353b81b19aab33d9cb20785/welcome/1090757/matches\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Fill in the expected value of each call to <code>matches()</code>.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2333988",
+  "subscriptions": [
+    "31-77-2333988",
+    "30-77-2333988"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3042,
+  "passed_by": 2995,
+  "correct_ratio": 0.4948318293683347,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313080,
+  "create_date": "2021-08-20T03:52:30Z",
+  "update_date": "2021-10-15T20:33:37Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,50 @@
+{
+  "id": 2379913,
+  "lesson": 579629,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>We can also think about these values in tabular form. We often use the word <strong>iteration</strong> to mean “one run of the loop body”:</p>\n\n<table cellpadding=\"0\" cellspacing=\"0\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p> </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><strong>Iteration</strong></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p> </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><strong>Value of s</strong></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><strong>total before</strong></p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p><strong>total after</strong></p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p> </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>1st</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>  </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>\"40\"</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>0</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>40</p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p> </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>2nd</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>\"20\"</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>40</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>60</p>\n\t\t\t</td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t<p> </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>3rd</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>\"10\"</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>60</p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>   </p>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<p>70</p>\n\t\t\t</td>\n\t\t</tr>\n\t</tbody>\n</table>\n\n<p>These element-wise or for-each loops are extremely useful when the program needs to process <em>all</em> the elements of an array. The general form is:</p>\n\n<pre><code class=\"language-java\">for(Type t: arr) {\n  ... loop body ...\n}</code></pre>\n\n<p>where <code>Type</code> is the type of elements (like <code>int</code>, <code>String</code>, or <code>Tweet</code>) and <code>arr</code> is an array containing elements of that type. The name of variable <code>t</code> is up to us, the programmer, as with parameters and field names. The loop body is any sequence of statements, and these statements can use the declared variable.</p>\n\n<p><em>(for-each loops also work for types other than arrays. We’ll see that in detail later on.)</em></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2379913",
+  "subscriptions": [
+    "31-77-2379913",
+    "30-77-2379913"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2974,
+  "passed_by": 2974,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2359005,
+  "create_date": "2021-09-10T04:55:20Z",
+  "update_date": "2021-09-18T23:53:38Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

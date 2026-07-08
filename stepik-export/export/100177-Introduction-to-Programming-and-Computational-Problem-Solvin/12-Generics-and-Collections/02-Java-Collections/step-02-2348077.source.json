@@ -1,0 +1,117 @@
+{
+  "id": 2348077,
+  "lesson": 578016,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<pre><code class=\"language-java\">import java.util.ArrayList;\nimport java.util.List;\n\nclass ArrayListExamples {\n  public static void main(String[] args) {\n    List&lt;Integer&gt; nums = new ArrayList&lt;Integer&gt;();\n    nums.add(10);\n    nums.add(20);\n    nums.add(30);\n    System.out.println(nums);\n  }\n}</code></pre>\n\n<p>Note that we are using the wrapper class <code>Integer</code> instead of the primitive type <code>int</code>. Remember that a primitive type cannot be used as a generic type. Therefore, we need to use the wrapper class <code>Integer</code> instead of the primitive <code>int</code>.</p>\n\n<p>The following code will produce an error:</p>\n\n<p><iframe height=\"600px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/6317864e384c512f673cc1ce8af4e79820785/welcome/1094919/ArrayListExamples.java\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Run the code above and fill in the blanks based on the output.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<b>1st line of the output:</b> <br>\n<code> ArrayListExamples.java:6: error: </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "unexpected type",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><br>\n<b> 4th line of the output: </b> <br>\n<code> required: </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "reference",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><br>\n<b> 5th line of the output: </b> <br>\n<code>found:    </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "int",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": true
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2348077",
+  "subscriptions": [
+    "31-77-2348077",
+    "30-77-2348077"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2901,
+  "passed_by": 2837,
+  "correct_ratio": 0.9456271576524741,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2327169,
+  "create_date": "2021-08-26T22:38:08Z",
+  "update_date": "2021-11-24T06:29:05Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

@@ -1,0 +1,63 @@
+{
+  "id": 2327648,
+  "lesson": 573068,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Sometimes, we can’t capture everything we need to know with a single comparison like in <code>max()</code> and, in the previous section, <code>weekly()</code>. For example, consider the method <code>gradeForNumber()</code>, which takes a number representing a score out of 100, and returns a letter from <code>\"A\"</code> to <code>\"F\"</code> representing a grade. Let’s set it up using the design recipe:</p>\n\n<pre><code class=\"language-java\">// Returns A if the score is over 90, B if 80-89, C if 70-79, D if 60-69, F if below 60\nString gradeForNumber(int score) {\n  // Fill in here\n}\nString aGrade1 = this.gradeForNumber(95); // Should be \"A\"\nString aGrade2 = this.gradeForNumber(90); // Should be \"A\"\nString aGrade3 = this.gradeForNumber(100); // Should be \"A\"\nString bGrade1 = this.gradeForNumber(80); // Should be \"B\"\nString cGrade1 = this.gradeForNumber(72); // Should be \"C\"\nString fGrade1 = this.gradeForNumber(55); // Should be \"F\"</code></pre>\n\n<p>If we try to use the structure above, we can easily figure out how to return <code>\"A\"</code>, but it’s less clear what to do in the <strong>else branch</strong>:</p>\n\n<pre><code class=\"language-java\">String gradeForNumber(int score) {\n  if(score &gt;= 90) {\n    return \"A\";\n  }\n  else {\n    // What to do here?\n  }\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2327648",
+  "subscriptions": [
+    "31-77-2327648",
+    "30-77-2327648"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3165,
+  "passed_by": 3165,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2306740,
+  "create_date": "2021-08-17T08:28:15Z",
+  "update_date": "2021-09-10T05:32:05Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

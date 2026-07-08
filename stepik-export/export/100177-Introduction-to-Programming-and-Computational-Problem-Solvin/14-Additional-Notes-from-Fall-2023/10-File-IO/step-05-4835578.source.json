@@ -1,0 +1,67 @@
+{
+  "id": 4835578,
+  "lesson": 1164810,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p> The last thing to focus on in this file is the <code>throws IOException</code> that is found after the method header of main just after the parameters and before the opening of the body of the function.</p>\n\n<p>If we fail to include this, the following will occur as we attempt to compile our code.</p>\n\n<pre><code class=\"language-brainfuck\">[user@sahara ~]$ javac FileExample.java\nFileExample.java:7: error: unreported exception IOException; must be caught or declared to be thrown\n        String contents = Files.readString(Paths.get(\"quotes.txt\"));\n                                          ^\n1 error</code></pre>\n\n<p> To fix this we simply add our <code>throws IOException</code> and now it compiles and runs as we expect. This is the first kind of exception and you can find out more about it in the next section which is on Exceptions.</p>\n\n<pre><code class=\"language-java\">import java.nio.file.*;\nimport java.io.IOException;\n\nclass FileExample {\n    public static void main(String[] args) throws IOException {\n        String contents = Files.readString(Paths.get(\"quotes.txt\"));\n        System.out.println(contents);\n\n        String[] words = contents.split(\" \");\n        for (String word: words) {\n            System.out.println(word);\n        }\n    }\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4835578",
+  "subscriptions": [
+    "31-77-4835578",
+    "30-77-4835578"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 331,
+  "passed_by": 331,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4814675,
+  "create_date": "2023-12-07T00:51:08Z",
+  "update_date": "2023-12-07T00:51:08Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4835578-1",
+  "discussion_threads": [
+    "77-4835578-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

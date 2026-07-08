@@ -1,0 +1,53 @@
+{
+  "id": 2465343,
+  "lesson": 587826,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p><strong>Wait a minute.</strong></p>\n\n<p>These <code>Math</code> methods are <em>weird</em>. When we write methods, we always write <code>this.methodName(...)</code> or <code>someObject.methodName(...)</code>, where what comes before the <code>.</code> is a (reference to a) <strong>object</strong>. But here, we just said that <code>Math</code> is a <em>class</em>, not an object.</p>\n\n<p>How does it work to call methods on it then?</p>\n\n<p><code>Math</code> is a built-in Java class (see the <a href=\"https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html\" rel=\"noopener noreferrer nofollow\"><code>Math</code> documentation</a>), and instead of calling a method on an <em>instance</em> of a class, we called methods directly on the <code>Math</code> class itself. Methods that are called directly on a class (rather than on an <em>instance</em> of a class) are called <strong>static</strong> functions, and they can be written using the <code><strong>static</strong></code> keyword. Specifically, the <code>static</code> keyword means that the method does not have an implicit <code>this</code> parameter, the method body cannot access fields of the class, and the method is expected to be called without any specific instance of the class.</p>\n\n<p>Let's try to write some <code>static</code> methods of our own to implement some more mathematical functions. Consider the following program, in which we implement a <code>static</code> method that returns the smaller of two given numbers (essentially the opposite of <code>Math.max()</code>):</p>\n\n<p><iframe height=\"600px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/61e7ef9ba42ae4bd6e7ef4ddcfaf706920785/welcome/1088066/MyMath\" width=\"100%\"></iframe></p>\n\n<p>Since we wrote the method call like <code>MyMath.min(10, 20)</code>, Java expects and <em>requires</em> that the <code>min()</code> method be static. If we do so, we'll see an error.</p>\n\n<h3><strong><span style=\"color: #cc0000;\">Do Now!</span> Fill in the blank in the error you see if you remove the <code>static</code> keyword from the <code>min()</code> method.</strong></h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2465343",
+  "subscriptions": [
+    "31-77-2465343",
+    "30-77-2465343"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3012,
+  "passed_by": 2978,
+  "correct_ratio": 0.8160919540229885,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2444435,
+  "create_date": "2021-10-17T22:07:58Z",
+  "update_date": "2021-10-18T00:24:29Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,152 @@
+{
+  "id": 2540659,
+  "lesson": 575943,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>We can now use a new keyword, <code>extends</code>, to let each of the individual query classes have access to the single implementation of <code>and()</code>,which is in <code>AQuery</code>. This would enable us to remove the individual definitions of the <code>and()</code> method from each of these classes. So <code>ContainsKeyword</code> becomes:</p>\n\n<pre><code class=\"language-java\">class ContainsKeyword extends AQuery {\n  // ... just the fields, constructors, and match(). No and() method ...\n}</code></pre>\n\n<p><em>(We no longer need to include <code>implements ImageQuery</code> for the <code>ContainsKeyword</code> class because <code>AQuery</code> implements the <code>ImageQuery</code> interface.)</em></p>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now! </strong></span>In the code example below,  the <code>ContainsKeyword</code> class does not use <code>extends AQuery</code> and does not contain an implementation of the <code>and()</code> method. Run the code as-is, and notice that there is an error message.</p>\n\n<p><iframe height=\"760px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/7d9480ec86daacc3524c40d5605c5dfa20785/welcome/1086014/extends%20AQuery\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Replace <code>implements ImageQuery</code> with <code>extends AQuery</code> in the <code>ContainsKeyword</code> class and fill in the blanks based on the output.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>\nExamplesSearch: <br>\n--------------- <br>\nnew ExamplesSearch:1( <br>\n&nbsp;this.ck1 = new ContainsKeyword:\n</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "2",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>\n(<br>&nbsp; this.keyword = \n</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "\"data\"",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>)<br>&nbsp;</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "this.ck2",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>\n= new ContainsKeyword:3(<br>\n&nbsp; this.keyword = \"science\")<br>\n&nbsp;this.query1 = new AndQuery:\n</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "4",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>\n(<br>\n&nbsp; this.iq1 = ContainsKeyword:2<br>\n&nbsp; this.iq2 = \n</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "ContainsKeyword",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>:3))</code>",
+          "options": []
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2540659",
+  "subscriptions": [
+    "31-77-2540659",
+    "30-77-2540659"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2386,
+  "passed_by": 2328,
+  "correct_ratio": 0.6360163710777627,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2519751,
+  "create_date": "2021-11-22T03:53:40Z",
+  "update_date": "2021-11-22T04:25:11Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

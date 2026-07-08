@@ -1,0 +1,87 @@
+{
+  "id": 2474141,
+  "lesson": 605734,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "matching",
+    "text": "<p>We saw how we can create arrays with array initializers. This is a somewhat limited approach, since it can only create arrays with a size that’s known when we write the program. It’s useful to be able to create arrays whose sizes are determined by the program itself. This works differently than using initializers.</p>\n\n<p>It's useful to have a method that takes two numbers and produces an array of numbers from the first up to the second. We could use this to create a numbered list, for example. This is different than the methods we’ve written so far, because it doesn’t take a reference to an array as input. Instead, it produces one as output. Let’s think about the header first:</p>\n\n<pre><code class=\"language-java\">/*\n  @param start The number to start from\n  @param end The number to end before\n  @return a reference to a new array containing integers from start (inclusive)\n  to end (exclusive)\n*/\nint[] range(int start, int end) {}</code></pre>\n\n<p>This warrants a few examples:</p>\n\n<pre><code class=\"language-java\">boolean testRange(Tester t) {\n  int[] check1 = {0, 1, 2};\n  t.checkExpect(this.range(0, 3), check1);\n \n  int[] check2 = {};\n  t.checkExpect(this.range(0, 0), check2);\n \n  int[] check3 = {5};\n  t.checkexpect(this.range(5, 6), check3);\n \n  int[] check4 = {5, 6, 7, 8};\n  t.checkexpect(this.range(5, 9), check4);\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> Based on the description of the range() method and the tests above, match the call to range() with the array that represents its expected return value.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "preserve_firsts_order": true,
+      "is_html_enabled": true,
+      "pairs": [
+        {
+          "first": "<code> this.range(2, 8) </code>",
+          "second": "<code> {2, 3, 4, 5, 6, 7} </code>"
+        },
+        {
+          "first": "<code> this.range(1, 2) </code>",
+          "second": "<code> {1} </code>"
+        },
+        {
+          "first": "<code> this.range(2, 7) </code>",
+          "second": "<code> {2, 3, 4, 5, 6} </code>"
+        },
+        {
+          "first": "<code> this.range(5, 8) </code>",
+          "second": "<code> {5, 6, 7} </code>"
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2474141",
+  "subscriptions": [
+    "31-77-2474141",
+    "30-77-2474141"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2975,
+  "passed_by": 2922,
+  "correct_ratio": 0.8687018375815057,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2453233,
+  "create_date": "2021-10-20T18:44:07Z",
+  "update_date": "2021-10-20T18:44:07Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

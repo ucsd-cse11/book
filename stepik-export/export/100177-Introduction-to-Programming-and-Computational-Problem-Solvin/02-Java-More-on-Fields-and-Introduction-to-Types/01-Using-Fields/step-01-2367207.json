@@ -1,0 +1,53 @@
+{
+  "id": 2367207,
+  "lesson": 571216,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>In the last section, we saw lots of examples of declaring fields. That is, every time we wrote a line like</p>\n\n<pre><code>int theNumberFive = 5;</code></pre>\n\n<p>or</p>\n\n<pre><code>int theAnswer = 5 + 2 * 7;</code></pre>\n\n<p>we were creating, or declaring, a new field. Java and the <code>tester</code> library would dutifully store these fields’ values, and then output them when the program was run.</p>\n\n<p>Fields have many more uses than just labeling the values that are printed out by <code>tester</code>,  however. For example, say we wanted to use Java as a calculator again to do some simple physics calculations, like how far something falls after a given amount of time. A quick glance at <a href=\"https://en.wikipedia.org/wiki/Equations_for_a_falling_body#The_equations\" rel=\"noopener noreferrer nofollow\">Wikipedia</a> gives us a formula. We’ll round to whole numbers (since we’re using <code>int</code>s) and say that the value of gravitational acceleration on Earth is about 10 meters per second<sup>2</sup>. So we could write out a few calculations:</p>\n\n<p><iframe height=\"485px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/0144e22e67b6a858a0eafc5932ae57b420785/welcome/1084195/Using%20Fields\" width=\"100%\"></iframe></p>\n\n<p>If we wanted to change this to, say, calculate the distance traveled on the moon (where acceleration is more like 4 m/s<sup>2</sup>), we’d need to change each of the <code>10</code> values to <code>4</code>.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>In the program above, change all the <code>10</code> values to <code>4</code> (for the acceleration on Mars). Then, answer the questions below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2367207",
+  "subscriptions": [
+    "31-77-2367207",
+    "30-77-2367207"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3561,
+  "passed_by": 3350,
+  "correct_ratio": 0.9215580200162293,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2346299,
+  "create_date": "2021-09-05T22:48:35Z",
+  "update_date": "2021-09-17T21:37:14Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

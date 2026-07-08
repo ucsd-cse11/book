@@ -1,0 +1,50 @@
+{
+  "id": 2474176,
+  "lesson": 579635,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2> </h2>\n\n<p>The answers from the last section are consistent with our explanation of how <code>addAtEnd</code> works.</p>\n\n<p><em>Each time</em> <code>addAtEnd</code> is called, it produces a new array, so the total number of arrays is the number directly created in the test method plus one per call to addAtEnd.</p>\n\n<p>Also, <code>addAtEnd</code> makes no changes to the input array's content or length (and altering an array's length in Java is not possible), so the lengths stay the size they had at creation time.</p>\n\n<p><iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/718e8c16b10fecaf8145089a3c7b576e20785/welcome/1091823/AddAtEnd\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2474176",
+  "subscriptions": [
+    "31-77-2474176",
+    "30-77-2474176"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2923,
+  "passed_by": 2923,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2453268,
+  "create_date": "2021-10-20T19:26:30Z",
+  "update_date": "2021-10-22T15:39:08Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

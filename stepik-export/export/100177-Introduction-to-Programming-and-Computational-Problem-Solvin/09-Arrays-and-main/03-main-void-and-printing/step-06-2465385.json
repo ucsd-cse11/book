@@ -1,0 +1,50 @@
+{
+  "id": 2465385,
+  "lesson": 587829,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>We can run standalone programs, without using the <code>tester</code> library, by writing a <code>main()</code> method.</li>\n\t<li>The program starts running at the beginning of the <code>main()</code> method.</li>\n\t<li>In our terminal, we can run a program that has a <code>main()</code> method by running 2 commands: first <code>javac &lt;name of file&gt;</code> and then <code>java &lt;name of class&gt;</code></li>\n\t<li>The method header for the main method must be <code>public static void main(String[] args)</code>. The only part that can change is the name <code>args</code>.</li>\n\t<li>A method that has a return type of <code>void</code> does not return any value.</li>\n\t<li>A program, when run without any errors, will have no output in the terminal unless we include <strong>print statements</strong>.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2465385",
+  "subscriptions": [
+    "31-77-2465385",
+    "30-77-2465385"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2974,
+  "passed_by": 2974,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2444477,
+  "create_date": "2021-10-17T23:09:17Z",
+  "update_date": "2021-10-18T07:55:52Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,132 @@
+{
+  "id": 2328693,
+  "lesson": 573386,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>If we wanted the <code>fullName</code> field to contain a <code>String</code> with a space in it, we could use <code>+</code> again:</p>\n\n<p><iframe height=\"450px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/b6bf759a164313c4cab47a2fff43aad549685/welcome/1084067/Conctenating%20Strings\" width=\"100%\"></iframe></p>\n\n<p>Since a <code>String</code> consists of a sequence of characters, sometimes we might also want to consider how many characters are in a given <code>String</code>. The quotation marks are part of the way we write out <code>String</code> values, but these quotation marks are not included in the length. The length of the <code>String</code> is determined by the number of characters in between the quotes, including spaces, numbers, and punctuation. For example, <code>\"Eritrea\"</code> contains 7 characters, and <code>\"s00peR_C_kret\"</code> contains 13 characters.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Run the code above and use its output to answer the questions. </h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "How many characters are in the string that is stored in <code> this.firstname </code>?<br>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "3",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br> <br> How many characters are in the string <code> \" \" </code>?<br>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "1",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br> <br> How many characters are in the string that is stored in <code> this.lastName </code>?<br>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "8",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br> <br> How many characters are in the string that is stored in <code> this.fullName </code>?<br>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "12",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": true,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2328693",
+  "subscriptions": [
+    "31-77-2328693",
+    "30-77-2328693"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3353,
+  "passed_by": 3304,
+  "correct_ratio": 0.7247386759581882,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2307785,
+  "create_date": "2021-08-18T00:51:46Z",
+  "update_date": "2021-09-25T03:54:56Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

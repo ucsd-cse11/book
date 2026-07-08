@@ -1,0 +1,50 @@
+{
+  "id": 2331713,
+  "lesson": 573910,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>In this section, we learned several new things:</p>\n\n<ul>\n\t<li>\n\t<p>We refined what goes in a <strong>class definition</strong> – it can also contain a <strong>constructor</strong>, which lets us set the fields differently for different instances.</p>\n\t</li>\n\t<li>\n\t<p>We saw that a <strong>field</strong> doesn’t necessarily need to come with a value; rather than always having the same value, it can instead be provided with a value when using <code>new</code>.</p>\n\t</li>\n\t<li>\n\t<p>We introduced the <code>new</code> keyword, which allows us to create instances of a class with specified values for the different fields.</p>\n\t</li>\n\t<li>\n\t<p>We distinguished between <strong>objects</strong> and <strong>references</strong>, both in the printed output we get when running programs and in a new picture-based representation of values.</p>\n\t</li>\n\t<li>\n\t<p>The special name <code>this</code> can be used in a method as a reference to the object that was to the left of the dot when the method was called.</p>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2331713",
+  "subscriptions": [
+    "31-77-2331713",
+    "30-77-2331713"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3132,
+  "passed_by": 3132,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2310805,
+  "create_date": "2021-08-19T08:08:57Z",
+  "update_date": "2021-08-20T09:40:41Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

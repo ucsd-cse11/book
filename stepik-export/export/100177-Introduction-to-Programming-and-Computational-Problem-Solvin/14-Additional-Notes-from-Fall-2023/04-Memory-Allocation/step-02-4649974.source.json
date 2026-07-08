@@ -1,0 +1,67 @@
+{
+  "id": 4649974,
+  "lesson": 1120313,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Let's assume that this code exists in some file called <code>FlightTest.java</code>. This means that our tester library will try to make an object from the <code>FlightTest</code> class, which it does, so to begin with we have a single <code>FlightTest</code> object on the heap and nothing on the stack. The fields in this object are immediately initialized to their default value, which for reference variables is null (i.e. the memory address of nowhere).</p>\n\n<p><em>Psst, there is actually something on the stack: it's the <code>main</code> method that the tester library uses to create the <code>FlightTest</code> object, so there's supposed to be a stack frame on the stack for the <code>main</code> method containing a reference to the <code>FlightTest</code> object. But we're not going to worry about what the tester library does and focus on the code we can actually see.</em></p>\n\n<p><em>Psst (again), the code itself exists in a separate part of memory from the stack and heap, but we're not concerned about the details of that here.</em></p>\n\n<p>We'll be using the arrow to the left of the code to indicate what line of code we're executing at this step of the program.</p>\n\n<p><img alt=\"\" height=\"612\" name=\"frame1 (2).svg\" src=\"https://ucarecdn.stepik.net/9240d797-b9d4-4b56-ace8-1b8d266c48a1/\" width=\"750\"></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4649974",
+  "subscriptions": [
+    "31-77-4649974",
+    "30-77-4649974"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 445,
+  "passed_by": 445,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4629071,
+  "create_date": "2023-10-28T23:47:53Z",
+  "update_date": "2023-11-12T19:50:12Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4649974-1",
+  "discussion_threads": [
+    "77-4649974-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

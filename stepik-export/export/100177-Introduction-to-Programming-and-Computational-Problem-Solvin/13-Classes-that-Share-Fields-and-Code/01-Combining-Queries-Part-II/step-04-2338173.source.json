@@ -1,0 +1,63 @@
+{
+  "id": 2338173,
+  "lesson": 575460,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Since all the names in the example in the previous step have type <code>ImageQuery</code>—the interface type—Java won’t let us use the <code>and()</code> method on them. We have to first declare that method as part of the interface:</p>\n\n<pre><code class=\"language-java\">interface ImageQuery {\n  boolean matches(ImageData id);\n  ImageQuery and(ImageQuery other);\n}</code></pre>\n\n<p>Now the example above will run, and we can use this idea of the <code>and()</code> method to shrink our code. Notice that the shortened version of the example from the first step also runs here.</p>\n\n<p><iframe height=\"950px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/889c85520367e6dd1595bbac472f6da320785/welcome/1095249/ExamplesSearch.java\" width=\"100%\"></iframe></p>\n\n<p>However, to shorten that line, we paid a particular cost – we had to put the same <code>and()</code> method in each of the <code>ImageQuery</code>-implementing classes. This is a bunch of repeated work. It might be worth it if we have hundreds of lines of code that make use of this, but it’s still annoying to repeat code when it is <em>exactly the same</em> across classes.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2338173",
+  "subscriptions": [
+    "31-77-2338173",
+    "30-77-2338173"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2370,
+  "passed_by": 2370,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2317265,
+  "create_date": "2021-08-22T23:22:43Z",
+  "update_date": "2021-11-22T07:38:13Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

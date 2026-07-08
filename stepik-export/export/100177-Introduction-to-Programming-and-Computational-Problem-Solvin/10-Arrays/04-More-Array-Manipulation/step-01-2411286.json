@@ -1,0 +1,55 @@
+{
+  "id": 2411286,
+  "lesson": 579635,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>Armed with the ability to create arrays of any length and to change their contents after creation, we can now write many new programs.</p>\n\n<p>For example, we can write a method that takes in an array and an element, and it returns a new array that has all the same contents but with the new element appended at the end. This lets us “get around” the restriction that an array is fixed at creation-time because we can use this method to create new, larger arrays from existing ones. </p>\n\n<p>Let’s try to write <code>addAtEnd()</code>:</p>\n\n<pre><code>class ArrayExamples {\n  /*\n  @param String[] base The base array to add to\n  @param String toAdd The string to add at the end\n  @return A new array containing the elements of base followed by toAdd\n  */\n  String[] addAtEnd(String[] base, String toAdd) {\n    // This method body is an example of a stub we filled in to avoid putting\n    // the whole implementation in place for now.\n    String[] result = {};\n    return result;\n  }\n \n  boolean testAddAtEnd(Tester t) {\n    String[] base1 = {\"kiwi\", \"apple\", \"banana\"};\n    String[] check1 = {\"kiwi\", \"apple\", \"banana\", \"orange\"};\n    t.checkExpect(this.addAtEnd(base1, \"orange\"), check1);\n \n    String[] base2 = {};\n    String[] check2 = {\"bear\"};\n    String[] check3 = {\"bear\", \"lion\"};\n    t.checkExpect(this.addAtEnd(base2, \"bear\"), check2);\n    t.checkExpect(this.addAtEnd(check2, \"lion\"), check3);\n \n    return true;\n  }\n}</code></pre>\n\n<p>We can note a few things here. First, the length of the array that is returned is one greater than the length of the input array. That helps us determine the size of the new array that should be created. Second, since the contents are the same for the indices that overlap, we know that we’ll be copying some number of elements from the original array to the returned one. </p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Select all of the statements that should be true about the implementation <code>addAtEnd()</code> method based on its description.</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2411286",
+  "subscriptions": [
+    "31-77-2411286",
+    "30-77-2411286"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2984,
+  "passed_by": 2898,
+  "correct_ratio": 0.38163934426229507,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2390378,
+  "create_date": "2021-09-22T03:11:11Z",
+  "update_date": "2021-10-22T15:23:44Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

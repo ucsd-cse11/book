@@ -1,0 +1,50 @@
+{
+  "id": 2334590,
+  "lesson": 573911,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>There are a few things worth noting about our new realization that <code>String</code> is a class, and that <code>String</code> values are objects:</p>\n\n<ul>\n\t<li>\n\t<p>When printed, <code>String</code>s don’t show up as <code>new String:5(\"some string\")</code> the way other objects do. This is mainly for convenience, since they are relatively common and the output would be difficult to read otherwise.</p>\n\t</li>\n\t<li>\n\t<p>The operator <code>+</code> is pretty special, since it is able to work with both primitives like <code>int</code>s and references to objects like <code>String</code>s. Not many other features in Java work over so many different kinds of values.</p>\n\t</li>\n\t<li>\n\t<p>We’ll slowly learn about more methods for <code>String</code>s that will allow us to perform even more string operations. If you want to look them up for yourself, they are all listed in Java’s official documentation for the <code><a href=\"https://docs.oracle.com/javase/7/docs/api/java/lang/String.html\" rel=\"noopener noreferrer nofollow\">String</a></code> class.</p>\n\t</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2334590",
+  "subscriptions": [
+    "31-77-2334590",
+    "30-77-2334590"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3082,
+  "passed_by": 3082,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313682,
+  "create_date": "2021-08-20T09:18:37Z",
+  "update_date": "2021-10-05T08:12:55Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

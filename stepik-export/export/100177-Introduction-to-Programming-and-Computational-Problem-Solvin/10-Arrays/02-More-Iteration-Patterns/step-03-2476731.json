@@ -1,0 +1,53 @@
+{
+  "id": 2476731,
+  "lesson": 579633,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>We can also write methods that skip just the last element of an array. A common case for such a method puts commas in between each element in a list of strings, but not after the last one. Let’s build that up:</p>\n\n<pre><code class=\"language-java\">/*\n  @param strs The strings to join together\n  @param separator The string to insert between the provided strs\n  @return A single string containing the provided strings joined with the separator\n*/\nString intersperse(String[] strs, String separator)</code></pre>\n\n<p>When we get into processing arrays in trickier ways, there are lots of opportunities to make mistakes with indices. For example, it’s easy to be off by one index. To avoid these issues, it is more important than ever with array methods to think through examples first, so that we have tests to check our work later, after things get complicated. So let’s pick a few tests for this method. In general, we should always make sure a method that processes arrays makes sense with the empty array, arrays with single elements, and several cases of longer arrays.</p>\n\n<p>One way to implement this is to write a loop that appends each string with the separator after it for all the elements <em>except</em> the last one, and then add the last string in the array:</p>\n\n<p><iframe height=\"800px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/90c00bc69c16a6fd595d970b9971ad8c20785/welcome/1091596/Intersperse\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Run the program. How many tests run and how many tests fail?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2476731",
+  "subscriptions": [
+    "31-77-2476731",
+    "30-77-2476731"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2956,
+  "passed_by": 2929,
+  "correct_ratio": 0.827741753594587,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2455823,
+  "create_date": "2021-10-22T06:00:03Z",
+  "update_date": "2021-10-23T20:54:35Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

@@ -1,0 +1,63 @@
+{
+  "id": 2379522,
+  "lesson": 573386,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Wait... What just happened? You might be surprised by the results of the previous program. If we manually add the numbers 49.99 and 4.99 by hand, we get a total of 54.98. However, when you ran the previous program, the value of <code>this.totalPrice</code> was probably something like the following:</p>\n\n<pre><code class=\"language-no-highlight\">54.980000000000004</code></pre>\n\n<p>Where did all of those additional decimal places come from? If you were curious and read the <a href=\"https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html\" rel=\"noopener noreferrer nofollow\"><em>Primitive Data Types</em></a> article in the Java documentation as we suggested, you may have stumbled upon the following description for the <code>double</code> data type:</p>\n\n<blockquote>\n<p>The <code>double</code> data type is a double-precision 64-bit IEEE 754 floating point. Its range of values is beyond the scope of this discussion, but is specified in the <a href=\"https://docs.oracle.com/javase/specs/jls/se7/html/jls-4.html#jls-4.2.3\" rel=\"noopener noreferrer nofollow\">Floating-Point Types, Formats, and Values</a> section of the Java Language Specification. For decimal values, <strong>this data type is generally the default choice. As mentioned above, this data type should never be used for precise values, such as currency</strong>.</p>\n</blockquote>\n\n<p>In Java, the integer types (<code>byte</code>, <code>short</code>, <code>int</code>, and <code>long</code>) are <em>precise</em>. For example, if we create an <code>int</code> variable with the value 42 (e.g. <code>int x = 42;</code>), the variable stores <em>exactly</em> the value 42. However, the floating point types (<code>float</code> and <code>double</code>) have <em>limited precision</em>. For example, when we think of the number 49.99, we actually are thinking of the value 49.9900000000... (with an infinite number of 0s). However, because Java's floating point types have limited precision, the number 49.99 is only precise to a certain number of decimal digits.</p>\n\n<p>A thorough discussion about floating point precision, while surely interesting (<em>sarcasm</em>), is a bit out of the scope of this text. Just know that, if two integer numbers seem like they should be mathematically equal, they will have the exact same value in Java, but if two decimal numbers seem like they should be mathematically equal, they are not guaranteed to have the exact same value in Java. For example, in the following code snippet, <code>num1</code> and <code>num2</code> are guaranteed to have the exact same value, but <code>num3</code> and <code>num4</code> are not.</p>\n\n<p><iframe height=\"500px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/592f4d83a9bfdcaa354e206b7da46e9420785/welcome/1085534/Number%20Precision\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2379522",
+  "subscriptions": [
+    "31-77-2379522",
+    "30-77-2379522"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3345,
+  "passed_by": 3345,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358614,
+  "create_date": "2021-09-09T21:24:28Z",
+  "update_date": "2021-09-15T20:39:54Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

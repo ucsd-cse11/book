@@ -1,0 +1,102 @@
+{
+  "id": 2398328,
+  "lesson": 571195,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>If we wanted the version of the program that evaluates to 315, we can insert parentheses around the part we want to evaluate first, as we would in math. Notice that the value stored in <code>theAnswer</code> is now 315 after this change.</p>\n\n<p><iframe height=\"450px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/d63c8ea4d9711ea2b312ad570ff6069a49685/welcome/1084054/Operators\" width=\"100%\"></iframe></p>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now!</strong> </span>Add a field called <code>anotherAnswer1</code> whose value is computed by <code>(5 + 2) - 3 * 9</code>. Run the program to ensure it works as expected. Then, add another field called <code>anotherAnswer2</code> whose value is computed by <code>((5 + 2) - 3) * 9</code> instead, and again check that it works as you expect.</p>\n\n<p>Note that there’s nothing special about the names <code>theAnswer</code> or <code>anotherAnswer1</code>; if we picked other names like <code>x</code> or <code>someReallyLongFieldName</code>, the programs would still perform the calculation and output the results just fine.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Enter the values of <code>anotherAnswer1</code> and <code>anotherAnswer2</code> in the box below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>anotherAnswer1</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "-20",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br>\n<code> anotherAnswer2 </code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "36",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": false,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2398328",
+  "subscriptions": [
+    "31-77-2398328",
+    "30-77-2398328"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3552,
+  "passed_by": 3414,
+  "correct_ratio": 0.8958604530070294,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2377420,
+  "create_date": "2021-09-16T04:51:45Z",
+  "update_date": "2021-09-27T00:24:54Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

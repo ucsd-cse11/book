@@ -1,0 +1,92 @@
+{
+  "id": 2491771,
+  "lesson": 609849,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>That gives us a few test cases – there are 9 open seats and 15 seats total.</p>\n\n<p>Let's focus first on calculating the total number of seats.</p>\n\n<p>Fill in the blank in this method to make the test pass:</p>\n\n<p><iframe height=\"750px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/d324c59fd39a22e1e6088ca19d5385eb20785/welcome/1092848/TheaterExamples.java\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>total +=</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "row.length",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<code>;</code>",
+          "options": []
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": false,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2491771",
+  "subscriptions": [
+    "31-77-2491771",
+    "30-77-2491771"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2926,
+  "passed_by": 2867,
+  "correct_ratio": 0.25060996863018475,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2470863,
+  "create_date": "2021-10-29T05:11:17Z",
+  "update_date": "2021-10-29T18:54:30Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

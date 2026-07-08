@@ -1,0 +1,50 @@
+{
+  "id": 2334597,
+  "lesson": 573911,
+  "position": 8,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>We’ll need two <code>String</code> methods to do this:</p>\n\n<ul>\n\t<li>\n\t<p><code><a href=\"https://docs.oracle.com/javase/7/docs/api/java/lang/String.html#length()\" rel=\"noopener noreferrer nofollow\">length()</a></code>, which takes in no arguments and returns the number of characters in the <code>String</code>.</p>\n\t</li>\n\t<li>\n\t<p><code><a href=\"https://docs.oracle.com/javase/7/docs/api/java/lang/String.html#substring(int,%20int)\" rel=\"noopener noreferrer nofollow\">substring()</a></code>, which takes in two positions as <code>int</code>s and returns the part of the string that starts at the first position and ends just before the second. The first position in the string is 0.</p>\n\t</li>\n</ul>\n\n<p>Here are some examples of these methods in action:</p>\n\n<pre><code class=\"language-java\">class ExamplesBook {\n  // examples from above omitted here\n\n  String ss1 = \"abcd\".substring(0, 1); // Produces \"a\"\n  String ss2 = \"abcd\".substring(0, 4); // Produces \"abcd\"\n  String ss3 = \"Hello there\".substring(0, 7); // Produces \"Hello t\"\n\n  String l1 = \"abcd\".length(); // Produces 4\n  String l2 = \"\".length(); // Produces 0\n  String l3 = \"The Little Schemer\".length(); // Produces 18\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2334597",
+  "subscriptions": [
+    "31-77-2334597",
+    "30-77-2334597"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3071,
+  "passed_by": 3071,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313689,
+  "create_date": "2021-08-20T09:34:26Z",
+  "update_date": "2021-10-05T08:12:55Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

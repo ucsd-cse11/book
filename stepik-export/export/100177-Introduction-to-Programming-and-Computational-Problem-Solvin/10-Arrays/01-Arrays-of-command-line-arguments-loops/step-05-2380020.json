@@ -1,0 +1,53 @@
+{
+  "id": 2380020,
+  "lesson": 579629,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>If we want to write a program that uses a <em>subset</em> of the values in an array, we need a loop that provides more control than only allowing us to visit every element. A common way to manage these situations is with a more general version of the <code>for</code> loop.</p>\n\n<p>Consider a calculator-like program that takes as the first command-line argument an operation to perform, followed by a list of numbers:</p>\n\n<pre><code class=\"language-no-highlight\">$ java CalcMain sum 3 4 5\n\n12\n\n$ java CalcMain product 3 4 5\n\n60\n\n$ java CalcMain mean 1 2 3 5 5 8\n\n4</code></pre>\n\n<p>To implement this, we need two pieces:</p>\n\n<ul>\n\t<li>\n\t<p>First, to choose the operation to perform by looking at the first element of the array</p>\n\t</li>\n\t<li>\n\t<p>Second, to perform the aggregation on the remaining elements</p>\n\t</li>\n</ul>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Answer the questions below based on the program described above.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2380020",
+  "subscriptions": [
+    "31-77-2380020",
+    "30-77-2380020"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2978,
+  "passed_by": 2935,
+  "correct_ratio": 0.2984590429845904,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2359112,
+  "create_date": "2021-09-10T05:52:51Z",
+  "update_date": "2021-10-22T03:58:05Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

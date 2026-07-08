@@ -1,0 +1,102 @@
+{
+  "id": 2367215,
+  "lesson": 571216,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>It’s pretty annoying to have to make those changes everywhere, and in a large program, we may need to use a constant many more than three times. This motivates another use of fields – to store a common value used in many places. Instead of writing the above, we could define a field that is just for storing the gravity constant, and then <em>use</em> that field every time we want the value for that constant. That looks like:</p>\n\n<p><iframe height=\"500px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/252cd1fc1e4afeb7f06c682e3f1d2a5f20785/welcome/1084176/Using%20Fields\" width=\"100%\"></iframe></p>\n\n<p>Above, instead of repeating <code>10</code> over and over, we use a <strong>field access</strong>, in this case <code>this.gravity</code>, to look up the value in the <code>gravity</code> field. Since it was set to <code>10</code> when it was declared, that value is used for all the calculations. Now, we can just change the value for <code>gravity</code> if we want to get calculations for a different value, like for Mars.</p>\n\n<p>(Notice that using <code>this.gravity</code> matches how the <code>tester</code> library prints out the values of fields, where each field is written as <code>this.fieldName</code>.)</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now!</span> In the code above, change the value for <code>gravity</code> to <code>4</code>. Then, answer the questions below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "How many times did you have to change <code>10</code> to <code>4</code>? <br>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "1",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><br> How many lines of the output are different after making these changes?</br>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "4",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": true,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2367215",
+  "subscriptions": [
+    "31-77-2367215",
+    "30-77-2367215"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3399,
+  "passed_by": 3341,
+  "correct_ratio": 0.5673758865248227,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2346307,
+  "create_date": "2021-09-05T23:02:06Z",
+  "update_date": "2021-09-06T00:11:20Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

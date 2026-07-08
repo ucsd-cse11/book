@@ -1,0 +1,53 @@
+{
+  "id": 2348129,
+  "lesson": 578016,
+  "position": 6,
+  "status": "ready",
+  "block": {
+    "name": "number",
+    "text": "<p>In Java, if we want to store a set of elements, then we may use the <code>HashSet</code> data structure. The documentation can be found <a href=\"https://docs.oracle.com/javase/9/docs/api/java/util/HashSet.html\" rel=\"noopener noreferrer nofollow\">here</a>.</p>\n\n<p>The following program creates a set of some prime numbers.</p>\n\n<p><iframe height=\"700px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/744c81ddad89049c5243e2f61563d4e520785/welcome/1094817/SetExamples.java\" width=\"100%\"></iframe></p>\n\n<p>Note that in a set, the elements are not arranged in the order of insertion. They are arranged in some random order. In this example, it just happens that the elements are arranged in ascending order, but that is not always the case.</p>\n\n<p>Also, note that even though we insert the value <code>3</code> three times, it appears only once in the set. Similarly, the value <code>7</code> is inserted twice, but it only appears once in the set. This is because a set stores only unique elements. </p>\n\n<p>Since there is no ordering of elements in the set, a set does not contain a <code>get(index)</code> method (like the one we saw in <code>ArrayList</code>). There are no indices in a set.</p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>How many values does <code>primes</code> contain?</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2348129",
+  "subscriptions": [
+    "31-77-2348129",
+    "30-77-2348129"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2878,
+  "passed_by": 2846,
+  "correct_ratio": 0.5394935752078609,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2327221,
+  "create_date": "2021-08-27T00:59:43Z",
+  "update_date": "2021-11-15T07:05:38Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

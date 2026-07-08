@@ -1,0 +1,53 @@
+{
+  "id": 2491780,
+  "lesson": 609849,
+  "position": 5,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>We saw that the total number of seats is the sum of the <em>lengths</em> of the individual rows. This was a loop a lot like we've seen before. It's worth pointing out that we were able to use a for-each loop to look at each row individually and store it in the <code>row</code> variable; the for-each loop also worked on this array of arrays.</p>\n\n<pre><code class=\"language-java\">  static int totalSeats(boolean[][] seats) {\n    int total = 0;\n    for(boolean[] row: seats) {\n      total += row.length;\n    }\n    return total;\n  }</code></pre>\n\n<p>One interesting thing here is that the <code>row</code> variable itself stores (a reference to) an array of booleans. This makes sense given how this works in memory; the value of <code>row</code> is set to one of the three references from seats each time the loop body runs.</p>\n\n<p>Our next goal was to calculate the number of <em>available</em> seats, which is the number of seats where the value <code>true</code> is stored in our representation.</p>\n\n<p>This requires a new idea, but no new programming language features. In this case, we want to add up the number of total times we see <code>true</code>. That means for each row, we want to look at each seat, which means another loop!</p>\n\n<p><code>totalSeats</code> gave us a start – we can use a for-each loop to look at each row. Then, for each row, we can use <em>another for-each loop</em> to look at all the elements. Here's most of the code; fill in the missing pieces to make this pass the tests:</p>\n\n<h3><iframe height=\"840px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/3a48d9b141e3fcf12506c37a2c6c9a8120785/welcome/1093528/TheaterExamples.java\" width=\"100%\"></iframe></h3>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Fill in the blanks in the code.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2491780",
+  "subscriptions": [
+    "31-77-2491780",
+    "30-77-2491780"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2920,
+  "passed_by": 2847,
+  "correct_ratio": 0.3587919630600275,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2470872,
+  "create_date": "2021-10-29T05:20:04Z",
+  "update_date": "2021-10-29T19:03:14Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

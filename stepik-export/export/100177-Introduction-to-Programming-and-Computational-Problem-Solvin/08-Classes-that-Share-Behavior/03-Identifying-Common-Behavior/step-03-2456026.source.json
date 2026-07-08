@@ -1,0 +1,63 @@
+{
+  "id": 2456026,
+  "lesson": 574398,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>We can write an <strong>interface</strong> to capture shared functionality between classes. Inside this interface, we can include method headers.</li>\n\t<li>A class that <strong>implements</strong> an interface must contain its own implementation of each method whose header is included in the interface.</li>\n\t<li>To write an interface, we put the keyword <code>interface</code> in front of the name of the interface, and we put our method headers between the curly brackets that come after the name.</li>\n\t<li>A class that implements an interface should have the keyword <code>implements</code> after the name of the class, and the name of the interface goes after the <code>implements</code> keyword.\n\t<ul>\n\t\t<li>e.g. A class named MatchesExtension that implements the ImageQuery interface would look like <code>class MatchesExtension implements ImageQuery { ... }</code></li>\n\t</ul>\n\t</li>\n\t<li>An interface can be used as a type, and a field or variable whose type is an interface can store a reference to any object of a class that implements that interface.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2456026",
+  "subscriptions": [
+    "31-77-2456026",
+    "30-77-2456026"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3017,
+  "passed_by": 3017,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2435118,
+  "create_date": "2021-10-13T06:41:05Z",
+  "update_date": "2021-10-13T06:41:11Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

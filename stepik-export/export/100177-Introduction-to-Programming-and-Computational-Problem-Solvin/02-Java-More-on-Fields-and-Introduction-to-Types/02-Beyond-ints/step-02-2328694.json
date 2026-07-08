@@ -1,0 +1,55 @@
+{
+  "id": 2328694,
+  "lesson": 573386,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p><code>String</code>s, like <code>int</code>s, support a number of operations. A simple one is <code>+</code>, which appends, or <em>concatenates</em>, strings together. For example:</p>\n\n<p><iframe height=\"450px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/b6bf759a164313c4cab47a2fff43aad549685/welcome/1084066/Conctenating%20Strings\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Which of the following options contain text that is part of the output? </h3>\n\n<p>(Hint: Consider <em>all</em> parts of the output, not just the values in the fields. Interpret each option <em>exactly</em> as it appears below, e.g. if you do not see that exact sequence of characters together, then it is not a part of the output.)</p>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2328694",
+  "subscriptions": [
+    "31-77-2328694",
+    "30-77-2328694"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3368,
+  "passed_by": 3278,
+  "correct_ratio": 0.2351518600184935,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2307786,
+  "create_date": "2021-08-18T00:51:46Z",
+  "update_date": "2021-10-18T02:44:51Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

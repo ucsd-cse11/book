@@ -1,0 +1,63 @@
+{
+  "id": 2440204,
+  "lesson": 573908,
+  "position": 9,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Let’s try to apply our pictorial representation idea to the fully-constructed <code>ExamplesStudent</code> object on the previous step, focusing first on just the field <code>s1</code>. Based on the earlier picture, we can assume that the picture for the <code>ExamplesStudent</code> object will look something like this:</p>\n\n<p style=\"text-align: center;\"><img alt=\"\" height=\"124\" name=\"step10-1.png\" src=\"https://ucarecdn.stepik.net/1c539d75-6559-4cfe-8679-5c05dedb45d4/\" width=\"195\"></p>\n\n<p>We just need to understand what goes in the box for <code>s1</code>. We <em>could</em> try to complete this visual by putting the entirety of our representation of <code>s1</code> in the box. But we’re not going to do that, because it’s not an accurate model of how these objects are laid out in the running Java program. Instead, here’s the actually-accurate picture of this situation:</p>\n\n<p style=\"text-align: center;\"><img alt=\"\" height=\"304\" name=\"step10-2.png\" src=\"https://ucarecdn.stepik.net/f70df480-1d6e-4a8e-a485-fe821241c70d/\" width=\"215\"></p>\n\n<p>We say that <code>s1</code> contains a<strong> reference</strong> to the object. The program always ends up acting on <strong>references</strong> to objects, never the objects themselves. We’ll use small, distinctly colored shapes to represent these <strong>references</strong>. The shape in the top-left corner of an object serves to identify it, so when we see a reference in another field (or used as a parameter), we’ll know which object it is referring to.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2440204",
+  "subscriptions": [
+    "31-77-2440204",
+    "30-77-2440204"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3137,
+  "passed_by": 3137,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2419296,
+  "create_date": "2021-10-04T10:38:56Z",
+  "update_date": "2021-10-04T10:38:56Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

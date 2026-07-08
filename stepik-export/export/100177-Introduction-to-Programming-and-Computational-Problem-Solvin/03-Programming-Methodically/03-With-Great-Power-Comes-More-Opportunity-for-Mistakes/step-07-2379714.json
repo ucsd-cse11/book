@@ -1,0 +1,55 @@
+{
+  "id": 2379714,
+  "lesson": 571274,
+  "position": 7,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>In addition to checking that the <strong>return type</strong> is consistent with the <strong>method body</strong>, Java will also check that any <strong>arguments</strong> passed to the method are consistent with the types of the <strong>parameters</strong>. So if we, for example, try to pass a <code>int</code> value in place of a <code>String</code> when calling <code>fillIn()</code>, we will also see an error:</p>\n\n<p><iframe height=\"500px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/cb8d972c6dd983f5d5f9cd5b835c98c720785/welcome/1086627/Understanding%20Errors\" width=\"100%\"></iframe></p>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now! </strong></span>Run the code and observe the error message.</p>\n\n<p>This error happens because the first <strong>parameter</strong> of <code>fillIn()</code>, <code>adjective</code>, is specified to have type <code>String</code>. The value <code>1</code> doesn’t match that (it’s an <code>int</code>), so an error is reported. In this case, Java is providing a helpful error message (rejoice!). Just remember that this won’t always be the case (and it’s not just Java’s fault; no language gives perfect error messages in all cases).</p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong></span> Which of the following pairs of method headers and method calls will <em>not</em> result in an error?</h3>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2379714",
+  "subscriptions": [
+    "31-77-2379714",
+    "30-77-2379714"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3239,
+  "passed_by": 3187,
+  "correct_ratio": 0.48418344180414713,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2358806,
+  "create_date": "2021-09-10T02:54:40Z",
+  "update_date": "2021-09-22T05:23:45Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

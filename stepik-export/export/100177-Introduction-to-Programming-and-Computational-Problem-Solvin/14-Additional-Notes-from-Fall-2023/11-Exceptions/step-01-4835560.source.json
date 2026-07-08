@@ -1,0 +1,67 @@
+{
+  "id": 4835560,
+  "lesson": 1164811,
+  "position": 1,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p> There are multiple ways that errors and exceptions can be handled in Java, here are a few.</p>\n\n<p>This first one is a simple <code>IndexOutOfBoundsException</code> which is incredibly common as it is an easy way to make sure we do not attempt accessing an index that we are not supposed to. Throwing this error with a message that we can control also allows us to easier debug later. If we see this error message print, we can go to <code>MyList</code> and we will know this is where the problem occurred. We can also include useful information in our message like what function we were in, possibly what the value of index was when this occurred. There are many options but for now just know that:</p>\n\n<p>1. Throwing a new exception with a message is one way of erroring and it can have a very custom error message.</p>\n\n<pre><code class=\"language-java\">class MyList {\n\n...\n    public int set(int index, int element) {\n        if (index &lt; 0 || index &gt;= this.elems.length) {\n            throw new IndexOutOfBoundsException(\"Error: Index is out of bounds in MyList!\");\n        }\n        int prevElem = this.elems[index];\n        this.elems[index] = element;\n        return prevElem;\n    }\n...\n}</code></pre>\n\n<p>The next 2 examples are both with file accessing.</p>\n\n<p>The second example overall shows that we have added <code>throws IOException</code> in the end of the method header in which the error may occur. This means that the function <em>may</em> throw this error but will not necessarily. In this case it will only error if it cannot find the file given in <code>args[0]</code>. This is an easy way to generalize an error within the method and let our program compile without very much work.</p>\n\n<p>2. Shortest way to handle errors by simply stating that a method may throw an error without writing any specific error message.</p>\n\n<pre><code class=\"language-java\">import java.nio.file.*;\nimport java.io.IOException;\nimport java.util.List;\n\nclass FileExample {\n    public static void main(String[] args) throws IOException {\n\n        List&lt;String&gt; lines = Files.readAllLines(Paths.get(args[0]));\n        System.out.println(lines);\n\n        for (int lineIndex = lines.size() - 1; lineIndex &gt;= 0; lineIndex--) {\n            System.out.println(lines.get(lineIndex));\n        }\n    }\n}</code></pre>\n\n<p>The third way is by using try and catch. The code that we know may cause an error we insert into a try block and after the try block we write a catch. The catch specifies what kind of exception might be caught and then can have it's own executable code, in this case a print statement giving more information about what error has occurred in our program. Be careful though, even if we catch an exception, the program will execute the catch block and continue running after the catch block unless told to exit.</p>\n\n<pre><code class=\"language-java\">import java.nio.file.*;\nimport java.io.IOException;\nimport java.util.List;\n\nclass FileExampleWithTryCatch {\n    public static void main(String[] args) {\n\n        try {\n            List&lt;String&gt; lines = Files.readAllLines(Paths.get(args[0]));\n        \n            System.out.println(lines);\n\n            for (int lineIndex = lines.size() - 1; lineIndex &gt;= 0; lineIndex--) {\n                System.out.println(lines.get(lineIndex));\n            }\n        } catch (IOException e) {\n            System.out.println(\"The File \" + args[0] + \" is not Found\");\n        }\n\n        System.out.println(\"I happen after the try and catch.\");\n    }\n}</code></pre>\n\n<p> For example if we run this code we see the following output</p>\n\n<pre><code class=\"language-brainfuck\">[user@sahara ~]$ java FileExampleWithTryCatch notAFile.txt\nThe File notAFile.txt is not Found\nI happen after the try and catch.</code></pre>\n\n<p>3. try and catch is good at printing specific messages when an exception occurs but will not stop the program on it's own. Has an entire code block to execute when an exception is caught.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4835560",
+  "subscriptions": [
+    "31-77-4835560",
+    "30-77-4835560"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 369,
+  "passed_by": 369,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4814657,
+  "create_date": "2023-12-07T00:48:27Z",
+  "update_date": "2023-12-07T00:51:50Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4835560-1",
+  "discussion_threads": [
+    "77-4835560-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

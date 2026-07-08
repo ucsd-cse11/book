@@ -1,0 +1,112 @@
+{
+  "id": 2348235,
+  "lesson": 578016,
+  "position": 11,
+  "status": "ready",
+  "block": {
+    "name": "choice",
+    "text": "<p>The following code example shows how to remove an element from a map.</p>\n\n<p><iframe height=\"700px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/744c81ddad89049c5243e2f61563d4e520785/welcome/1094822/MapExamples.java\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Considering each option on its own, which of the following lines of code, when added to the end of the program, would change the size of <code>studDir</code>?</h3>\n\n<p>(Hint: try running the code with each of these options!)</p>",
+    "video": null,
+    "options": {
+      "is_multiple_choice": true
+    },
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "is_multiple_choice": true,
+      "is_always_correct": false,
+      "sample_size": 7,
+      "preserve_order": false,
+      "is_html_enabled": true,
+      "is_options_feedback": false,
+      "options": [
+        {
+          "is_correct": true,
+          "text": "<code> studDir.remove(67890); </code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code> studDir.remove(13579); </code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "<code> studDir.put(24680, \"Oksana\"); </code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code> studDir.remove(54321); </code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": true,
+          "text": "<code> studDir.put(13579, \"Qiling\"); </code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code> studDir.put(12345, \"Amahle\"); </code>",
+          "feedback": ""
+        },
+        {
+          "is_correct": false,
+          "text": "<code> studDir.get(67890); </code>",
+          "feedback": ""
+        }
+      ]
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2348235",
+  "subscriptions": [
+    "31-77-2348235",
+    "30-77-2348235"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2876,
+  "passed_by": 2705,
+  "correct_ratio": 0.1600708800945068,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2327327,
+  "create_date": "2021-08-27T05:20:10Z",
+  "update_date": "2021-11-24T06:25:56Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

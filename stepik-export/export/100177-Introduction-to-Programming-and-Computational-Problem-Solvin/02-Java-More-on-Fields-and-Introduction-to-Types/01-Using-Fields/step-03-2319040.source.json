@@ -1,0 +1,63 @@
+{
+  "id": 2319040,
+  "lesson": 571216,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Here are some more examples of both declaring and using fields.</p>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now! </strong></span>Try to predict the output for each of these programs, and then run them to see if you were right.</p>\n\n<p><iframe height=\"485px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/da817b2443ddb1e1c652acc2e678121f20785/welcome/1087092/Getting%20Paid\" width=\"100%\"></iframe></p>\n\n<p><iframe height=\"510px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/252cd1fc1e4afeb7f06c682e3f1d2a5f20785/welcome/1084178/Calculating%20Revenue\" width=\"100%\"></iframe></p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2319040",
+  "subscriptions": [
+    "31-77-2319040",
+    "30-77-2319040"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3390,
+  "passed_by": 3390,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2298132,
+  "create_date": "2021-08-13T07:37:11Z",
+  "update_date": "2021-09-25T03:45:17Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

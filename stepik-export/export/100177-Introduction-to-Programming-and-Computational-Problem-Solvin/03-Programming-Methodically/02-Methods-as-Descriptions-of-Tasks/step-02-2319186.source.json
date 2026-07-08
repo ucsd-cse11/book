@@ -1,0 +1,63 @@
+{
+  "id": 2319186,
+  "lesson": 571273,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>Let’s take another example, that of building up a “Mad Lib”. We might have the following English description of what we want to do:</p>\n\n<blockquote>\n<p>Write a program that takes in an adjective and a number, and fills them into the template: “The professor’s explanation was &lt;adjective&gt;, probably because he’s been teaching for &lt;number&gt; years.”</p>\n</blockquote>\n\n<p>We can take this description and use it to derive a method that accomplishes the goal it sets out. First, we need to figure out the inputs and outputs from the problem description. The problem is expecting two inputs: an adjective, which can be represented as <code>String</code> data, and a number which can be represented as an <code>int</code>. The result of the method ought to be a <code>String</code> — the result of combining the template string with the two input values. This tells us that the method should have a <strong>return type</strong> of <code>String</code>, and two <strong>parameters</strong>, one with type <code>String</code> and one with type <code>int</code>. Along with a name for the method, which we’ll call <code>fillIn()</code> (since we’re filling in a sentence), that gives us the first part of the method definition:</p>\n\n<pre><code class=\"language-java\">/*\n  Places the given adjective and number into the sentence template to\n  create a full sentence.\n*/\nString fillIn(String adjective, int number) {\n  // Still need to fill in this method body\n}</code></pre>\n\n<p>Here, we also picked <em>names</em> for the parameters — <code>adjective</code> and <code>number</code> — which were straightforward to pick given the problem statement. We call this part of a method definition — the part with the <strong>return type</strong>, the name, and the <strong>parameters</strong> — the <strong>method header</strong>. It describes the behavior of the method in terms of types.</p>\n\n<p>This is also an example of a method definition that has more than one <strong>parameter</strong> (in this case, it has two of them). The two parameters — <code>adjective</code> and <code>number</code> — are separated with a comma, and both are written with the corresponding type in front of them.</p>\n\n<p>Finally, as we have shown above, it’s also useful to put a comment before the method that describes the result that will be produced.</p>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {},
+  "progress": "77-2319186",
+  "subscriptions": [
+    "31-77-2319186",
+    "30-77-2319186"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3316,
+  "passed_by": 3316,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2298278,
+  "create_date": "2021-08-13T09:36:24Z",
+  "update_date": "2021-09-10T00:47:26Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

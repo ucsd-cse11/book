@@ -1,0 +1,67 @@
+{
+  "id": 4683977,
+  "lesson": 1129704,
+  "position": 4,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>The advantage of defining our classes to implement <code>Region</code> is that we can now use <code>Region</code> as a reference variable type. The Java compiler will allow us to call <code>contains</code> from a <code>Region</code> reference variable, even if we don't know exactly what object type the reference variable points to, because it is guaranteed to implement <code>contains</code>. So we can scrap the three union region classes we had before and define one <code>UnionRegion</code> class:</p>\n\n<pre><code class=\"language-java\">class UnionRegion implements Region {\n    Region r1, r2;\n\n    UnionRegion(Region r1, Region r2) {\n        this.r1 = r1;\n        this.r2 = r2;\n    }\n\n    public boolean contains(Point p) {\n        return this.r1.contains(p) || this.r2.contains(p);\n    }\n}</code></pre>\n\n<p>Much easier on the hands. Note that we also have <code>UnionRegion implements Region</code>. This allows us to take the union of two <code>UnionRegions</code>, or one <code>UnionRegion</code> and some other <code>Region</code>, granting us a lot of flexibility with how we use our code.</p>\n\n<p>We can just as easily define an <code>IntersectRegion</code> class, which contains all points covered by both of the two regions.</p>\n\n<pre><code class=\"language-java\">class IntersectRegion implements Region {\n    Region r1, r2;\n\n    IntersectRegion(Region r1, Region r2) {\n        this.r1 = r1;\n        this.r2 = r2;\n    }\n\n    public boolean contains(Point p) {\n        return this.r1.contains(p) &amp;&amp; this.r2.contains(p);\n    }\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {},
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4683977",
+  "subscriptions": [
+    "31-77-4683977",
+    "30-77-4683977"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 379,
+  "passed_by": 379,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4663074,
+  "create_date": "2023-11-06T09:12:25Z",
+  "update_date": "2023-11-06T09:12:25Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4683977-1",
+  "discussion_threads": [
+    "77-4683977-1"
+  ],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 0
+}

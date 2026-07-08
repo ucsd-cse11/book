@@ -1,0 +1,53 @@
+{
+  "id": 2333955,
+  "lesson": 574307,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "matching",
+    "text": "<p>We could also check that the size is greater than a certain width and height:</p>\n\n<p><iframe height=\"860px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/4976173eb7cba7495536db272fa233fc20785/welcome/1086231/largerThan\" width=\"100%\"></iframe></p>\n\n<pre><code class=\"language-java\">// For the question below, you might find it helpful\n// to modify the code above and may refer to this template to answer.\n\n__BLANK1__ largerThan(int __BLANK2__, int minHeight) {\n  __BLANK3__ this.__BLANK4__ &gt;= minWidth __BLANK5__ this.height &gt;= __BLANK6__;\n}</code></pre>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>Complete the <code>largerThan</code> method by reordering the code snippets below to match the blanks that they belong in.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2333955",
+  "subscriptions": [
+    "31-77-2333955",
+    "30-77-2333955"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3044,
+  "passed_by": 3000,
+  "correct_ratio": 0.6030060120240481,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2313047,
+  "create_date": "2021-08-19T23:30:13Z",
+  "update_date": "2021-10-13T02:25:34Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

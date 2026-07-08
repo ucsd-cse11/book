@@ -1,0 +1,54 @@
+{
+  "id": 4835575,
+  "lesson": 1164810,
+  "position": 3,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<p>The next important line we have is</p>\n\n<pre><code class=\"language-java\">        String contents = Files.readString(Paths.get(\"quotes.txt\"));</code></pre>\n\n<p>which has 2 important function calls to functions we did not ourselves write so to javadocs we go.</p>\n\n<p>First up is readString:</p>\n\n<table>\n\t<tbody>\n\t\t<tr>\n\t\t\t<td><code>static <a href=\"https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html\" rel=\"noopener noreferrer nofollow\" title=\"class in java.lang\">String</a></code></td>\n\t\t\t<th><code><a href=\"https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Files.html#readString(java.nio.file.Path)\" rel=\"noopener noreferrer nofollow\">readString</a>​(<a href=\"https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/file/Path.html\" rel=\"noopener noreferrer nofollow\" title=\"interface in java.nio.file\">Path</a> path)</code></th>\n\t\t\t<td>\n\t\t\t<p>Reads all content from a file into a string, decoding from bytes to characters using the <a href=\"https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/StandardCharsets.html#UTF_8\" rel=\"noopener noreferrer nofollow\"><code>UTF-8</code></a> <a href=\"https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html\" rel=\"noopener noreferrer nofollow\" title=\"class in java.nio.charset\"><code>charset</code></a>.</p>\n\t\t\t</td>\n\t\t</tr>\n\t</tbody>\n</table>\n\n<p> We see that it takes a path, and how do we get this? We have another method to help us:</p>\n\n<table border=\"0\" cellpadding=\"3\" cellspacing=\"0\">\n\t<tbody>\n\t\t<tr>\n\t\t\t<td><code>static <a href=\"https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html\" rel=\"noopener noreferrer nofollow\" title=\"interface in java.nio.file\">Path</a></code></td>\n\t\t\t<td><code><a href=\"https://docs.oracle.com/javase/8/docs/api/java/nio/file/Paths.html#get-java.lang.String-java.lang.String...-\" rel=\"noopener noreferrer nofollow\">get</a>(<a href=\"https://docs.oracle.com/javase/8/docs/api/java/lang/String.html\" rel=\"noopener noreferrer nofollow\" title=\"class in java.lang\">String</a> first, <a href=\"https://docs.oracle.com/javase/8/docs/api/java/lang/String.html\" rel=\"noopener noreferrer nofollow\" title=\"class in java.lang\">String</a>... more)</code>\n\t\t\t<p>Converts a path string, or a sequence of strings that when joined form a path string, to a <code>Path</code>.</p>\n\t\t\t</td>\n\t\t</tr>\n\t</tbody>\n</table>\n\n<p>Now that we have gotten our Path object and called readString with it as the parameter, we have the string from the file! (stored in \"contents\").</p>\n\n<pre><code class=\"language-java\">import java.nio.file.*;\nimport java.io.IOException;\n\nclass FileExample {\n    public static void main(String[] args) throws IOException {\n        String contents = Files.readString(Paths.get(\"quotes.txt\"));\n        System.out.println(contents);\n\n        String[] words = contents.split(\" \");\n        for (String word: words) {\n            System.out.println(word);\n        }\n    }\n}</code></pre>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "comment": "#"
+  },
+  "progress": "77-4835575",
+  "subscriptions": [
+    "31-77-4835575",
+    "30-77-4835575"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 341,
+  "passed_by": 341,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 4814672,
+  "create_date": "2023-12-07T00:50:42Z",
+  "update_date": "2023-12-07T00:50:42Z",
+  "discussions_count": 0,
+  "discussion_proxy": "77-4835575-1",
+  "discussion_threads": [
+    "77-4835575-1"
+  ]
+}

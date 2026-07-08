@@ -1,0 +1,102 @@
+{
+  "id": 2491749,
+  "lesson": 609849,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>The type <code>boolean[][]</code> we pronounce as “array of array of booleans”. Indeed, in the output of `./run` we can see that structure:</p>\n\n<pre><code class=\"language-no-highlight\">new TheaterExamples:1(\n this.row1 = new boolean[4]:2{\n  [0] true,\n  [1] true,\n  [2] false,\n  [3] false\n }\n this.row2 = new boolean[5]:3{\n  [0] true,\n  [1] false,\n  [2] false,\n  [3] false,\n  [4] true\n }\n this.row3 = new boolean[6]:4{\n  [0] true,\n  [1] false,\n  [2] true,\n  [3] true,\n  [4] true,\n  [5] true\n }\n this.seats = new boolean[][3]:5{\n  [0] [Z:2,\n  [1] [Z:3,\n  [2] [Z:4\n })</code></pre>\n\n<p>Each individual array gets its own reference, and the array stored in <code>seats</code> stores a reference to each of the rows. (Java prints references to boolean arrays as <code>[Z</code> followed by their reference number. <a href=\"https://twitter.com/johnwvilk/status/1453961614718169097?s=12\" rel=\"noopener noreferrer nofollow\">I cannot find a good reason for this</a>.)</p>\n\n<p>When we access elements in <code>seats</code>, we will get these array references as results. So, if we wanted to get the value corresponding to a single one of the booleans, we would use <code>seats[indexOfRow][indexOfSeat]</code>. Relatedly, we could get the length of a row with <code>seats[indexOfRow].length</code>.</p>\n\n<p>Try running the following program to understand how array lookup works with this array of arrays.</p>\n\n<p><iframe height=\"600px\" scrolling=\"yes\" src=\"https://tech.io/playground-widget/3a48d9b141e3fcf12506c37a2c6c9a8120785/welcome/1093526/TheaterExamples.java\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\"><strong>Do Now!</strong> </span>Fill in the blanks below with the results of running the program above.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false,
+    "source": {
+      "components": [
+        {
+          "type": "text",
+          "text": "<code>this.row3Seats =</code>\n",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "6",
+              "is_correct": true
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "text": "<br><code>this.row3Accessed =</code>",
+          "options": []
+        },
+        {
+          "type": "input",
+          "text": "",
+          "options": [
+            {
+              "text": "[Z:4",
+              "is_correct": true
+            }
+          ]
+        }
+      ],
+      "is_case_sensitive": false,
+      "is_detailed_feedback": false,
+      "is_partially_correct": false
+    },
+    "subtitles": {},
+    "tests_archive": null,
+    "feedback_correct": "",
+    "feedback_wrong": ""
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2491749",
+  "subscriptions": [
+    "31-77-2491749",
+    "30-77-2491749"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2935,
+  "passed_by": 2881,
+  "correct_ratio": 0.4705595315549772,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2470841,
+  "create_date": "2021-10-29T04:46:22Z",
+  "update_date": "2021-10-29T18:50:56Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": [],
+  "reason_of_failure": "",
+  "error": {
+    "text": "",
+    "code": "",
+    "params": {}
+  },
+  "warnings": [],
+  "cost": 1
+}

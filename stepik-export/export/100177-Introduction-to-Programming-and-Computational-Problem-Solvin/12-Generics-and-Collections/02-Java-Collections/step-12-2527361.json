@@ -1,0 +1,50 @@
+{
+  "id": 2527361,
+  "lesson": 578016,
+  "position": 12,
+  "status": "ready",
+  "block": {
+    "name": "text",
+    "text": "<h2>Summary</h2>\n\n<ul>\n\t<li>Java has several pre-defined classes that we can use to represent collections of data. In this module, we introduced <code>ArrayList</code>, <code>HashSet</code>, and <code>HashMap</code>.</li>\n\t<li><code>ArrayList</code> has several similarities to arrays. Both contain elements that can be accessed using indices. Some differences are that the size of an <code>ArrayList</code> can change (while the size of an array cannot be changed) and that an <code>ArrayList</code> cannot store elements of primitive types (while an array can).</li>\n\t<li><code>HashSet</code> stores a set of elements. The elements are not kept in any order and cannot be accessed using indices.</li>\n\t<li><code>HashMap</code> creates key-value pairs. We can use the key to access the value that it is paired with. The key and value do not have to be of the same type.</li>\n</ul>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {},
+  "progress": "77-2527361",
+  "subscriptions": [
+    "31-77-2527361",
+    "30-77-2527361"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 2847,
+  "passed_by": 2847,
+  "correct_ratio": null,
+  "worth": 0,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2506453,
+  "create_date": "2021-11-15T05:16:05Z",
+  "update_date": "2021-11-15T05:16:05Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}

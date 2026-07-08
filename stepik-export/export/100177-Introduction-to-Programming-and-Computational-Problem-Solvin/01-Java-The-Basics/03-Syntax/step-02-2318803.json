@@ -1,0 +1,53 @@
+{
+  "id": 2318803,
+  "lesson": 571200,
+  "position": 2,
+  "status": "ready",
+  "block": {
+    "name": "fill-blanks",
+    "text": "<p>In the previous step, Java refused to run the program because it didn’t have the right syntax. Java is extremely picky and forces us to get things exactly right. <strong>You must get used to reading and responding to error messages like the one from the previous step.</strong> <strong>It’s nearly impossible to write correct syntax on the first try all the time</strong>, so you’ll often be interpreting error messages many times to make a program run. Even experienced programmers deal with this on a regular basis. Be patient with yourself, read the code carefully, and use try to use the error message to your advantage to make the fix.</p>\n\n<p><span style=\"color: #cc0000;\"><strong>Do Now! </strong></span>Take the previous example (provided here), put the curly brace back, and make sure the program works. Then delete the semicolon, run the program, and check the error message you get.</p>\n\n<p><iframe height=\"370px\" scrolling=\"no\" src=\"https://tech.io/playground-widget/252cd1fc1e4afeb7f06c682e3f1d2a5f20785/welcome/1084173/Syntax\" width=\"100%\"></iframe></p>\n\n<h3><span style=\"color: #cc0000;\">Do Now! </span>The program should produce an error message when it is run without a semicolon. Fill in the blanks for this error message below.</h3>",
+    "video": null,
+    "options": {},
+    "subtitle_files": [],
+    "is_deprecated": false
+  },
+  "actions": {
+    "edit_instructions": "#",
+    "submit": "#"
+  },
+  "progress": "77-2318803",
+  "subscriptions": [
+    "31-77-2318803",
+    "30-77-2318803"
+  ],
+  "instruction": null,
+  "session": null,
+  "instruction_type": null,
+  "viewed_by": 3452,
+  "passed_by": 3354,
+  "correct_ratio": 0.5109566268701828,
+  "worth": 1,
+  "is_solutions_unlocked": false,
+  "solutions_unlocked_attempts": 3,
+  "has_submissions_restrictions": false,
+  "max_submissions_count": 3,
+  "variation": 1,
+  "variations_count": 1,
+  "is_enabled": true,
+  "needs_plan": null,
+  "num_grades": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "user_step_grade": null,
+  "user_step_vote": null,
+  "step_issue": 2297895,
+  "create_date": "2021-08-13T04:50:17Z",
+  "update_date": "2021-09-17T21:33:43Z",
+  "discussions_count": 0,
+  "discussion_proxy": null,
+  "discussion_threads": []
+}
