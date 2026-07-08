@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6.2 From Examples to Testing</title>
+<link rel="stylesheet" href="../assets/book.css">
+
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Programming, Objectively</span>
+</header>
+<main>
+<h1>6.2 — From Examples to Testing</h1>
+<nav class="stepnav"><a href="#step1" class="t-fill-blanks" title="Fill in the blanks">1</a><a href="#step2" class="t-text" title="reading">2</a><a href="#step3" class="t-string" title="Short answer">3</a><a href="#step4" class="t-string" title="Short answer">4</a><a href="#step5" class="t-fill-blanks" title="Fill in the blanks">5</a><a href="#step6" class="t-fill-blanks" title="Fill in the blanks">6</a><a href="#step7" class="t-text" title="reading">7</a><a href="#step8" class="t-text" title="reading">8</a></nav>
+<section class="step t-fill-blanks" id="step1"><span class="badge">Fill in the blanks</span><p>Let’s take stock of the whole program we’ve written so far in this section:</p>
+
+<p>
+<div class="runner" id="w1" data-main="ExamplesBook" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="24">class Book {
+  String title;
+  String author;
+  int price;
+
+  Book(String title, String author, int price) {
+    this.title = title;
+    this.author = author;
+    this.price = price;
+  }
+
+  /*
+    @param percentage A percent (between 0 and 100) of the discount to subtract
+    @return The price with the discount subtracted
+  */
+  __BLANK1__ salePrice(int percentage) {
+    return this.price - (this.price * percentage) / 100;
+  }
+
+  /*
+    @param other The Book to compare against
+    @return true if this book and other have the same author, false otherwise
+  */
+  boolean sameAuthor(Book other) {
+    return this.author.equals(__BLANK2__);
+  }
+
+  /*
+    @param length The number of characters to appear before &quot;...&quot;
+    @return A new string containing length characters followed by &quot;...&quot; if the
+    string was too long, or the original string otherwise
+  */
+  String truncateTitle(int length) {
+    if(this.title.length() &gt; length) {
+      return this.title.substring(0, __BLANK3__) + &quot;...&quot;;
+    }
+    else {
+      return __BLANK4__;
+    }
+  }
+}
+
+
+class ExamplesBook {
+  Book schemer = new Book(&quot;The Little Schemer&quot;, &quot;Daniel P. Friedman&quot;, 40);
+  Book stick = new Book(&quot;Make It Stick: The Science of Successful Learning&quot;, &quot;Peter C. Brown&quot;, 13);
+  Book pLaw = new Book(&quot;Parkinson&#x27;s Law&quot;, &quot;C. Northcote Parkinson&quot;, 30);
+  Book reason = new Book(&quot;The Reasoned Schemer&quot;, &quot;Daniel P. Friedman&quot;, 38);
+
+  int sale1 = this.schemer.salePrice(25); // should be 30
+  int sale2 = this.stick.salePrice(50); // should be 7
+  int sale3 = this.pLaw.salePrice(10); // should be 27
+
+  String truncate1 = this.stick.truncateTitle(15); // Should be &quot;Make It Stick: ...&quot;
+  String truncate2 = this.schemer.truncateTitle(20); // Should be &quot;The Little Schemer&quot;
+  String truncate3 = this.schemer.truncateTitle(0); // Should be &quot;...&quot;
+
+  boolean same1 = this.reason.sameAuthor(this.schemer); // should be true
+  boolean same2 = this.reason.sameAuthor(this.stick); // should be false
+  boolean same3 = this.schemer.sameAuthor(this.reason); // should be true
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #cc0000;"><strong>Do Now!</strong></span> Fill in the blanks in the program that we've written so far.</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2354981">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "BLANK1: ", "options": []}, {"type": "input", "text": "", "options": [{"text": "int", "is_correct": true}]}, {"type": "text", "text": "<br>BLANK2: ", "options": []}, {"type": "input", "text": "", "options": [{"text": "other.author", "is_correct": true}]}, {"type": "text", "text": "<br>BLANK3: ", "options": []}, {"type": "input", "text": "", "options": [{"text": "length", "is_correct": true}]}, {"type": "text", "text": "<br>BLANK4: ", "options": []}, {"type": "input", "text": "", "options": [{"text": "this.title", "is_correct": true}, {"text": "title", "is_correct": true}]}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-text" id="step2"><p>Below is what we get when we run the program. </p>
+
+<p>Let’s observe a few things about this:</p>
+
+<ul>
+	<li>
+	<p>We should be very happy that we have examples that double-check the work we did while coding the methods we wrote. It gives us a lot of confidence that our code is working as intended.</p>
+	</li>
+	<li>
+	<p>It’s not ideal that we have to switch back and forth between the file we wrote and the output to verify that everything is as we expected. That is, we have to <em>visually inspect</em> that each output is correct, based on the comment we wrote with the example.</p>
+	</li>
+	<li>
+	<p>There’s a weird message at the bottom that says <code>No test methods found.</code> that we haven’t talked about yet.</p>
+	</li>
+</ul>
+
+<pre><code class="language-no-highlight">⤇ ./run ExamplesBook
+Tester Prima v.2.1
+-----------------------------------
+Tests defined in the class: ExamplesBook:
+---------------------------
+ExamplesBook:
+---------------
+ new ExamplesBook:1(
+  this.schemer =
+   new Book:2(
+    this.title =  "The Little Schemer"
+    this.author =  "Daniel P. Friedman"
+    this.price = 40)
+  this.stick =
+   new Book:3(
+    this.title =  "Make It Stick: The Science of Successful Learning"
+    this.author =  "Peter C. Brown"
+    this.price = 13)
+  this.pLaw =
+   new Book:4(
+    this.title =  "Parkinson's Law"
+    this.author =  "C. Northcote Parkinson"
+    this.price = 30)
+  this.reason =
+   new Book:5(
+    this.title =  "The Reasoned Schemer"
+    this.author =  "Daniel P. Friedman"
+    this.price = 38)
+  this.sale1 = 30
+  this.sale2 = 7
+  this.sale3 = 27
+  this.truncate1 =  "Make It Stick: ..."
+  this.truncate2 =  "The Little Schemer"
+  this.truncate3 =  "..."
+  this.same1 = true
+  this.same2 = false
+  this.same3 = true)
+---------------
+No test methods found.</code></pre></section>
+<section class="step t-string" id="step3"><span class="badge">Short answer</span><p>Before we handle that last point, there’s one step we could take to make it easier to double-check our work right away. Instead of putting the answer to the method call directly in the example, we could use <code>==</code> (in the case of <code>int</code> and <code>boolean</code>), or <code>equals()</code> (in the case of <code>String</code>s) to check if the answer is what we expect. Then we would only need to make sure that all the examples evaluate to <code>true</code>, which is easier than manually comparing them with our comments on what the return values should be.</p>
+
+<p>Ideally, we’d like a system that can <em>check for equality</em>, <em>summarize successes</em>, and <em>show us the reason for failures</em>. Systems that do this are known as <strong>testing frameworks</strong> or <strong>testing libraries</strong>, and one comes built in to the libraries we’re using for the course.</p>
+
+<p>The way that testing works in this course is that we can write any number of methods starting with the word <code>test</code> that have the return type <code>boolean</code> and take in a reference to an object of type <code>Tester</code> as a parameter. The <code>Tester</code> object has a particular method that we’ll use extensively called <code>checkExpect()</code>, which takes any two values of the same type, compares them for equality, and prints useful messages if they aren’t equal.</p>
+
+<p>It’s useful to write this all out and describe the pieces. Here’s a method that we could add to replace the first example we wrote, <code>sale1</code>:</p>
+
+<pre><code class="language-java">// Originally, we wrote this:
+int sale1 = this.schemer.salePrice(25); // Should be 30
+
+// We can write this instead:
+boolean testSalePrice(Tester t) {
+  return t.checkExpect(this.schemer.salePrice(25), 30);
+}</code></pre>
+
+<p>We also have to tell Java that we want to use the <code>Tester</code> class, since it isn’t built into Java (it’s part of a library we’re using). So this line is necessary at the <em>top</em> of the file whenever we mention <code>Tester</code>:</p>
+
+<pre><code class="language-java">import tester.*;</code></pre>
+
+<p>Here's the program all together:</p>
+
+<p>
+<div class="runner" id="w2" data-main="ExamplesBook" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="24">import tester.*;
+
+class Book {
+    String title;
+    String author;
+    int price;
+// { autofold
+    Book(String title, String author, int price) {
+      this.title = title;
+      this.author = author;
+      this.price = price;
+    }
+  
+    boolean sameAuthor(Book other) {
+      return this.author.equals(other.author);
+    }
+// }
+
+    int salePrice(int percentage) {
+      return this.price - (this.price * percentage) / 100;
+    }
+  }
+  
+  class ExamplesBook {
+    Book schemer = new Book(&quot;The Little Schemer&quot;, &quot;Daniel P. Friedman&quot;, 40);
+    Book stick = new Book(&quot;Make It Stick: The Science of Successful Learning&quot;, &quot;Peter C. Brown&quot;, 13);
+    Book pLaw = new Book(&quot;Parkinson&#x27;s Law&quot;, &quot;C. Northcote Parkinson&quot;, 30);
+    Book reason = new Book(&quot;The Reasoned Schemer&quot;, &quot;Daniel P. Friedman&quot;, 38);
+  
+    // Originally, we wrote this:
+    int sale1 = this.schemer.salePrice(25); // Should be 30
+
+    // We can write this instead:
+    boolean testSalePrice(Tester t) {
+      return t.checkExpect(this.schemer.salePrice(25), 30);
+    }
+
+  }
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #ff4363;"><strong>Do Now!</strong></span> Run the program. What's the line of output right <strong>before</strong> "All tests passed"? Put it into the box below.</h3>
+<div class="quiz" data-type="string" data-step-id="2446403">
+<script type="application/json">{"type": "string", "source": {"pattern": "Ran 1 test.", "use_re": false, "match_substring": true, "case_sensitive": false, "code": "# def check(reply):\n#     \"\"\"Evaluate the learner's reply.\n#\n#     It should return 1 or True for the correct reply and 0 or False\n#     for the incorrect one.\n#\n#     A partial solution may be scored using a float number from the\n#     interval (0, 1). In such a case the learner total score for the\n#     problem will be 'step cost' * 'score'.\n#\n#     :param reply: a string that is the learner's reply to the problem\n#     :return: a score number (int or float) in range [0, 1]\n#\n#     \"\"\"\n#     return reply == \"Hello\"\n\n# def solve():\n#     \"\"\"Return a correct reply. This function is *optional*.\n#\n#     It is used to test the correctness of the 'check' function.\n#\n#     :return: a string that is a correct reply to the problem\n#\n#     \"\"\"\n#     return \"Hello\"", "is_text_disabled": false, "is_file_disabled": true}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-string" id="step4"><span class="badge">Short answer</span><p>We can add more tests in two ways. First, we can use multiple calls to <code>checkExpect()</code> together in the test method and combine them together with <code>&amp;&amp;</code>:</p>
+
+<pre><code class="language-java">// We can write this instead of all the salePrice() examples:
+boolean testSalePrice(Tester t) {
+  return t.checkExpect(this.schemer.salePrice(25), 30) &amp;&amp;
+         t.checkExpect(this.stick.salePrice(50), 7) &amp;&amp;
+         t.checkExpect(this.pLaw.salePrice(10), 27);
+}</code></pre>
+
+<p>This produces the following:</p>
+
+<pre><code class="language-no-highlight">---------------
+
+Ran 3 tests.
+All tests passed.
+
+--- END OF TEST RESULTS ---</code></pre>
+
+<h3><span style="color: #ff4363;"><strong>Do Now!</strong></span> Based on what you see here, what must the return type of <code>checkExpect</code> be? </h3>
+<div class="quiz" data-type="string" data-step-id="2446404">
+<script type="application/json">{"type": "string", "source": {"pattern": "boolean", "use_re": false, "match_substring": true, "case_sensitive": true, "code": "# def check(reply):\n#     \"\"\"Evaluate the learner's reply.\n#\n#     It should return 1 or True for the correct reply and 0 or False\n#     for the incorrect one.\n#\n#     A partial solution may be scored using a float number from the\n#     interval (0, 1). In such a case the learner total score for the\n#     problem will be 'step cost' * 'score'.\n#\n#     :param reply: a string that is the learner's reply to the problem\n#     :return: a score number (int or float) in range [0, 1]\n#\n#     \"\"\"\n#     return reply == \"Hello\"\n\n# def solve():\n#     \"\"\"Return a correct reply. This function is *optional*.\n#\n#     It is used to test the correctness of the 'check' function.\n#\n#     :return: a string that is a correct reply to the problem\n#\n#     \"\"\"\n#     return \"Hello\"", "is_text_disabled": false, "is_file_disabled": true}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step5"><span class="badge">Fill in the blanks</span><p>Second, we can define as many test methods as we like. So we could define another that captures all the truncate tests, and another that captures all the same author tests:</p>
+
+<pre><code class="language-java">boolean testSalePrice(Tester t) {
+  return t.checkExpect(this.schemer.salePrice(25), 30) &amp;&amp;
+         t.checkExpect(this.stick.salePrice(50), 6) &amp;&amp;
+         t.checkExpect(this.pLaw.salePrice(10), 27);
+}
+
+boolean testTruncateTitle(Tester t) {
+  return t.checkExpect(this.stick.truncateTitle(15), "Make It Stick: ...") &amp;&amp;
+         t.checkExpect(this.schemer.truncateTitle(20), "The Little Schemer") &amp;&amp;
+         t.checkExpect(this.schemer.truncateTitle(0), "...");
+}
+
+boolean testSameAuthor(Tester t) {
+  return t.checkExpect(this.reason.sameAuthor(this.schemer), true) &amp;&amp;
+         t.checkExpect(this.reason.sameAuthor(this.stick), false) &amp;&amp;
+         t.checkExpect(this.schemer.sameAuthor(this.reason), true);
+}</code></pre>
+
+<p>This produces the following:</p>
+
+<pre><code class="language-no-highlight">---------------
+
+Ran 9 tests.
+All tests passed.
+
+--- END OF TEST RESULTS ---</code></pre>
+
+<p>The test output nicely summarizes all the successes; in addition, the testing library is smart enough to correctly compare <code>String</code>s with <code>equals()</code> and <code>int</code>s with <code>==</code>, so we don’t have to worry about that detail.</p>
+
+<h3><span style="color: #cc0000;"><strong>Do Now!</strong></span> Say that we write another method, <code>titleContains()</code>, that receives a <code>String</code> argument and returns <code>true</code> if the title of the book it was called on contains the <code>String</code> in question (and returns <code>false</code> if it doesn't). Fill in the blanks for the test method that we would write for this method below.</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2362515">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "<code>\nBook schemer = new Book(\"The Little Schemer\", \"Daniel P. Friedman\", 40); <br>\nBook stick = new Book(\"Make it Stick: The Science of Successful Learning\", \"Peter C. Brown\", 13); <br><br>\n<\/code>\n<code>boolean testTitleContains(Tester t) {<br>&nbsp; return t.checkExpect(this.stick.titleContains(\"Science\"), <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "true", "is_correct": true}]}, {"type": "text", "text": "<code>) &&<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;t.checkExpect(<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "this.schemer", "is_correct": true}, {"text": "schemer", "is_correct": true}]}, {"type": "text", "text": "<code>.titleContains(\"Schemer\"), true) &&<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  t.checkExpect(this.stick.titleContains(<\/code>", "options": []}, {"type": "select", "text": "", "options": [{"text": "\"Successful Learning\"", "is_correct": false}, {"text": "\"Stick the Science\"", "is_correct": true}, {"text": "\":\"", "is_correct": false}, {"text": "\" \"", "is_correct": false}]}, {"type": "text", "text": "<code>), false);<br>}<\/code>", "options": []}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step6"><span class="badge">Fill in the blanks</span><p>Additionally, if we get something wrong, the <code>tester</code> library is quite helpful in pointing out how. For example, we've introduced a mistake in this version of the program:</p>
+
+<p>
+<div class="runner" id="w3" data-main="ExamplesBook" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="24">import tester.*;
+
+class Book {
+    String title;
+    String author;
+    int price;
+// { autofold
+    Book(String title, String author, int price) {
+      this.title = title;
+      this.author = author;
+      this.price = price;
+    }
+  
+    boolean sameAuthor(Book other) {
+      return this.author.equals(other.author);
+    }
+// }
+
+    int salePrice(int percentage) {
+      return this.price - this.price * (percentage / 100);
+    }
+
+    String truncateTitle(int length) {
+        if(this.title.length() &lt;= length) { return this.title; }
+        else { return this.title.substring(0, length) + &quot;...&quot;; }
+    }
+  }
+  
+  class ExamplesBook {
+    Book schemer = new Book(&quot;The Little Schemer&quot;, &quot;Daniel P. Friedman&quot;, 40);
+    Book stick = new Book(&quot;Make It Stick: The Science of Successful Learning&quot;, &quot;Peter C. Brown&quot;, 13);
+    Book pLaw = new Book(&quot;Parkinson&#x27;s Law&quot;, &quot;C. Northcote Parkinson&quot;, 30);
+    Book reason = new Book(&quot;The Reasoned Schemer&quot;, &quot;Daniel P. Friedman&quot;, 38);
+  
+    boolean testSalePrice(Tester t) {
+        return t.checkExpect(this.schemer.salePrice(25), 30) &amp;&amp;
+               t.checkExpect(this.stick.salePrice(50), 7) &amp;&amp;
+               t.checkExpect(this.pLaw.salePrice(10), 27);
+      }
+      
+      boolean testTruncateTitle(Tester t) {
+        return t.checkExpect(this.stick.truncateTitle(15), &quot;Make It Stick: ...&quot;) &amp;&amp;
+               t.checkExpect(this.schemer.truncateTitle(20), &quot;The Little Schemer&quot;) &amp;&amp;
+               t.checkExpect(this.schemer.truncateTitle(0), &quot;...&quot;);
+      }
+      
+      boolean testSameAuthor(Tester t) {
+        return t.checkExpect(this.reason.sameAuthor(this.schemer), true) &amp;&amp;
+               t.checkExpect(this.reason.sameAuthor(this.stick), false) &amp;&amp;
+               t.checkExpect(this.schemer.sameAuthor(this.reason), true);
+      }
+
+  }
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<p>Try running it to see what output you get.</p>
+
+<h3><span style="color: #ff4363;"><strong>Do Now! </strong></span>Answer the questions below about the output you see from the tester.</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2446418">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "How many tests ran?", "options": []}, {"type": "input", "text": "", "options": [{"text": "7", "is_correct": true}]}, {"type": "text", "text": "<br/>Which part of the output indicates the <b>line number<\/b> of the failing test?", "options": []}, {"type": "select", "text": "", "options": [{"text": "new Book:2", "is_correct": false}, {"text": "Error in test number 7", "is_correct": false}, {"text": "actual:...expected:", "is_correct": false}, {"text": "ExamplesBook.java:36", "is_correct": true}, {"text": "Error in test number 1", "is_correct": false}, {"text": "Error in test number 4", "is_correct": false}]}, {"type": "text", "text": "<br/>What value did our test <em>expect<\/em> the method to produce?", "options": []}, {"type": "input", "text": "", "options": [{"text": "30", "is_correct": true}]}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-text" id="step7"><p>Let's look at that output again:</p>
+
+<pre><code>Ran 7 tests.
+1 test failed.
+
+Failed test results: 
+--------------
+
+Error in test number 7
+
+tester.ErrorReport: Error trace:
+        at ExamplesBook.testSalePrice(ExamplesBook.java:36)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+actual:...........................................expected:
+
+40................................................30
+
+
+--- END OF TEST RESULTS ---</code></pre>
+
+<p>The failed test prints the result of calling the method on the left, and on the right, the result we originally wrote down as the expected answer in the test appears. This helps us quickly see which test has failed.</p>
+
+<p>It’s important to note the number of tests that ran — the message says that 7 tests ran and 1 failed (so 6 of them passed), but we wrote 9 uses of <code>checkExpect</code>! This happened because while all test methods always run, an individual test method stops when the first <code>checkExpect</code> within it fails. In this case, the first check inside one of the test methods failed, so the other two didn’t <code>checkExpect</code>s did not run. That accounts for the difference.</p>
+
+<p>This is often useful because it prevents the test output from being overwhelming and reporting all of the different ways things are failing, since multiple tests often fail for the same reason. But if we really want tests to run even when others fail, we can always put them into separate <code>test</code> methods.</p>
+
+<p>(Oh, and what was the bug? It was a change in the order of operations in the <code>salePrice</code> method that did integer division on <code>(percentage / 100)</code>, which always produced 0.)</p></section>
+<section class="step t-text" id="step8"><h2>Summary</h2>
+
+<ul>
+	<li>Up until this lesson, we wrote tests by calling the method, commenting its expected return value, and manually checking the output of the program to see that it the expected value matched the value shown in the output.</li>
+	<li>We can test our code in a more efficient way by using the <code>Tester</code> class, which helps us to <em>check for equality</em>, <em>summarize successes</em>, and <em>show the reason for failures</em>.</li>
+</ul></section>
+<nav class="pagenav"><a class="prev" href="06-01-More-Classes.html">← 6.1 More Classes</a> <a class="next" href="06-03-In-Summary--Programming-Objectively.html">6.3 In Summary — Programming, Objectively →</a></nav>
+</main>
+<footer>Generated from the Stepik course export · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<pre id="console"></pre>
+<script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

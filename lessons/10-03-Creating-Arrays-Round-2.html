@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10.3 Creating Arrays, Round 2</title>
+<link rel="stylesheet" href="../assets/book.css">
+
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Arrays</span>
+</header>
+<main>
+<h1>10.3 — Creating Arrays, Round 2</h1>
+<nav class="stepnav"><a href="#step1" class="t-matching" title="Matching">1</a><a href="#step2" class="t-fill-blanks" title="Fill in the blanks">2</a><a href="#step3" class="t-fill-blanks" title="Fill in the blanks">3</a><a href="#step4" class="t-fill-blanks" title="Fill in the blanks">4</a></nav>
+<section class="step t-matching" id="step1"><span class="badge">Matching</span><p>We saw how we can create arrays with array initializers. This is a somewhat limited approach, since it can only create arrays with a size that’s known when we write the program. It’s useful to be able to create arrays whose sizes are determined by the program itself. This works differently than using initializers.</p>
+
+<p>It's useful to have a method that takes two numbers and produces an array of numbers from the first up to the second. We could use this to create a numbered list, for example. This is different than the methods we’ve written so far, because it doesn’t take a reference to an array as input. Instead, it produces one as output. Let’s think about the header first:</p>
+
+<pre><code class="language-java">/*
+  @param start The number to start from
+  @param end The number to end before
+  @return a reference to a new array containing integers from start (inclusive)
+  to end (exclusive)
+*/
+int[] range(int start, int end) {}</code></pre>
+
+<p>This warrants a few examples:</p>
+
+<pre><code class="language-java">boolean testRange(Tester t) {
+  int[] check1 = {0, 1, 2};
+  t.checkExpect(this.range(0, 3), check1);
+ 
+  int[] check2 = {};
+  t.checkExpect(this.range(0, 0), check2);
+ 
+  int[] check3 = {5};
+  t.checkexpect(this.range(5, 6), check3);
+ 
+  int[] check4 = {5, 6, 7, 8};
+  t.checkexpect(this.range(5, 9), check4);
+}</code></pre>
+
+<h3><span style="color: #cc0000;">Do Now!</span> Based on the description of the range() method and the tests above, match the call to range() with the array that represents its expected return value.</h3>
+<div class="quiz" data-type="matching" data-step-id="2474141">
+<script type="application/json">{"type": "matching", "source": {"preserve_firsts_order": true, "is_html_enabled": true, "pairs": [{"first": "<code> this.range(2, 8) <\/code>", "second": "<code> {2, 3, 4, 5, 6, 7} <\/code>"}, {"first": "<code> this.range(1, 2) <\/code>", "second": "<code> {1} <\/code>"}, {"first": "<code> this.range(2, 7) <\/code>", "second": "<code> {2, 3, 4, 5, 6} <\/code>"}, {"first": "<code> this.range(5, 8) <\/code>", "second": "<code> {5, 6, 7} <\/code>"}]}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step2"><span class="badge">Fill in the blanks</span><p>The size of the array we want to create will be different depending on the argument values. We need two new Java features to write this method body because we don't know of any array initializer that will create a different array depending on the arguments. That is, how can we fill in the ??? below with an array that always has the right size based on <code>start</code> and <code>end</code>?</p>
+
+<pre><code class="language-java">int[] range(int start, int end) {
+  int[] result = ???
+  ...
+}</code></pre>
+
+<p>Here’s the first of the new features we need: we can create an array of a specified size with the following syntax:</p>
+
+<pre><code class="language-java">new Type[size]</code></pre>
+
+<p>where <code>size</code> is some expression that calculates an <code>int</code>. For example, before going back to the <code>range()</code> method, we can think about this as an example:</p>
+
+<pre><code class="language-java">class ExamplesArrays {
+  int[] nums = new int[3];
+}</code></pre>
+
+<p>In memory diagram form, here’s what this creates: </p>
+
+<p><img alt="" height="181" name="Screen Shot 2021-09-17 at 8.18.15 PM.png" src="../assets/img/18c67d8091aef1c2.png" width="442"></p>
+
+<p>Note that the values of all the elements of the newly created array are <code>0</code>! When we create an array using the <code>new</code> operator, all the elements get a specific default value. For <code>int</code> and <code>double</code> arrays, that value is 0. There are 3 elements in this array because we specified the size <code>3</code> in <code>new int[3]</code>.</p>
+
+<h3><span style="color: #cc0000;">Do Now!</span> Fill in the blanks in the code based on the memory diagram below.</h3>
+
+<p><img alt="" height="352" name="Screen Shot 2021-09-17 at 8.28.27 PM.png" src="../assets/img/50c41241b4f91489.png" width="620"></p>
+<div class="quiz" data-type="fill-blanks" data-step-id="2474142">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "<code> class ArrayExample { <br>\n&nbsp; int[] numsA = new int[<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "2", "is_correct": true}]}, {"type": "text", "text": "<code> ]; <br>\n&nbsp; int[] numsB = new int[<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "4", "is_correct": true}]}, {"type": "text", "text": "<code>\n]; <br>\n&nbsp; int[]<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "numsC", "is_correct": true}]}, {"type": "text", "text": "<code>=<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "new int[1]", "is_correct": true}, {"text": "new int[ 1 ]", "is_correct": true}]}, {"type": "text", "text": "<code>;<br>}<\/code>", "options": []}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step3"><span class="badge">Fill in the blanks</span><p>This leaves us with a question. If the arrays get created full of default values, how can we create an array that contains the values we want? The answer is the second new feature we need, which is <strong>array assignment</strong>. This assigns values into the indices in an array, and the syntax is:</p>
+
+<pre><code class="language-java">someArray[index] = newVal;</code></pre>
+
+<p>We can see this in action with a simple method that creates a fixed-size array and sets its contents:</p>
+
+<pre><code class="language-java">int[] simpleArrayCreator() {
+  int[] nums = new int[3];
+  nums[0] = 88;
+  nums[1] = 95;
+  nums[2] = 1000;
+  return nums;
+}</code></pre>
+
+<p>As this method runs, here’s what happens:</p>
+
+<p><img alt="" height="242" name="create-array.gif" src="../assets/img/d4e4214229c8e2b9.png" width="464"></p>
+
+<h3><span style="color: #cc0000;">Do Now! </span>Fill in the values that will be in the nums array after the program below runs.</h3>
+
+<pre><code>class ArrayExample {
+  int[] nums = new int[5];
+  nums[0] = 9;
+  nums[2] = -1;
+  nums[3] = 5;
+}</code></pre>
+<div class="quiz" data-type="fill-blanks" data-step-id="2474143">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "<code>\n<u>index<\/u>&nbsp;&nbsp;   <u>value<\/u> <br>\n&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "9", "is_correct": true}]}, {"type": "text", "text": "<br><code>\n&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "0", "is_correct": true}]}, {"type": "text", "text": "<br><code>\n&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "-1", "is_correct": true}]}, {"type": "text", "text": "<br><code>\n&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "5", "is_correct": true}]}, {"type": "text", "text": "<br><code>\n&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "0", "is_correct": true}]}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step4"><span class="badge">Fill in the blanks</span><p>We can apply these two new features to fill in the body of <code>range()</code>:</p>
+
+<pre><code class="language-java">int[] range(int start, int end) {
+  int[] result = new int[end - start];  // creates a new array of int of size (end - start)
+  for(int i = start; i &lt; end; i += 1) {
+    result[i - start] = i;              // assigns into the appropriate start field
+  }
+  return result;
+}</code></pre>
+
+<p>We can see the execution of this in tabular form. Let’s call <code>range(5, 9)</code>.</p>
+
+<table cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p>Iteration</p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p>Value of <code>i</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p>Value of <code>start</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p>Value of <code>end</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>result</code> before</p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>result</code> after</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p>1</p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>5</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>5</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>9</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>{0, 0, 0, 0}</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>{5, 0, 0, 0}</code></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p>2</p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>6</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>5</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>9</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>{5, 0, 0, 0}</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>{5, 6, 0, 0}</code></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p>3</p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>7</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>5</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>9</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>{5, 6, 0, 0}</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>{5, 6, 7, 0}</code></p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p>4</p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>8</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>5</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>9</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>{5, 6, 7, 0}</code></p>
+			</td>
+			<td>
+			<p>   </p>
+			</td>
+			<td>
+			<p><code>{5, 6, 7, 8}</code></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>There are a few interesting things going on here.</p>
+
+<ul>
+	<li>First, we create an array of the correct size right at the beginning of the method. This is a common pattern in array-processing methods, which is to compute the correct size and create the resulting array first.</li>
+	<li>Next, we loop the index <code>i</code> from <code>start</code> to <code>end</code>, so <code>i</code> will take on the values <code>5</code>, <code>6</code>, <code>7</code>, and <code>8</code> on the different iterations of the loop. When we perform the <strong>array assignment</strong>, we are careful to use <code>i - start</code> to make sure that we don’t use indices that are too large for the array and will always start at index <code>0</code>.</li>
+</ul>
+
+<p>The tabular description helps us see the values within the array at each step and how they are incrementally filled in – in each step, we can see that the index of <code>i - start</code> is filled in in the rightmost column.</p>
+
+<h3><span style="color: #cc0000;">Do Now!</span> Answer the questions below.</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2474144">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "If we call <code>range(2, 5)<\/code>, what will be the length of <code>result<\/code>? <br>", "options": []}, {"type": "input", "text": "", "options": [{"text": "3", "is_correct": true}]}, {"type": "text", "text": "<br><br>\nIf we call <code>range(2, 5)<\/code>, how many times will the loop run? <br>", "options": []}, {"type": "input", "text": "", "options": [{"text": "3", "is_correct": true}]}, {"type": "text", "text": "<br><br>\nFill in the values for the array that is returned from <code>range(2, 5)<\/code>. <br>\n<code> { <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "2", "is_correct": true}]}, {"type": "text", "text": "<code> , <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "3", "is_correct": true}]}, {"type": "text", "text": "<code> , <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "4", "is_correct": true}]}, {"type": "text", "text": "<code> } <\/code>", "options": []}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<nav class="pagenav"><a class="prev" href="10-02-More-Iteration-Patterns.html">← 10.2 More Iteration Patterns</a> <a class="next" href="10-04-More-Array-Manipulation.html">10.4 More Array Manipulation →</a></nav>
+</main>
+<footer>Generated from the Stepik course export · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<pre id="console"></pre>
+<script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>
