@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4.1 Beyond Arithmetic and Concatenation</title>
+<link rel="stylesheet" href="../assets/book.css">
+
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Programming, Decisively</span>
+</header>
+<main>
+<h1>4.1 — Beyond Arithmetic and Concatenation</h1>
+<nav class="stepnav"><a href="#step1" class="t-fill-blanks" title="Fill in the blanks">1</a><a href="#step2" class="t-choice" title="Quiz">2</a><a href="#step3" class="t-fill-blanks" title="Fill in the blanks">3</a><a href="#step4" class="t-matching" title="Matching">4</a><a href="#step5" class="t-fill-blanks" title="Fill in the blanks">5</a><a href="#step6" class="t-choice" title="Quiz">6</a><a href="#step7" class="t-fill-blanks" title="Fill in the blanks">7</a><a href="#step8" class="t-text" title="reading">8</a></nav>
+<section class="step t-fill-blanks" id="step1"><span class="badge">Fill in the blanks</span><p>So far, we’ve used Java to do things that a calculator could do, with the notable exception of <code>String</code>s. We introduced methods mainly as a way to enhance our calculator-like behavior. In this section, we’ll go further and start doing work that’s unique to computation — making decisions based on data.</p>
+
+<p>We’ve used <code>+</code>, <code>-</code>, <code>/</code>, and <code>*</code> to perform arithmetic on numbers (and in the case of <code>+</code>, append <code>String</code>s). Mathematically, there’s a natural next set of operations to try on numbers — to compare them! Operators like <code>&lt;</code> have meaning in math, and they also have meaning in Java. We can try them out:</p>
+
+<pre><code class="language-java">class Comparisons {
+  boolean fourIsLessThanFive = 4 &lt; 5;
+  boolean fiveIsLessThanFour = 5 &lt; 4;
+}</code></pre>
+
+<p>Here, we’re using the <code>&lt;</code> operator to compare <code>5</code> and <code>4</code>. Run the program to see the output.</p>
+
+<p>
+<div class="runner" id="w1" data-main="Comparisons" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="6">class Comparisons {
+  boolean fourIsLessThanFive = 4 &lt; 5;
+  boolean fiveIsLessThanFour = 5 &lt; 4;
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #cc0000;"><strong>Do Now!</strong></span> Fill in the blanks based on the output of the program.</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2434884">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "<code>\nComparisons:<br>\n---------------<br>\nnew Comparisons:1(<br>\n&nbsp;this.fourIsLessThanFive =  <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "true", "is_correct": true}]}, {"type": "text", "text": "<br><code> \n&nbsp;this.fiveIsLessThanFour = <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "false", "is_correct": true}]}, {"type": "text", "text": "<code>) <br>\n--------------- <\/code>", "options": []}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-choice" id="step2"><span class="badge">Quiz</span><p>The result from the previous step says that <code>fourIsLessThanFive</code> has the value <code>true</code>, and <code>fiveIsLessThanFour</code> has the value <code>false</code>. This seems quite reasonable; the first is, after all, a true statement, while the second isn’t. These two values, <code>true</code> and <code>false</code>, have the type <code>boolean</code>; in fact, they are the <em>only</em> two values of the type <code>boolean</code>. They represent computations that <em>ask a question</em>, where the answer can be yes (true) or no (false).</p>
+
+<p>To see how these new values are particularly useful in action, let’s go back to an example we’ve worked on <a href="https://stepik.org/lesson/571273/step/6?unit=565814" rel="noopener noreferrer nofollow">before</a> — calculating weekly pay with overtime. The past times we’ve addressed the problem, we’ve always made the assumption that the number of hours worked is greater than 40 because the calculation would produce nonsense for smaller numbers of hours. Armed with the ability to ask questions, along with one more piece we’ll add along the way, we’ll be able to make progress on this problem now. Let’s clearly state the problem:</p>
+
+<blockquote>
+<p><strong>Use the design recipe to write a program that, given an employee’s weekly hours worked and hourly wage, calculates their weekly pay. Any hours worked over 40 should count at double their hourly rate. An employee may work less than 40 hours a week.</strong></p>
+</blockquote>
+
+<p> </p>
+
+<p>To write this program, we first need to write the method header, which is the same as before:</p>
+
+<pre><code class="language-java">int weekly(int hours, int rate)</code></pre>
+
+<p>We can add documentation:</p>
+
+<pre><code class="language-java">// Calculate weekly pay at the given rate and number of hours worked.
+// If hours is above 40, pay at double the rate for hours beyond 40.  Pay at
+// rate for the first 40 hours.  If the number of hours is not more than 40,
+// don't add any overtime.
+int weekly(int hours, int rate)</code></pre>
+
+<h3><span style="color: #cc0000;"><strong>Do Now!</strong></span> Select the test cases below whose comments show the correct expected value.</h3>
+<div class="quiz" data-type="choice" data-step-id="2434799">
+<script type="application/json">{"type": "choice", "source": {"is_multiple_choice": true, "is_always_correct": false, "sample_size": 4, "preserve_order": false, "is_html_enabled": true, "is_options_feedback": false, "options": [{"is_correct": true, "text": "<code>int aTestCase = this.weekly(48, 18); //should be 1008<\/code>", "feedback": ""}, {"is_correct": true, "text": "<code>int someTestCase = this.weekly(36, 14); //should be 504<\/code>", "feedback": ""}, {"is_correct": false, "text": "<code>int myTestCase = this.weekly(40, 25); //should be 1025<\/code>", "feedback": ""}, {"is_correct": true, "text": "<code>int theirTestCase = this.weekly(42, 17); //should be 748<\/code>", "feedback": ""}]}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step3"><span class="badge">Fill in the blanks</span><p>And it’s good to think through some examples next:</p>
+
+<p>
+<div class="runner" id="w2" data-main="WeeklyPay" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="15">class WeeklyPay {
+  // Calculate weekly pay at the given rate and number of hours worked.
+  // If hours is above 40, pay at double the rate for hours beyond 40.  Pay at
+  // rate for the first 40 hours.  If the number of hours is less than 40, don&#x27;t
+  // add any overtime.
+  int weekly(int hours, int rate) {
+    return 0;
+  }
+
+  int exactly40 = this.weekly(40, 10); // Should be 400
+  int someOvertime = this.weekly(45, 10); // Should be 400 + 100, total 500
+  int lessThan40 = this.weekly(30, 20); // Should be 600
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<p>Note that we’ve added a default return statement as well. This way, even if we don’t have anything else in the method, we can still run the program without any errors.</p>
+
+<h3><span style="color: #cc0000;"><strong>Do Now!</strong></span> Run the program and use its output to fill in the blanks below.</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2434497">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "<code> WeeklyPay: <br>\n--------------- <br>\nnew WeeklyPay:1( <br>\n&nbsp;this.exactly40 = <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "0", "is_correct": true}]}, {"type": "text", "text": "<br> <code>\n&nbsp;this.someOvertime = <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "0", "is_correct": true}]}, {"type": "text", "text": "<br> <code>\n&nbsp;this.lessThan40 = <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "0", "is_correct": true}]}, {"type": "text", "text": "<code> ) <\/code><br>\n<code> --------------- <\/code>", "options": []}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-matching" id="step4"><span class="badge">Matching</span><p>Notice that in the previous step, the output of the method was always 0, which is expected, given that we set the return value to 0. It's nice that we can run the program, see all <code>0</code>s, and know our program doesn't have any bad typos so far.</p>
+
+<p>With that, we just need to work on the method body. We know now that we can compare numbers, but that on its own isn’t enough to solve the problem. We need to have the program make a <em>decision</em> based on the result of the comparison. To do this, we’re going to introduce a new kind of syntax that we can use in method bodies: the <code>if</code> statement. An <code>if</code> statement takes the following form:</p>
+
+<pre><code class="language-java">if(someBooleanCalculation) {
+  ... someResultIfTrue ...
+}
+else {
+  ... someResultIfFalse ...
+}</code></pre>
+
+<p>In our case, the boolean calculation we need to check is if the number of hours is greater or less than 40, which we get from the problem description. So we can start the method body like this:</p>
+
+<pre><code class="language-java">// Calculate weekly pay at the given rate and number of hours worked.
+// If hours is above 40, pay at double the rate for hours beyond 40.  Pay at
+// rate for the first 40 hours.  If the number of hours is not more than 40,
+// don't add any overtime.
+int weekly(int hours, int rate) {
+  if(hours &gt; 40) {
+    // ... answer if greater than 40 ...
+  }
+  else {
+    // ... answer if not more than 40 ...
+  }
+}
+
+int exactly40 = this.weekly(40, 10); // Should be 400
+int someOvertime = this.weekly(45, 10); // Should be 400 + 100, total 500
+int lessThan40 = this.weekly(30, 20); // Should be 600</code></pre>
+
+<p>Now, we can use what we know about getting results from methods by using <code>return</code> to fill in the two comments above:</p>
+
+<p>
+<div class="runner" id="w3" data-main="WeeklyPay" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="24">class WeeklyPay {
+  // Calculate weekly pay at the given rate and number of hours worked.
+  // If hours is above 40, pay at double the rate for hours beyond 40.  Pay at
+  // rate for the first 40 hours.  If the number of hours is not more than 40,
+  // don&#x27;t add any overtime.
+  int weekly(int hours, int rate) {
+    if(hours &gt; 40) {
+      return (40 * rate) + ((hours - 40) * (rate * 2));
+    }
+    else {
+      return hours * rate;
+    }
+  }
+
+  int exactly40 = this.weekly(40, 10); // Should be 400
+  int someOvertime = this.weekly(45, 10); // Should be 400 + 100, total 500
+  int lessThan40 = this.weekly(30, 25); // Should be 750
+
+  int matchTest1 = this.weekly(20, 35);
+  int matchTest2 = this.weekly(0, 50);
+  int matchTest3 = this.weekly(43, 24);
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #cc0000;">Do Now! </span>Run the program above and match the test cases with their values.</h3>
+<div class="quiz" data-type="matching" data-step-id="2434876">
+<script type="application/json">{"type": "matching", "source": {"preserve_firsts_order": true, "is_html_enabled": true, "pairs": [{"first": "<code> matchTest1 <\/code>", "second": "<code>700 <\/code>"}, {"first": "<code> matchTest2 <\/code>", "second": "<code>0<\/code>"}, {"first": "<code> matchTest3 <\/code>", "second": "<code>1104<\/code>"}]}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step5"><span class="badge">Fill in the blanks</span><p>
+<div class="runner" id="w4" data-main="WeeklyPay" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="20">class WeeklyPay {
+  // Calculate weekly pay at the given rate and number of hours worked.
+  // If hours is above 40, pay at double the rate for hours beyond 40.  Pay at
+  // rate for the first 40 hours.  If the number of hours is less than 40, don&#x27;t
+  // add any overtime.
+  int weekly(int hours, int rate) {
+    if(hours &gt; 40) {
+      return 40 * rate + ((hours - 40) * (rate * 2));
+    }
+    else {
+      return hours * rate;
+    }
+  }
+
+  int exactly40 = this.weekly(40, 10); // Should be 400
+  int someOvertime = this.weekly(45, 10); // Should be 400 + 100, total 500
+  int lessThan40 = this.weekly(30, 25); // Should be 750
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #cc0000;"><strong>Do Now!</strong></span> There's another way to implement this method. Fill in the blank such that the method returns the same value as it did in the previous step. (Hint: The <code>&gt;=</code> and <code>&lt;=</code> operators are pronounced "greater than or equal to" and "less than or equal to," respectively.)</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2354935">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "<code>if(<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "hours <= 40", "is_correct": true}, {"text": "40 >= hours", "is_correct": true}, {"text": "hours < 41", "is_correct": true}, {"text": "41 > hours", "is_correct": true}, {"text": "hours<=40", "is_correct": true}, {"text": "40>=hours", "is_correct": true}, {"text": "hours<41", "is_correct": true}, {"text": "41>hours", "is_correct": true}]}, {"type": "text", "text": "<code>) {<br>&emsp;return hours * rate;<br>}<br>else {<br>&emsp;return 40 * rate + ((hours - 40) * (rate * 2));<br>}<\/code>", "options": []}], "is_case_sensitive": false, "is_detailed_feedback": false, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-choice" id="step6"><span class="badge">Quiz</span><pre><code class="language-java">//code from before, for reference
+
+int weekly(int hours, int rate) {
+  if(hours &gt; 40) {
+    return (40 * rate) + ((hours - 40) * (rate * 2));
+  }
+  else {
+    return hours * rate;
+  }
+}</code></pre>
+
+<p>We’re going to introduce names for the different parts of the <code>if</code> statement. We call the expression in between the parentheses (in the example above, it’s <code>hours &gt; 40</code>) the <strong>conditional</strong> part. The two parts between the curly braces we call the <strong>branches</strong> or <strong>cases</strong> of the <code>if</code> statement. The first is called the <strong>then branch</strong>, and the second is called the <strong>else branch</strong>.</p>
+
+<p>This helps us say what happens in English: “The <code>if</code> statement evaluates the <strong>then branch</strong> if the condition is <code>true</code>, and the <strong>else branch</strong> if the condition is <code>false</code>.”</p>
+
+<h3><span style="color: #cc0000;"><strong>Do Now!</strong></span> Select the English sentence that describes the behavior of the following <span style="color: #000000;">method</span>.</h3>
+
+<pre><code class="language-java">String someMethod(int visibleAge) {
+  if(visibleAge &gt;= 21) {
+    return "What can I get for you?";
+  }
+  else {
+    return "I need to see your ID.";
+  }
+}</code></pre>
+<div class="quiz" data-type="choice" data-step-id="2332068">
+<script type="application/json">{"type": "choice", "source": {"is_multiple_choice": false, "is_always_correct": false, "sample_size": 4, "preserve_order": false, "is_html_enabled": true, "is_options_feedback": false, "options": [{"is_correct": true, "text": "The method returns <code>\"What can I get for you?\"<\/code> if <code>visibleAge<\/code> is at least <code>21<\/code>, and returns <code>\"I need to see your ID.\"<\/code> if <code>visibleAge<\/code> is less than <code>21<\/code>.", "feedback": ""}, {"is_correct": false, "text": "The method returns <code>\"What can I get for you?\"<\/code> if <code>visibleAge<\/code> is greater than <code>21<\/code>, and returns <code>\"I need to see your ID.\"<\/code> if <code>visibleAge<\/code> is at most <code>21<\/code>.", "feedback": ""}, {"is_correct": false, "text": "The method returns <code>\"I need to see your ID.\"<\/code> if <code>visibleAge<\/code> is at least <code>21<\/code>, and returns <code>\"What can I get for you?\"<\/code> if <code>visibleAge<\/code> is less than <code>21<\/code>.", "feedback": ""}, {"is_correct": false, "text": "The method returns <code>\"I need to see your ID.\"<\/code> if <code>visibleAge<\/code> is greater than <code>21<\/code>, and returns <code>\"What can I get for you?\"<\/code> if <code>visibleAge<\/code> is at most <code>21<\/code>.", "feedback": ""}]}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step7"><span class="badge">Fill in the blanks</span><pre><code>//code from before, for reference
+
+int weekly(int hours, int rate) {
+  if(hours &gt; 40) {
+    return (40 * rate) + ((hours - 40) * (rate * 2));
+  }
+  else {
+    return hours * rate;
+  }
+}</code></pre>
+
+<p>Let’s see that definition in action. When we introduced methods, we said that to evaluate a <strong>method call</strong> we need to do the calculation in the body of the method with the <strong>parameters</strong> replaced with the <strong>argument</strong> values. So, for example, in the method call <code>this.weekly(30, 25)</code>, <code>hours</code> would be replaced with <code>30</code>, and <code>rate</code> would be replaced with <code>25</code>. That would look like this:</p>
+
+<pre><code>if(30 &gt; 40) {
+  return 40 * 25 + ((30 - 40) * (25 * 2));
+}
+else {
+  return 30 * 25;
+}</code></pre>
+
+<p>The <strong>condition</strong> (which is <code>30 &gt; 40</code> in this case) evaluates to <code>false</code>, because <code>30</code> isn’t greater than <code>40</code>. That means Java will evaluate the <strong>else branch</strong> and <em>ignore</em> the <strong>then branch</strong>. This causes the result (or <strong>return value</strong>) of this method to be <code>750</code>, the value of <code>30 * 25</code>.</p>
+
+<h3><span style="color: #cc0000;"><strong>Do Now!</strong></span> Refer to the <code>weekly()</code> method at the top of the page to fill in the blanks below for the body of the method call <code>this.weekly(50, 20)</code>. You should replace the parameters with the argument values.</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2407292">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "<code>if(<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "50", "is_correct": true}]}, {"type": "text", "text": "<code> > 40) {<br>&nbsp;&nbsp;return 40 * <\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "20", "is_correct": true}]}, {"type": "text", "text": "<code> + ((<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "50", "is_correct": true}]}, {"type": "text", "text": "<code> - 40) * (<\/code>", "options": []}, {"type": "input", "text": "", "options": [{"text": "20", "is_correct": true}]}, {"type": "text", "text": "<code> * 2));<br>}<br>else {<br>&nbsp;&nbsp;return <\/code>", "options": []}, {"type": "text", "text": "<code> 50 * 20<\/code>", "options": []}, {"type": "text", "text": "<code>;<br>}<\/code><br>The expected return value is ", "options": []}, {"type": "input", "text": "", "options": [{"text": "1200", "is_correct": true}]}, {"type": "text", "text": ".", "options": []}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-text" id="step8"><h2>Summary</h2>
+
+<ul>
+	<li>When making decisions based on data, we can use the <code>boolean</code> data type, as well as operators like <code>&lt;</code> and <code>&gt;</code>.</li>
+	<li>The <code>boolean</code> data type has only two possible values — <code>true</code> and <code>false</code> — that represent computations that ask a yes/no question.</li>
+	<li>An <code>if</code> statement allows us to write a program that chooses between two calculations based on a <code>boolean</code> value called a <strong>condition</strong>. The part of the <code>if</code> statement that runs if the condition is <code>true</code> is called the <strong>then branch</strong>, while the part that runs if the condition is <code>false</code> is called the <strong>else branch</strong>.</li>
+</ul></section>
+<nav class="pagenav"><a class="prev" href="03-04-In-Summary--Programming-Methodically.html">← 3.4 In Summary — Programming, Methodically</a> <a class="next" href="04-02-More-Examples-of-Decision-Making-Programs.html">4.2 More Examples of Decision-Making Programs →</a></nav>
+</main>
+<footer>Generated from the Stepik course export · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<pre id="console"></pre>
+<script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

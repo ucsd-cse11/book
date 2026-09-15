@@ -1,0 +1,292 @@
+:root {
+  color-scheme: light dark;
+  --accent: #2d7d46;
+  --right: #2d7d46;
+  --wrong: #c0392b;
+  --card-border: color-mix(in srgb, currentColor 22%, transparent);
+  --soft-bg: color-mix(in srgb, currentColor 6%, transparent);
+  --prof: #2d7d46;
+  --stud: #5a4bbf;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --prof: #63b37e; --stud: #a99bf0; }
+}
+* { box-sizing: border-box; }
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  line-height: 1.55;
+}
+main { max-width: 820px; margin: 0 auto; padding: 1rem 1rem 4rem; }
+header {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; gap: 1rem; align-items: center;
+  padding: .5rem 1rem;
+  background: Canvas;
+  border-bottom: 1px solid var(--card-border);
+}
+header .home { text-decoration: none; font-weight: 600; }
+header .crumb { opacity: .7; font-size: .9rem; }
+header .report-status { margin-left: auto; font-size: .85rem; opacity: .8; }
+header .report-status.lost { color: var(--wrong, #b00); opacity: 1; }
+h1 { font-size: 1.5rem; }
+a { color: var(--accent); }
+footer { text-align: center; font-size: .8rem; opacity: .6; padding: 2rem 1rem; }
+footer .authors { font-size: .9rem; opacity: .9; }
+
+/* table of contents */
+body.toc h2 { margin-top: 2rem; border-bottom: 1px solid var(--card-border); padding-bottom: .2rem; }
+body.toc .meta { font-size: .8rem; opacity: .6; }
+body.toc .subtitle { opacity: .75; }
+
+/* chapter prose */
+.prose pre {
+  overflow-x: auto; background: var(--soft-bg);
+  margin: .5rem 0; padding: .3rem; border-radius: .4rem; font-size: .88rem;
+}
+.prose code { background: var(--soft-bg); padding: .05rem .3rem; border-radius: .25rem; }
+.prose pre code { background: none; padding: 0; }
+.prose li { margin: 1rem 0; }
+.prose li > pre { margin: .3rem 0; }
+.prose h2 { margin-top: 2.2rem; }
+/* a glossary term (every use); <dfn> kept for a first-use promotion pass */
+.prose .term, .prose dfn { font-style: normal; font-weight: 650; }
+.prose img { max-width: 100%; height: auto; }
+
+/* AI-provenance banner (chapter ai-note meta) */
+.ai-banner {
+  margin: 1rem 0 0;
+  border: 1px solid color-mix(in srgb, #c9930a 50%, transparent);
+  background: color-mix(in srgb, #e6a817 12%, transparent);
+  border-radius: .5rem;
+  padding: .5rem .9rem;
+  font-size: .85rem;
+}
+.ai-banner::before { content: "⚠ "; }
+
+/* socratic dialogue, rendered as a transcript: turns run flush with the
+   page column, the speaker name leads the first line */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+.speech { margin: 1rem 0; line-height: 1.5; }
+.speech .bubble { min-width: 0; }
+.speech p { margin: .22rem 0; }
+.speech .bubble > p:first-of-type { margin-top: 0; }
+.speech .bubble > p:last-of-type { margin-bottom: 0; }
+/* float so the name sits on the first line and the text runs on beneath it */
+.speech .who { float: left; margin-right: .4rem; font-weight: 650; }
+.speech.prof .who { color: var(--prof); }
+.speech.student .who { color: var(--stud); }
+/* stage direction as a system message */
+.scene {
+  display: flex; align-items: center; gap: .8rem;
+  opacity: .6; font-size: .9rem; margin: .8rem 0; text-align: center;
+}
+.scene::before, .scene::after {
+  content: ""; flex: 1; border-top: 1px solid var(--card-border);
+}
+
+/* runnable code widgets */
+.runner { position: relative; border: 1px solid var(--card-border); border-radius: .5rem; margin: 1rem 0; overflow: hidden; }
+.runner .editor { position: relative; background: var(--soft-bg); }
+.runner .editor pre.hl, .runner textarea.code {
+  margin: 0; padding: .3rem; border: 0; border-radius: 0;
+  font-family: ui-monospace, monospace; font-size: .88rem; line-height: 1.4;
+  white-space: pre-wrap; overflow-wrap: break-word; word-break: normal; tab-size: 4;
+  overflow-y: auto; scrollbar-gutter: stable;
+}
+.runner .editor pre.hl {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  background: none; color: inherit;
+}
+.runner textarea.code {
+  position: relative; display: block; width: 100%; resize: vertical; min-height: 4rem;
+  background: transparent; color: transparent; caret-color: CanvasText;
+}
+/* Typst's own listing palette (its HTML export inlines these), so a widget
+   and a prose listing colour the same tokens the same way */
+.hl .kw { color: #d73948; }
+.hl .ty { color: #4b69c6; }
+.hl .nu { color: #b60157; }
+.hl .st { color: #198810; }
+.hl .cm { color: #74747c; }
+.hl .an { color: #301414; }
+/* an edit of the previous listing (#run(edit: true)): unchanged lines fade
+   until the reader hovers or edits; changed text is tinted */
+.runner[data-edit] .hl .line { display: inline; }
+.runner[data-edit] .hl .line.same { opacity: .45; }
+.runner[data-edit]:hover .hl .line.same, .runner[data-edit]:focus-within .hl .line.same { opacity: 1; }
+.runner[data-edit] .hl .line.new { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.runner[data-edit] .hl .ins {
+  background: color-mix(in srgb, var(--accent) 28%, transparent); border-radius: .15rem;
+}
+.runner[data-edit] .hl .line.del-before { box-shadow: 0 -2px 0 0 var(--wrong); }
+@media print { .runner[data-edit] .hl .line.same { opacity: .6; } }
+/* controls float over the code's top-right corner — a listing's first line
+   rarely runs that wide — and stand one code-line tall */
+.runner .bar {
+  position: absolute; top: .3rem; right: .4rem;
+  display: flex; align-items: center; gap: .35rem;
+}
+.runner button {
+  font: inherit; font-size: .78rem; line-height: 1.3; padding: 0 .55rem;
+  border-radius: .25rem; border: 1px solid transparent; cursor: pointer;
+}
+.runner button.run { background: var(--accent); color: white; }
+.runner button.revert {
+  background: color-mix(in srgb, currentColor 6%, transparent); color: inherit;
+  border-color: var(--card-border);
+}
+.runner button.run:disabled { opacity: .5; cursor: wait; }
+.runner button.revert:disabled { opacity: .4; cursor: default; }
+/* state text grows leftward so the buttons never move under it */
+.runner .state { order: -1; font-size: .78rem; color: inherit; opacity: .6; white-space: nowrap; }
+.runner pre.out {
+  margin: 0; padding: .8rem; font-size: .85rem; white-space: pre-wrap;
+  color: inherit; background: none; max-height: 22rem; overflow-y: auto;
+}
+.runner pre.out.err { color: var(--wrong); }
+/* shown images sit in the output at the point they were shown */
+.runner pre.out img, .exercise pre.out img {
+  display: block; max-width: 100%; margin: .3rem 0;
+}
+.runner pre.out:has(img), .exercise pre.out:has(img) { max-height: none; }
+
+/* an unspoken block: neither speaker owns it — groups a #run, a question,
+   and whatever else belongs with them */
+.innercise {
+  border: 1px solid var(--card-border); border-radius: .5rem;
+  background: var(--soft-bg);
+  margin: 1.4rem 0; padding: .9rem;
+}
+.innercise > :first-child { margin-top: 0; }
+.innercise > :last-child { margin-bottom: 0; }
+/* no double frame: a nested exercise keeps only its header as a divider */
+.innercise .exercise {
+  border: 0; border-radius: 0; margin: .9rem 0 0; padding: 0;
+}
+.innercise .exercise::before {
+  margin: 0 0 .5rem; padding: 0 0 .3rem; background: none; border-radius: 0;
+}
+
+/* exercises (see docs/exercise-contract.md; hydrated by exercise.js) —
+   a full-column card, sibling to the dialogue rather than a turn in it */
+.exercise {
+  border: 1px solid var(--card-border); border-radius: .5rem;
+  margin: 1.4rem 0; padding: 0 .9rem .8rem;
+}
+.exercise::before {
+  content: "Question";
+  display: block; margin: 0 -.9rem .7rem; padding: .35rem .9rem;
+  background: var(--soft-bg); border-bottom: 1px solid var(--card-border);
+  border-radius: .45rem .45rem 0 0;
+  font-size: .7rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; opacity: .6;
+}
+.exercise .stem { margin: 0 0 .6rem; }
+.exercise .response { margin: 0; }
+
+/* conversation gating (gate.js) */
+.gated { display: none; }
+.revealed { animation: gate-reveal .45s ease; }
+@keyframes gate-reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .revealed { animation: none; } }
+.gate-frontier::after {
+  content: "answer to continue the conversation";
+  display: block; clear: both; text-align: center;
+  font-size: .8rem; opacity: .5; margin-top: 1rem;
+}
+.gate-frontier[data-gate-need="run"]::after { content: "run it to continue the conversation"; }
+
+.exercise ol.choices { list-style: none; padding: 0; margin: .5rem 0; }
+.exercise .choices li {
+  display: flex; flex-wrap: wrap; gap: .6rem; align-items: baseline;
+  padding: .35rem .6rem; border-radius: .4rem; margin: .15rem 0; cursor: pointer;
+}
+.exercise .choices li:hover { background: var(--soft-bg); }
+.exercise .choices li > pre { flex: 1 1 auto; margin: .2rem 0; cursor: pointer; }
+.exercise .choices li.right { outline: 2px solid var(--right); }
+.exercise .choices li.wrong { outline: 2px solid var(--wrong); }
+.exercise.revealed .choices li[data-correct] { outline: 2px solid var(--right); }
+.exercise .why {
+  display: none; flex-basis: 100%;
+  font-size: .9rem; opacity: .85;
+  border-left: 3px solid var(--wrong); padding-left: .6rem; margin-top: .2rem;
+}
+.exercise .choices li.show-why .why, .exercise.revealed .why { display: block; }
+.exercise select.blank, .exercise input.blank {
+  font: inherit; padding: .15rem .4rem; margin: 0 .2rem;
+  border: 1px solid var(--card-border); border-radius: .3rem;
+  background: Canvas; color: inherit;
+}
+.exercise input.blank { width: 7rem; }
+.exercise input.blank.num { width: 9rem; }
+/* a cloze that is code with holes: monospace, with literal spacing kept so
+   indented lines line up (a string part carries its own newlines) */
+.exercise .cloze.code {
+  font-family: ui-monospace, monospace; font-size: .88rem; line-height: 1.9;
+  white-space: pre-wrap; background: var(--soft-bg);
+  padding: .7rem; border-radius: .4rem; overflow-x: auto;
+}
+/* a single code-shaped hole in an ordinary sentence */
+.exercise .blank.code { font-family: ui-monospace, monospace; }
+/* a code exercise: holes are real code, so they get room to type */
+.exercise[data-kind="code"] input.blank {
+  width: 28rem; max-width: 100%; field-sizing: content; min-width: 10rem;
+}
+.exercise[data-kind="code"] textarea.blank {
+  display: block; width: 100%; box-sizing: border-box; margin: .2rem 0;
+  font: inherit; line-height: 1.4; padding: .3rem .4rem; resize: vertical;
+  border: 1px solid var(--card-border); border-radius: .3rem;
+  background: Canvas; color: inherit;
+}
+.exercise .state { font-size: .85rem; opacity: .7; }
+.exercise pre.out {
+  margin: .6rem 0 0; padding: .8rem; font-size: .85rem; white-space: pre-wrap;
+  background: none; color: inherit; border-radius: .4rem;
+  max-height: 22rem; overflow-y: auto;
+}
+.exercise pre.out.err { color: var(--wrong); }
+.exercise .blank.right { outline: 2px solid var(--right); }
+.exercise .blank.wrong { outline: 2px solid var(--wrong); }
+.exercise .ans { color: var(--right); font-weight: 600; margin-left: .35rem; }
+.exercise .ans::before { content: "→ "; }
+.exercise .exercise-footer { display: flex; align-items: center; gap: 1rem; margin-top: .8rem; }
+.exercise button.check {
+  font: inherit; padding: .25rem 1.2rem; border-radius: .3rem;
+  border: 0; background: var(--accent); color: white; cursor: pointer;
+}
+.exercise .verdict.ok { color: var(--right); font-weight: 600; }
+.exercise .verdict.no { color: var(--wrong); font-weight: 600; }
+.all-answered { margin: 2.5rem 0 1rem; text-align: center; font-weight: 600; color: var(--right); }
+.exercise details.reveal { margin-top: .6rem; font-size: .9rem; }
+.exercise details.reveal summary { cursor: pointer; opacity: .6; }
+
+/* page prev/next */
+.pagenav { display: flex; justify-content: space-between; margin-top: 3rem; gap: 1rem; }
+.pagenav a { text-decoration: none; }
+
+/* step progress indicator (nav.js) — lives in the sticky header so it
+   stays put as the reader scrolls; numbered dots, current filled, done ticked */
+header .stepbar { margin: 0 0 0 auto; display: flex; align-items: center; gap: .55rem; min-width: 0; }
+header .stepbar[hidden] { display: none; }
+.step-dots { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 0; margin: 0; padding: 0; }
+.step-dots li { display: flex; align-items: center; }
+.step-dots li:not(:first-child)::before {
+  content: ""; width: 1rem; height: 2px; background: var(--card-border);
+}
+.step-dot {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.6rem; height: 1.6rem; border-radius: 50%; box-sizing: border-box;
+  border: 2px solid var(--card-border); background: Canvas; color: inherit;
+  font-size: .75rem; font-weight: 600; text-decoration: none;
+}
+.step-dot.done { border-color: var(--right); color: var(--right); }
+.step-dot.current { border-color: var(--accent); background: var(--accent); color: #fff; }
+.step-caption { font-size: .8rem; opacity: .7; white-space: nowrap; }
+@media (max-width: 560px) { .step-caption { display: none; } }

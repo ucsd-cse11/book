@@ -4,31 +4,61 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Introduction to Programming and Computational Problem-Solving</title>
-<link rel="stylesheet" href="assets/book.css">
+<meta name="description" content="The CSE 11 book. Each course offering is published as its own frozen edition.">
+<style>
+  :root { color-scheme: light dark; --fg:#16181d; --muted:#5c6370; --rule:#dfe2e8; --link:#1a4fd6; --bg:#fff; --card:#f7f8fa; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg:#e6e8ec; --muted:#9aa2b1; --rule:#2b3038; --link:#8ab0ff; --bg:#14161a; --card:#1c1f25; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    padding: 3rem 1.25rem 4rem;
+  }
+  main { max-width: 44rem; margin: 0 auto; }
+  h1 { font-size: 1.6rem; line-height: 1.25; margin: 0 0 .4rem; letter-spacing: -.01em; }
+  .sub { color: var(--muted); margin: 0 0 2.25rem; }
+  h2 { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em;
+       color: var(--muted); font-weight: 600; margin: 0 0 .75rem;
+       padding-bottom: .5rem; border-bottom: 1px solid var(--rule); }
+  ul { list-style: none; padding: 0; margin: 0 0 2.5rem; }
+  li { padding: .9rem 0; border-bottom: 1px solid var(--rule); }
+  li:last-child { border-bottom: 0; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .ed { font-size: 1.05rem; font-weight: 600; }
+  .tag { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .05em;
+         text-transform: uppercase; padding: .12rem .45rem; border-radius: 3px;
+         background: #1a7f4b; color: #fff; vertical-align: .12em; margin-left: .4rem; }
+  .note { color: var(--muted); font-size: .92rem; margin-top: .15rem; }
+  footer { color: var(--muted); font-size: .88rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; }
+</style>
 </head>
-<body class="toc">
+<body>
 <main>
-<h1>Introduction to Programming and Computational Problem-Solving</h1>
-<p class="subtitle"></p>
-<h2>1. Java: The Basics</h2>
-<ol><li><a href="lessons/01-01-Programs-Fields.html">Programs, Fields</a> <span class="meta">(2 runnable, 3 exercises)</span></li><li><a href="lessons/01-02-Java-as-a-Calculator.html">Java as a Calculator</a> <span class="meta">(6 runnable, 3 exercises)</span></li><li><a href="lessons/01-03-Syntax.html">Syntax</a> <span class="meta">(3 runnable, 3 exercises)</span></li></ol><h2>2. Java: More on Fields, and Introduction to Types</h2>
-<ol><li><a href="lessons/02-01-Using-Fields.html">Using Fields</a> <span class="meta">(4 runnable, 2 exercises)</span></li><li><a href="lessons/02-02-Beyond-ints.html">Beyond ints</a> <span class="meta">(7 runnable, 6 exercises)</span></li><li><a href="lessons/02-03-Java-Checks-Types.html">Java Checks Types</a> <span class="meta">(4 runnable, 3 exercises)</span></li></ol><h2>3. Programming, Methodically</h2>
-<ol><li><a href="lessons/03-01-Capturing-Repeated-Work-with-Methods.html">Capturing Repeated Work with Methods</a> <span class="meta">(3 runnable, 4 exercises)</span></li><li><a href="lessons/03-02-Methods-as-Descriptions-of-Tasks.html">Methods as Descriptions of Tasks</a> <span class="meta">(3 runnable, 3 exercises)</span></li><li><a href="lessons/03-03-With-Great-Power-Comes-More-Opportunity-for-Mistak.html">With Great Power Comes More Opportunity for Mistakes</a> <span class="meta">(4 runnable, 4 exercises)</span></li><li><a href="lessons/03-04-In-Summary--Programming-Methodically.html">In Summary — Programming, Methodically</a></li></ol><h2>4. Programming, Decisively</h2>
-<ol><li><a href="lessons/04-01-Beyond-Arithmetic-and-Concatenation.html">Beyond Arithmetic and Concatenation</a> <span class="meta">(4 runnable, 7 exercises)</span></li><li><a href="lessons/04-02-More-Examples-of-Decision-Making-Programs.html">More Examples of Decision-Making Programs</a> <span class="meta">(3 runnable, 4 exercises)</span></li><li><a href="lessons/04-03-In-Summary--Programming-Decisively.html">In Summary — Programming, Decisively</a></li></ol><h2>5. Programming, With Class</h2>
-<ol><li><a href="lessons/05-01-Representing-Compound-Data.html">Representing Compound Data</a> <span class="meta">(2 runnable, 4 exercises)</span></li><li><a href="lessons/05-02-More-on-Methods.html">More on Methods</a> <span class="meta">(3 exercises)</span></li><li><a href="lessons/05-03-Variables-and-Scope.html">Variables and Scope</a> <span class="meta">(4 runnable, 4 exercises)</span></li><li><a href="lessons/05-04-In-Summary--Programming-With-Class.html">In Summary — Programming, With Class</a></li></ol><h2>6. Programming, Objectively</h2>
-<ol><li><a href="lessons/06-01-More-Classes.html">More Classes</a> <span class="meta">(2 runnable, 6 exercises)</span></li><li><a href="lessons/06-02-From-Examples-to-Testing.html">From Examples to Testing</a> <span class="meta">(3 runnable, 5 exercises)</span></li><li><a href="lessons/06-03-In-Summary--Programming-Objectively.html">In Summary — Programming, Objectively</a></li></ol><h2>7. Nested Data and Approximate Numbers</h2>
-<ol><li><a href="lessons/07-01-Nested-Data.html">Nested Data</a> <span class="meta">(7 runnable, 7 exercises)</span></li><li><a href="lessons/07-02-More-Regions.html">More Regions</a> <span class="meta">(4 runnable, 3 exercises)</span></li><li><a href="lessons/07-03-In-Summary--Nested-Data-and-Approximate-Numbers.html">In Summary — Nested Data and Approximate Numbers</a></li></ol><h2>8. Classes that Share Behavior</h2>
-<ol><li><a href="lessons/08-01-Searching-for-Images.html">Searching for Images</a> <span class="meta">(2 runnable, 2 exercises)</span></li><li><a href="lessons/08-02-Queries-as-Data.html">Queries as Data</a> <span class="meta">(2 runnable, 2 exercises)</span></li><li><a href="lessons/08-03-Identifying-Common-Behavior.html">Identifying Common Behavior</a> <span class="meta">(1 runnable, 2 exercises)</span></li><li><a href="lessons/08-04-Combining-Queries.html">Combining Queries</a> <span class="meta">(4 runnable, 4 exercises)</span></li><li><a href="lessons/08-05-In-Summary--Classes-that-Share-Behavior.html">In Summary — Classes that Share Behavior</a></li></ol><h2>9. Arrays and main</h2>
-<ol><li><a href="lessons/09-01-Intro-to-Arrays.html">Intro to Arrays</a> <span class="meta">(2 runnable, 2 exercises)</span></li><li><a href="lessons/09-02-static-methods.html">static methods</a> <span class="meta">(2 runnable, 2 exercises)</span></li><li><a href="lessons/09-03-main-void-and-printing.html">main, void, and printing</a> <span class="meta">(5 runnable, 5 exercises)</span></li><li><a href="lessons/09-04-In-Summary--Arrays-and-main.html">In Summary — Arrays and main</a></li></ol><h2>10. Arrays</h2>
-<ol><li><a href="lessons/10-01-Arrays-of-command-line-arguments-loops.html">Arrays of command line arguments, loops</a> <span class="meta">(4 runnable, 6 exercises)</span></li><li><a href="lessons/10-02-More-Iteration-Patterns.html">More Iteration Patterns</a> <span class="meta">(3 runnable, 4 exercises)</span></li><li><a href="lessons/10-03-Creating-Arrays-Round-2.html">Creating Arrays, Round 2</a> <span class="meta">(4 exercises)</span></li><li><a href="lessons/10-04-More-Array-Manipulation.html">More Array Manipulation</a> <span class="meta">(2 runnable, 2 exercises)</span></li><li><a href="lessons/10-05-In-Summary--Arrays-and-Loops.html">In Summary – Arrays and Loops</a></li></ol><h2>11. More Arrays and Collections</h2>
-<ol><li><a href="lessons/11-01-Arrays-of-Arrays-Nested-Loops.html">Arrays of Arrays, Nested Loops</a> <span class="meta">(5 runnable, 7 exercises)</span></li></ol><h2>12. Generics and Collections</h2>
-<ol><li><a href="lessons/12-01-Java-Generics.html">Java Generics</a> <span class="meta">(7 runnable, 5 exercises)</span></li><li><a href="lessons/12-02-Java-Collections.html">Java Collections</a> <span class="meta">(11 runnable, 9 exercises)</span></li></ol><h2>13. Classes that Share Fields and Code</h2>
-<ol><li><a href="lessons/13-01-Combining-Queries-Part-II.html">Combining Queries, Part II</a> <span class="meta">(3 runnable, 2 exercises)</span></li><li><a href="lessons/13-02-Abstracting-Common-Method-Implementations.html">Abstracting Common Method Implementations</a> <span class="meta">(2 runnable, 2 exercises)</span></li><li><a href="lessons/13-03-Abstracting-Common-Fields.html">Abstracting Common Fields</a> <span class="meta">(1 runnable, 1 exercises)</span></li><li><a href="lessons/13-04-Talking-About-Abstract-Classes.html">Talking About Abstract Classes</a> <span class="meta">(1 runnable, 1 exercises)</span></li><li><a href="lessons/13-05-In-Summary--Classes-that-Share-Fields-and-Code.html">In Summary — Classes that Share Fields and Code</a></li></ol><h2>14. Additional Notes from Fall 2023</h2>
-<ol><li><a href="lessons/14-01-Building-Code.html">Building Code</a></li><li><a href="lessons/14-02-String-Methods.html">String Methods</a></li><li><a href="lessons/14-03-Nested-Objects.html">Nested Objects</a></li><li><a href="lessons/14-04-Memory-Allocation.html">Memory Allocation</a></li><li><a href="lessons/14-05-Switch-Statements.html">Switch Statements</a></li><li><a href="lessons/14-06-Interfaces.html">Interfaces</a></li><li><a href="lessons/14-07-Memory-Models-for-Methods-and-Arrays.html">Memory Models for Methods and Arrays</a></li><li><a href="lessons/14-08-While-Loops.html">While Loops</a></li><li><a href="lessons/14-09-Hashmaps.html">Hashmaps</a></li><li><a href="lessons/14-10-File-IO.html">File IO</a></li><li><a href="lessons/14-11-Exceptions.html">Exceptions</a></li></ol>
+  <h1>Introduction to Programming and Computational Problem-Solving</h1>
+  <p class="sub">The CSE 11 book, at UC San Diego. Java examples compile and run in
+  your browser — no accounts, no install, no execution server.</p>
+
+  <h2>Editions</h2>
+  <ul>
+    <li>
+      <a class="ed" href="fa26/">Fall 2026</a><span class="tag">Current</span>
+      <div class="note">A rewrite in progress. Published as it is written, so
+      later chapters are not here yet.</div>
+    </li>
+    <li>
+      <a class="ed" href="fa23/">Fall 2023</a>
+      <div class="note">The complete earlier book, covering the full course.
+      By Joe Politz, Rachel Lim, Sunwoo Kim, Gerald Soosairaj, and Niema Moshiri.</div>
+    </li>
+  </ul>
+
+  <footer>
+    Each edition is frozen when its quarter ends, so links keep working and a
+    course offering keeps the book it was actually taught from.
+  </footer>
 </main>
-<footer>
-<p class="authors">By Joe Politz, Rachel Lim, Sunwoo Kim, Gerald Soosairaj, and Niema Moshiri</p>
-Generated from the Stepik course export · interactive Java powered by
-<a href="https://cheerpj.com">CheerpJ</a></footer>
 </body>
 </html>

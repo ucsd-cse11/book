@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10.2 More Iteration Patterns</title>
+<link rel="stylesheet" href="../assets/book.css">
+
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Arrays</span>
+</header>
+<main>
+<h1>10.2 — More Iteration Patterns</h1>
+<nav class="stepnav"><a href="#step1" class="t-fill-blanks" title="Fill in the blanks">1</a><a href="#step2" class="t-fill-blanks" title="Fill in the blanks">2</a><a href="#step3" class="t-fill-blanks" title="Fill in the blanks">3</a><a href="#step4" class="t-choice" title="Quiz">4</a><a href="#step5" class="t-text" title="reading">5</a></nav>
+<section class="step t-fill-blanks" id="step1"><span class="badge">Fill in the blanks</span><p>Just as we can use references to objects as arguments to methods, we can use references to arrays. So, for example, we could write a <code>sum()</code> method over arrays of <code>double</code>s, and use it on one of the examples we just created:</p>
+
+<p>
+<div class="runner" id="w1" data-main="ExamplesArrays" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="19">class ExamplesArrays {
+    /*
+        @param numbers Elements to add together
+        @return The sum of the numbers
+    */
+    double sum(double[] numbers) {
+        double total = 0;
+        for(double num: numbers) {
+        total = total + num;
+        }
+        return total;
+    }
+
+    double[] someMoreNumbers = {100.5, 0.3, 9.5, 4.4};
+    double[] noNumbersHere = {};
+    double sum1 = this.sum(this.someMoreNumbers);
+    double sum2 = this.sum(this.noNumbersHere);
+}</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<p>There are no new Java constructs involved here. The for-each loop is the same as in the last section, where the type of the element variable is <code>double</code>, the name of the element variable is <code>num</code>, and the array is an array of <code>double</code>s. Just as we wrote <code>String[]</code> for the parameter type of <code>main()</code>, we write <code>double[]</code> for the parameter type of <code>sum()</code>. In addition, we made sure that this method would work for <em>empty</em> arrays by adding an example for that case.</p>
+<div class="quiz" data-type="fill-blanks" data-step-id="2476656">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "What is the result stored in <code>sum1<\/code>?", "options": []}, {"type": "input", "text": "", "options": [{"text": "114.7", "is_correct": true}]}], "is_case_sensitive": false, "is_detailed_feedback": false, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step2"><span class="badge">Fill in the blanks</span><p>There are many other patterns for iterating over arrays, especially using counted for loops rather than for-each loops. For example, we could sum every other element in an array:</p>
+
+<pre><code class="language-java">double sumEveryOther(double[] numbers) {
+  double total = 0;
+  for(int i = 0; i &lt; numbers.length; i = i + 2) {
+    total = total + numbers[i];
+  }
+  return total;
+}</code></pre>
+
+<h3><span style="color: #cc0000;"><strong>Do Now!</strong></span> In the program above, only every other index is visited. Consider calling it <code>sumEveryOther</code> with the array <code>{4, 1, 9, 7, 6}</code>. What values will be stored in <code>i</code> as this program runs, and what will the return value be?</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2476666">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "Values of i: ", "options": []}, {"type": "input", "text": "", "options": [{"text": "0", "is_correct": true}]}, {"type": "input", "text": "", "options": [{"text": "2", "is_correct": true}]}, {"type": "input", "text": "", "options": [{"text": "4", "is_correct": true}]}, {"type": "input", "text": "", "options": [{"text": "6", "is_correct": true}]}, {"type": "text", "text": "<br/>Return value:", "options": []}, {"type": "input", "text": "", "options": [{"text": "19", "is_correct": true}]}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-fill-blanks" id="step3"><span class="badge">Fill in the blanks</span><p>We can also write methods that skip just the last element of an array. A common case for such a method puts commas in between each element in a list of strings, but not after the last one. Let’s build that up:</p>
+
+<pre><code class="language-java">/*
+  @param strs The strings to join together
+  @param separator The string to insert between the provided strs
+  @return A single string containing the provided strings joined with the separator
+*/
+String intersperse(String[] strs, String separator)</code></pre>
+
+<p>When we get into processing arrays in trickier ways, there are lots of opportunities to make mistakes with indices. For example, it’s easy to be off by one index. To avoid these issues, it is more important than ever with array methods to think through examples first, so that we have tests to check our work later, after things get complicated. So let’s pick a few tests for this method. In general, we should always make sure a method that processes arrays makes sense with the empty array, arrays with single elements, and several cases of longer arrays.</p>
+
+<p>One way to implement this is to write a loop that appends each string with the separator after it for all the elements <em>except</em> the last one, and then add the last string in the array:</p>
+
+<p>
+<div class="runner" id="w2" data-main="Intersperse" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="24">import tester.*;
+public class Intersperse {
+    String intersperse(String[] strs, String separator) {
+        String result = &quot;&quot;;
+        for(int i = 0; i &lt; strs.length - 1; i += 1) {
+          result += strs[i] + separator;
+        }
+        result += strs[strs.length - 1];
+        return result;
+    }
+    
+    void testIntersperse(Tester t) {
+      String[] strs1 = {&quot;a&quot;, &quot;b&quot;, &quot;c&quot;};
+      t.checkExpect(this.intersperse(strs1, &quot; and &quot;), &quot;a and b and c&quot;);
+      t.checkExpect(this.intersperse(strs1, &quot;;&quot;), &quot;a;b;c&quot;);
+    
+      String[] one = {&quot;onestring&quot;};
+      t.checkExpect(this.intersperse(one, &quot;,&quot;), &quot;onestring&quot;);
+      t.checkExpect(this.intersperse(one, &quot;; &quot;), &quot;onestring&quot;);
+    
+      String[] two = {&quot;two&quot;, &quot;strings&quot;};
+      t.checkExpect(this.intersperse(two, &quot;|&quot;), &quot;two|strings&quot;);
+      t.checkExpect(this.intersperse(two, &quot;; &quot;), &quot;two; strings&quot;);
+
+      String[] empty = {};
+      t.checkExpect(this.intersperse(empty, &quot;,&quot;), &quot;&quot;);
+      t.checkExpect(this.intersperse(empty, &quot;; &quot;), &quot;&quot;);
+    
+    }
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #cc0000;">Do Now! </span>Run the program. How many tests run and how many tests fail?</h3>
+<div class="quiz" data-type="fill-blanks" data-step-id="2476731">
+<script type="application/json">{"type": "fill-blanks", "source": {"components": [{"type": "text", "text": "How many tests run?", "options": []}, {"type": "input", "text": "", "options": [{"text": "7", "is_correct": true}]}, {"type": "text", "text": "<br/>How many tests fail?", "options": []}, {"type": "input", "text": "", "options": [{"text": "1", "is_correct": true}]}], "is_case_sensitive": false, "is_detailed_feedback": true, "is_partially_correct": false}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-choice" id="step4"><span class="badge">Quiz</span><p>When the array is empty, the line <code>result += strs[strs.length - 1];</code> runs with <code>strs.length</code> equal to <code>0</code>. That produces the index <code>-1</code> for the array lookup, which produces the error. The body of the method doesn’t work for empty arrays! We could try to re-work the logic around this case. We could also just add a single line at the beginning. Think about this! What line of code could we add at the beginning to return the empty string if the array is empty?</p>
+
+<p>
+<div class="runner" id="w3" data-main="Intersperse" data-runner="tester">
+<textarea class="code" spellcheck="false" rows="24">import tester.*;
+public class Intersperse {
+    String intersperse(String[] strs, String separator) {
+        String result = &quot;&quot;;
+        for(int i = 0; i &lt; strs.length - 1; i += 1) {
+          result += strs[i] + separator;
+        }
+        result += strs[strs.length - 1];
+        return result;
+    }
+    
+    void testIntersperse(Tester t) {
+      String[] strs1 = {&quot;a&quot;, &quot;b&quot;, &quot;c&quot;};
+      t.checkExpect(this.intersperse(strs1, &quot; and &quot;), &quot;a and b and c&quot;);
+      t.checkExpect(this.intersperse(strs1, &quot;;&quot;), &quot;a;b;c&quot;);
+    
+      String[] one = {&quot;onestring&quot;};
+      t.checkExpect(this.intersperse(one, &quot;,&quot;), &quot;onestring&quot;);
+      t.checkExpect(this.intersperse(one, &quot;; &quot;), &quot;onestring&quot;);
+    
+      String[] two = {&quot;two&quot;, &quot;strings&quot;};
+      t.checkExpect(this.intersperse(two, &quot;|&quot;), &quot;two|strings&quot;);
+      t.checkExpect(this.intersperse(two, &quot;; &quot;), &quot;two; strings&quot;);
+
+      String[] empty = {};
+      t.checkExpect(this.intersperse(empty, &quot;,&quot;), &quot;&quot;);
+      t.checkExpect(this.intersperse(empty, &quot;; &quot;), &quot;&quot;);
+    
+    }
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #cc0000;">Do Now!</span> Which of the following lines, when added to the beginning of the method, will make all the tests pass? Choose all that apply.</h3>
+<div class="quiz" data-type="choice" data-step-id="2476739">
+<script type="application/json">{"type": "choice", "source": {"is_multiple_choice": true, "is_always_correct": false, "sample_size": 7, "preserve_order": false, "is_html_enabled": true, "is_options_feedback": false, "options": [{"is_correct": true, "text": "<code>if(strs.length == 0) { return \"\"; }<\/code>", "feedback": ""}, {"is_correct": false, "text": "<code>if(strs.length > 0) { return \"\"; }<\/code>", "feedback": ""}, {"is_correct": true, "text": "<code>if(strs.length <= 0) { return \"\"; }<\/code>", "feedback": ""}, {"is_correct": false, "text": "<code>if(separator == \"\") { return \"\"; }<\/code>", "feedback": ""}, {"is_correct": false, "text": "<code>if(separator.equals(\"\")) { return \"\"; }<\/code>", "feedback": ""}, {"is_correct": false, "text": "<code>if(strs == {}) { return \"\"; }<\/code>", "feedback": ""}, {"is_correct": false, "text": "<code>if(strs.length < separator.length()) { return \"\"; }<\/code>", "feedback": ""}]}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-text" id="step5"><p>There are actually several ways we <em>could</em> have written this method. For example, we could have visited every element with the loop, and not appended the separator if the index was equal to the highest index in the array. Or we could have started <code>result</code> with the first element in the array, and then added the <code>separator + strs[i]</code> in a loop that started at index <code>1</code>. Often, we have some choice in our particular layout of a loop, and there’s not a specific “right” way to write it.</p>
+
+<p>In general, in the next sections on loops we will show many <strong>examples</strong> of using loops and arrays so that you can get a sense of different strategies and styles for programming with them. This is a really broad space of programming design, so there are lots of things to try and learn, and doing so by example, then trying things out on your own, is the best way to learn it.</p></section>
+<nav class="pagenav"><a class="prev" href="10-01-Arrays-of-command-line-arguments-loops.html">← 10.1 Arrays of command line arguments, loops</a> <a class="next" href="10-03-Creating-Arrays-Round-2.html">10.3 Creating Arrays, Round 2 →</a></nav>
+</main>
+<footer>Generated from the Stepik course export · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<pre id="console"></pre>
+<script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9.3 main, void, and printing</title>
+<link rel="stylesheet" href="../assets/book.css">
+
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Arrays and main</span>
+</header>
+<main>
+<h1>9.3 — main, void, and printing</h1>
+<nav class="stepnav"><a href="#step1" class="t-choice" title="Quiz">1</a><a href="#step2" class="t-choice" title="Quiz">2</a><a href="#step3" class="t-choice" title="Quiz">3</a><a href="#step4" class="t-string" title="Short answer">4</a><a href="#step5" class="t-choice" title="Quiz">5</a><a href="#step6" class="t-text" title="reading">6</a></nav>
+<section class="step t-choice" id="step1"><span class="badge">Quiz</span><p>Up until this point, we have written programs that were using the tester library to print the fields of objects. Now, we are going to learn how to write stand-alone programs that do not depend on the tester library. The key method that enables us to write such stand-alone Java programs is the <strong><code>main()</code> method</strong>.</p>
+
+<p>In Java (and in many other programming languages), the <code>main()</code> method is where your program begins execution. In other words, when you run a stand-alone Java program, the <code>main()</code> method is the first method to get executed. A class with a <code>main()</code> method in Java looks like the following:</p>
+
+<p>
+<div class="runner" id="w1" data-main="HasAMainMethod" data-runner="cli">
+<textarea class="code" spellcheck="false" rows="7">class HasAMainMethod {
+  public static void main(String[] args) {
+
+  }
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  <label class="cli">$ java HasAMainMethod <input class="args" type="text" placeholder="command-line arguments"></label>
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<p>To run this program we use two commands, <code>javac</code> and <code>java</code>. Assuming we stored this in a file called HasAMainMethod.java, running the program would look like this (where we use $ as an abbreviation for whatever your terminal prints before you type the command):</p>
+
+<pre><code>$ javac HasAMainMethod.java 
+$ java HasAMainMethod
+$</code></pre>
+
+<p><strong><span style="color: #cc0000;">Do Now! </span></strong>Click "Run", and you should see a terminal. Type these two commands into the terminal (and press enter after each one). Observe what happens (or if anything even happens!) after each one.</p>
+
+<p>At the moment, this program does.... <strong>nothing!</strong> It doesn't even display any text to let us know whether we've succeeded or failed.</p>
+
+<p>Actually, it would give some kinds of feedback if we caused errors. For example, if we delete a curly brace and re-run with the same terminal commands, the javac command will report an error:</p>
+
+<p>
+<div class="runner" id="w2" data-main="HasAMainMethod" data-runner="cli">
+<textarea class="code" spellcheck="false" rows="7">class HasAMainMethod {
+  public static void main(String[] args) // removed this curly brace
+
+  }
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  <label class="cli">$ java HasAMainMethod <input class="args" type="text" placeholder="command-line arguments"></label>
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #cc0000;">Do Now! </span>Run the <code>javac HasAMainMethod.java</code> command and then <code>java HasAMainMethod</code>. When running them in that order, which command, <code>javac</code> or <code>java</code>, first caused an error? </h3>
+<div class="quiz" data-type="choice" data-step-id="2465649">
+<script type="application/json">{"type": "choice", "source": {"is_multiple_choice": false, "is_always_correct": false, "sample_size": 2, "preserve_order": false, "is_html_enabled": true, "is_options_feedback": false, "options": [{"is_correct": true, "text": "<code>javac<\/code>", "feedback": ""}, {"is_correct": false, "text": "<code>java<\/code>", "feedback": ""}]}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-choice" id="step2"><span class="badge">Quiz</span><p> We see that the <code>javac</code> command fails if we make a syntax error:</p>
+
+<pre><code class="language-no-highlight">$ javac HasAMainMethod.java
+HasAMainMethod.java:2: error: ';' expected
+  public static void main(String[] args) // removed a curly brace
+                                        ^
+HasAMainMethod.java:5: error: class, interface, or enum expected
+}
+^
+2 errors</code></pre>
+
+<p>Let's go back to the program that “worked”, which is still a bit odd, because it didn't produce any output at all when we ran it:</p>
+
+<p>
+<div class="runner" id="w3" data-main="HasAMainMethod" data-runner="cli">
+<textarea class="code" spellcheck="false" rows="7">class HasAMainMethod {
+  public static void main(String[] args) {
+
+  }
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  <label class="cli">$ java HasAMainMethod <input class="args" type="text" placeholder="command-line arguments"></label>
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<pre><code>$ javac HasAMainMethod.java 
+$ java HasAMainMethod
+$</code></pre>
+
+<p>Let's reflect on this code a little bit.</p>
+
+<h3><span style="color: #cc0000;">Do Now! </span>Which of the following pieces of the <code>main()</code> method have we <em>not</em> seen before in this book?</h3>
+<div class="quiz" data-type="choice" data-step-id="2465380">
+<script type="application/json">{"type": "choice", "source": {"is_multiple_choice": true, "is_always_correct": false, "sample_size": 5, "preserve_order": true, "is_html_enabled": true, "is_options_feedback": true, "options": [{"is_correct": false, "text": "<code>public<\/code>", "feedback": "See module 8, where we learned about interfaces."}, {"is_correct": false, "text": "<code>static<\/code>", "feedback": ""}, {"is_correct": true, "text": "<code>void<\/code>", "feedback": ""}, {"is_correct": false, "text": "<code>String[]<\/code>", "feedback": "Remember what an array initialization statement looks like."}, {"is_correct": true, "text": "a method with no return statement", "feedback": "Have we written any methods so far that do not have a return statement?"}]}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-choice" id="step3"><span class="badge">Quiz</span><p>Let's break down each of the pieces of the <code>main()</code> method declaration:</p>
+
+<ul>
+	<li>The <code>main()</code> method is <strong><code>public</code></strong>, meaning it is accessible everywhere</li>
+	<li>The <code>main()</code> method is <code><strong>static</strong></code>, meaning it belongs to the <em>class itself</em> rather than to any instance of the class</li>
+	<li>The <code>main()</code> method has a <strong><code>void</code></strong> return type, meaning it doesn't return anything <strong>(NEW!)</strong></li>
+	<li>The <code>main()</code> method is named "<code>main</code>"</li>
+	<li>The <code>main()</code> method has a single parameter of type <code>String[]</code> (i.e., array of <code>String</code>)
+	<ul>
+		<li>It is customary to have this single parameter be named "<code>args</code>" (for "arguments"; we'll dive into this a bit later)</li>
+	</ul>
+	</li>
+	<li>It doesn't have a return statement <strong>(NEW!)</strong></li>
+</ul>
+
+<p>It turns out the <code>./run</code> command was doing a <em>lot</em> of work for us to display output. We will need to use other tools to get meaningful results from our program when we use <code>java</code>, <code>javac</code>, and a <code>main()</code> method.</p>
+
+<p>First, an observation. The place where the main method says <code>void</code> is the position for its <strong>return type</strong>. A return type of <code>void</code> indicates that the method <em>doesn't return a value</em>. The fact that <code>main()</code> has a void return type helps us understand that the method itself isn't going to return a value that gets printed out for us; we'll need to find a way to do that in Java ourselves.</p>
+
+<h3><strong><span style="color: #cc0000;">Do Now!</span> Which of the following are requirements of a valid <code>main()</code> method in a Java program? (Select all that apply)</strong></h3>
+<div class="quiz" data-type="choice" data-step-id="2433088">
+<script type="application/json">{"type": "choice", "source": {"is_multiple_choice": true, "is_always_correct": false, "sample_size": 5, "preserve_order": true, "is_html_enabled": true, "is_options_feedback": false, "options": [{"is_correct": true, "text": "Must be <code>public<\/code>", "feedback": ""}, {"is_correct": true, "text": "Must be <code>static<\/code>", "feedback": ""}, {"is_correct": true, "text": "Must have a <code>void<\/code> return type", "feedback": ""}, {"is_correct": true, "text": "Must be called \"<code>main<\/code>\"", "feedback": ""}, {"is_correct": false, "text": "Must have a single parameter of type <code>String[]<\/code> named \"<code>args<\/code>\"", "feedback": ""}]}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-string" id="step4"><span class="badge">Short answer</span><p>Now, let's figure out how we can get our program to produce some sort of output when we run it.</p>
+
+<p>We can insert a line of code that outputs, or "prints", some value to the terminal. A <strong>print statement</strong> in Java looks like this:</p>
+
+<pre><code class="language-java">System.out.println();</code></pre>
+
+<p>Inside the parentheses, we can put some value that we want to output, and that value will be printed in the output of the program.</p>
+
+<p>Let's try writing our own <a href="https://en.wikipedia.org/wiki/%22Hello,_World!%22_program" rel="noopener noreferrer nofollow">"Hello, World!" program</a>! We'll run it using the commands <code>javac HelloWorld.java</code> and then <code>java HelloWorld</code>, since this code is stored in a file named HelloWorld.java.</p>
+
+<p>
+<div class="runner" id="w4" data-main="HelloWorld" data-runner="cli">
+<textarea class="code" spellcheck="false" rows="7">class HelloWorld {
+  public static void main(String[] args) {
+    System.out.println(&quot;Hello, World!&quot;);
+  }
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  <label class="cli">$ java HelloWorld <input class="args" type="text" placeholder="command-line arguments"></label>
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #cc0000;">Do Now!</span> Change the value inside the parentheses to <code>"Notice that the output does not include quotes!"</code> and run the program. Paste the output below.</h3>
+<div class="quiz" data-type="string" data-step-id="2465685">
+<script type="application/json">{"type": "string", "source": {"pattern": "Notice that the output does not include quotes!", "use_re": false, "match_substring": false, "case_sensitive": false, "code": "# def check(reply):\n#     \"\"\"Evaluate the learner's reply.\n#\n#     It should return 1 or True for the correct reply and 0 or False\n#     for the incorrect one.\n#\n#     A partial solution may be scored using a float number from the\n#     interval (0, 1). In such a case the learner total score for the\n#     problem will be 'step cost' * 'score'.\n#\n#     :param reply: a string that is the learner's reply to the problem\n#     :return: a score number (int or float) in range [0, 1]\n#\n#     \"\"\"\n#     return reply == \"Hello\"\n\n# def solve():\n#     \"\"\"Return a correct reply. This function is *optional*.\n#\n#     It is used to test the correctness of the 'check' function.\n#\n#     :return: a string that is a correct reply to the problem\n#\n#     \"\"\"\n#     return \"Hello\"", "is_text_disabled": false, "is_file_disabled": true}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-choice" id="step5"><span class="badge">Quiz</span><p>We can include as many print statements in our program as we want. The expression inside the parentheses does not have to be a <code>String</code>; it can be the name of a variable, an arithmetic expression, a method call, and many other things. The expression will be evaluated and its value will be printed.</p>
+
+<p>
+<div class="runner" id="w5" data-main="PrintingIsFun" data-runner="cli">
+<textarea class="code" spellcheck="false" rows="12">class PrintingIsFun {
+  public static void main(String[] args) {
+    System.out.println(5 + 3);
+    double d1 = -7.7;
+    String s1 = &quot;Mango&quot;;
+    System.out.println(d1);
+    String s2 = &quot;steen&quot;;
+    System.out.println(s1 + s2);
+  }
+}
+</textarea>
+<div class="bar">
+  <button class="run">Run ▶</button>
+  <button class="revert" title="Restore the original code">Revert</button>
+  <label class="cli">$ java PrintingIsFun <input class="args" type="text" placeholder="command-line arguments"></label>
+  <span class="state"></span>
+</div>
+<pre class="out" hidden></pre>
+</div></p>
+
+<h3><span style="color: #cc0000;">Do Now! </span>Assume that this code is saved in a file called PrintingIsFun.java. Run the appropriate <code>javac</code> and <code>java</code> commands to run the program. Select all of the options below that appear as part of the output.</h3>
+
+<p>(Hint: consider each option as a sequence of characters that must appear together in the output to be part of it.)</p>
+<div class="quiz" data-type="choice" data-step-id="2465686">
+<script type="application/json">{"type": "choice", "source": {"is_multiple_choice": true, "is_always_correct": false, "sample_size": 7, "preserve_order": false, "is_html_enabled": true, "is_options_feedback": true, "options": [{"is_correct": false, "text": "5 + 3", "feedback": "The value that 5 + 3 evaluates to is part of the output, but is 5 + 3 itself a part of the output?"}, {"is_correct": true, "text": "8", "feedback": ""}, {"is_correct": true, "text": "-7.7", "feedback": ""}, {"is_correct": false, "text": "d1", "feedback": "The value that d1 evaluates to is part of the output, but is d1 itself a part of the output?"}, {"is_correct": true, "text": "Mangosteen", "feedback": ""}, {"is_correct": false, "text": "\"Mangosteen\"", "feedback": ""}, {"is_correct": false, "text": "System.out.println", "feedback": ""}]}}</script>
+<div class="quiz-body"></div>
+</div></section>
+<section class="step t-text" id="step6"><h2>Summary</h2>
+
+<ul>
+	<li>We can run standalone programs, without using the <code>tester</code> library, by writing a <code>main()</code> method.</li>
+	<li>The program starts running at the beginning of the <code>main()</code> method.</li>
+	<li>In our terminal, we can run a program that has a <code>main()</code> method by running 2 commands: first <code>javac &lt;name of file&gt;</code> and then <code>java &lt;name of class&gt;</code></li>
+	<li>The method header for the main method must be <code>public static void main(String[] args)</code>. The only part that can change is the name <code>args</code>.</li>
+	<li>A method that has a return type of <code>void</code> does not return any value.</li>
+	<li>A program, when run without any errors, will have no output in the terminal unless we include <strong>print statements</strong>.</li>
+</ul></section>
+<nav class="pagenav"><a class="prev" href="09-02-static-methods.html">← 9.2 static methods</a> <a class="next" href="09-04-In-Summary--Arrays-and-main.html">9.4 In Summary — Arrays and main →</a></nav>
+</main>
+<footer>Generated from the Stepik course export · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<pre id="console"></pre>
+<script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>
