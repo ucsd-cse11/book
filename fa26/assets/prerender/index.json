@@ -1,0 +1,233 @@
+{
+ "20287871": {
+  "slug": "programs-and-values/string-definitions",
+  "widget": 0,
+  "state": "compile error",
+  "text": "line 1: error: string cannot be resolved to a type\nline 2: error: string cannot be resolved to a type\nline 3: error: string cannot be resolved to a type\n",
+  "images": 0
+ },
+ "ba8fb5bd": {
+  "slug": "data-that-travel-together/convenience-methods",
+  "widget": 0,
+  "state": "done",
+  "text": "blue = Rect[width=10, height=20, color=blue]\n[[IMG:0]]white = Rect[width=10, height=20, color=white]\n[[IMG:1]]red = Rect[width=10, height=20, color=red]\n[[IMG:2]]frConstr = Beside[left=Beside[left=Rect[width=10, height=20, color=blue], right=Rect[width=10, height=20, color=white]], right=Rect[width=10, height=20, color=red]]\n[[IMG:3]]frMethod = Beside[left=Beside[left=Rect[width=10, height=20, color=blue], right=Rect[width=10, height=20, color=white]], right=Rect[width=10, height=20, color=red]]\n[[IMG:4]]",
+  "images": 5
+ },
+ "66c9c93b": {
+  "slug": "data-that-travel-together/data-that-travels-together",
+  "widget": 0,
+  "state": "done",
+  "text": "course = CSE-011\nmaxSize = 600\ncurrentEnrollment = 550\n",
+  "images": 0
+ },
+ "729f6565": {
+  "slug": "data-that-travel-together/data-that-travels-together",
+  "widget": 1,
+  "state": "done",
+  "text": "course = CSE-012\nmaxSize = 400\ncurrentEnrollment = 380\n",
+  "images": 0
+ },
+ "730b8adf": {
+  "slug": "data-that-travel-together/data-that-travels-together",
+  "widget": 2,
+  "state": "compile error",
+  "text": "line 1: error: Duplicate field course\nline 2: error: Duplicate field maxSize\nline 3: error: Duplicate field currentEnrollment\nline 4: error: Duplicate field course\nline 5: error: Duplicate field maxSize\nline 6: error: Duplicate field currentEnrollment\n",
+  "images": 0
+ },
+ "8167eb3a": {
+  "slug": "data-that-travel-together/data-that-travels-together",
+  "widget": 3,
+  "state": "done",
+  "text": "cse11 = Course[name=CSE-011, maxSize=600, currentSize=550]\ncse12 = Course[name=CSE-012, maxSize=400, currentSize=380]\n",
+  "images": 0
+ },
+ "acde4fb6": {
+  "slug": "data-that-travel-together/data-that-travels-together",
+  "widget": 4,
+  "state": "done",
+  "text": "cse11 = Course[name=CSE-011, maxSize=600, currentSize=550]\ncse12 = Course[name=CSE-012, maxSize=400, currentSize=380]\nname11 = CSE-011\nmaxSize11 = 600\ncurrentSize11 = 550\nname12 = CSE-012\nmaxSize12 = 400\ncurrentSize12 = 380\n",
+  "images": 0
+ },
+ "c3d62c95": {
+  "slug": "data-that-travel-together/data-that-travels-together",
+  "widget": 5,
+  "state": "compile error",
+  "text": "line 3: error: The constructor User(int, String) is undefined\n",
+  "images": 0
+ },
+ "c94dd091": {
+  "slug": "data-that-travel-together/library-methods",
+  "widget": 0,
+  "state": "done",
+  "text": "two = 2.0\n",
+  "images": 0
+ },
+ "6ef09384": {
+  "slug": "data-that-travel-together/library-methods",
+  "widget": 1,
+  "state": "done",
+  "text": "p = Point[x=3.0, y=4.0]\no = Point[x=0.0, y=0.0]\ndist = 25.0\n",
+  "images": 0
+ },
+ "a0f3e23b": {
+  "slug": "data-that-travel-together/library-methods",
+  "widget": 2,
+  "state": "done",
+  "text": "p = Point[x=3.0, y=4.0]\no = Point[x=0.0, y=0.0]\ndist = 5.0\n",
+  "images": 0
+ },
+ "ab17ff3e": {
+  "slug": "data-that-travel-together/methods",
+  "widget": 0,
+  "state": "done",
+  "text": "p1 = Post[content=My AI agent hacked my fridge today, author=naught-cool, likes=3461]\np2 = Post[content=Happy Birthday Ava!!!, author=birthdaybot, likes=7]\np3 = Post[content=Anyone else smell microwaved fish in CSE again today?!, author=pesca127, likes=33]\n",
+  "images": 0
+ },
+ "4a326ad1": {
+  "slug": "data-that-travel-together/methods",
+  "widget": 1,
+  "state": "done",
+  "text": "p1 = Post[content=My AI agent hacked my fridge today, author=naught-cool, likes=3461]\np2 = Post[content=Happy Birthday Ava!!!, author=birthdaybot, likes=7]\np3 = Post[content=Anyone else smell microwaved fish in CSE again today?!, author=pesca127, likes=33]\np1Fewer10Likes = false\np1Fewer10000Likes = true\np2Fewer10Likes = true\np3Fewer10Likes = false\n",
+  "images": 0
+ },
+ "bafa03b1": {
+  "slug": "data-that-travel-together/methods",
+  "widget": 2,
+  "state": "done",
+  "text": "p = Point[x=3.5, y=4.0]\nb1 = true\nb2 = false\n",
+  "images": 0
+ },
+ "64e35765": {
+  "slug": "data-that-travel-together/more-composition",
+  "widget": 0,
+  "state": "compile error",
+  "text": "line 6: error: The constructor Beside(Pict, Pict, Pict) is undefined\n",
+  "images": 0
+ },
+ "bb81fc50": {
+  "slug": "data-that-travel-together/more-composition",
+  "widget": 1,
+  "state": "done",
+  "text": "w = 40\nh = 80\nblue = Rect[width=40, height=80, color=blue]\n[[IMG:0]]white = Rect[width=40, height=80, color=white]\n[[IMG:1]]red = Rect[width=40, height=80, color=red]\n[[IMG:2]]bluewhite = Beside[left=Rect[width=40, height=80, color=blue], right=Rect[width=40, height=80, color=white]]\n[[IMG:3]]flag = Beside[left=Beside[left=Rect[width=40, height=80, color=blue], right=Rect[width=40, height=80, color=white]], right=Rect[width=40, height=80, color=red]]\n[[IMG:4]]",
+  "images": 5
+ },
+ "cf6b462a": {
+  "slug": "data-that-travel-together/more-methods",
+  "widget": 0,
+  "state": "done",
+  "text": "fr = Beside[left=Rect[width=10, height=20, color=blue], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=red]]]\n[[IMG:0]]bigfr = Beside[left=Rect[width=30, height=60, color=blue], right=Beside[left=Rect[width=30, height=60, color=white], right=Rect[width=30, height=60, color=red]]]\n[[IMG:1]]it = Beside[left=Rect[width=10, height=20, color=green], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=red]]]\n[[IMG:2]]ir = Beside[left=Rect[width=10, height=20, color=green], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=orange]]]\n[[IMG:3]]",
+  "images": 4
+ },
+ "995f2d24": {
+  "slug": "data-that-travel-together/more-methods",
+  "widget": 1,
+  "state": "done",
+  "text": "fr = Tricolor[left=blue, middle=white, right=red]\nit = Tricolor[left=green, middle=white, right=red]\nir = Tricolor[left=green, middle=white, right=orange]\n",
+  "images": 0
+ },
+ "ffd421c9": {
+  "slug": "data-that-travel-together/more-methods",
+  "widget": 2,
+  "state": "compile error",
+  "text": "line 2: error: This method must return a result of type Pict\n",
+  "images": 0
+ },
+ "b5bd6703": {
+  "slug": "data-that-travel-together/more-methods",
+  "widget": 3,
+  "state": "done",
+  "text": "fr = Tricolor[left=blue, middle=white, right=red]\nit = Tricolor[left=green, middle=white, right=red]\nir = Tricolor[left=green, middle=white, right=orange]\nfrPic = Beside[left=Rect[width=10, height=20, color=blue], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=red]]]\n[[IMG:0]]bigFr = Beside[left=Rect[width=30, height=60, color=blue], right=Beside[left=Rect[width=30, height=60, color=white], right=Rect[width=30, height=60, color=red]]]\n[[IMG:1]]itPic = Beside[left=Rect[width=10, height=20, color=green], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=red]]]\n[[IMG:2]]",
+  "images": 3
+ },
+ "c5a99249": {
+  "slug": "data-that-travel-together/records-and-images",
+  "widget": 1,
+  "state": "done",
+  "text": "trunk = Rect[width=10, height=20, color=brown]\n[[IMG:0]]top = Triangle[width=30, height=40, color=green]\n[[IMG:1]]below = Below[bottom=Triangle[width=30, height=40, color=green], top=Rect[width=10, height=20, color=brown]]\n[[IMG:2]]beside = Beside[left=Triangle[width=30, height=40, color=green], right=Rect[width=10, height=20, color=brown]]\n[[IMG:3]]overlay = Overlay[front=Triangle[width=30, height=40, color=green], back=Rect[width=10, height=20, color=brown]]\n[[IMG:4]]",
+  "images": 5
+ },
+ "604f4858": {
+  "slug": "data-that-travel-together/string-methods",
+  "widget": 0,
+  "state": "compile error",
+  "text": "line 1: error: Syntax error, insert \"Identifier (\" to complete MethodHeaderName\nline 1: error: Syntax error, insert \")\" to complete MethodDeclaration\nline 1: error: Syntax error, insert \";\" to complete ClassBodyDeclarations\n",
+  "images": 0
+ },
+ "2027ab61": {
+  "slug": "programs-and-values/double-definitions",
+  "widget": 0,
+  "state": "done",
+  "text": "earthGravity = 9.8\nmassKg = 50.3\nearthWeight = 492.94\n",
+  "images": 0
+ },
+ "297eb999": {
+  "slug": "programs-and-values/double-definitions",
+  "widget": 1,
+  "state": "done",
+  "text": "microTransaction1 = 0.1\nmicroTransaction2 = 0.2\nmicroTransaction3 = 0.3\ntotal = 0.6000000000000001\n",
+  "images": 0
+ },
+ "6d3b6c17": {
+  "slug": "programs-and-values/number-definitions",
+  "widget": 0,
+  "state": "done",
+  "text": "size = 20\n",
+  "images": 0
+ },
+ "75f01ac2": {
+  "slug": "programs-and-values/number-definitions",
+  "widget": 1,
+  "state": "done",
+  "text": "dot = Circle[radius=20, color=red]\n[[IMG:0]]square = Rect[width=40, height=40, color=blue]\n[[IMG:1]]tri = Triangle[width=40, height=20, color=purple]\n[[IMG:2]]",
+  "images": 3
+ },
+ "7fba05f9": {
+  "slug": "programs-and-values/number-definitions",
+  "widget": 2,
+  "state": "done",
+  "text": "size = 20\ndot = Circle[radius=20, color=red]\n[[IMG:0]]square = Rect[width=40, height=40, color=blue]\n[[IMG:1]]tri = Triangle[width=40, height=20, color=purple]\n[[IMG:2]]",
+  "images": 3
+ },
+ "5ad0a50a": {
+  "slug": "programs-and-values/operators",
+  "widget": 0,
+  "state": "done",
+  "text": "x = 6\ny = 5\nxsq = 36\nysq = 25\nresult = 5\n",
+  "images": 0
+ },
+ "89002faa": {
+  "slug": "programs-and-values/operators",
+  "widget": 1,
+  "state": "done",
+  "text": "name = Joe\ngreeting = Hello, Joe\ngoodbye = Goodbye, Joe\n",
+  "images": 0
+ },
+ "da1e456e": {
+  "slug": "programs-and-values/operators",
+  "widget": 2,
+  "state": "done",
+  "text": "age = 17\nlabel = 17\nagePlusOne = 18\nlabelPlusOne = 171\n",
+  "images": 0
+ },
+ "13a66f8c": {
+  "slug": "programs-and-values/programs-and-values",
+  "widget": 0,
+  "state": "done",
+  "text": "dot = Circle[radius=25, color=red]\n[[IMG:0]]box = Rect[width=20, height=30, color=blue]\n[[IMG:1]]",
+  "images": 2
+ },
+ "d0aab996": {
+  "slug": "programs-and-values/string-definitions",
+  "widget": 1,
+  "state": "done",
+  "text": "age = 17\nlabel = 17\n",
+  "images": 0
+ },
+ "3c532b86": {
+  "slug": "data-that-travel-together/records-and-images",
+  "widget": 0,
+  "state": "done",
+  "text": "trunk = Rect[width=10, height=20, color=brown]\n[[IMG:0]]top = Triangle[width=30, height=40, color=green]\n[[IMG:1]]tree = Above[top=Triangle[width=30, height=40, color=green], bottom=Rect[width=10, height=20, color=brown]]\n[[IMG:2]]",
+  "images": 3
+ }
+}

@@ -21,6 +21,37 @@
   const jobs = new Map();
   let nextId = 1;
 
+  // Recorded output for untouched widgets (tools/capture-runs.js), keyed by a
+  // hash of the source. A reader's first Run on code they have not edited is
+  // painted from the recording instead of waiting out the warm-up. `nocapture`
+  // in the query turns this off, which is how the test suite and the recorder
+  // itself still exercise the live path.
+  // Fetched on the first Run rather than at load, so it never competes with
+  // CheerpJ's warm-up for the browser's attention, and a reader who never runs
+  // anything never asks for it. It is a few kilobytes against a wait of
+  // seconds, so paying for it inside the click is free.
+  let capturesPromise = null;
+  function loadCaptures() {
+    if (capturesPromise) return capturesPromise;
+    capturesPromise = /(^|&)nocapture(=|&|$)/.test(location.search.slice(1))
+      ? Promise.resolve(null)
+      : fetch(new URL('../assets/prerender/index.json', document.baseURI))
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null);
+    return capturesPromise;
+  }
+
+  // The same FNV-1a that lib/book.typ and tools/capture-runs.js use, so one
+  // source string keys alike in Typst, in node, and here.
+  function sourceKey(s) {
+    let h = 2166136261;
+    for (const b of new TextEncoder().encode(s)) {
+      h = (h ^ b) >>> 0;
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    return h.toString(16).padStart(8, '0');
+  }
+
   function ensureChannel() {
     if (channel) return channel;
     const url = new URL('../assets/runner-worker.js', document.baseURI);
@@ -133,22 +164,33 @@
   // ImageIO_.show prints one of these per image; the image itself arrives
   // with the result, and takes the marker's place in the output box.
   const SHOWN = /\u0001__SHOWN__(\d+)\u0001\n?/g;
-  function render(job, images) {
-    const text = fixLineNumbers(job.buffer, job.headerLines);
-    job.out.replaceChildren();
+  // The marker tools/capture-runs.js leaves where an image sat.
+  const CAPTURED = /\[\[IMG:(\d+)\]\]/g;
+
+  // Text carrying image markers becomes text nodes and <img>s. srcFor turns a
+  // marker's index into a url: a blob for a live run, a file for a recording.
+  function paintOutput(out, text, marker, srcFor) {
+    out.replaceChildren();
     let last = 0;
-    for (const m of text.matchAll(SHOWN)) {
-      job.out.append(text.slice(last, m.index));
-      const buf = images && images[Number(m[1])];
-      if (buf) {
+    for (const m of text.matchAll(marker)) {
+      out.append(text.slice(last, m.index));
+      const src = srcFor(Number(m[1]));
+      if (src) {
         const img = document.createElement('img');
-        img.src = URL.createObjectURL(new Blob([buf], { type: 'image/png' }));
+        img.src = src;
         img.alt = 'shown image';
-        job.out.append(img);
+        out.append(img);
       }
       last = m.index + m[0].length;
     }
-    job.out.append(text.slice(last));
+    out.append(text.slice(last));
+  }
+
+  function render(job, images) {
+    paintOutput(job.out, fixLineNumbers(job.buffer, job.headerLines), SHOWN, (n) => {
+      const buf = images && images[n];
+      return buf ? URL.createObjectURL(new Blob([buf], { type: 'image/png' })) : null;
+    });
   }
 
   function onWorkerMessage(e) {
@@ -219,9 +261,32 @@
     });
   }
 
-  function startRun(widget) {
+  // Paint a recording and report the run as finished, so gates and anything
+  // else listening for run-done behave exactly as after a live run.
+  function showCapture(widget, key, cap) {
+    const out = widget.querySelector('pre.out');
+    paintOutput(out, cap.text, CAPTURED, (n) =>
+      new URL('../assets/prerender/' + key + '-' + n + '.png', document.baseURI).href);
+    out.hidden = cap.text.trim() === '';
+    out.classList.toggle('err', cap.state !== 'done');
+    widget.querySelector('.state').textContent = cap.state;
+    announce(widget);
+  }
+
+  // A reader's first Run on code they have not touched is answered from the
+  // recording, which is what it would have printed anyway. Every later run, and
+  // anything they have edited, goes to the worker, which is warm by then.
+  async function startRun(widget) {
+    const source = widget.querySelector('textarea').value;
+    const first = !widget.hasAttribute('data-ran');
+    widget.setAttribute('data-ran', '');
+    if (first) {
+      const captures = await loadCaptures();
+      const key = captures && sourceKey(source);
+      if (key && captures[key]) return showCapture(widget, key, captures[key]);
+    }
     run({
-      source: widget.querySelector('textarea').value,
+      source,
       echo: widget.hasAttribute('data-echo'),
       widget,
       button: widget.querySelector('button.run'),

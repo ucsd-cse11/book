@@ -154,6 +154,18 @@ body.toc .subtitle { opacity: .75; }
 }
 .runner pre.out:has(img), .exercise pre.out:has(img) { max-height: none; }
 
+/* Narrow screens: the status text cannot share the code's first line with the
+   buttons without covering it, so the whole control bar drops into flow above
+   the listing. Long status wraps to its own line over the buttons. */
+@media (max-width: 640px) {
+  .runner { display: flex; flex-direction: column; }
+  .runner .bar {
+    position: static; order: -1; flex-wrap: wrap;
+    justify-content: flex-end; padding: .35rem .4rem 0;
+  }
+  .runner .state { margin-right: auto; }
+}
+
 /* an unspoken block: neither speaker owns it — groups a #run, a question,
    and whatever else belongs with them */
 .innercise {
