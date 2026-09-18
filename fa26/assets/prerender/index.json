@@ -146,13 +146,6 @@
   "text": "trunk = Rect[width=10, height=20, color=brown]\n[[IMG:0]]top = Triangle[width=30, height=40, color=green]\n[[IMG:1]]below = Below[bottom=Triangle[width=30, height=40, color=green], top=Rect[width=10, height=20, color=brown]]\n[[IMG:2]]beside = Beside[left=Triangle[width=30, height=40, color=green], right=Rect[width=10, height=20, color=brown]]\n[[IMG:3]]overlay = Overlay[front=Triangle[width=30, height=40, color=green], back=Rect[width=10, height=20, color=brown]]\n[[IMG:4]]",
   "images": 5
  },
- "604f4858": {
-  "slug": "data-that-travel-together/string-methods",
-  "widget": 0,
-  "state": "compile error",
-  "text": "line 1: error: Syntax error, insert \"Identifier (\" to complete MethodHeaderName\nline 1: error: Syntax error, insert \")\" to complete MethodDeclaration\nline 1: error: Syntax error, insert \";\" to complete ClassBodyDeclarations\n",
-  "images": 0
- },
  "2027ab61": {
   "slug": "programs-and-values/double-definitions",
   "widget": 0,
@@ -229,5 +222,40 @@
   "state": "done",
   "text": "trunk = Rect[width=10, height=20, color=brown]\n[[IMG:0]]top = Triangle[width=30, height=40, color=green]\n[[IMG:1]]tree = Above[top=Triangle[width=30, height=40, color=green], bottom=Rect[width=10, height=20, color=brown]]\n[[IMG:2]]",
   "images": 3
+ },
+ "be4029db": {
+  "slug": "data-that-travel-together/string-methods",
+  "widget": 0,
+  "state": "done",
+  "text": "email = bochoa@ucsd.edu\natIndex = 6\nbeforeAt = bochoa\n",
+  "images": 0
+ },
+ "b44f093f": {
+  "slug": "data-that-travel-together/string-methods",
+  "widget": 1,
+  "state": "done",
+  "text": "email = bochoa@ucsd.edu\nisUCSD = true\nisGmail = false\nstartsWithBo = true\nstartsWithUCSD = false\nhasAt = true\nhasSpace = false\n",
+  "images": 0
+ },
+ "5f1f7bf2": {
+  "slug": "data-that-travel-together/string-methods",
+  "widget": 2,
+  "state": "done",
+  "text": "email = bochoa@ucsd.edu\nexclaimIndex = -1\n",
+  "images": 0
+ },
+ "b166d4f4": {
+  "slug": "data-that-travel-together/string-methods",
+  "widget": 3,
+  "state": "done",
+  "text": "typed =   bochoa@ucsd.edu  \ncleaned = bochoa@ucsd.edu\ntypedLength = 19\ncleanedLength = 15\nshouted = BOCHOA@UCSD.EDU\nquieted = bochoa@ucsd.edu\n",
+  "images": 0
+ },
+ "9504861b": {
+  "slug": "data-that-travel-together/string-methods",
+  "widget": 4,
+  "state": "done",
+  "text": "cse11 = Course[title=Introduction to Programming, number=11]\ncse110 = Course[title=Software Engineering, number=110]\nintroInCse11 = true\nintroInCse110 = false\nengInCse110 = true\nengInCse11 = false\n",
+  "images": 0
  }
 }
