@@ -302,3 +302,30 @@ header .stepbar[hidden] { display: none; }
 .step-dot.current { border-color: var(--accent); background: var(--accent); color: #fff; }
 .step-caption { font-size: .8rem; opacity: .7; white-space: nowrap; }
 @media (max-width: 560px) { .step-caption { display: none; } }
+
+/* worksheet previews (site/worksheets/): a sheet's PDF under a header that
+   swaps student copy for key, so watch.py's reload shows a fresh compile */
+body.sheet { height: 100vh; display: flex; flex-direction: column; }
+body.sheet header { flex-wrap: wrap; }
+body.sheet iframe { flex: 1; width: 100%; border: 0; background: var(--soft-bg); }
+header .views { margin-left: auto; display: flex; gap: .35rem; }
+header .views button {
+  font: inherit; font-size: .85rem; padding: .1rem .6rem;
+  border: 1px solid var(--card-border); border-radius: .4rem;
+  background: none; color: inherit; cursor: pointer;
+}
+header .views button[aria-pressed="true"] { background: var(--soft-bg); font-weight: 600; }
+header .raw { font-size: .85rem; }
+.draft-badge {
+  font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+  border: 1px solid color-mix(in srgb, var(--wrong) 55%, transparent);
+  background: color-mix(in srgb, var(--wrong) 12%, transparent);
+  border-radius: .3rem; padding: .05rem .35rem;
+}
+body.sheets ul { list-style: none; padding: 0; }
+body.sheets li {
+  display: flex; gap: .6rem; align-items: baseline;
+  padding: .45rem 0; border-bottom: 1px solid var(--card-border);
+}
+body.sheets .name { font-weight: 600; }
+body.sheets .links { margin-left: auto; display: flex; gap: .8rem; font-size: .85rem; }
