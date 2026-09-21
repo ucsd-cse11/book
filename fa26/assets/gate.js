@@ -34,6 +34,11 @@
     const gates = [];
     let building = null;
     for (const node of article.children) {
+      // The all-answered banner (exercise.js) is page chrome, not part of
+      // the conversation: it shows itself when it is earned. Gating it
+      // leaves a step whose last element is its only trigger with a gate
+      // that hides nothing a reader could ever see.
+      if (node.classList.contains('all-answered')) continue;
       if (building) building.nodes.push(node);
       const triggers = node.matches(TRIGGER)
         ? [node]

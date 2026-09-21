@@ -14,7 +14,16 @@
 // Protocol (worker -> page): {type:'state', label}   warm-up / phase progress
 //                            {type:'console', id, text}  live program output
 //                            {type:'result', id, ok, compileError, images}
+//                            {type:'closing'}       this worker is going away
 // (page -> worker):          {type:'run', id, source}
+//                            {type:'stop'}          close, whatever you are doing
+//
+// There is no way to interrupt a running Java program here: CheerpJ only
+// preempts at call sites, and nothing in the JVM's API can stop a thread
+// from outside. So a reader's Stop is answered the only way it can be —
+// the whole worker closes, JVM and all, and the page starts a new one.
+// Closing is announced first so other tabs sharing this worker can fail
+// their own in-flight runs instead of waiting on a port that is gone.
 'use strict';
 
 const IS_SHARED = typeof SharedWorkerGlobalScope !== 'undefined'
@@ -160,6 +169,11 @@ async function drain() {
 
 function onRunMessage(post) {
   return (e) => {
+    if (e.data.type === 'stop') {
+      broadcast({ type: 'closing' });
+      self.close();
+      return;
+    }
     if (e.data.type !== 'run') return;
     queue.push({ id: e.data.id, source: e.data.source, post });
     drain();

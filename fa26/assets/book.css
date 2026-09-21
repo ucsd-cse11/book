@@ -53,6 +53,61 @@ body.toc .subtitle { opacity: .75; }
 .prose .term, .prose dfn { font-style: normal; font-weight: 650; }
 .prose img { max-width: 100%; height: auto; }
 
+/* a shell transcript (#term): static, unlike the .runner widgets. The
+   prompt is not selectable, so a drag across a command copies the command
+   alone. (.term is a glossary term; a shell is .terminal.) */
+.terminal {
+  border: 1px solid var(--card-border); border-radius: .5rem;
+  background: Canvas; margin: 1rem 0; overflow: hidden;
+  padding: .6rem .9rem;
+  font-family: ui-monospace, monospace; font-size: .88rem; line-height: 1.5;
+}
+.terminal::before {
+  content: "Terminal";
+  display: block; margin: -.6rem -.9rem .5rem; padding: .3rem .9rem;
+  background: var(--soft-bg); border-bottom: 1px solid var(--card-border);
+  font-family: system-ui, sans-serif;
+  font-size: .7rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; opacity: .6;
+}
+.prose .terminal pre {
+  margin: 0; padding: 0; border-radius: 0; background: none; font: inherit;
+  /* not pre-wrap: a javac error's ^ points at a column, and only lines up
+     while the line above it is unwrapped */
+  white-space: pre; overflow-x: auto;
+}
+.terminal .prompt { user-select: none; -webkit-user-select: none; color: var(--accent); }
+.terminal .line.in .cmd { font-weight: 650; }
+/* a prompt with nothing typed: the shell came back and is waiting */
+.terminal .cursor {
+  display: inline-block; width: .55em; height: 1.05em;
+  vertical-align: text-bottom; background: currentColor; opacity: .55;
+  animation: term-blink 1.1s step-end infinite;
+}
+@keyframes term-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .terminal .cursor { animation: none; } }
+@media print { .terminal .cursor { animation: none; } }
+/* Narrow screens: nothing is worth a sideways scroll, so a long line wraps
+   even though that can put a compiler's ^ under the wrong column. */
+@media (max-width: 640px) {
+  .prose .terminal pre { white-space: pre-wrap; }
+}
+
+/* A widget whose chapter named a file (#run(file: ...)) wears the same
+   transcript around its run: the command, the output, then the prompt back,
+   so "it ran and printed nothing" is visible rather than absent. The widget
+   is already a framed card, so this one drops the chrome bar. */
+.runner .terminal {
+  margin: 0; border: 0; border-radius: 0;
+  border-top: 1px solid var(--card-border);
+}
+.runner .terminal::before { content: none; }
+.runner .terminal pre.out {
+  padding: 0; font: inherit; max-height: 20rem;
+}
+/* the prompt only comes back when the run is over */
+.runner .terminal .line.in.waiting { display: none; }
+
 /* AI-provenance banner (chapter ai-note meta) */
 .ai-banner {
   margin: 1rem 0 0;
@@ -139,6 +194,11 @@ body.toc .subtitle { opacity: .75; }
   background: color-mix(in srgb, currentColor 6%, transparent); color: inherit;
   border-color: var(--card-border);
 }
+/* Stop takes Run's place for as long as a program is running, so the bar
+   never grows a third button and there is only ever one thing to press. */
+.runner button.stop { display: none; background: var(--wrong); color: white; }
+.runner[data-running] button.stop { display: inline-block; }
+.runner[data-running] button.run { display: none; }
 .runner button.run:disabled { opacity: .5; cursor: wait; }
 .runner button.revert:disabled { opacity: .4; cursor: default; }
 /* state text grows leftward so the buttons never move under it */

@@ -52,28 +52,106 @@
     return h.toString(16).padStart(8, '0');
   }
 
+  // A worker that was stopped can never be reused — the program it was
+  // running may still be spinning inside it — so each restart takes its
+  // successor under a new name. Tabs agree on that name through
+  // localStorage, which is what keeps them sharing one JVM across a
+  // restart instead of warming up one apiece.
+  const GEN_KEY = 'book-runner-gen';
+  let genFallback = 0;
+  function generation() {
+    try { return Number(localStorage.getItem(GEN_KEY)) || 0; } catch (e) { return genFallback; }
+  }
+  function bumpGeneration() {
+    genFallback = generation() + 1;
+    try { localStorage.setItem(GEN_KEY, String(genFallback)); } catch (e) { /* no storage */ }
+  }
+
   function ensureChannel() {
     if (channel) return channel;
     const url = new URL('../assets/runner-worker.js', document.baseURI);
     let target = null;
+    let terminate = null;
     let mode = 'dedicated';
     if (typeof SharedWorker !== 'undefined') {
       try {
-        const sw = new SharedWorker(url);
+        const sw = new SharedWorker(url, { name: 'book-runner-' + generation() });
         sw.onerror = (e) => onWorkerFailure(e.message || 'worker error');
         target = sw.port;
         mode = 'shared';
       } catch (e) { /* fall through to a dedicated worker */ }
     }
     if (!target) {
-      target = new Worker(url);
-      target.onerror = (e) => onWorkerFailure(e.message || 'worker error');
+      const w = new Worker(url);
+      w.onerror = (e) => onWorkerFailure(e.message || 'worker error');
+      target = w;
+      terminate = () => w.terminate();
     }
     document.documentElement.dataset.javaWorker = mode;
     target.onmessage = onWorkerMessage;
     target.onmessageerror = () => onWorkerFailure('message error');
-    channel = { post: (msg) => target.postMessage(msg) };
+    channel = { post: (msg) => target.postMessage(msg), terminate };
     return channel;
+  }
+
+  // Let go of the worker without touching any job. A dedicated one can be
+  // killed outright; a SharedWorker cannot be terminated from a page, so it
+  // is asked to close itself and abandoned either way.
+  function dropChannel() {
+    if (channel && channel.terminate) {
+      try { channel.terminate(); } catch (e) { /* already gone */ }
+    }
+    channel = null;
+    warmupState = 'preparing Java…';
+  }
+
+  // Give up on whatever Java is doing. CheerpJ cannot interrupt a running
+  // program, so this is the only honest answer to Stop: throw the worker
+  // away, JVM and all, and pay the warm-up again on the next Run.
+  function stopAll(label) {
+    if (channel) { try { channel.post({ type: 'stop' }); } catch (e) { /* gone */ } }
+    bumpGeneration();
+    dropChannel();
+    abandonJobs(label);
+  }
+
+  function abandonJobs(label) {
+    const orphaned = [...jobs.values()];
+    jobs.clear();
+    for (const job of orphaned) {
+      clearTimeout(job.nudge);
+      cancelAnimationFrame(job.frame);
+      render(job);
+      job.out.hidden = job.buffer.trim() === '';
+      paintTerminal(job.out, 'done');
+      job.state.textContent = label;
+      job.button.disabled = false;
+      setRunning(job.widget, false);
+      job.resolve({
+        ok: false, compileError: false, stopped: true, images: 0,
+        output: job.out.textContent,
+      });
+      announce(job.widget);
+    }
+  }
+
+  // Another tab stopped the worker we were sharing.
+  window.addEventListener('storage', (e) => {
+    if (e.key === GEN_KEY) dropChannel();
+  });
+
+  function setRunning(widget, on) {
+    if (!widget) return;
+    if (on) widget.setAttribute('data-running', '');
+    else widget.removeAttribute('data-running');
+  }
+
+  // Long enough that a slow-but-finite example finishes first, short enough
+  // that a reader who wrote a loop notices Stop is sitting there.
+  const NUDGE_MS = 8000;
+  function armNudge(job) {
+    clearTimeout(job.nudge);
+    job.nudge = setTimeout(() => { job.state.textContent = 'still running…'; }, NUDGE_MS);
   }
 
   // Warm up as soon as the reader is actually looking at this tab.
@@ -139,13 +217,29 @@
         + 'class __Prog {\n' + body.join('\n') + '\n}\n'
         + (echo ? ECHO_MAIN : PLAIN_MAIN),
       headerLines: split,
+      studentLines: lines.length,
     };
   }
 
-  function fixLineNumbers(text, headerLines) {
+  // `name` is what the student thinks they are running: the file a chapter
+  // named with #run(file: ...), or just "Program". The wrapper class has to
+  // exist — CheerpJ tops out at Java 17, which has no implicit main — but
+  // the reader should never meet it, so the compiler's own messages get its
+  // name swapped for one the reader recognises.
+  function fixLineNumbers(text, headerLines, name, studentLines) {
     const toStudentLine = (n) => (Number(n) > headerLines ? Number(n) - 1 : Number(n));
+    // A complaint about the wrapper's own lines — "no main", say — maps past
+    // the end of what the reader wrote. Citing a line they do not have is
+    // worse than citing none, so that error loses its line and keeps its
+    // message.
+    const own = (n) => {
+      const line = toStudentLine(n);
+      return !studentLines || (line >= 1 && line <= studentLines);
+    };
     return text
       // compile errors cite the full /str/ path
+      .replace(/\/str\/Program\.java:(\d+):\s*/g,
+        (m, n) => (own(n) ? `line ${toStudentLine(n)}: ` : ''))
       .replace(/\/str\/Program\.java:(\d+)/g, (m, n) => `line ${toStudentLine(n)}`)
       // runtime stack traces (e.g. a failed assert): CheerpJ reports frames
       // as "(Unknown Source)" — no line info at runtime — but the wrapper
@@ -156,9 +250,14 @@
       .replace(/\s*at (?:java\.base\/)?(?:jdk\.internal\.reflect|java\.lang\.reflect)\.[^\n]*/g, '')
       .replace(/\(Program\.java:(\d+)\)/g, (m, n) => `(line ${toStudentLine(n)})`)
       .replace(/\bat __Prog\./g, 'at ')
-      // compiler messages name student fields/methods through the wrapper
-      // class ("Duplicate field __Prog.x"); the student never wrote __Prog
-      .replace(/\b__Prog\./g, '');
+      // compiler messages reach student fields and methods through the
+      // wrapper class ("Duplicate field __Prog.x"): drop the prefix, the
+      // student never wrote it
+      .replace(/\b__Prog\./g, '')
+      // and where the class itself is the subject ("The method main() is
+      // undefined for the type __Prog" — what a program with no main says)
+      // it takes the name of the file the reader thinks they are running
+      .replace(/\b__Prog\b/g, name || 'Program');
   }
 
   // ImageIO_.show prints one of these per image; the image itself arrives
@@ -186,8 +285,67 @@
     out.append(text.slice(last));
   }
 
+  // A widget whose chapter named a file (#run(file: ...)) shows its run as a
+  // terminal session. The output box itself is untouched — it is wrapped in
+  // the same .terminal markup #term emits, between a typed command and the
+  // prompt coming back — so a run that prints nothing still shows that it
+  // ran and that the shell returned.
+  function promptLine(cmd) {
+    const line = document.createElement('div');
+    line.className = 'line in';
+    const prompt = document.createElement('span');
+    prompt.className = 'prompt';
+    prompt.textContent = '$ ';
+    const rest = document.createElement('span');
+    rest.className = cmd ? 'cmd' : 'cursor';
+    if (cmd) rest.textContent = cmd;
+    line.append(prompt, rest);
+    return line;
+  }
+
+  function frameAsTerminal(widget) {
+    const file = widget.dataset.file;
+    const out = widget.querySelector('pre.out');
+    if (!file || !out || out.closest('.terminal')) return;
+    const frame = document.createElement('div');
+    frame.className = 'terminal';
+    frame.hidden = true;
+    out.parentNode.insertBefore(frame, out);
+    const waiting = promptLine(null);
+    waiting.classList.add('waiting');
+    frame.append(promptLine('java ' + file), out, waiting);
+  }
+
+  // phase: 'start' while the program runs (no prompt yet), 'done' once it
+  // has finished and the shell has come back.
+  function paintTerminal(out, phase) {
+    const frame = out.parentElement;
+    if (!frame || !frame.classList.contains('terminal')) return;
+    frame.hidden = false;
+    frame.lastElementChild.classList.toggle('waiting', phase !== 'done');
+  }
+
+  // A runaway loop prints faster than anyone can read, and re-rendering the
+  // whole buffer on every message would wedge the page Stop is there to
+  // rescue. So: keep the tail, and repaint at most once a frame.
+  const MAX_OUTPUT = 100000;
+  const DROPPED = '…earlier output dropped…\n';
+  function appendOutput(job, text) {
+    job.buffer += text;
+    if (job.buffer.length <= MAX_OUTPUT) return;
+    const from = job.buffer.length - MAX_OUTPUT;
+    const nl = job.buffer.indexOf('\n', from);
+    job.buffer = DROPPED + job.buffer.slice(nl < 0 ? from : nl + 1);
+  }
+
+  function scheduleRender(job) {
+    if (job.frame) return;
+    job.frame = requestAnimationFrame(() => { job.frame = 0; render(job); });
+  }
+
   function render(job, images) {
-    paintOutput(job.out, fixLineNumbers(job.buffer, job.headerLines), SHOWN, (n) => {
+    const text = fixLineNumbers(job.buffer, job.headerLines, job.name, job.studentLines);
+    paintOutput(job.out, text, SHOWN, (n) => {
       const buf = images && images[n];
       return buf ? URL.createObjectURL(new Blob([buf], { type: 'image/png' })) : null;
     });
@@ -195,17 +353,27 @@
 
   function onWorkerMessage(e) {
     const m = e.data;
-    if (m.type === 'state') {
+    if (m.type === 'closing') {
+      // The worker is going away — this tab's Stop, or another tab's.
+      dropChannel();
+      abandonJobs('stopped');
+    } else if (m.type === 'state') {
       warmupState = m.label;
       // Progress is per-run once a job is active; before that, reflect the
       // warm-up phase on any widget the reader has already clicked.
-      for (const job of jobs.values()) job.state.textContent = m.label;
+      for (const job of jobs.values()) {
+        job.state.textContent = m.label;
+        // Only the program's own time is worth nudging about; the warm-up
+        // before it is not the reader's fault.
+        if (m.label === 'running…') armNudge(job);
+      }
     } else if (m.type === 'console') {
       const job = jobs.get(m.id);
       if (!job) return;
-      job.buffer += m.text;
+      appendOutput(job, m.text);
       job.out.hidden = false;
-      render(job);
+      paintTerminal(job.out, 'start');
+      scheduleRender(job);
     } else if (m.type === 'result') {
       const job = jobs.get(m.id);
       if (!job) return;
@@ -217,9 +385,11 @@
   function onWorkerFailure(message) {
     warmupState = 'Java setup failed: ' + message;
     for (const job of jobs.values()) {
+      clearTimeout(job.nudge);
       job.state.textContent = warmupState;
       job.button.disabled = false;
-      job.resolve({ ok: false, compileError: false, output: warmupState });
+      setRunning(job.widget, false);
+      job.resolve({ ok: false, compileError: false, images: 0, output: warmupState });
       announce(job.widget);
     }
     jobs.clear();
@@ -232,13 +402,20 @@
   }
 
   function finishRun(job, result) {
+    clearTimeout(job.nudge);
+    cancelAnimationFrame(job.frame);
+    setRunning(job.widget, false);
     render(job, result.images);
     job.out.hidden = job.buffer.trim() === '';
+    paintTerminal(job.out, 'done');
     if (!result.ok) job.out.classList.add('err');
     job.state.textContent =
       result.compileError ? 'compile error' : result.ok ? 'done' : 'failed';
     job.button.disabled = false;
-    job.resolve({ ok: result.ok, compileError: result.compileError, output: job.out.textContent });
+    job.resolve({
+      ok: result.ok, compileError: result.compileError,
+      images: (result.images || []).length, output: job.out.textContent,
+    });
     announce(job.widget);
   }
 
@@ -248,14 +425,20 @@
   // Resolves with {ok, compileError, output} — never rejects.
   function run({ source: student, echo, widget, button, state, out }) {
     return new Promise((resolve) => {
-      const { source, headerLines } = wrap(student, !!echo);
+      const { source, headerLines, studentLines } = wrap(student, !!echo);
+      const name = ((widget && widget.dataset.file) || '').replace(/\.java$/, '') || 'Program';
       button.disabled = true;
+      setRunning(widget, true);
       out.hidden = true;
       out.textContent = '';
       out.classList.remove('err');
+      paintTerminal(out, 'start');
 
       const id = nextId++;
-      jobs.set(id, { widget, button, state, out, headerLines, buffer: '', resolve });
+      jobs.set(id, {
+        widget, button, state, out, headerLines, studentLines, name,
+        buffer: '', resolve, nudge: 0, frame: 0,
+      });
       state.textContent = warmupState || 'queued…';
       ensureChannel().post({ type: 'run', id, source });
     });
@@ -268,6 +451,7 @@
     paintOutput(out, cap.text, CAPTURED, (n) =>
       new URL('../assets/prerender/' + key + '-' + n + '.png', document.baseURI).href);
     out.hidden = cap.text.trim() === '';
+    paintTerminal(out, 'done');
     out.classList.toggle('err', cap.state !== 'done');
     widget.querySelector('.state').textContent = cap.state;
     announce(widget);
@@ -475,6 +659,7 @@
         if (prev) before = prev.dataset.original;
       }
       widget.dataset.original = original;
+      frameAsTerminal(widget);
       const paint = attachHighlighter(textarea, before);
       // Nothing to revert to until the reader edits: disable it so its
       // resting state reads as "unchanged", not "ready".
@@ -484,12 +669,14 @@
       widget.querySelector('button.run').addEventListener('click', () => {
         if (!widget.querySelector('button.run').disabled) startRun(widget);
       });
+      const stop = widget.querySelector('button.stop');
+      if (stop) stop.addEventListener('click', () => stopAll('stopped'));
       revert.addEventListener('click', () => { textarea.value = original; paint(); syncRevert(); });
     }
   }
 
   // For other page scripts (exercise.js runs code exercises through it) and
   // the step router (nav.js re-hydrates swapped-in content).
-  window.bookRunner = { run, hydrate };
+  window.bookRunner = { run, hydrate, stop: () => stopAll('stopped') };
   hydrate(document);
 })();

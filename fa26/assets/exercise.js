@@ -45,6 +45,14 @@
     return caseSensitive ? s : s.toLowerCase();
   }
 
+  // What a program printed, compared the way a reader would read it:
+  // trailing whitespace on a line, and at the end, is not a difference.
+  function normOutput(s) {
+    return String(s).replace(/\r\n/g, '\n')
+      .split('\n').map((l) => l.replace(/\s+$/, '')).join('\n')
+      .replace(/\n+$/, '');
+  }
+
   function markBlank(b, good) {
     b.classList.toggle('right', good);
     b.classList.toggle('wrong', !good);
@@ -175,15 +183,28 @@
             widget: ex, button, state, out,
           });
           state.textContent = '';
-          if (r.ok) {
-            for (const h of holes) h.classList.add('right');
-            return { ok: true, label: '✓ Compiles and runs' };
-          }
-          for (const h of holes) h.classList.add('wrong');
-          return {
-            ok: false,
-            label: r.compileError ? '✗ Doesn\u2019t compile yet' : '✗ Ran, but failed',
+          const wrong = (label) => {
+            for (const h of holes) h.classList.add('wrong');
+            return { ok: false, label };
           };
+          if (!r.ok) {
+            return wrong(r.compileError ? '✗ Doesn\u2019t compile yet' : '✗ Ran, but failed');
+          }
+          // It ran. blanks(prints:) and blanks(shows:) ask the further
+          // question: did it do what the exercise asked? Without them an
+          // empty hole passes anything that still compiles.
+          if (ex.dataset.prints !== undefined
+              && normOutput(r.output) !== normOutput(ex.dataset.prints)) {
+            return wrong('✗ It runs, but that is not what it prints');
+          }
+          const shows = Number(ex.dataset.shows || 0);
+          if (shows && r.images !== shows) {
+            return wrong(r.images
+              ? `✗ It runs, but it showed ${r.images} image(s), not ${shows}`
+              : '✗ It runs, but it never showed an image');
+          }
+          for (const h of holes) h.classList.add('right');
+          return { ok: true, label: '✓ Compiles and runs' };
         },
         reveal() {
           for (const h of holes) {

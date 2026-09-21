@@ -6,6 +6,13 @@
   "text": "line 1: error: string cannot be resolved to a type\nline 2: error: string cannot be resolved to a type\nline 3: error: string cannot be resolved to a type\n",
   "images": 0
  },
+ "26762871": {
+  "slug": "the-main-thing/main",
+  "widget": 1,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
  "ba8fb5bd": {
   "slug": "data-that-travel-together/convenience-methods",
   "widget": 0,
@@ -257,5 +264,40 @@
   "state": "done",
   "text": "cse11 = Course[title=Introduction to Programming, number=11]\ncse110 = Course[title=Software Engineering, number=110]\nintroInCse11 = true\nintroInCse110 = false\nengInCse110 = true\nengInCse11 = false\n",
   "images": 0
+ },
+ "49cc8d17": {
+  "slug": "the-main-thing/main",
+  "widget": 0,
+  "state": "compile error",
+  "text": "error: The method main() is undefined for the type DefineX\n",
+  "images": 0
+ },
+ "f6b102e3": {
+  "slug": "the-main-thing/main",
+  "widget": 2,
+  "state": "done",
+  "text": "10\n",
+  "images": 0
+ },
+ "a722bcc8": {
+  "slug": "the-main-thing/main",
+  "widget": 3,
+  "state": "done",
+  "text": "Hello, world!\n",
+  "images": 0
+ },
+ "06e087f2": {
+  "slug": "the-main-thing/main-pict",
+  "widget": 0,
+  "state": "done",
+  "text": "Circle[radius=30, color=red]\n",
+  "images": 0
+ },
+ "65ea77a8": {
+  "slug": "the-main-thing/main-pict",
+  "widget": 1,
+  "state": "done",
+  "text": "Circle[radius=30, color=red]\n[[IMG:0]]",
+  "images": 1
  }
 }
