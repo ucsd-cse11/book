@@ -78,15 +78,6 @@ body.toc .subtitle { opacity: .75; }
 }
 .terminal .prompt { user-select: none; -webkit-user-select: none; color: var(--accent); }
 .terminal .line.in .cmd { font-weight: 650; }
-/* a prompt with nothing typed: the shell came back and is waiting */
-.terminal .cursor {
-  display: inline-block; width: .55em; height: 1.05em;
-  vertical-align: text-bottom; background: currentColor; opacity: .55;
-  animation: term-blink 1.1s step-end infinite;
-}
-@keyframes term-blink { 50% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .terminal .cursor { animation: none; } }
-@media print { .terminal .cursor { animation: none; } }
 /* Narrow screens: nothing is worth a sideways scroll, so a long line wraps
    even though that can put a compiler's ^ under the wrong column. */
 @media (max-width: 640px) {
@@ -262,12 +253,12 @@ body.toc .subtitle { opacity: .75; }
 
 /* conversation gating (gate.js) */
 .gated { display: none; }
-.revealed { animation: gate-reveal .45s ease; }
+.gate-open { animation: gate-reveal .45s ease; }
 @keyframes gate-reveal {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
-@media (prefers-reduced-motion: reduce) { .revealed { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .gate-open { animation: none; } }
 .gate-frontier::after {
   content: "answer to continue the conversation";
   display: block; clear: both; text-align: center;

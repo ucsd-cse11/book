@@ -296,10 +296,13 @@
     const prompt = document.createElement('span');
     prompt.className = 'prompt';
     prompt.textContent = '$ ';
-    const rest = document.createElement('span');
-    rest.className = cmd ? 'cmd' : 'cursor';
-    if (cmd) rest.textContent = cmd;
-    line.append(prompt, rest);
+    line.append(prompt);
+    if (cmd) {
+      const text = document.createElement('span');
+      text.className = 'cmd';
+      text.textContent = cmd;
+      line.append(text);
+    }
     return line;
   }
 

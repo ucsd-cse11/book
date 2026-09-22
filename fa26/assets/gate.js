@@ -100,7 +100,7 @@
       }
       g.nodes.forEach((n) => {
         n.classList.remove('gated');
-        n.classList.add('revealed');
+        n.classList.add('gate-open');
       });
       passed++;
       try { localStorage.setItem(key, passed); } catch (e) { /* private mode */ }
