@@ -6,13 +6,6 @@
   "text": "line 1: error: string cannot be resolved to a type\nline 2: error: string cannot be resolved to a type\nline 3: error: string cannot be resolved to a type\n",
   "images": 0
  },
- "26762871": {
-  "slug": "the-main-thing/main",
-  "widget": 1,
-  "state": "done",
-  "text": "",
-  "images": 0
- },
  "ba8fb5bd": {
   "slug": "data-that-travel-together/convenience-methods",
   "widget": 0,
@@ -265,11 +258,32 @@
   "text": "cse11 = Course[title=Introduction to Programming, number=11]\ncse110 = Course[title=Software Engineering, number=110]\nintroInCse11 = true\nintroInCse110 = false\nengInCse110 = true\nengInCse11 = false\n",
   "images": 0
  },
- "49cc8d17": {
+ "06e087f2": {
+  "slug": "the-main-thing/main-pict",
+  "widget": 0,
+  "state": "done",
+  "text": "Circle[radius=30, color=red]\n",
+  "images": 0
+ },
+ "65ea77a8": {
+  "slug": "the-main-thing/main-pict",
+  "widget": 1,
+  "state": "done",
+  "text": "Circle[radius=30, color=red]\n[[IMG:0]]",
+  "images": 1
+ },
+ "f8ea0134": {
   "slug": "the-main-thing/main",
   "widget": 0,
   "state": "compile error",
   "text": "error: The method main() is undefined for the type DefineX\n",
+  "images": 0
+ },
+ "a44d3996": {
+  "slug": "the-main-thing/main",
+  "widget": 1,
+  "state": "done",
+  "text": "",
   "images": 0
  },
  "f6b102e3": {
@@ -286,18 +300,32 @@
   "text": "Hello, world!\n",
   "images": 0
  },
- "06e087f2": {
-  "slug": "the-main-thing/main-pict",
+ "c3c5c851": {
+  "slug": "the-main-thing/checking-assertively",
   "widget": 0,
   "state": "done",
-  "text": "Circle[radius=30, color=red]\n",
+  "text": "90\n90\n0\n30\n1439\n80\n250\n720\n1\n1290\n59\n600\n",
   "images": 0
  },
- "65ea77a8": {
-  "slug": "the-main-thing/main-pict",
+ "52f4d299": {
+  "slug": "the-main-thing/checking-assertively",
   "widget": 1,
   "state": "done",
-  "text": "Circle[radius=30, color=red]\n[[IMG:0]]",
-  "images": 1
+  "text": "",
+  "images": 0
+ },
+ "684b4845": {
+  "slug": "the-main-thing/checking-assertively",
+  "widget": 2,
+  "state": "done",
+  "text": "All tests succeeded!\n",
+  "images": 0
+ },
+ "1a38d865": {
+  "slug": "the-main-thing/checking-assertively",
+  "widget": 3,
+  "state": "failed",
+  "text": "Exception in thread \"Thread-0\" org.opentest4j.AssertionFailedError: expected: <1> but was: <0>\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
  }
 }

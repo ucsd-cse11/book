@@ -22,8 +22,9 @@
   let nextId = 1;
 
   // Recorded output for untouched widgets (tools/capture-runs.js), keyed by a
-  // hash of the source. A reader's first Run on code they have not edited is
-  // painted from the recording instead of waiting out the warm-up. `nocapture`
+  // hash of the source and, for a widget that names one, its file. A
+  // reader's first Run on code they have not edited is painted from the
+  // recording instead of waiting out the warm-up. `nocapture`
   // in the query turns this off, which is how the test suite and the recorder
   // itself still exercise the live path.
   // Fetched on the first Run rather than at load, so it never competes with
@@ -50,6 +51,10 @@
       h = Math.imul(h, 16777619) >>> 0;
     }
     return h.toString(16).padStart(8, '0');
+  }
+
+  function captureKey(source, file) {
+    return sourceKey(file ? file + '\u0000' + source : source);
   }
 
   // A worker that was stopped can never be reused — the program it was
@@ -214,7 +219,7 @@
     const body = lines.slice(split);
     return {
       source: header.join('\n') + (header.length ? '\n' : '')
-        + 'class __Prog {\n' + body.join('\n') + '\n}\n'
+        + 'import static org.junit.jupiter.api.Assertions.*; class __Prog {\n' + body.join('\n') + '\n}\n'
         + (echo ? ECHO_MAIN : PLAIN_MAIN),
       headerLines: split,
       studentLines: lines.length,
@@ -469,7 +474,7 @@
     widget.setAttribute('data-ran', '');
     if (first) {
       const captures = await loadCaptures();
-      const key = captures && sourceKey(source);
+      const key = captures && captureKey(source, widget.dataset.file);
       if (key && captures[key]) return showCapture(widget, key, captures[key]);
     }
     run({

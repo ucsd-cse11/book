@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checking Assertively — The Main Thing</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">The Main Thing</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>The Main Thing</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Professor, my fingers and eyes are tired.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>You should get some rest!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>No, I mean that I’m annoyed at how much typing and reading something is taking in my program. Can you help me make it shorter?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Oh, I see. Show me what’s going on.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, I wrote a cool method, I think, to calculate the difference between two times. I wanted to use <code>main</code> like you showed me. There are two things I don’t like. One is all the times I have to type <code>System.out.println</code> (I know I can get AI to do it for me, but I feel like the practice is good). But the other is that it’s hard for me to check the output by reading it. Here’s my code:</div></div><div class="runner" id="w3284518993" data-engine="java17" data-expect="compiles" data-gate><textarea class="code" spellcheck="false" rows="24">record Time(int hour, int minute) {
+  int toMinutes() {
+    return this.hour * 60 + this.minute;
+  }
+  int minutesBetween(Time other) {
+    return Math.abs(this.toMinutes() - other.toMinutes());
+  }
+}
+
+void main() {
+  System.out.println(new Time(9, 0).minutesBetween(new Time(10, 30)));
+  System.out.println(new Time(10, 30).minutesBetween(new Time(9, 0)));
+  System.out.println(new Time(12, 0).minutesBetween(new Time(12, 0)));
+  System.out.println(new Time(8, 15).minutesBetween(new Time(8, 45)));
+  System.out.println(new Time(0, 0).minutesBetween(new Time(23, 59)));
+  System.out.println(new Time(11, 50).minutesBetween(new Time(13, 10)));
+  System.out.println(new Time(14, 5).minutesBetween(new Time(9, 55)));
+  System.out.println(new Time(7, 0).minutesBetween(new Time(19, 0)));
+  System.out.println(new Time(16, 20).minutesBetween(new Time(16, 21)));
+  System.out.println(new Time(22, 45).minutesBetween(new Time(1, 15)));
+  System.out.println(new Time(10, 0).minutesBetween(new Time(10, 59)));
+  System.out.println(new Time(13, 30).minutesBetween(new Time(3, 30)));
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>I see. So it’s printing out all these times and you don’t know which is which?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Right – I see all the numbers, but like… I lose track. And I <strong>also</strong> tried a version that made 12 separate definitions with like <code>int shouldBe90 = ...</code>, but that didn’t help <em>that</em> much.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>First of all, great job. You’re doing the right thing by checking your work, <strong>and</strong> you’re making a great observation here. Think about how bad this would get if you had a dozen methods like this! Printed output isn’t the right way to check things once programs get large.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Yeah how do big companies manage this? They have tons of code, right?</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>Right! So the main thing people use here is something that:</p><ul><li>Checks a result from <strong>our program</strong> against an <strong>expected result</strong>. These are called <span class="term" data-term="test assertions">test assertions</span> or just <span class="term" data-term="tests">tests</span></li><li>Only prints or reports when things <strong>fail</strong>. That’s called a <span class="term" data-term="test harness">test harness</span> or a <span class="term" data-term="test runner">test runner</span></li></ul><p>The standard one for Java is called <a href="https://junit.org">JUnit</a>. The book runs a simplified version. The main function we need is <code>assertEquals</code>:</p><p><code>void assertEquals(value1, value2)</code></p><p>It’s somewhat special in that it can take and compare <strong>any two values</strong> (which is why for now I didn’t give them any type). It reports an error if the values aren’t equal, and does nothing if they pass.</p><p>Here’s what it looks like for just two tests of your <code>minutesBetween</code> method:</p></div></div><div class="runner" id="w1391776409" data-engine="java17" data-expect="compiles" data-edit><textarea class="code" spellcheck="false" rows="14">record Time(int hour, int minute) {
+  int toMinutes() {
+    return this.hour * 60 + this.minute;
+  }
+  int minutesBetween(Time other) {
+    return Math.abs(this.toMinutes() - other.toMinutes());
+  }
+}
+
+void main() {
+  assertEquals(90, new Time(9, 0).minutesBetween(new Time(10, 30)));
+  assertEquals(90, new Time(10, 30).minutesBetween(new Time(9, 0)));
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Notice how the first value (90) is the <strong>expected</strong> value that we wrote out by hand (or copied from somewhere).</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But it didn’t print anything!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right! That was kind of the goal, right? No noise if everything went well. But I agree that it can be jarring to see nothing. One thing we can do, for our book examples, is put one print statement to see that we got to the end.</div></div><div class="runner" id="w1749764165" data-engine="java17" data-expect="compiles" data-edit><textarea class="code" spellcheck="false" rows="15">record Time(int hour, int minute) {
+  int toMinutes() {
+    return this.hour * 60 + this.minute;
+  }
+  int minutesBetween(Time other) {
+    return Math.abs(this.toMinutes() - other.toMinutes());
+  }
+}
+
+void main() {
+  assertEquals(90, new Time(9, 0).minutesBetween(new Time(10, 30)));
+  assertEquals(90, new Time(10, 30).minutesBetween(new Time(9, 0)));
+  System.out.println("All tests succeeded!");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Now we know we got to that line if we see it, and can rest easy knowing our tests succeeded. Now try writing a test that fails!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Like this?</div></div><div class="runner" id="w439933029" data-engine="java17" data-expect="assert" data-edit><textarea class="code" spellcheck="false" rows="16">record Time(int hour, int minute) {
+  int toMinutes() {
+    return this.hour * 60 + this.minute;
+  }
+  int minutesBetween(Time other) {
+    return Math.abs(this.toMinutes() - other.toMinutes());
+  }
+}
+
+void main() {
+  assertEquals(90, new Time(9, 0).minutesBetween(new Time(10, 30)));
+  assertEquals(90, new Time(10, 30).minutesBetween(new Time(9, 0)));
+  assertEquals(1, new Time(12, 0).minutesBetween(new Time(12, 0)));
+  System.out.println("All tests succeeded!");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh cool! It doesn’t print the “all succeeded” message this time, and says what failed.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, so that’s what it looks like when the <strong>expectation</strong> (which you wrote as <code>1</code>, good work) doesn’t match the actual value the method gives back (which is <code>0</code>). In this case, we just did that to see what would happen. In big programs, the usual idea is that the expected result is what you carefully check yourself, and then the assertion makes sure that your program did what you expect.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Got it. So I can use <code>assertEquals</code>, which will check something about my program and only report it if something went wrong.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly, and that’s a critical tool for having confidence in our programs; seeing the assertions succeed tells us a lot about what our program did!</div></div><div class="innercise">Work out by hand how many seats each course has left, and write that as the expected value of its test.<div class="exercise" data-kind="code" data-seed="3514066569"><div class="cloze code">record Course(String name, int maxEnrollment, int enrollment) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int seatsAvailable() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return this.maxEnrollment - this.enrollment;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>assertEquals(<input class="blank" data-answer="15">, new Course("CSE 11", 400, 385).seatsAvailable());<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>assertEquals(<input class="blank" data-answer="0">, new Course("CSE 12", 200, 200).seatsAvailable());<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println("All tests succeeded!");<br>}<br></div></div></div></article>
+<nav class="pagenav"><a class="prev" href="just-in-case.html">← Just in Case</a> <a class="next" href="../pict-library/pict-library.html">Pict Library Reference →</a></nav>
+</main>
+<footer>Draft — Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "the-main-thing", "title": "The Main Thing", "current": 4, "steps": [{"title": "The Main Thing", "slug": "main", "url": "main.html", "path": "/the-main-thing/main.html"}, {"title": "Main and Pict", "slug": "main-pict", "url": "main-pict.html", "path": "/the-main-thing/main-pict.html"}, {"title": "Into the Void", "slug": "into-the-void", "url": "into-the-void.html", "path": "/the-main-thing/into-the-void.html"}, {"title": "Just in Case", "slug": "just-in-case", "url": "just-in-case.html", "path": "/the-main-thing/just-in-case.html"}, {"title": "Checking Assertively", "slug": "checking-assertively", "url": "checking-assertively.html", "path": "/the-main-thing/checking-assertively.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>
