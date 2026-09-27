@@ -300,28 +300,28 @@
   "text": "Hello, world!\n",
   "images": 0
  },
- "c3c5c851": {
+ "becee35f": {
   "slug": "the-main-thing/checking-assertively",
   "widget": 0,
   "state": "done",
   "text": "90\n90\n0\n30\n1439\n80\n250\n720\n1\n1290\n59\n600\n",
   "images": 0
  },
- "52f4d299": {
+ "f564e2af": {
   "slug": "the-main-thing/checking-assertively",
   "widget": 1,
   "state": "done",
   "text": "",
   "images": 0
  },
- "684b4845": {
+ "bdef2a17": {
   "slug": "the-main-thing/checking-assertively",
   "widget": 2,
   "state": "done",
   "text": "All tests succeeded!\n",
   "images": 0
  },
- "1a38d865": {
+ "df3b0d2f": {
   "slug": "the-main-thing/checking-assertively",
   "widget": 3,
   "state": "failed",

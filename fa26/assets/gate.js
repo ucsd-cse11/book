@@ -65,7 +65,9 @@
     }
 
     const key = 'gate:' + location.pathname;
-    let passed = Math.min(parseInt(localStorage.getItem(key), 10) || 0, gates.length);
+    let saved = null;
+    try { saved = localStorage.getItem(key); } catch (e) { /* private mode */ }
+    let passed = Math.min(parseInt(saved, 10) || 0, gates.length);
     progress(passed);
 
     gates.forEach((g, i) => {
