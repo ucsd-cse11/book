@@ -298,9 +298,8 @@ body.toc .subtitle { opacity: .75; }
 }
 /* a single code-shaped hole in an ordinary sentence */
 .exercise .blank.code { font-family: ui-monospace, monospace; }
-/* a code exercise: holes are real code, so they get room to type */
 .exercise[data-kind="code"] input.blank {
-  width: 28rem; max-width: 100%; field-sizing: content; min-width: 10rem;
+  width: auto; max-width: 100%; margin: 0;
 }
 .exercise[data-kind="code"] textarea.blank {
   display: block; width: 100%; box-sizing: border-box; margin: .2rem 0;

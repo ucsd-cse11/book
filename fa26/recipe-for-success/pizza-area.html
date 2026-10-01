@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Helping Hand — Recipe for Success</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Recipe for Success</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Recipe for Success</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>You were suggesting that my pizza example had more we could learn from it.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Indeed! Let’s have a look at your code again</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Here it is:</div></div><div class="runner" id="w1245130849" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="17" spellcheck="false" autocorrect="off" autocapitalize="off">// inches is the *diameter* of the Pizza
+record Pizza(double inches, int costCents) {
+  boolean betterDeal(Pizza other) {
+    double thisRadius = inches / 2;
+    double thisArea = thisRadius * thisRadius * Math.PI;
+    double otherRadius = other.inches / 2;
+    double otherArea = otherRadius * otherRadius * Math.PI;
+    double thisPriceSqInch = costCents / thisArea;
+    double otherPriceSqInch = other.costCents / otherArea;
+    return thisPriceSqInch &lt; otherPriceSqInch;
+  }
+}
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+boolean bigBetter = big.betterDeal(small);
+boolean smallBetter = small.betterDeal(big);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Here’s a version I think would read much better:</div></div><div class="runner" id="w3154083781" data-engine="java17" data-expect="error" data-echo data-gate><textarea class="code" rows="13" spellcheck="false" autocorrect="off" autocapitalize="off">// inches is the *diameter* of the Pizza
+record Pizza(double inches, int costCents) {
+  boolean betterDeal(Pizza other) {
+    double thisPriceSqInch = costCents / area();
+    double otherPriceSqInch = other.costCents / other.area();
+    return thisPriceSqInch &lt; otherPriceSqInch;
+  }
+}
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+boolean bigBetter = big.betterDeal(small);
+boolean smallBetter = small.betterDeal(big);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I mean, sure, but your code clearly doesn’t run. How is that better?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, let’s say it ran and gave all the same answers as yours. Would you like it better?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I mean, sure. It’s nice to not write all the multiplication and division over and over.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great! OK, so make it run – define the <code>area</code> method.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmmm… I guess it uses a lot of the same code we just deleted.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Indeed! Let’s think it through. Based on how we used it, what’s its name, its return type, and its parameters?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well the name is obviously <code>area</code>. And it must return a <code>double</code> because that’s what we were calculating before.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great so far! What about the arguments?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Does it take a <code>Pizza</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Oh that’s a good instinct, but no. The receiver of <code>area</code> will always be a <code>Pizza</code>, and we don’t need any more information. Unlike <code>betterDeal</code>, area only works with the receiver, so it doesn’t take any arguments! And when <code>betterDeal</code> calls <code>area()</code> with nothing in front of it, the receiver is the same pizza <code>betterDeal</code> was called on.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm OK. So that’s like…</div></div><div class="runner" id="w1677890520" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="17" spellcheck="false" autocorrect="off" autocapitalize="off">// inches is the *diameter* of the Pizza
+record Pizza(double inches, int costCents) {
+  double area() {
+    double radius = inches / 2;
+    return radius * radius * Math.PI;
+  }
+  boolean betterDeal(Pizza other) {
+    double thisPriceSqInch = costCents / area();
+    double otherPriceSqInch = other.costCents / other.area();
+    return thisPriceSqInch &lt; otherPriceSqInch;
+  }
+}
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+boolean bigBetter = big.betterDeal(small);
+boolean smallBetter = small.betterDeal(big);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Ah, very nice. Isn’t that pleasant? What are some benefits of having done this?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, I do think it’s nice to just use <code>.area()</code> in the <code>betterDeal</code> method. I can see more quickly what it does.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Can you think of any other benefits?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm… wait, can we use <code>area</code> for <strong>any</strong> <code>Pizza</code> now?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right! This <code>area</code> method started as what we call a “helper” method, whose job is just to make another method simpler. But a lot of times a helper method can be useful on its own, too.</div></div><div class="exercise" data-kind="code" data-seed="3483946176" data-echo data-check="farFurther &amp;&amp; !nearFurther" data-check-message="That runs, but far.furtherFrom0Than(near) should be true and near.furtherFrom0Than(far) should be false."><div class="stem"><p>This method computes a distance from <code>0</code> twice:</p><pre><code data-lang="java"><span style="color: #d73948">boolean</span> <span style="color: #4b69c6">furtherFrom0Than</span>(<span style="color: #4b69c6">Point</span> other) {
+  <span style="color: #d73948">double</span> thisDistance <span style="color: #d73948">=</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">sqrt</span>(x <span style="color: #d73948">*</span> x <span style="color: #d73948">+</span> y <span style="color: #d73948">*</span> y);
+  <span style="color: #d73948">double</span> otherDistance <span style="color: #d73948">=</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">sqrt</span>(other.x <span style="color: #d73948">*</span> other.x <span style="color: #d73948">+</span> other.y <span style="color: #d73948">*</span> other.y);
+  <span style="color: #d73948">return</span> thisDistance <span style="color: #d73948">></span> otherDistance;
+}</code></pre><p>Finish the version below that uses the <code>dist0</code> helper instead.</p></div><div class="cloze code">record Point(double x, double y) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>double dist0() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return Math.sqrt(x * x + y * y);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>boolean furtherFrom0Than(Point other) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="dist0()" spellcheck="false" autocorrect="off" autocapitalize="off"> > <input class="blank" data-answer="other.dist0()" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>Point far = new Point(3, 4);<br>Point near = new Point(1, 1);<br>boolean farFurther = far.furtherFrom0Than(near);<br>boolean nearFurther = near.furtherFrom0Than(far);</div></div></article>
+<nav class="pagenav"><a class="prev" href="pizza.html">← Pizza</a> <a class="next" href="exercises.html">Practice →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "recipe-for-success", "title": "Recipe for Success", "current": 2, "steps": [{"title": "Breaking It Down", "slug": "breaking-it-down", "url": "breaking-it-down.html", "path": "/recipe-for-success/breaking-it-down.html"}, {"title": "Pizza", "slug": "pizza", "url": "pizza.html", "path": "/recipe-for-success/pizza.html"}, {"title": "A Helping Hand", "slug": "pizza-area", "url": "pizza-area.html", "path": "/recipe-for-success/pizza-area.html"}, {"title": "Practice", "slug": "exercises", "url": "exercises.html", "path": "/recipe-for-success/exercises.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

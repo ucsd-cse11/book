@@ -72,6 +72,29 @@
     }
   }
 
+  const FIELD_DUMP = 'java.util.Arrays.stream(getClass().getDeclaredFields())'
+    + '.filter(f -> !f.isSynthetic() && !java.lang.reflect.Modifier.isStatic(f.getModifiers()))'
+    + '.map(f -> { try { f.setAccessible(true); return "\\n" + f.getName() + " = " + f.get(this); }'
+    + ' catch (Exception e) { return ""; } })'
+    + '.collect(java.util.stream.Collectors.joining("", "\\n", ""))';
+
+  function tidyCheckFailure(out, msg) {
+    const head = /Exception in thread "[^"]*" java\.lang\.AssertionError: /;
+    for (const n of out.childNodes) {
+      if (n.nodeType !== Node.TEXT_NODE) continue;
+      const m = n.textContent.match(head);
+      if (!m || !n.textContent.slice(m.index + m[0].length).startsWith(msg)) continue;
+      n.textContent = n.textContent.slice(0, m.index)
+        + n.textContent.slice(m.index + m[0].length).replace(/(\n[ \t]+at [^\n]*)+/, '');
+      return;
+    }
+  }
+
+  function fit(h) {
+    if (h.tagName !== 'INPUT') return;
+    h.size = Math.max(3, (h.value || h.placeholder).length + 1);
+  }
+
   // Each kind returns {check(button): boolean | Promise<{ok, label}>,
   // reveal()?, buttonLabel?, footer?: [nodes], after?: [nodes]}.
   const kinds = {
@@ -140,6 +163,10 @@
       const cloze = ex.querySelector('.cloze');
       const holes = [...ex.querySelectorAll('.blank')];
       prepareSelects(ex, rand);
+      for (const h of holes) {
+        fit(h);
+        h.addEventListener('input', () => fit(h));
+      }
       const state = el('span', { class: 'state' });
       const out = el('pre', { class: 'out' });
       out.hidden = true;
@@ -173,10 +200,11 @@
           // AssertionError carries only the author's message, not the
           // predicate, so `instanceof` stays out of sight.
           let source = assemble();
+          const msg = ex.dataset.check && (ex.dataset.checkMessage
+            || 'That runs, but it is not what the exercise asks for.');
           if (ex.dataset.check) {
-            const msg = ex.dataset.checkMessage
-              || 'That runs, but it is not what the exercise asks for.';
-            source += '\n{ assert (' + ex.dataset.check + ') : ' + JSON.stringify(msg) + '; }\n';
+            source += '\n{ assert (' + ex.dataset.check + ') : ' + JSON.stringify(msg)
+              + ' + ' + FIELD_DUMP + '; }\n';
           }
           const r = await window.bookRunner.run({
             source, echo: ex.hasAttribute('data-echo'),
@@ -188,6 +216,7 @@
             return { ok: false, label };
           };
           if (!r.ok) {
+            if (msg) tidyCheckFailure(out, msg);
             return wrong(r.compileError ? '✗ Doesn\u2019t compile yet' : '✗ Ran, but failed');
           }
           // It ran. blanks(prints:) and blanks(shows:) ask the further
@@ -212,6 +241,7 @@
               h.value = [...h.options].find((o) => o.hasAttribute('data-correct')).textContent;
             } else {
               h.value = h.dataset.answer.split('|')[0];
+              fit(h);
             }
           }
         },

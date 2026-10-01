@@ -6,6 +6,13 @@
   "text": "line 1: error: string cannot be resolved to a type\nline 2: error: string cannot be resolved to a type\nline 3: error: string cannot be resolved to a type\n",
   "images": 0
  },
+ "25171444": {
+  "slug": "recipe-for-success/breaking-it-down",
+  "widget": 3,
+  "state": "compile error",
+  "text": "line 2: error: Syntax error on token \")\", { expected after this token\nerror: Syntax error, insert \"}\" to complete ClassBody\n",
+  "images": 0
+ },
  "ba8fb5bd": {
   "slug": "data-that-travel-together/convenience-methods",
   "widget": 0,
@@ -300,32 +307,116 @@
   "text": "Hello, world!\n",
   "images": 0
  },
- "becee35f": {
+ "8030716a": {
+  "slug": "recipe-for-success/breaking-it-down",
+  "widget": 0,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "0e2f6c96": {
+  "slug": "recipe-for-success/breaking-it-down",
+  "widget": 1,
+  "state": "done",
+  "text": "netflix = Subscription[name=Netflix, price=19, months=3]\ndisney = Subscription[name=Disney+, price=21, months=1]\n",
+  "images": 0
+ },
+ "0ccf866b": {
+  "slug": "recipe-for-success/breaking-it-down",
+  "widget": 2,
+  "state": "done",
+  "text": "netflix = Subscription[name=Netflix, priceCents=1900, trialMonths=3]\ndisney = Subscription[name=Disney+, priceCents=2100, trialMonths=1]\n",
+  "images": 0
+ },
+ "cb21cda3": {
+  "slug": "recipe-for-success/breaking-it-down",
+  "widget": 4,
+  "state": "done",
+  "text": "netflix = Subscription[name=Netflix, priceCents=1900, trialMonths=3]\ndisney = Subscription[name=Disney+, priceCents=2100, trialMonths=1]\nprice = 0\n",
+  "images": 0
+ },
+ "869cd8ff": {
+  "slug": "recipe-for-success/breaking-it-down",
+  "widget": 5,
+  "state": "done",
+  "text": "netflix = Subscription[name=Netflix, priceCents=1900, trialMonths=3]\ndisney = Subscription[name=Disney+, priceCents=2100, trialMonths=1]\nprice = 9500\n",
+  "images": 0
+ },
+ "f9dbdca3": {
+  "slug": "recipe-for-success/breaking-it-down",
+  "widget": 6,
+  "state": "done",
+  "text": "netflix = Subscription[name=Netflix, priceCents=1900, trialMonths=3]\ndisney = Subscription[name=Disney+, priceCents=2100, trialMonths=1]\nprice = 9500\npriceAfter2 = -1900\n",
+  "images": 0
+ },
+ "67440fa2": {
+  "slug": "recipe-for-success/pizza",
+  "widget": 0,
+  "state": "done",
+  "text": "big = Pizza[size=16.0, cost=1000]\nsmall = Pizza[size=10.0, cost=500]\n",
+  "images": 0
+ },
+ "d340066a": {
+  "slug": "recipe-for-success/pizza",
+  "widget": 1,
+  "state": "done",
+  "text": "big = Pizza[inches=16.0, costCents=1000]\nsmall = Pizza[inches=10.0, costCents=500]\n",
+  "images": 0
+ },
+ "d514b71a": {
+  "slug": "recipe-for-success/pizza",
+  "widget": 2,
+  "state": "done",
+  "text": "big = Pizza[inches=16.0, costCents=1000]\nsmall = Pizza[inches=10.0, costCents=500]\nbigBetter = false\n",
+  "images": 0
+ },
+ "456edce1": {
   "slug": "the-main-thing/checking-assertively",
   "widget": 0,
   "state": "done",
   "text": "90\n90\n0\n30\n1439\n80\n250\n720\n1\n1290\n59\n600\n",
   "images": 0
  },
- "f564e2af": {
+ "bd6878a9": {
   "slug": "the-main-thing/checking-assertively",
   "widget": 1,
   "state": "done",
   "text": "",
   "images": 0
  },
- "bdef2a17": {
+ "7d5df655": {
   "slug": "the-main-thing/checking-assertively",
   "widget": 2,
   "state": "done",
   "text": "All tests succeeded!\n",
   "images": 0
  },
- "df3b0d2f": {
+ "a86bb835": {
   "slug": "the-main-thing/checking-assertively",
   "widget": 3,
   "state": "failed",
   "text": "Exception in thread \"Thread-0\" org.opentest4j.AssertionFailedError: expected: <1> but was: <0>\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "4a373061": {
+  "slug": "recipe-for-success/pizza-area",
+  "widget": 0,
+  "state": "done",
+  "text": "big = Pizza[inches=16.0, costCents=1000]\nsmall = Pizza[inches=10.0, costCents=500]\nbigBetter = true\nsmallBetter = false\n",
+  "images": 0
+ },
+ "bbff7fc5": {
+  "slug": "recipe-for-success/pizza-area",
+  "widget": 1,
+  "state": "compile error",
+  "text": "line 4: error: The method area() is undefined for the type Pizza\nline 5: error: The method area() is undefined for the type Pizza\n",
+  "images": 0
+ },
+ "640293d8": {
+  "slug": "recipe-for-success/pizza-area",
+  "widget": 2,
+  "state": "done",
+  "text": "big = Pizza[inches=16.0, costCents=1000]\nsmall = Pizza[inches=10.0, costCents=500]\nbigBetter = true\nsmallBetter = false\n",
   "images": 0
  }
 }
