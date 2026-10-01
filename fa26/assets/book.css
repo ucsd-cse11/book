@@ -265,6 +265,7 @@ body.toc .subtitle { opacity: .75; }
   font-size: .8rem; opacity: .5; margin-top: 1rem;
 }
 .gate-frontier[data-gate-need="run"]::after { content: "run it to continue the conversation"; }
+.gate-frontier[data-gate-last]::after { content: "run it to finish this step"; }
 
 .exercise ol.choices { list-style: none; padding: 0; margin: .5rem 0; }
 .exercise .choices li {

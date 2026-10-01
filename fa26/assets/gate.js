@@ -82,10 +82,15 @@
       for (const g of gates) {
         g.unit.classList.remove('gate-frontier');
         g.unit.removeAttribute('data-gate-need');
+        g.unit.removeAttribute('data-gate-last');
       }
-      if (passed < gates.length && gates[passed].nodes.length) {
-        gates[passed].unit.classList.add('gate-frontier');
-        gates[passed].unit.setAttribute('data-gate-need', need(gates[passed]));
+      if (passed >= gates.length) return;
+      const g = gates[passed];
+      const pendingRun = g.triggers.some((t) => !g.engaged.has(t) && t.classList.contains('runner'));
+      if (g.nodes.length || pendingRun) {
+        g.unit.classList.add('gate-frontier');
+        g.unit.setAttribute('data-gate-need', need(g));
+        if (!g.nodes.length) g.unit.setAttribute('data-gate-last', '');
       }
     };
     frontier();
