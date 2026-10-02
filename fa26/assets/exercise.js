@@ -74,7 +74,10 @@
 
   const FIELD_DUMP = 'java.util.Arrays.stream(getClass().getDeclaredFields())'
     + '.filter(f -> !f.isSynthetic() && !java.lang.reflect.Modifier.isStatic(f.getModifiers()))'
-    + '.map(f -> { try { f.setAccessible(true); return "\\n" + f.getName() + " = " + f.get(this); }'
+    + '.map(f -> { try { f.setAccessible(true); Object v = f.get(this);'
+    + ' return "\\n" + f.getName() + " = " + (v != null && v.getClass().isArray()'
+    + ' ? java.util.Arrays.deepToString(new Object[] { v }).replaceAll("^\\\\[|\\\\]$", "")'
+    + ' : String.valueOf(v)); }'
     + ' catch (Exception e) { return ""; } })'
     + '.collect(java.util.stream.Collectors.joining("", "\\n", ""))';
 

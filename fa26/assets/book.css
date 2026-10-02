@@ -181,7 +181,11 @@ body.toc .subtitle { opacity: .75; }
   border-radius: .25rem; border: 1px solid transparent; cursor: pointer;
 }
 .runner button.run { background: var(--accent); color: white; }
-.runner button.revert {
+.runner .hl .fold {
+  color: inherit; opacity: .55; font-style: italic;
+  background: var(--soft-bg); border-radius: .2rem;
+}
+.runner button.unfold, .runner button.revert {
   background: color-mix(in srgb, currentColor 6%, transparent); color: inherit;
   border-color: var(--card-border);
 }
@@ -380,3 +384,71 @@ body.sheets li {
 }
 body.sheets .name { font-weight: 600; }
 body.sheets .links { margin-left: auto; display: flex; gap: .8rem; font-size: .85rem; }
+
+/* memory diagrams (#memory) */
+.memory {
+  position: relative;
+  display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 2.5rem;
+  margin: 1rem 0; padding: .8rem 1rem;
+  border: 1px solid var(--card-border); border-radius: .5rem;
+  font-size: .9rem;
+}
+.memory code { background: none; padding: 0; white-space: pre-wrap; }
+.memory .mem-title {
+  font-size: .75rem; text-transform: uppercase; letter-spacing: .05em;
+  opacity: .65; margin-bottom: .4rem;
+}
+.memory {
+  --frame-border: #ccc;
+  --frame-bg: #f4f4f2;
+}
+.memory .frame {
+  border: 1px solid var(--frame-border); border-radius: .3rem;
+  background: var(--frame-bg);
+  padding: .25rem .5rem .35rem; margin: 0 0 .5rem;
+}
+.memory .frame-head {
+  font-size: .8rem; opacity: .8; margin-bottom: .15rem;
+}
+.memory .binding, .memory .returns { padding: .1rem 0; }
+.memory .slot-line { padding: .1rem 0 .1rem .4rem; }
+.memory .returns { opacity: .75; font-style: italic; }
+.memory .addr {
+  --addr: oklch(50% .15 var(--hue));
+  color: var(--addr); font-weight: 600; cursor: pointer; border-radius: .2rem;
+}
+.memory .addr.hot { background: color-mix(in oklch, var(--addr) 18%, transparent); }
+.memory svg.mem-arrows {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; overflow: visible;
+}
+@media (prefers-color-scheme: dark) {
+  .memory { --frame-border: #555; --frame-bg: #2a2a2a; }
+  .memory .addr { --addr: oklch(78% .12 var(--hue)); }
+}
+@media (max-width: 560px) {
+  .memory { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+}
+
+.memory.flame { display: block; --col: 11.5rem; }
+.memory.flame .flame-chart {
+  position: relative; overflow-x: auto; margin-bottom: 1.4rem;
+  padding-bottom: .3rem;
+}
+.memory.flame .flame-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--col));
+  grid-template-rows: repeat(var(--rows), auto);
+  gap: 3px .3rem;
+  width: max-content;
+}
+.memory.flame .frame {
+  margin: 0; min-width: 0;
+  overflow-wrap: anywhere;
+}
+.memory.flame .frame-head code { white-space: normal; }
+.memory.flame .frame-inner {
+  position: sticky; left: .5rem;
+  max-width: calc(var(--span) * var(--col) + (var(--span) - 1) * .3rem - 1rem);
+  width: max-content;
+}

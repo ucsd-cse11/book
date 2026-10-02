@@ -197,7 +197,10 @@
     + ' for (java.lang.reflect.Field f : __Prog.class.getDeclaredFields()) {'
     + ' if (f.isSynthetic() || java.lang.reflect.Modifier.isStatic(f.getModifiers())) continue;'
     + ' f.setAccessible(true); Object v = f.get(p);'
-    + ' System.out.println(f.getName() + " = " + v);'
+    + ' String shown = v != null && v.getClass().isArray()'
+    + ' ? java.util.Arrays.deepToString(new Object[] { v }).replaceAll("^\\\\[|\\\\]$", "")'
+    + ' : String.valueOf(v);'
+    + ' System.out.println(f.getName() + " = " + shown);'
     + ' if (v instanceof Pict pic) ImageIO_.show(pic);'
     + ' else if (v instanceof Raster r) ImageIO_.show(r); }'
     + GUARD_CLOSE;
@@ -211,6 +214,90 @@
   // Wrap implicit-main student code: imports stay at the top of the unit,
   // everything else becomes the body of a class. Adds exactly one line in
   // front of the body — fixLineNumbers undoes that in error messages.
+  function blankLiterals(src) {
+    let out = '';
+    let i = 0;
+    const keepNl = (t) => t.replace(/[^\n]/g, ' ');
+    while (i < src.length) {
+      const rest = src.slice(i);
+      const m = /^(\/\/[^\n]*|\/\*[\s\S]*?(?:\*\/|$)|"""[\s\S]*?(?:"""|$)|"(?:[^"\\\n]|\\.)*"?|'(?:[^'\\\n]|\\.)*'?)/.exec(rest);
+      if (m) { out += keepNl(m[0]); i += m[0].length; } else { out += src[i]; i++; }
+    }
+    return out;
+  }
+
+  function closing(text, from, open, close) {
+    let depth = 0;
+    for (let i = from; i < text.length; i++) {
+      if (text[i] === open) depth++;
+      else if (text[i] === close && --depth === 0) return i;
+    }
+    return -1;
+  }
+
+  function shimArrayRecords(code) {
+    const blank = blankLiterals(code);
+    const inserts = [];
+    const head = /\brecord\s+([A-Za-z_$][\w$]*)\s*(<[^>{}()]*>)?\s*\(/g;
+    let m;
+    while ((m = head.exec(blank)) !== null) {
+      const open = m.index + m[0].length - 1;
+      const close = closing(blank, open, '(', ')');
+      if (close < 0) continue;
+      const brace = blank.indexOf('{', close);
+      const end = brace < 0 ? -1 : closing(blank, brace, '{', '}');
+      if (end < 0) continue;
+      const parts = [];
+      let depth = 0, from = open + 1;
+      for (let i = open + 1; i <= close; i++) {
+        const ch = blank[i];
+        if (ch === '<') depth++;
+        else if (ch === '>') depth--;
+        else if ((ch === ',' && depth === 0) || i === close) {
+          const t = blank.slice(from, i).replace(/@[\w.]+(\([^)]*\))?/g, ' ').trim();
+          if (t) parts.push(t);
+          from = i + 1;
+        }
+      }
+      const comps = parts.map((t) => {
+        const nm = /([A-Za-z_$][\w$]*)\s*$/.exec(t);
+        const type = t.slice(0, nm.index).trim();
+        return { name: nm[1], type, array: /\[|\.\.\./.test(type) };
+      });
+      if (!comps.some((c) => c.array)) continue;
+      const body = blank.slice(brace + 1, end);
+      const self = m[1] + (m[2] ? '<?>' : '');
+      const f = (c) => 'this.' + c.name;
+      const g = (c) => '__r.' + c.name;
+      const eq = (c) => {
+        if (/^(int|long|short|byte|char|boolean)$/.test(c.type)) return f(c) + ' == ' + g(c);
+        if (c.type === 'double') return 'Double.compare(' + f(c) + ', ' + g(c) + ') == 0';
+        if (c.type === 'float') return 'Float.compare(' + f(c) + ', ' + g(c) + ') == 0';
+        return 'java.util.Objects.equals(' + f(c) + ', ' + g(c) + ')';
+      };
+      let add = '';
+      if (!/\bString\s+toString\s*\(\s*\)/.test(body)) {
+        add += ' @Override public String toString() { return "' + m[1] + '[" + '
+          + comps.map((c, k) => '"' + (k ? ', ' : '') + c.name + '=" + String.valueOf((Object) ' + f(c) + ')').join(' + ')
+          + ' + "]"; }';
+      }
+      if (!/\bboolean\s+equals\s*\(/.test(body)) {
+        add += ' @Override public boolean equals(Object __o) { if (this == __o) return true;'
+          + ' if (!(__o instanceof ' + self + ' __r)) return false; return '
+          + comps.map(eq).join(' && ') + '; }';
+      }
+      if (!/\bint\s+hashCode\s*\(\s*\)/.test(body)) {
+        add += ' @Override public int hashCode() { int __h = 0;'
+          + comps.map((c) => ' __h = 31 * __h + java.util.Objects.hashCode((Object) ' + f(c) + ');').join('')
+          + ' return __h; }';
+      }
+      if (add) inserts.push([brace + 1, add]);
+    }
+    let result = code;
+    for (const [at, text] of inserts.reverse()) result = result.slice(0, at) + text + result.slice(at);
+    return result;
+  }
+
   function wrap(code, echo) {
     const lines = code.split('\n');
     let split = 0;
@@ -219,7 +306,7 @@
     const body = lines.slice(split);
     return {
       source: header.join('\n') + (header.length ? '\n' : '')
-        + 'import static org.junit.jupiter.api.Assertions.*; class __Prog {\n' + body.join('\n') + '\n}\n'
+        + 'import static org.junit.jupiter.api.Assertions.*; class __Prog {\n' + shimArrayRecords(body.join('\n')) + '\n}\n'
         + (echo ? ECHO_MAIN : PLAIN_MAIN),
       headerLines: split,
       studentLines: lines.length,
@@ -262,7 +349,8 @@
       // and where the class itself is the subject ("The method main() is
       // undefined for the type __Prog" — what a program with no main says)
       // it takes the name of the file the reader thinks they are running
-      .replace(/\b__Prog\b/g, name || 'Program');
+      .replace(/\b__Prog\b/g, name || 'Program')
+      .replace(/\[L__Prog\$/g, '[L' + (name || 'Program') + '$');
   }
 
   // ImageIO_.show prints one of these per image; the image itself arrives
@@ -468,13 +556,22 @@
   // A reader's first Run on code they have not touched is answered from the
   // recording, which is what it would have printed anyway. Every later run, and
   // anything they have edited, goes to the worker, which is warm by then.
+  function unfold(widget, text) {
+    const folds = JSON.parse(widget.dataset.folds || '[]');
+    return text.split('\n').map((l) => {
+      const f = folds.find((x) => x.line === l.replace(/\s+$/, ''));
+      return f ? f.code : l;
+    }).join('\n');
+  }
+
   async function startRun(widget) {
-    const source = widget.querySelector('textarea').value;
+    const shown = widget.querySelector('textarea').value;
+    const source = unfold(widget, shown);
     const first = !widget.hasAttribute('data-ran');
     widget.setAttribute('data-ran', '');
     if (first) {
       const captures = await loadCaptures();
-      const key = captures && captureKey(source, widget.dataset.file);
+      const key = captures && captureKey(shown, widget.dataset.file);
       if (key && captures[key]) return showCapture(widget, key, captures[key]);
     }
     run({
@@ -567,56 +664,113 @@
   function alignLines(before, after) {
     const key = (l) => l.replace(/^\s+/, '');
     const n = before.length, m = after.length;
-    const dp = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
-    for (let i = n - 1; i >= 0; i--) {
-      for (let j = m - 1; j >= 0; j--) {
-        dp[i][j] = key(before[i]) === key(after[j])
-          ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    const EPS = 1e-3;
+    const M = 0, D = 1, I = 2;
+    const best = Array.from({ length: n + 1 }, () =>
+      Array.from({ length: m + 1 }, () => [0, 0, 0]));
+    const choice = Array.from({ length: n + 1 }, () =>
+      Array.from({ length: m + 1 }, () => [null, null, null]));
+    for (let i = n; i >= 0; i--) {
+      for (let j = m; j >= 0; j--) {
+        if (i === n && j === m) continue;
+        for (const s of [M, D, I]) {
+          let top = -Infinity, pick = null;
+          if (i < n && j < m && key(before[i]) === key(after[j])) {
+            top = 1 + best[i + 1][j + 1][M]; pick = M;
+          }
+          if (i < n) {
+            const v = (s === D ? 0 : -EPS) + best[i + 1][j][D];
+            if (v > top + 1e-9) { top = v; pick = D; }
+          }
+          if (j < m) {
+            const v = (s === I ? 0 : -EPS) + best[i][j + 1][I];
+            if (v > top + 1e-9) { top = v; pick = I; }
+          }
+          best[i][j][s] = top;
+          choice[i][j][s] = pick;
+        }
       }
     }
-    // For each line of `after`: {same: true} (paired with an old line), or
-    // {same: false, ins: [a, b) | null, deletedBefore: k} for a new line.
     const out = [];
-    let i = 0, j = 0, deleted = 0;
+    let i = 0, j = 0, deleted = 0, state = M;
     while (j < m) {
-      if (i < n && key(before[i]) === key(after[j])) {
+      const pick = choice[i][j][state];
+      if (pick === M) {
         out.push({ same: true, deletedBefore: deleted }); deleted = 0; i++; j++;
-      } else if (i < n && dp[i + 1][j] >= dp[i][j + 1]) {
+      } else if (pick === D) {
         deleted++; i++;
       } else {
         out.push({ same: false, deletedBefore: deleted }); deleted = 0; j++;
       }
+      state = pick;
     }
-    // A new line that replaces a deleted one: mark only the changed span.
-    // Walk deleted old lines alongside new lines in order and pair them.
-    let di = 0;
-    const olds = [];
+    const ident = (ch) => ch !== undefined && /[\w$]/.test(ch);
+    const span = (old, cur) => {
+      let a = 0;
+      while (a < old.length && a < cur.length && old[a] === cur[a]) a++;
+      while (a > 0 && ident(cur[a - 1]) && (ident(cur[a]) || ident(old[a]))) a--;
+      let b = 0;
+      while (b < old.length - a && b < cur.length - a
+        && old[old.length - 1 - b] === cur[cur.length - 1 - b]) b++;
+      while (b > 0 && ident(cur[cur.length - b])
+        && (ident(cur[cur.length - 1 - b]) || ident(old[old.length - 1 - b]))) b--;
+      return { a, b, score: (a + b) / Math.max(old.length, cur.length, 1) };
+    };
     i = 0; j = 0;
-    for (const o of out) {
-      if (o.same) { i += o.deletedBefore + 1; olds.length = 0; j++; continue; }
-      for (let k = 0; k < o.deletedBefore; k++) olds.push(before[i + k]);
-      i += o.deletedBefore;
-      const old = olds.length ? olds.shift() : null;
-      if (old !== null) {
-        // a replacement, not a deletion followed by an insertion
-        if (o.deletedBefore > 0) o.deletedBefore--;
-        const cur = after[j];
-        let a = 0;
-        while (a < old.length && a < cur.length && old[a] === cur[a]) a++;
-        let b = 0;
-        while (b < old.length - a && b < cur.length - a
-          && old[old.length - 1 - b] === cur[cur.length - 1 - b]) b++;
-        if (a < cur.length - b) o.ins = [a, cur.length - b];
+    let k = 0;
+    while (k < out.length) {
+      if (out[k].same) { i += out[k].deletedBefore + 1; j++; k++; continue; }
+      const run = [];
+      const olds = [];
+      while (k < out.length && !out[k].same) {
+        for (let d = 0; d < out[k].deletedBefore; d++) olds.push(before[i++]);
+        run.push({ o: out[k], cur: after[j++] });
+        k++;
       }
-      j++;
+      let next = 0;
+      let paired = 0;
+      for (const old of olds) {
+        let best = null;
+        for (let r = next; r < run.length; r++) {
+          const sp = span(old, run[r].cur);
+          if (sp.score >= 0.3 && (!best || sp.score > best.sp.score)) best = { r, sp };
+        }
+        if (!best) continue;
+        const { a, b } = best.sp;
+        const cur = run[best.r].cur;
+        if (a < cur.length - b) run[best.r].o.ins = [a, cur.length - b];
+        next = best.r + 1;
+        paired++;
+      }
+      for (const x of run) x.o.deletedBefore = 0;
+      run[0].o.deletedBefore = olds.length - paired;
     }
     return out;
   }
 
-  function highlight(src, before) {
+  function editMarks(widget, before, shown) {
+    const folds = JSON.parse(widget.dataset.folds || '[]');
+    const groups = [];
+    const full = [];
+    for (const l of shown.split('\n')) {
+      const f = folds.find((x) => x.line === l.replace(/\s+$/, ''));
+      const code = f ? f.code.split('\n') : [l];
+      groups.push({ start: full.length, size: code.length, folded: !!f });
+      full.push(...code);
+    }
+    const marks = alignLines(before.split('\n'), full);
+    return groups.map((g) => {
+      if (!g.folded) return marks[g.start];
+      const part = marks.slice(g.start, g.start + g.size);
+      return {
+        same: part.every((mk) => mk.same),
+        deletedBefore: part.reduce((t, mk) => t + mk.deletedBefore, 0),
+      };
+    });
+  }
+
+  function highlight(src, marks) {
     const lines = tokenize(src);
-    const srcLines = src.split('\n');
-    const marks = before == null ? null : alignLines(before.split('\n'), srcLines);
     const html = lines.map((pieces, k) => {
       if (!marks) return lineHtml(pieces, null);
       const mk = marks[k] || { same: false };
@@ -630,7 +784,7 @@
     return html + '\u200b';
   }
 
-  function attachHighlighter(textarea, before) {
+  function attachHighlighter(widget, textarea, before) {
     const editor = document.createElement('div');
     editor.className = 'editor';
     const hl = document.createElement('pre');
@@ -639,10 +793,12 @@
     textarea.parentNode.insertBefore(editor, textarea);
     editor.append(hl, textarea);
     const original = textarea.value;
+    const marks = before == null ? null : editMarks(widget, before, original);
     // The edit marks describe the original listing; once the reader types,
     // the diff is against nothing and the marks go.
     const paint = () => {
-      hl.innerHTML = highlight(textarea.value, textarea.value === original ? before : null);
+      hl.innerHTML = highlight(textarea.value, textarea.value === original ? marks : null)
+        .replace(/\{ \u2026 \}|\u2026/g, '<span class="fold">$&</span>');
     };
     const sync = () => { hl.scrollTop = textarea.scrollTop; hl.scrollLeft = textarea.scrollLeft; };
     textarea.addEventListener('input', paint);
@@ -664,11 +820,11 @@
       if (widget.hasAttribute('data-edit')) {
         const all = [...document.querySelectorAll('.runner')];
         const prev = all[all.indexOf(widget) - 1];
-        if (prev) before = prev.dataset.original;
+        if (prev) before = unfold(prev, prev.dataset.original);
       }
       widget.dataset.original = original;
       frameAsTerminal(widget);
-      const paint = attachHighlighter(textarea, before);
+      const paint = attachHighlighter(widget, textarea, before);
       // Nothing to revert to until the reader edits: disable it so its
       // resting state reads as "unchanged", not "ready".
       const syncRevert = () => { revert.disabled = textarea.value === original; };
@@ -679,7 +835,23 @@
       });
       const stop = widget.querySelector('button.stop');
       if (stop) stop.addEventListener('click', () => stopAll('stopped'));
-      revert.addEventListener('click', () => { textarea.value = original; paint(); syncRevert(); });
+      const unfoldButton = widget.querySelector('button.unfold');
+      const syncUnfold = () => {
+        if (unfoldButton) unfoldButton.hidden = unfold(widget, textarea.value) === textarea.value;
+      };
+      syncUnfold();
+      textarea.addEventListener('input', syncUnfold);
+      const rows = textarea.rows;
+      if (unfoldButton) {
+        unfoldButton.addEventListener('click', () => {
+          textarea.value = unfold(widget, textarea.value);
+          textarea.rows = Math.min(24, Math.max(rows, textarea.value.split('\n').length + 1));
+          paint(); syncRevert(); syncUnfold();
+        });
+      }
+      revert.addEventListener('click', () => {
+        textarea.value = original; textarea.rows = rows; paint(); syncRevert(); syncUnfold();
+      });
     }
   }
 
