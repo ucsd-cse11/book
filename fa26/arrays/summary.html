@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collecting Values in Summary — Collecting Values</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collecting Values</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Collecting Values</h1>
+<article class="prose"><div class="exercise" data-kind="blanks" data-seed="940122605"><div class="stem">Each of these <code>CourseRoster</code> methods loops over <code>students</code>. Which kind of loop fits each one best?</div><div class="cloze"><code>String[] usernames()</code> – every student’s username, in order:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option>counter</option><option>running-sum</option><option>best-so-far</option><option data-correct>builder</option></select><br><code>int countWithShortNames(int max)</code> – how many students have a <code>displayName</code> shorter than <code>max</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option data-correct>counter</option><option>running-sum</option><option>best-so-far</option><option>builder</option></select><br><code>Student longestName()</code> – the student whose <code>displayName</code> is longest:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option>counter</option><option>running-sum</option><option data-correct>best-so-far</option><option>builder</option></select><br><code>String allIds()</code> – every <code>id</code>, joined into one <code>String</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option>counter</option><option data-correct>running-sum</option><option>best-so-far</option><option>builder</option></select></div></div><div class="exercise" data-kind="code" data-seed="978067494" data-echo data-check="names.length == 3 &amp;&amp; names[0].equals(&quot;alovelace&quot;) &amp;&amp; names[1].equals(&quot;aturing&quot;) &amp;&amp; names[2].equals(&quot;ghopper&quot;)" data-check-message="That runs, but names should be alovelace, aturing, ghopper, in that order."><div class="stem">Write the body of <code>usernames</code>, which returns a new array with each student’s <code>username</code>, in order.</div><div class="cloze code">record Student(String displayName, String username, String id) { }<br>record CourseRoster(Student[] students) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>String[] usernames() {<br><textarea class="blank" data-answer="    String[] result = new String[students.length];
+    int index = 0;
+    for(Student s: students) {
+      result[index] = s.username;
+      index += 1;
+    }
+    return result;" rows="8" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>Student ada = new Student("Ada Lovelace", "alovelace", "A10000001");<br>Student alan = new Student("Alan Turing", "aturing", "A10000002");<br>Student grace = new Student("Grace Hopper", "ghopper", "A10000003");<br>Student[] enrolled = { ada, alan, grace };<br>CourseRoster cse11 = new CourseRoster(enrolled);<br>String[] names = cse11.usernames();</div></div><div class="exercise" data-kind="choice" data-seed="2831426167"><div class="stem"><p>Here is <code>usernames</code> with one line left out. With the same <code>cse11</code> as above, what does the book show for <code>names</code>?</p><pre><code data-lang="java"><span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> <span style="color: #4b69c6">usernames</span>() {
+  <span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> result <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">String</span>[students.length];
+  <span style="color: #d73948">int</span> index <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;
+  <span style="color: #d73948">for</span>(<span style="color: #4b69c6">Student</span> s<span style="color: #d73948">:</span> students) {
+    result[index] <span style="color: #d73948">=</span> s.username;
+  }
+  <span style="color: #d73948">return</span> result;
+}</code></pre></div><ol class="choices"><li data-correct><code>names = [ghopper, null, null]</code></li><li><code>names = [alovelace, null, null]</code><div class="why">Every run of the body writes to <code>result[0]</code>, so each username replaces the one before it. The last one stays.</div></li><li><code>names = [alovelace, aturing, ghopper]</code><div class="why">Without <code>index += 1</code>, <code>index</code> is <code>0</code> every time, so the body only ever changes <code>result[0]</code>.</div></li><li>It doesn’t compile<div class="why">Nothing is wrong with the program’s types, so it compiles. It just doesn’t do what the method promises.</div></li></ol></div></article>
+<nav class="pagenav"><a class="prev" href="builder.html">← Making Arrays</a> <a class="next" href="../pict-library/pict-library.html">Pict Library Reference →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "arrays", "title": "Collecting Values", "current": 8, "steps": [{"title": "A List of Names", "slug": "collections", "url": "collections.html", "path": "/arrays/collections.html"}, {"title": "Arrays and Records", "slug": "arrays-and-records", "url": "arrays-and-records.html", "path": "/arrays/arrays-and-records.html"}, {"title": "Arrays and Loops", "slug": "loops", "url": "loops.html", "path": "/arrays/loops.html"}, {"title": "More Arrays and Loops", "slug": "more-loops", "url": "more-loops.html", "path": "/arrays/more-loops.html"}, {"title": "Arrays and main", "slug": "command-line-args", "url": "command-line-args.html", "path": "/arrays/command-line-args.html"}, {"title": "Counter as an Index", "slug": "combining-patterns", "url": "combining-patterns.html", "path": "/arrays/combining-patterns.html"}, {"title": "Arrays of Unusual Size", "slug": "more-array-creation", "url": "more-array-creation.html", "path": "/arrays/more-array-creation.html"}, {"title": "Making Arrays", "slug": "builder", "url": "builder.html", "path": "/arrays/builder.html"}, {"title": "Collecting Values in Summary", "slug": "summary", "url": "summary.html", "path": "/arrays/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

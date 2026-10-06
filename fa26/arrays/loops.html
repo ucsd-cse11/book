@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrays and Loops — Collecting Values</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collecting Values</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Collecting Values</h1>
+<article class="prose"><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There are actually a lot of ways to do this in Java. We’ll use a loop; it’s one of the most common and it works well with arrays.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Finally, real code!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Hey, everything up to now was extremely real, we watched it all run and everything!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Just show me the loop, please!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Fine. First tell me the plan for this method body, though.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>The plan?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yeah. Loop plans over arrays will often say something like “for each element of the array, the code will…”</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK. For each point, the code will get its distance to the target and check if it’s closer than… the other… closer than something.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, we need a point of comparison. This is a kind of <span class="term" data-term="accumulator">accumulator</span> loop because it’s going to track a value that “accumulates” some information over time. Here I’d call it a <span class="term" data-term="best-so-far">best-so-far</span> accumulator, which tracks “the closest point we’ve seen so far”.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, so for each point, the code will get its distance to the target and check if it’s closer than the closest point we’ve seen so far.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>And what does it do if we get something closer?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I guess it… updates it?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Cool! Let’s put it all together.</div></div><div class="runner" id="w519125963" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  double distanceTo(Point other) { … }&quot;,&quot;code&quot;:&quot;  double distanceTo(Point other) {\n    double dx = x - other.x;\n    double dy = y - other.y;\n    return Math.sqrt(dx * dx + dy * dy);\n  }&quot;}]" data-echo data-gate><textarea class="code" rows="22" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {
+  double distanceTo(Point other) { … }
+}
+record Positions(Point[] points) {
+  Point closestTo(Point target) {
+    Point closest = points[0];
+    for(Point p: points) {
+      if(p.distanceTo(target) &lt; closest.distanceTo(target)) {
+        closest = p;
+      }
+    }
+    return closest;
+  }
+}
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);
+Point closestOrigin = posns.closestTo(new Point(0.0, 0.0));
+Point closesttTopRight = posns.closestTo(new Point(9.0, 9.0));</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Wow, that’s so interesting. There’s a lot going on!</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>Indeed. We just saw two things at once:</p><ul><li><span class="term" data-term="assignment">Assignment</span> – the definition of <code>closest</code> <strong>starts</strong> as the first value in the array, and then <strong>changes</strong> when we use <code>closest = p</code></li><li><span class="term" data-term="aforloop">A <code>for</code> loop</span> – the syntax <code>for(Point p: points) { /* loop body */ }</code>. It runs the <span class="term" data-term="loop body">loop body</span> once for each element of <code>points</code>, and each time it runs, the next element is stored in <code>p</code>.</li></ul><p>These two things tend to go together in programming: many loops that we want to write only work with assignment.</p><p>And one other bit of jargon – a mathy name for a best-so-far loop that returns the element that is the “smallest” in some way is <span class="term" data-term="argmin">argmin</span>, which you might see in other contexts. Here that “something” is the distance to a target.</p></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Cool!</div></div><div class="exercise" data-kind="code" data-seed="3454164609" data-echo data-check="partyBest == big &amp;&amp; lunchBest == small" data-check-message="That runs, but party.bestDeal() should be big and lunch.bestDeal() should be small."><div class="stem"><code>Pizza</code> has the <code>area</code> and <code>betterDeal</code> methods from before. Write the whole body of <code>bestDeal</code>, which returns the pizza in the order with the best (lowest) price per square inch.</div><div class="cloze code">record Pizza(double inches, int costCents) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>double area() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>double radius = inches / 2;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return radius * radius * Math.PI;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>boolean betterDeal(Pizza other) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return costCents / area() &lt; other.costCents / other.area();<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>record PizzaOrder(Pizza[] pizzas) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Pizza bestDeal() {<br><textarea class="blank" data-answer="    Pizza best = pizzas[0];
+    for(Pizza p: pizzas) {
+      if(p.betterDeal(best)) {
+        best = p;
+      }
+    }
+    return best;" rows="8" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>Pizza small = new Pizza(10, 500);<br>Pizza big = new Pizza(16, 1000);<br>Pizza medium = new Pizza(12, 900);<br>Pizza[] partyPizzas = { small, big, medium };<br>PizzaOrder party = new PizzaOrder(partyPizzas);<br>Pizza[] lunchPizzas = { medium, small };<br>PizzaOrder lunch = new PizzaOrder(lunchPizzas);<br>Pizza partyBest = party.bestDeal();<br>Pizza lunchBest = lunch.bestDeal();</div></div></article>
+<nav class="pagenav"><a class="prev" href="arrays-and-records.html">← Arrays and Records</a> <a class="next" href="more-loops.html">More Arrays and Loops →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "arrays", "title": "Collecting Values", "current": 2, "steps": [{"title": "A List of Names", "slug": "collections", "url": "collections.html", "path": "/arrays/collections.html"}, {"title": "Arrays and Records", "slug": "arrays-and-records", "url": "arrays-and-records.html", "path": "/arrays/arrays-and-records.html"}, {"title": "Arrays and Loops", "slug": "loops", "url": "loops.html", "path": "/arrays/loops.html"}, {"title": "More Arrays and Loops", "slug": "more-loops", "url": "more-loops.html", "path": "/arrays/more-loops.html"}, {"title": "Arrays and main", "slug": "command-line-args", "url": "command-line-args.html", "path": "/arrays/command-line-args.html"}, {"title": "Counter as an Index", "slug": "combining-patterns", "url": "combining-patterns.html", "path": "/arrays/combining-patterns.html"}, {"title": "Arrays of Unusual Size", "slug": "more-array-creation", "url": "more-array-creation.html", "path": "/arrays/more-array-creation.html"}, {"title": "Making Arrays", "slug": "builder", "url": "builder.html", "path": "/arrays/builder.html"}, {"title": "Collecting Values in Summary", "slug": "summary", "url": "summary.html", "path": "/arrays/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

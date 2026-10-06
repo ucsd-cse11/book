@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Making Arrays — Collecting Values</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collecting Values</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Collecting Values</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK I’m liking these patterns. What are some other ones?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great let’s keep going. Sometimes you want to take an array and produce a <strong>new</strong> array with a value calculated from each element of the original array. That requires some new thinking. An example is something like taking a roster of <code>Student</code> records and getting all their emails as a <code>String</code> array.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, I can see that being useful.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s set it up. A <code>Student</code> record and a <code>CourseRoster</code> record with an array of students</div></div><div class="runner" id="w3415562841" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="12" spellcheck="false" autocorrect="off" autocapitalize="off">record Student(String displayName, String username, String id) {
+  String email(String domain) { return username + "@" + domain; }
+}
+record CourseRoster(Student[] students) {
+  
+}
+Student ada = new Student("Ada Lovelace", "alovelace", "A10000001");
+Student alan = new Student("Alan Turing", "aturing", "A10000002");
+Student grace = new Student("Grace Hopper", "ghopper", "A10000003");
+Student[] enrolled = { ada, alan, grace };
+CourseRoster cse11 = new CourseRoster(enrolled);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, I see. So we’re going to try to write <code>String[] emails(String domain)</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right, and we need one more feature of arrays to handle it. The pattern here is called <span class="term" data-term="builder">builder</span>, and the new feature is <strong>changing</strong> an element of an array <code>arr[i] = v</code> where <code>arr</code> is an array and <code>i</code> is an integer. That’s called <span class="term" data-term="array update">array update</span>, and it’s how we make sure the <code>null</code> values are all replaced with the values we want before returning the new array.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, so we make the array at the top, kind of like we initialized the totals or counters, and then we update in a loop?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yup, that’s right. Like with <code>numberedList</code>, we combine it with a counter, so that we can refer to indices correctly. Here the counter is used as the index for the array update</div></div><div class="runner" id="w2731669360" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="21" spellcheck="false" autocorrect="off" autocapitalize="off">record Student(String displayName, String username, String id) {
+  String email(String domain) { return username + "@" + domain; }
+}
+record CourseRoster(Student[] students) {
+  String[] emails(String domain) {
+    String[] emailStrings = new String[students.length];
+    int index = 0;
+    for(Student s: students) {
+      emailStrings[index] = s.email(domain);
+      index += 1;
+    }
+    return emailStrings;
+  }
+}
+Student ada = new Student("Ada Lovelace", "alovelace", "A10000001");
+Student alan = new Student("Alan Turing", "aturing", "A10000002");
+Student grace = new Student("Grace Hopper", "ghopper", "A10000003");
+Student[] enrolled = { ada, alan, grace };
+CourseRoster cse11 = new CourseRoster(enrolled);
+String[] ucsdEmails = cse11.emails("ucsd.edu");</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Interesting. So it returns the whole array.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right. The <code>new String[students.length]</code> makes a brand new array, and the loop fills it in with string values from the results of the <code>.email</code> method.</div></div><div class="exercise" data-kind="code" data-seed="137963542" data-echo data-check="partyAreas.length == 3 &amp;&amp; partyAreas[0] == small.area() &amp;&amp; partyAreas[1] == big.area() &amp;&amp; partyAreas[2] == medium.area()" data-check-message="That runs, but partyAreas should hold the areas of small, big, and medium, in that order."><div class="stem"><code>areas</code> should return a new array holding the area of each pizza in the order, in the same order. Fill in the three missing pieces.</div><div class="cloze code">record Pizza(double inches, int costCents) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>double area() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>double radius = inches / 2;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return radius * radius * Math.PI;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>record PizzaOrder(Pizza[] pizzas) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>double[] areas() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>double[] result = <input class="blank" data-answer="new double[pizzas.length]" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>int index = 0;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>for(Pizza p: pizzas) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span><input class="blank" data-answer="result[index] = p.area();" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span><input class="blank" data-answer="index += 1;" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return result;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>Pizza small = new Pizza(10, 500);<br>Pizza big = new Pizza(16, 1000);<br>Pizza medium = new Pizza(12, 900);<br>Pizza[] partyPizzas = { small, big, medium };<br>PizzaOrder party = new PizzaOrder(partyPizzas);<br>double[] partyAreas = party.areas();</div></div></article>
+<nav class="pagenav"><a class="prev" href="more-array-creation.html">← Arrays of Unusual Size</a> <a class="next" href="summary.html">Collecting Values in Summary →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "arrays", "title": "Collecting Values", "current": 7, "steps": [{"title": "A List of Names", "slug": "collections", "url": "collections.html", "path": "/arrays/collections.html"}, {"title": "Arrays and Records", "slug": "arrays-and-records", "url": "arrays-and-records.html", "path": "/arrays/arrays-and-records.html"}, {"title": "Arrays and Loops", "slug": "loops", "url": "loops.html", "path": "/arrays/loops.html"}, {"title": "More Arrays and Loops", "slug": "more-loops", "url": "more-loops.html", "path": "/arrays/more-loops.html"}, {"title": "Arrays and main", "slug": "command-line-args", "url": "command-line-args.html", "path": "/arrays/command-line-args.html"}, {"title": "Counter as an Index", "slug": "combining-patterns", "url": "combining-patterns.html", "path": "/arrays/combining-patterns.html"}, {"title": "Arrays of Unusual Size", "slug": "more-array-creation", "url": "more-array-creation.html", "path": "/arrays/more-array-creation.html"}, {"title": "Making Arrays", "slug": "builder", "url": "builder.html", "path": "/arrays/builder.html"}, {"title": "Collecting Values in Summary", "slug": "summary", "url": "summary.html", "path": "/arrays/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A List of Names — Collecting Values</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collecting Values</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Collecting Values</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Professor, I’m unsatisfied with what we’ve learned. I feel like you’re not telling the whole story.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Oh? In what way?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, we talk about records for storing students, but not a whole list of them. Surely things like TSS don’t have a different definition for every student. And there was an example with a <code>ShoppingItem</code> or something like that, but it only had one item in it. When you shop online your cart is a whole bunch of different items. And a lot of pictures you might want to make have <strong>lots</strong> of little pieces, like a lot of stripes or something like that. I don’t see at all how you’d do that with what you’ve shown me.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Ah, you want to create collections or sequences of values of the same type!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Uh, yeah? Sure, I guess, that sounds kind of right.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There are a lot of ways to do that in Java, but <span class="term" data-term="arrays">arrays</span> are one really common tool. Here’s an array in Java, and how to access its pieces:</div></div><div class="runner" id="w3366318433" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="8" spellcheck="false" autocorrect="off" autocapitalize="off">String[] names = { "Anya", "Rachel", "Neelkanth", "Sydney", "Daniela", "Gonzalo" };
+String anya = names[0];
+String rachel = names[1];
+String sydney = names[3];
+int gonzaloIndex = 5;
+String gonzalo = names[gonzaloIndex];
+int numberOfNames = names.length;</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, so the array itself is stored in <code>names</code>, and you can use the <code>[]</code> to look it up? And indexes start at 0?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right. We call <code>array[i]</code> <span class="term" data-term="array indexing">array indexing</span>, and <code>i</code> has to be an <code>int</code> that is between <code>0</code> and the size of the array minus 1</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Why minus 1?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, how many elements are in that array (we call each value in an array an <span class="term" data-term="element">element</span>)?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Six…</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>And what’s the index of the last one?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>You made a definition for it, it was 5… oh! I see.</div></div><div class="exercise" data-kind="choice" data-seed="1472448305" data-multi><div class="stem"><p>Here is an array of <code>double</code>s:</p><pre><code data-lang="java"><span style="color: #d73948">double</span><span style="color: #d73948">[]</span> temps <span style="color: #d73948">=</span> { <span style="color: #b60157">72</span><span style="color: #b60157">.</span><span style="color: #b60157">5</span>, <span style="color: #b60157">68</span><span style="color: #b60157">.</span><span style="color: #b60157">0</span>, <span style="color: #b60157">75</span><span style="color: #b60157">.</span><span style="color: #b60157">2</span>, <span style="color: #b60157">80</span><span style="color: #b60157">.</span><span style="color: #b60157">1</span> };</code></pre><p>Which of these are valid ways to index <code>temps</code>? Select all that apply.</p></div><ol class="choices"><li data-correct><code>temps[0]</code></li><li data-correct><code>temps[3]</code></li><li><code>temps[4]</code><div class="why"><code>temps</code> has 4 elements, so the last index is <code>3</code>.</div></li><li><code>temps[-1]</code><div class="why">Indexes start at <code>0</code>; there is nothing before it.</div></li><li><code>temps[1.0]</code><div class="why">An index has to be an <code>int</code>, even when the elements are <code>double</code>s.</div></li></ol></div></article>
+<nav class="pagenav"><a class="prev" href="../recipe-for-success/exercises.html">← Practice</a> <a class="next" href="arrays-and-records.html">Arrays and Records →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "arrays", "title": "Collecting Values", "current": 0, "steps": [{"title": "A List of Names", "slug": "collections", "url": "collections.html", "path": "/arrays/collections.html"}, {"title": "Arrays and Records", "slug": "arrays-and-records", "url": "arrays-and-records.html", "path": "/arrays/arrays-and-records.html"}, {"title": "Arrays and Loops", "slug": "loops", "url": "loops.html", "path": "/arrays/loops.html"}, {"title": "More Arrays and Loops", "slug": "more-loops", "url": "more-loops.html", "path": "/arrays/more-loops.html"}, {"title": "Arrays and main", "slug": "command-line-args", "url": "command-line-args.html", "path": "/arrays/command-line-args.html"}, {"title": "Counter as an Index", "slug": "combining-patterns", "url": "combining-patterns.html", "path": "/arrays/combining-patterns.html"}, {"title": "Arrays of Unusual Size", "slug": "more-array-creation", "url": "more-array-creation.html", "path": "/arrays/more-array-creation.html"}, {"title": "Making Arrays", "slug": "builder", "url": "builder.html", "path": "/arrays/builder.html"}, {"title": "Collecting Values in Summary", "slug": "summary", "url": "summary.html", "path": "/arrays/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

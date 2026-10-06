@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrays and Records — Collecting Values</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collecting Values</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Collecting Values</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, so we can make collections of strings. I’m not impressed.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Oh?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I started this conversation wanting to make big collections of like, lots of images or course rosters like you keep suggesting.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>I see, that makes sense. Let me think of a good first example… OK how about this. We’ll have a class that stores an <strong>array</strong> of points, representing a bunch of positions on a coordinate plane. In, say, sports analytics, this could be positions of players on a field. In a physics experiment, it could be positions of particles.</div></div><div class="runner" id="w2916695963" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="3" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) { }
+record Positions(Point[] points) { }</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, so now you’ve used <code>Point[]</code> as the type of a field?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right. Why don’t you try constructing some example points and a <code>Positions</code> instance?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Sure.</div></div><div class="runner" id="w2175718735" data-engine="java17" data-expect="error" data-echo data-gate data-edit><textarea class="code" rows="7" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) { }
+record Positions(Point[] points) { }
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Positions posns = new Positions(p1, p2, p3);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Huh, that didn’t work. Why not?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>How many fields does <code>Positions</code> have?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Three?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Setting aside your example for a minute, just look at <code>record Positions(Point[] points)</code>. How many fields?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh, just one. Ohhhh so I have to make an array and give just one array to the constructor? Like this:</div></div><div class="runner" id="w1661513673" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="8" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) { }
+record Positions(Point[] points) { }
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>You got it. OK so let’s think of some interesting methods to write for <code>Positions</code>. Can you think of any?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Um… maybe like which points are the closest to each other or furthest?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great. Let’s do “which point is closest to a given point”, how about that? That could make sense for a lot of tasks, like which player is closest to a goal, or which particle is closest to some stimulus in an experiment.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Sure, I buy that.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s assume <code>Point</code> defines <code>double distanceTo(Point other)</code>; we’ve seen things like that before, and focus on this new method in the <code>Positions</code> record. What do you think the method header looks like?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, I need a name and the arguments. So probably the name is like <code>closestTo</code> and then the argument is a <code>Point</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>And you need one more thing – the return type.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh, probably it returns a point, like the one it found that is closest.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great. What’s a good placeholder value for the method?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Maybe just like… the first point in the array?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Sure – go ahead and let’s get that in. Maybe at the same time write a few examples of <strong>calling</strong> it with comments for what you expect?</div></div><div class="runner" id="w1236100872" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  double distanceTo(Point other) { … }&quot;,&quot;code&quot;:&quot;  double distanceTo(Point other) {\n    double dx = x - other.x;\n    double dy = y - other.y;\n    return Math.sqrt(dx * dx + dy * dy);\n  }&quot;}]" data-echo data-gate data-edit><textarea class="code" rows="16" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {
+  double distanceTo(Point other) { … }
+}
+record Positions(Point[] points) {
+  Point closestTo(Point target) {
+    return points[0];
+  }
+}
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);
+Point closestOrigin = posns.closestTo(new Point(0.0, 0.0));
+Point closesttTopRight = posns.closestTo(new Point(9.0, 9.0));</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Excellent! So both of these are always returning the 3.0, 4.0 point for now because that’s the first one. Now we need to fill it in.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Awesome!</div></div><div class="exercise" data-kind="code" data-seed="3264972866" data-echo data-check="((Object) order.pizzas) instanceof Pizza[] ps &amp;&amp; ps.length >= 2" data-check-message="That runs, but order.pizzas should be an array holding both pizzas."><div class="stem">Make <code>order</code> a <code>PizzaOrder</code> that holds both pizzas: fill in the type of the <code>pizzas</code> field, define an array of the pizzas on the empty line, and pass it to the constructor.</div><div class="cloze code">record Pizza(double inches, int costCents) { }<br>record PizzaOrder(<input class="blank" data-answer="Pizza[]" placeholder="type" spellcheck="false" autocorrect="off" autocapitalize="off"> pizzas) { }<br>Pizza big = new Pizza(16, 1000);<br>Pizza small = new Pizza(10, 500);<br><input class="blank" data-answer="Pizza[] pies = { big, small };" placeholder="define an array here" spellcheck="false" autocorrect="off" autocapitalize="off"><br>PizzaOrder order = new PizzaOrder(<input class="blank" data-answer="pies" spellcheck="false" autocorrect="off" autocapitalize="off">);</div></div></article>
+<nav class="pagenav"><a class="prev" href="collections.html">← A List of Names</a> <a class="next" href="loops.html">Arrays and Loops →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "arrays", "title": "Collecting Values", "current": 1, "steps": [{"title": "A List of Names", "slug": "collections", "url": "collections.html", "path": "/arrays/collections.html"}, {"title": "Arrays and Records", "slug": "arrays-and-records", "url": "arrays-and-records.html", "path": "/arrays/arrays-and-records.html"}, {"title": "Arrays and Loops", "slug": "loops", "url": "loops.html", "path": "/arrays/loops.html"}, {"title": "More Arrays and Loops", "slug": "more-loops", "url": "more-loops.html", "path": "/arrays/more-loops.html"}, {"title": "Arrays and main", "slug": "command-line-args", "url": "command-line-args.html", "path": "/arrays/command-line-args.html"}, {"title": "Counter as an Index", "slug": "combining-patterns", "url": "combining-patterns.html", "path": "/arrays/combining-patterns.html"}, {"title": "Arrays of Unusual Size", "slug": "more-array-creation", "url": "more-array-creation.html", "path": "/arrays/more-array-creation.html"}, {"title": "Making Arrays", "slug": "builder", "url": "builder.html", "path": "/arrays/builder.html"}, {"title": "Collecting Values in Summary", "slug": "summary", "url": "summary.html", "path": "/arrays/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

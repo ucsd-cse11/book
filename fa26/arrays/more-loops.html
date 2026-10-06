@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>More Arrays and Loops — Collecting Values</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collecting Values</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Collecting Values</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK so you mentioned that we have “accumulator” loops and we did a “best-so-far” loop. What are some other kinds?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Glad you asked! There are lots of tasks we like to do with arrays, and many involve loops, and many do have logical “plans” and even useful names. Let’s write a method that is a small change to <code>closestTo</code>: <code>averageDistanceTo</code>. Based on the name, what do you think it does?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I guess it takes a point and averages up all the distances to that point?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right! What do you think it will need to track?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I guess the total distance, so we can divide it later?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right! We’d call that a <span class="term" data-term="running-sum">running-sum</span> accumulator. What type do you think it would be, what’s a good name for it, and what’s a good initial value?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I guess <code>double</code>? Named <code>total</code>, starting at <code>0</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s try it.</div></div><div class="runner" id="w1384228687" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  double distanceTo(Point other) { … }&quot;,&quot;code&quot;:&quot;  double distanceTo(Point other) {\n    double dx = x - other.x;\n    double dy = y - other.y;\n    return Math.sqrt(dx * dx + dy * dy);\n  }&quot;},{&quot;line&quot;:&quot;  Point closestTo(Point target) { … }&quot;,&quot;code&quot;:&quot;  Point closestTo(Point target) {\n    Point closest = points[0];\n    for(Point p: points) {\n      if(p.distanceTo(target) < closest.distanceTo(target)) {\n        closest = p;\n      }\n    }\n    return closest;\n  }&quot;}]" data-echo data-gate><textarea class="code" rows="21" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {
+  double distanceTo(Point other) { … }
+}
+record Positions(Point[] points) {
+  Point closestTo(Point target) { … }
+  double averageDistanceTo(Point target) {
+    double total = 0;
+    for(Point p: points) {
+      total += p.distanceTo(target);
+    }
+    return total / points.length;
+  }
+}
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);
+double avgToOrigin = posns.averageDistanceTo(new Point(0, 0));
+double avgToY10 = posns.averageDistanceTo(new Point(0, 10));</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, I think I get that.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There are also <span class="term" data-term="counter">counter</span> loops, that, well, count something. For example, you could count how many Points are within a certain range of a target. What would the method header be for something like that?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmmm maybe like <code>countNearby</code>? And I guess it returns an <code>int</code> because that’s what a count is.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great, and the parameters?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I guess another <code>Point target</code> like we’ve been doing?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Anything else? Did we talk about any other data in the problem description?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well you said “within a certain range”. I guess we need to pick that. Should it be a parameter?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>You could try it that way!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK so <code>int countNearby(Point target, double range)</code></div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Looks great. Let’s try to write it.</div></div><div class="runner" id="w2307651411" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  double distanceTo(Point other) { … }&quot;,&quot;code&quot;:&quot;  double distanceTo(Point other) {\n    double dx = x - other.x;\n    double dy = y - other.y;\n    return Math.sqrt(dx * dx + dy * dy);\n  }&quot;},{&quot;line&quot;:&quot;  Point closestTo(Point target) { … }&quot;,&quot;code&quot;:&quot;  Point closestTo(Point target) {\n    Point closest = points[0];\n    for(Point p: points) {\n      if(p.distanceTo(target) < closest.distanceTo(target)) {\n        closest = p;\n      }\n    }\n    return closest;\n  }&quot;},{&quot;line&quot;:&quot;  double averageDistanceTo(Point target) { … }&quot;,&quot;code&quot;:&quot;  double averageDistanceTo(Point target) {\n    double total = 0;\n    for(Point p: points) {\n      total += p.distanceTo(target);\n    }\n    return total / points.length;\n  }&quot;}]" data-echo data-gate data-edit><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {
+  double distanceTo(Point other) { … }
+}
+record Positions(Point[] points) {
+  Point closestTo(Point target) { … }
+  double averageDistanceTo(Point target) { … }
+  int countNearby(Point target, double range) {
+    int count = 0;
+    for(Point p: points) {
+        if(p.distanceTo(target) &lt; range) {
+            count += 1;
+        }
+    }
+    return count;
+  }
+}
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);
+int within6Origin = posns.countNearby(new Point(0.0, 0.0), 6.0);
+int within1OfTenTen = posns.countNearby(new Point(10.0, 10.0), 1.0);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I see. OK so we’ve seen running-sum, best-so-far, and counters. That’s a cool way to organize thinking about loops and arrays. I hadn’t thought of giving them those names before.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>I hope it helps you write cool array programs!</div></div><div class="exercise" data-kind="blanks" data-seed="3035574270"><div class="stem"><p>Recall <code>Pizza</code> and <code>PizzaOrder</code>:</p><pre><code data-lang="java">record <span style="color: #4b69c6">Pizza</span>(<span style="color: #d73948">double</span> inches, <span style="color: #d73948">int</span> costCents) {
+  <span style="color: #d73948">double</span> <span style="color: #4b69c6">area</span>() {
+    <span style="color: #d73948">double</span> radius <span style="color: #d73948">=</span> inches <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>;
+    <span style="color: #d73948">return</span> radius <span style="color: #d73948">*</span> radius <span style="color: #d73948">*</span> <span style="color: #4b69c6">Math</span>.<span style="color: #b60157">PI</span>;
+  }
+}
+record <span style="color: #4b69c6">PizzaOrder</span>(<span style="color: #4b69c6">Pizza</span><span style="color: #d73948">[]</span> pizzas) { }</code></pre><p>Each of these <code>PizzaOrder</code> methods loops over its <code>pizzas</code>. Which kind of loop fits each one best?</p></div><div class="cloze"><code>int countCheaperThan(int limitCents)</code> – how many pizzas in the order cost less than <code>limitCents</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option data-correct>counter</option><option>running-sum</option><option>best-so-far</option></select><br><code>Pizza largest()</code> – the pizza with the biggest diameter:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option>counter</option><option>running-sum</option><option data-correct>best-so-far</option></select><br><code>double totalArea()</code> – how many square inches of pizza the whole order adds up to:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option>counter</option><option data-correct>running-sum</option><option>best-so-far</option></select></div></div></article>
+<nav class="pagenav"><a class="prev" href="loops.html">← Arrays and Loops</a> <a class="next" href="command-line-args.html">Arrays and main →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "arrays", "title": "Collecting Values", "current": 3, "steps": [{"title": "A List of Names", "slug": "collections", "url": "collections.html", "path": "/arrays/collections.html"}, {"title": "Arrays and Records", "slug": "arrays-and-records", "url": "arrays-and-records.html", "path": "/arrays/arrays-and-records.html"}, {"title": "Arrays and Loops", "slug": "loops", "url": "loops.html", "path": "/arrays/loops.html"}, {"title": "More Arrays and Loops", "slug": "more-loops", "url": "more-loops.html", "path": "/arrays/more-loops.html"}, {"title": "Arrays and main", "slug": "command-line-args", "url": "command-line-args.html", "path": "/arrays/command-line-args.html"}, {"title": "Counter as an Index", "slug": "combining-patterns", "url": "combining-patterns.html", "path": "/arrays/combining-patterns.html"}, {"title": "Arrays of Unusual Size", "slug": "more-array-creation", "url": "more-array-creation.html", "path": "/arrays/more-array-creation.html"}, {"title": "Making Arrays", "slug": "builder", "url": "builder.html", "path": "/arrays/builder.html"}, {"title": "Collecting Values in Summary", "slug": "summary", "url": "summary.html", "path": "/arrays/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>
