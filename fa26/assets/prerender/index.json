@@ -475,13 +475,6 @@
   "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@919]\nwithin6Origin = 2\nwithin1OfTenTen = 0\n",
   "images": 0
  },
- "3c50b235": {
-  "slug": "arrays/combining-patterns",
-  "widget": 0,
-  "state": "done",
-  "text": "groceryItems = [eggs, milk, bread]\ngroceries = ItemList[items=[Ljava.lang.String;@752]\nlist = \n1. eggs\n2. milk\n3. bread\n",
-  "images": 0
- },
  "838ebaac": {
   "slug": "arrays/more-array-creation",
   "widget": 0,
@@ -508,6 +501,13 @@
   "widget": 1,
   "state": "done",
   "text": "ada = Student[displayName=Ada Lovelace, username=alovelace, id=A10000001]\nalan = Student[displayName=Alan Turing, username=aturing, id=A10000002]\ngrace = Student[displayName=Grace Hopper, username=ghopper, id=A10000003]\nenrolled = [Student[displayName=Ada Lovelace, username=alovelace, id=A10000001], Student[displayName=Alan Turing, username=aturing, id=A10000002], Student[displayName=Grace Hopper, username=ghopper, id=A10000003]]\ncse11 = CourseRoster[students=[LProgram$Student;@8e7]\nucsdEmails = [alovelace@ucsd.edu, aturing@ucsd.edu, ghopper@ucsd.edu]\n",
+  "images": 0
+ },
+ "b8cda1a1": {
+  "slug": "arrays/combining-patterns",
+  "widget": 0,
+  "state": "done",
+  "text": "groceryItems = [eggs, milk, bread]\ngroceries = ItemList[items=[Ljava.lang.String;@7b4]\nlist = 1. eggs\n2. milk\n3. bread\n\n",
   "images": 0
  }
 }

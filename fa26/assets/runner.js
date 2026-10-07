@@ -855,6 +855,50 @@
     }
   }
 
+  // Tab in a code textarea (a widget's editor, a multi-line code hole)
+  // indents by two spaces and Shift+Tab outdents, instead of moving focus.
+  // Escape and then Tab still moves focus on, so the keyboard is never
+  // trapped. Delegated, so content nav.js swaps in is covered too.
+  const INDENT = '  ';
+  let released = null;
+
+  function edit(ta, from, to, text) {
+    ta.focus();
+    ta.setSelectionRange(from, to);
+    // insertText keeps the browser's undo history; setRangeText does not.
+    if (!document.execCommand('insertText', false, text)) {
+      ta.setRangeText(text, from, to, 'end');
+      ta.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  }
+
+  function indent(ta, out) {
+    const v = ta.value;
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    if (!out && start === end) { edit(ta, start, end, INDENT); return; }
+    const from = v.lastIndexOf('\n', start - 1) + 1;
+    const to = end > start && v[end - 1] === '\n' ? end - 1 : end;
+    const lines = v.slice(from, to).split('\n');
+    const changed = lines.map((l) => out ? l.replace(/^ {1,2}/, '') : INDENT + l);
+    const text = changed.join('\n');
+    if (text === lines.join('\n')) return;
+    edit(ta, from, to, text);
+    const first = changed[0].length - lines[0].length;
+    ta.setSelectionRange(Math.max(from, start + first), end + text.length - (to - from));
+  }
+
+  document.addEventListener('keydown', (e) => {
+    const ta = e.target;
+    if (!(ta instanceof HTMLTextAreaElement) || !ta.classList.contains('code')) return;
+    if (e.key === 'Escape') { released = ta; return; }
+    if (['Shift', 'Control', 'Alt', 'Meta'].includes(e.key)) return;
+    const tab = e.key === 'Tab' && !e.ctrlKey && !e.altKey && !e.metaKey;
+    if (!tab || released === ta) { released = null; return; }
+    e.preventDefault();
+    indent(ta, e.shiftKey);
+  });
+
   // For other page scripts (exercise.js runs code exercises through it) and
   // the step router (nav.js re-hydrates swapped-in content).
   window.bookRunner = { run, hydrate, stop: () => stopAll('stopped') };

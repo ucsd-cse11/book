@@ -56,6 +56,8 @@
     const newMeta = doc.querySelector('script[type="application/x-steps"]');
     if (!newArticle || !newMeta) { location.href = url; return; }
     document.querySelector('article.prose').replaceWith(newArticle);
+    const newHeading = doc.querySelector('main > h1');
+    if (newHeading) document.querySelector('main > h1').replaceWith(newHeading);
     const newNav = doc.querySelector('nav.pagenav');
     if (newNav) document.querySelector('nav.pagenav').replaceWith(newNav);
     data = JSON.parse(newMeta.textContent);

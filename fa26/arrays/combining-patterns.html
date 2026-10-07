@@ -13,14 +13,14 @@
   <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
 </header>
 <main>
-<h1>Collecting Values</h1>
+<h1>Counter as an Index</h1>
 <article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>I could use some more practice and ideas with arrays.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Glad you asked. Let’s see how to combine a <strong>counter</strong> and a <strong>running total</strong> to do something cool with an array.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I’m game</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>Let’s imagine we want to print an array of strings, but numbered. So we have <code>{"apple", "banana"}</code> and we want to print it as</p><pre><code>1. apple
-2. banana</code></pre></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I can see that being useful.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So we’ll set it up as a <code>record</code> with a field that’s a <code>String[]</code>, and then a method that builds this numbered string. One thing I need to mention first – <code>"\n"</code> means “newline” in Java. It’s a <span class="term" data-term="escape character">escape character</span> that has a special meaning. It won’t print as <code>\n</code>, it’ll make the rest of the string go onto the next line when printed.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Alright, I’ll be ready for it.</div></div><div class="runner" id="w1011921461" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="15" spellcheck="false" autocorrect="off" autocapitalize="off">record ItemList(String[] items) {
+2. banana</code></pre></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I can see that being useful.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So we’ll set it up as a <code>record</code> with a field that’s a <code>String[]</code>, and then a method that builds this numbered string. One thing I need to mention first – <code>"\n"</code> means “newline” in Java. It’s a <span class="term" data-term="escape character">escape character</span> that has a special meaning. It won’t print as <code>\n</code>, it’ll make the rest of the string go onto the next line when printed.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Alright, I’ll be ready for it.</div></div><div class="runner" id="w3100484001" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="15" spellcheck="false" autocorrect="off" autocapitalize="off">record ItemList(String[] items) {
   String numberedList() {
     int counter = 1;
     String result = "";
     for(String item: items) {
-      result = result + "\n" + counter + ". " + item;
+      result = result + counter + ". " + item + "\n";
       counter = counter + 1;
     }
     return result;

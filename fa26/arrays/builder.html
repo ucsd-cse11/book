@@ -13,7 +13,7 @@
   <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
 </header>
 <main>
-<h1>Collecting Values</h1>
+<h1>Making Arrays</h1>
 <article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK I’m liking these patterns. What are some other ones?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great let’s keep going. Sometimes you want to take an array and produce a <strong>new</strong> array with a value calculated from each element of the original array. That requires some new thinking. An example is something like taking a roster of <code>Student</code> records and getting all their emails as a <code>String</code> array.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, I can see that being useful.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s set it up. A <code>Student</code> record and a <code>CourseRoster</code> record with an array of students</div></div><div class="runner" id="w3415562841" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="12" spellcheck="false" autocorrect="off" autocapitalize="off">record Student(String displayName, String username, String id) {
   String email(String domain) { return username + "@" + domain; }
 }
