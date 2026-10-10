@@ -454,27 +454,6 @@
   "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@b06]\nclosestOrigin = Point[x=3.0, y=4.0]\nclosesttTopRight = Point[x=3.0, y=4.0]\n",
   "images": 0
  },
- "61bc7a77": {
-  "slug": "arrays/loops",
-  "widget": 0,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@78a]\nclosestOrigin = Point[x=3.0, y=4.0]\nclosesttTopRight = Point[x=7.0, y=8.0]\n",
-  "images": 0
- },
- "2b79d5e2": {
-  "slug": "arrays/more-loops",
-  "widget": 0,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@7a4]\navgToOrigin = 6.909721775442478\navgToY10 = 8.69045326512482\n",
-  "images": 0
- },
- "304c9408": {
-  "slug": "arrays/more-loops",
-  "widget": 1,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@919]\nwithin6Origin = 2\nwithin1OfTenTen = 0\n",
-  "images": 0
- },
  "838ebaac": {
   "slug": "arrays/more-array-creation",
   "widget": 0,
@@ -508,6 +487,139 @@
   "widget": 0,
   "state": "done",
   "text": "groceryItems = [eggs, milk, bread]\ngroceries = ItemList[items=[Ljava.lang.String;@7b4]\nlist = 1. eggs\n2. milk\n3. bread\n\n",
+  "images": 0
+ },
+ "ead4c3a9": {
+  "slug": "arrays/loops",
+  "widget": 0,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@7cd]\nclosestOrigin = Point[x=3.0, y=4.0]\nclosesttTopRight = Point[x=7.0, y=8.0]\n",
+  "images": 0
+ },
+ "8a1a07a0": {
+  "slug": "arrays/more-loops",
+  "widget": 0,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@7a9]\navgToOrigin = 6.909721775442478\navgToY10 = 8.69045326512482\n",
+  "images": 0
+ },
+ "eb466d5e": {
+  "slug": "arrays/more-loops",
+  "widget": 1,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@91e]\nwithin6Origin = 2\nwithin1OfTenTen = 0\n",
+  "images": 0
+ },
+ "2aa47331": {
+  "slug": "memory/where-things-are",
+  "widget": 0,
+  "state": "done",
+  "text": "tp1 = trash panda\ntrash = trash\ntp2 = trash panda\ntp3 = trash panda\nsame1and2 = false\nsame1and3 = false\nsame2and3 = true\n",
+  "images": 0
+ },
+ "524fca29": {
+  "slug": "memory/where-things-are",
+  "widget": 1,
+  "state": "done",
+  "text": "nums1 = [6, 7]\nnums2 = [6, 7]\nnums3 = [6, 7]\nsame1and2 = false\nsame1and3 = false\nsame2and3 = true\n",
+  "images": 0
+ },
+ "f5926634": {
+  "slug": "memory/checking-contents",
+  "widget": 0,
+  "state": "done",
+  "text": "p1 == p2? false\np1.equals(p2)? true\ntp1 == tp2? false\ntp1.equals(tp2)? true\n",
+  "images": 0
+ },
+ "0b16cd95": {
+  "slug": "memory/checking-contents",
+  "widget": 1,
+  "state": "failed",
+  "text": "nums1 == nums2? false\nnums1.equals(nums2)? false, surprise!\nArrays.equals(nums1, nums2)? true\nException in thread \"Thread-0\" org.opentest4j.AssertionFailedError: expected: <[I@85a> but was: <[I@85b>\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "0ac2f0c1": {
+  "slug": "memory/stack-frames",
+  "widget": 0,
+  "state": "failed",
+  "text": "nums1 == nums2? false\nnums1.equals(nums2)? false, surprise!\nArrays.equals(nums1, nums2)? true\nArrays.equals(nums1, nums2)? false\nException in thread \"Thread-0\" org.opentest4j.AssertionFailedError: array contents differ at index [0], expected: <6> but was: <999>\n\tat org.junit.jupiter.api.Assertions.failArrays(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.arraysEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertArrayEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "a8d8ba90": {
+  "slug": "memory/stack-frames",
+  "widget": 1,
+  "state": "done",
+  "text": "regular = [2000, 1000, 500, 800]\nmenu = Menu[pricesCents=[I@880]\nsale = [1800, 900, 450, 720]\n",
+  "images": 0
+ },
+ "59b215b9": {
+  "slug": "memory/multiple-objects",
+  "widget": 0,
+  "state": "done",
+  "text": "regular = [1620, 810, 405, 648]\nmenu = Menu[pricesCents=[I@77d]\npricy = [9000, 4500, 8100, 7200]\npricyMenu = Menu[pricesCents=[I@77f]\n",
+  "images": 0
+ },
+ "a3cae6b2": {
+  "slug": "memory/multiple-objects",
+  "widget": 1,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "470e9b2b": {
+  "slug": "memory/aliasing",
+  "widget": 0,
+  "state": "done",
+  "text": "regular = [1800, 900, 450, 720]\nlunch = Menu[pricesCents=[I@7bf]\ndinner = Menu[pricesCents=[I@7bf]\nlunchPrices = [1800, 900, 450, 720]\ndinnerPrices = [1800, 900, 450, 720]\n",
+  "images": 0
+ },
+ "7b8d88d6": {
+  "slug": "memory/aliasing",
+  "widget": 1,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "41247bdc": {
+  "slug": "memory/summary",
+  "widget": 0,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "5594e62e": {
+  "slug": "memory/arrays-as-fields",
+  "widget": 0,
+  "state": "done",
+  "text": "All tests passed!\nc1 = Car[make=Honda, model=Civic, year=2008]\nc2 = Car[make=Honda, model=Civic, year=2008]\nrefEqual = false\nstructEqual = true\n",
+  "images": 0
+ },
+ "0930342d": {
+  "slug": "memory/arrays-as-fields",
+  "widget": 1,
+  "state": "failed",
+  "text": "Exception in thread \"Thread-0\" org.opentest4j.AssertionFailedError: expected: <Car[make=Honda, model=Civic, year=2008, pressures=[I@96d]> but was: <Car[make=Honda, model=Civic, year=2008, pressures=[I@97c]>\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "27927f7a": {
+  "slug": "memory/arrays-as-fields",
+  "widget": 2,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "337d4770": {
+  "slug": "memory/updater-method",
+  "widget": 0,
+  "state": "done",
+  "text": "regular = [2000, 1000, 500, 800]\nmenu = Menu[pricesCents=[I@7ba]\n",
+  "images": 0
+ },
+ "e378ab16": {
+  "slug": "memory/updater-method",
+  "widget": 1,
+  "state": "done",
+  "text": "regular = [1800, 900, 450, 720]\nmenu = Menu[pricesCents=[I@924]\n",
   "images": 0
  }
 }

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Objects, Methods, and Memory — How Java Runs</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">How Java Runs</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Objects, Methods, and Memory</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>I think I still don’t get what’s going on with stack frames and method calls. What is the reference in the top of the stack frame for?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s build up an example with <strong>two</strong> objects whose methods we call.</div></div><div class="runner" id="w1504843193" data-engine="java17" data-expect="compiles" data-echo data-gate data-trace="1504843193" data-trace-steps="calls"><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Menu(int[] pricesCents) {
+  int[] discounted() {
+    int[] result = new int[pricesCents.length];
+    int index = 0;
+    for(int p: pricesCents) {
+      result[index] = p * 90 / 100;
+      index += 1;
+    }
+    return result;
+  }
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu menu = new Menu(regular);
+int[] pricy = { 10000, 5000, 9000, 8000 };
+Menu pricyMenu = new Menu(pricy);
+void main() {
+  menu.discountInPlace();
+  pricyMenu.discountInPlace();
+  menu.discountInPlace();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm… so there’s like… three frames? One for each time <code>discountInPlace</code> is called?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Makes sense. So how are they different? The method doesn’t take any arguments, so what makes the frames different from one another?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh! So to tell apart the first two calls, it has to know which object is used for each, <code>menu</code> or <code>pricyMenu</code>.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>That’s cool. So the first call uses <code>menu</code>, the second uses <code>pricyMenu</code>. Oh and the values in the <code>menu</code> one get updated <strong>twice</strong>. Why is that?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That corresponds to the <strong>two</strong> calls to <code>discountInPlace</code> on <code>menu</code>. The first time through, it updates all the values once. The second time is <strong>still working with the same array</strong>, so it updates it again.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I see!</div></div><h3 class="practice">Practice</h3><div class="innercise"><p>This record has a builder and an updater too. Step through the trace to check your answers.</p><div class="runner" id="w2747983538" data-engine="java17" data-expect="compiles" data-trace="2747983538" data-trace-steps="calls"><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Section(int[] scores) {
+  int[] curved() {
+    int[] result = new int[scores.length];
+    int index = 0;
+    for(int s: scores) {
+      result[index] = s + 5;
+      index += 1;
+    }
+    return result;
+  }
+  void curveInPlace() {
+    int index = 0;
+    for(int s: scores) {
+      scores[index] = s + 5;
+      index += 1;
+    }
+  }
+}
+int[] morningScores = { 80, 92, 75 };
+Section morning = new Section(morningScores);
+int[] eveningScores = { 68, 88, 90 };
+Section evening = new Section(eveningScores);
+void main() {
+  int[] curved1 = morning.curved();
+  evening.curveInPlace();
+  int[] curved2 = morning.curved();
+  evening.curveInPlace();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="exercise" data-kind="number" data-seed="1170172508"><div class="stem">How many times does the value at index 0 of <code>morningScores</code> change while this program runs?</div><p><input class="blank num" data-answer="0" data-tolerance="0"></p></div><div class="exercise" data-kind="number" data-seed="600293570"><div class="stem">How many times does the value at index 0 of <code>eveningScores</code> change while this program runs?</div><p><input class="blank num" data-answer="2" data-tolerance="0"></p></div><div class="exercise" data-kind="number" data-seed="2413637831"><div class="stem">How many arrays does this program create in total?</div><p><input class="blank num" data-answer="4" data-tolerance="0"></p></div></div></article>
+<nav class="pagenav"><a class="prev" href="updater-method.html">← Methods that Update Arrays</a> <a class="next" href="aliasing.html">Aliasing →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "memory", "title": "How Java Runs", "current": 4, "steps": [{"title": "When Some Values are More Equal than Others", "slug": "where-things-are", "url": "where-things-are.html", "path": "/memory/where-things-are.html"}, {"title": "Checking Contents vs Checking Identity", "slug": "checking-contents", "url": "checking-contents.html", "path": "/memory/checking-contents.html"}, {"title": "Methods and Memory", "slug": "stack-frames", "url": "stack-frames.html", "path": "/memory/stack-frames.html"}, {"title": "Methods that Update Arrays", "slug": "updater-method", "url": "updater-method.html", "path": "/memory/updater-method.html"}, {"title": "Objects, Methods, and Memory", "slug": "multiple-objects", "url": "multiple-objects.html", "path": "/memory/multiple-objects.html"}, {"title": "Aliasing", "slug": "aliasing", "url": "aliasing.html", "path": "/memory/aliasing.html"}, {"title": "Nuanced and Nested Structures", "slug": "arrays-as-fields", "url": "arrays-as-fields.html", "path": "/memory/arrays-as-fields.html"}, {"title": "How Java Runs in Summary", "slug": "summary", "url": "summary.html", "path": "/memory/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/trace.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

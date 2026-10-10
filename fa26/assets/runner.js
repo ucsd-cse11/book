@@ -298,6 +298,10 @@
     return result;
   }
 
+  const JAVA_BASE_IMPORTS = ['java.io', 'java.math', 'java.net', 'java.nio.file', 'java.text',
+    'java.time', 'java.util', 'java.util.function', 'java.util.regex', 'java.util.stream']
+    .map((p) => 'import ' + p + '.*; ').join('');
+
   function wrap(code, echo) {
     const lines = code.split('\n');
     let split = 0;
@@ -306,7 +310,7 @@
     const body = lines.slice(split);
     return {
       source: header.join('\n') + (header.length ? '\n' : '')
-        + 'import static org.junit.jupiter.api.Assertions.*; class __Prog {\n' + shimArrayRecords(body.join('\n')) + '\n}\n'
+        + JAVA_BASE_IMPORTS + 'import static org.junit.jupiter.api.Assertions.*; class __Prog {\n' + shimArrayRecords(body.join('\n')) + '\n}\n'
         + (echo ? ECHO_MAIN : PLAIN_MAIN),
       headerLines: split,
       studentLines: lines.length,

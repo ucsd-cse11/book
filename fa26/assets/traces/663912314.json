@@ -1,0 +1,13 @@
+{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":10},{"id":1,"parent":0,"call":"main()","on":null,"enter":7,"exit":9}],
+"steps":[
+{"kind":"line","frame":0,"line":2,"names":{"0":[]},"heap":[]},
+{"kind":"line","frame":0,"line":3,"names":{"0":[["factory","@1001"]]},"heap":[["@1001",{"items":["35","35","33","33"]}]]},
+{"kind":"line","frame":0,"line":3,"names":{"0":[["factory","@1001"]]},"heap":[["@1001",{"items":["35","35","33","33"]}],["@1002",{"type":"Car","fields":[["make","Honda"],["model","Civic"],["year","2008"],["pressures","@1001"]]}]]},
+{"kind":"line","frame":0,"line":4,"names":{"0":[["factory","@1001"],["car1","@1002"]]}},
+{"kind":"line","frame":0,"line":4,"names":{"0":[["factory","@1001"],["car1","@1002"]]},"heap":[["@1001",{"items":["35","35","33","33"]}],["@1002",{"type":"Car","fields":[["make","Honda"],["model","Civic"],["year","2008"],["pressures","@1001"]]}],["@1003",{"type":"Car","fields":[["make","Honda"],["model","Civic"],["year","2008"],["pressures","@1001"]]}]]},
+{"kind":"line","frame":0,"line":5,"names":{"0":[["factory","@1001"],["car1","@1002"],["car2","@1003"]]}},
+{"kind":"line","frame":0,"line":5,"names":{"0":[["factory","@1001"],["car1","@1002"],["car2","@1003"]]},"heap":[["@1001",{"items":["35","35","33","33"]}],["@1002",{"type":"Car","fields":[["make","Honda"],["model","Civic"],["year","2008"],["pressures","@1001"]]}],["@1003",{"type":"Car","fields":[["make","Honda"],["model","Civic"],["year","2008"],["pressures","@1001"]]}],["@1004",{"type":"Car","fields":[["make","Honda"],["model","Civic"],["year","2008"],["pressures","@1005"]]}],["@1005",{"items":["35","35","33","33"]}]]},
+{"kind":"line","frame":1,"line":7,"names":{"1":[],"0":[["factory","@1001"],["car1","@1002"],["car2","@1003"],["car3","@1004"]]}},
+{"kind":"line","frame":1,"line":8,"names":{"1":[],"0":[["factory","@1001"],["car1","@1002"],["car2","@1003"],["car3","@1004"]]},"heap":[["@1001",{"items":["30","35","33","33"]}],["@1002",{"type":"Car","fields":[["make","Honda"],["model","Civic"],["year","2008"],["pressures","@1001"]]}],["@1003",{"type":"Car","fields":[["make","Honda"],["model","Civic"],["year","2008"],["pressures","@1001"]]}],["@1004",{"type":"Car","fields":[["make","Honda"],["model","Civic"],["year","2008"],["pressures","@1005"]]}],["@1005",{"items":["35","35","33","33"]}]]},
+{"kind":"return","frame":1,"line":8,"names":{"1":[],"0":[["factory","@1001"],["car1","@1002"],["car2","@1003"],["car3","@1004"]]}},
+{"kind":"end","frame":0,"names":{"0":[["factory","@1001"],["car1","@1002"],["car2","@1003"],["car3","@1004"]]}}]}

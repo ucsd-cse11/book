@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuanced and Nested Structures — How Java Runs</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">How Java Runs</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Nuanced and Nested Structures</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>We talked about structural vs. reference equality – which one do records use?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great question, how would you know?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I guess I’d have to try <code>.equals()</code> on an object I created from a record?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right, or <code>assertEquals</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK let’s try both.</div></div><div class="runner" id="w1435821614" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="10" spellcheck="false" autocorrect="off" autocapitalize="off">record Car(String make, String model, int year) {}
+Car c1 = new Car("Honda", "Civic", 2008);
+Car c2 = new Car("Honda", "Civic", 2008);
+boolean refEqual = c1 == c2;
+boolean structEqual = c1.equals(c2);
+void main() {
+    assertEquals(c1, c2);
+    System.out.println("All tests passed!");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Great! Easy.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>OK, actually, I have some bad news. Let’s say these cars could have an array of ints representing the pressure of the 4 tires (it’ll always be 4 elements long). Just a quick tip, you can use <code>new int[]{ ... }</code> to make an int array with specific contents as a value, without defining a new name.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Sure, let’s do it!</div></div><div class="runner" id="w154154029" data-engine="java17" data-expect="assert" data-echo data-gate data-edit><textarea class="code" rows="10" spellcheck="false" autocorrect="off" autocapitalize="off">record Car(String make, String model, int year, int[] pressures) {}
+Car c1 = new Car("Honda", "Civic", 2008, new int[]{ 35, 35, 33, 33 });
+Car c2 = new Car("Honda", "Civic", 2008, new int[]{ 35, 35, 33, 33 });
+boolean refEqual = c1 == c2;
+boolean structEqual = c1.equals(c2);
+void main() {
+    assertEquals(c1, c2);
+    System.out.println("All tests passed!");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Wait, what?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, so that test succeeded before, and now it fails. This is a real gotcha when working with arrays and equality in Java.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>What’s going on?</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>Well, we need to be precise about what the “structural equality” does on <code>record</code> instances in Java. It works by calling <code>.equals()</code> on all the pairs of fields that are reference types, and uses <code>==</code> on the ones that are primitives. So for <code>Car</code> it’s like the method does</p><pre><code data-lang="java"><span style="color: #d73948">boolean</span> <span style="color: #4b69c6">equals</span>(<span style="color: #4b69c6">Car</span> other) {
+    <span style="color: #d73948">return</span> make.<span style="color: #4b69c6">equals</span>(other.make) <span style="color: #d73948">&amp;&amp;</span> model.<span style="color: #4b69c6">equals</span>(other.model)
+            <span style="color: #d73948">&amp;&amp;</span> year <span style="color: #d73948">==</span> other.year <span style="color: #d73948">&amp;&amp;</span> pressures.<span style="color: #4b69c6">equals</span>(other.pressures);
+}</code></pre></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But that looks fine?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What did we learn about the <code>.equals()</code> method on arrays?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ohhhhhh! That does <strong>reference equality</strong> on the two arrays, not structural. It would need to be <code>Arrays.equals</code> for that to work.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right. We’ll have a conversation in the future about how to write <strong>our own</strong> equals method. For now we just need to be careful and conscious of our equality comparisons. Sometimes we might want to use a field lookup to access arrays and compare them directly in a test, for example.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Noted. Wow, Java makes us remember a lot about equality.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>It’s true. Some of this is <strong>necessary</strong> complexity, in that most languages do expose both reference and structural equality (or <a href="https://pyret.org/docs/latest/equality.html">even more</a>). But some of it is also <strong>incidental</strong> complexity related to arrays in Java, which have pretty specific rules. We’ll see ways to manage both kinds of complexity going forward.</div></div><h3 class="practice">Practice</h3><div class="exercise" data-kind="blanks" data-seed="4257729803"><div class="stem"><code>c1</code> and <code>c2</code> have tire pressures with the same contents. Which line checks that in a test?</div><div class="cloze code">void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span><select class="blank code"><option>assertEquals(c1, c2);</option><option>assertEquals(c1.pressures, c2.pressures);</option><option data-correct>assertArrayEquals(c1.pressures, c2.pressures);</option><option>assertArrayEquals(c1, c2);</option></select><br>}</div></div><div class="innercise"><div class="runner" id="w663912314" data-engine="java17" data-expect="compiles" data-trace="663912314" data-trace-steps="calls"><textarea class="code" rows="9" spellcheck="false" autocorrect="off" autocapitalize="off">record Car(String make, String model, int year, int[] pressures) {}
+int[] factory = { 35, 35, 33, 33 };
+Car car1 = new Car("Honda", "Civic", 2008, factory);
+Car car2 = new Car("Honda", "Civic", 2008, factory);
+Car car3 = new Car("Honda", "Civic", 2008, new int[]{ 35, 35, 33, 33 });
+void main() {
+  car1.pressures[0] = 30;
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="exercise" data-kind="blanks" data-seed="1260085134"><div class="stem">After <code>main</code> runs, what is true of each pair?</div><div class="cloze"><code>car1.pressures</code> and <code>car2.pressures</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option data-correct>the same array</option><option>different arrays, same contents</option><option>different arrays, different contents</option></select><br><code>car1.pressures</code> and <code>car3.pressures</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option>the same array</option><option>different arrays, same contents</option><option data-correct>different arrays, different contents</option></select><br><code>car2.pressures</code> and <code>car3.pressures</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option>the same array</option><option>different arrays, same contents</option><option data-correct>different arrays, different contents</option></select><br><code>car1.equals(car2)</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>true</option><option>false</option></select><br><code>car2.equals(car3)</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>true</option><option data-correct>false</option></select></div></div></div></article>
+<nav class="pagenav"><a class="prev" href="aliasing.html">← Aliasing</a> <a class="next" href="summary.html">How Java Runs in Summary →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "memory", "title": "How Java Runs", "current": 6, "steps": [{"title": "When Some Values are More Equal than Others", "slug": "where-things-are", "url": "where-things-are.html", "path": "/memory/where-things-are.html"}, {"title": "Checking Contents vs Checking Identity", "slug": "checking-contents", "url": "checking-contents.html", "path": "/memory/checking-contents.html"}, {"title": "Methods and Memory", "slug": "stack-frames", "url": "stack-frames.html", "path": "/memory/stack-frames.html"}, {"title": "Methods that Update Arrays", "slug": "updater-method", "url": "updater-method.html", "path": "/memory/updater-method.html"}, {"title": "Objects, Methods, and Memory", "slug": "multiple-objects", "url": "multiple-objects.html", "path": "/memory/multiple-objects.html"}, {"title": "Aliasing", "slug": "aliasing", "url": "aliasing.html", "path": "/memory/aliasing.html"}, {"title": "Nuanced and Nested Structures", "slug": "arrays-as-fields", "url": "arrays-as-fields.html", "path": "/memory/arrays-as-fields.html"}, {"title": "How Java Runs in Summary", "slug": "summary", "url": "summary.html", "path": "/memory/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/trace.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

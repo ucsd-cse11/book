@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aliasing — How Java Runs</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">How Java Runs</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Aliasing</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Professor I wrote a program and I don’t get why it’s running that way.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great! That probably means there’s something good to learn. Let’s see it!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I made two <code>Menu</code> instances, but it seems like updating one updates the other:</div></div><div class="runner" id="w1618328572" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  int[] discounted() { … }&quot;,&quot;code&quot;:&quot;  int[] discounted() {\n    int[] result = new int[pricesCents.length];\n    int index = 0;\n    for(int p: pricesCents) {\n      result[index] = p * 90 / 100;\n      index += 1;\n    }\n    return result;\n  }&quot;}]" data-echo data-gate><textarea class="code" rows="19" spellcheck="false" autocorrect="off" autocapitalize="off">record Menu(int[] pricesCents) {
+  int[] discounted() { … }
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu lunch = new Menu(regular);
+Menu dinner = new Menu(regular);
+int[] lunchPrices = lunch.pricesCents;
+int[] dinnerPrices = dinner.pricesCents;
+void main() {
+  lunch.discountInPlace();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I’m confused because I thought <code>discountInPlace</code> would only update the <code>lunch</code> menu, not the <code>dinner</code> one. But when I show the arrays it seems like all the arrays updated.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Very interesting! I think what’s happening here is there is only one array.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Only one array?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right. Let’s look at a memory diagram at the end:</div></div><div class="trace-of" data-trace="1618328572" data-trace-steps="calls" data-trace-open="end"></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So that one array is created and stored in <code>regular</code>, and <strong>that same reference</strong> is used to initialize both <code>lunch</code> and <code>dinner</code>. Look at the two objects – they have different references but both of the <code>pricesCents</code> fields store the same array reference!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I see, that one reference is referred to by five different places!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, and the array updates change the elements on the heap, so then if we access those elements through any of the references, we see the updated values. This idea has a name: it is called <span class="term" data-term="aliasing">aliasing</span>, when different names in a program store the same reference. Aliasing makes it so updates through one reference are visible through all the others.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, I think I got it!</div></div><h3 class="practice">Practice</h3><div class="innercise"><div class="runner" id="w2072873174" data-engine="java17" data-expect="compiles" data-trace="2072873174" data-trace-steps="calls"><textarea class="code" rows="16" spellcheck="false" autocorrect="off" autocapitalize="off">record Team(String[] players) {
+  void replaceFirst(String name) {
+    players[0] = name;
+  }
+}
+String[] varsity = { "Ana", "Ben", "Cy" };
+String[] jv = { "Dee", "Eli" };
+Team red = new Team(varsity);
+Team blue = new Team(jv);
+Team green = new Team(red.players);
+String[] roster = blue.players;
+Team gold = new Team(roster);
+void main() {
+  green.replaceFirst("Zed");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="exercise" data-kind="blanks" data-seed="3777761600"><div class="stem">This program creates two arrays. Which one is stored in each team’s <code>players</code> field?</div><div class="cloze"><code>red.players</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>{ "Ana", "Ben", "Cy" }</option><option>{ "Dee", "Eli" }</option></select><br><code>blue.players</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>{ "Ana", "Ben", "Cy" }</option><option data-correct>{ "Dee", "Eli" }</option></select><br><code>green.players</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>{ "Ana", "Ben", "Cy" }</option><option>{ "Dee", "Eli" }</option></select><br><code>gold.players</code>:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>{ "Ana", "Ben", "Cy" }</option><option data-correct>{ "Dee", "Eli" }</option></select></div></div><div class="exercise" data-kind="number" data-seed="414029318"><div class="stem">After <code>main</code> runs, how many of the four teams have <code>"Zed"</code> as their first player?</div><p><input class="blank num" data-answer="2" data-tolerance="0"></p></div></div></article>
+<nav class="pagenav"><a class="prev" href="multiple-objects.html">← Objects, Methods, and Memory</a> <a class="next" href="arrays-as-fields.html">Nuanced and Nested Structures →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "memory", "title": "How Java Runs", "current": 5, "steps": [{"title": "When Some Values are More Equal than Others", "slug": "where-things-are", "url": "where-things-are.html", "path": "/memory/where-things-are.html"}, {"title": "Checking Contents vs Checking Identity", "slug": "checking-contents", "url": "checking-contents.html", "path": "/memory/checking-contents.html"}, {"title": "Methods and Memory", "slug": "stack-frames", "url": "stack-frames.html", "path": "/memory/stack-frames.html"}, {"title": "Methods that Update Arrays", "slug": "updater-method", "url": "updater-method.html", "path": "/memory/updater-method.html"}, {"title": "Objects, Methods, and Memory", "slug": "multiple-objects", "url": "multiple-objects.html", "path": "/memory/multiple-objects.html"}, {"title": "Aliasing", "slug": "aliasing", "url": "aliasing.html", "path": "/memory/aliasing.html"}, {"title": "Nuanced and Nested Structures", "slug": "arrays-as-fields", "url": "arrays-as-fields.html", "path": "/memory/arrays-as-fields.html"}, {"title": "How Java Runs in Summary", "slug": "summary", "url": "summary.html", "path": "/memory/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/trace.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 // Book stand-in for the subset of JUnit 5's Assertions the book uses; messages match JUnit's.
 package org.junit.jupiter.api;
 
+import java.lang.reflect.Array;
 import java.util.Objects;
 import org.opentest4j.AssertionFailedError;
 
@@ -32,6 +33,30 @@ public final class Assertions {
 
     private static void failNotEqual(Object expected, Object actual) {
         failNotEqual(expected, actual, null);
+    }
+
+    private static void failArrays(String what, String path, Object expected, Object actual, String message) {
+        String prefix = message == null || message.isBlank() ? "" : message + " ==> ";
+        String at = path.isEmpty() ? "" : " at index " + path;
+        String detail = expected == null && actual == null ? "" : ", expected: <" + expected + "> but was: <" + actual + ">";
+        throw new AssertionFailedError(prefix + what + at + detail, expected, actual);
+    }
+
+    private static void arraysEqual(Object expected, Object actual, String path, String message) {
+        if (expected == actual) return;
+        String prefix = message == null || message.isBlank() ? "" : message + " ==> ";
+        String at = path.isEmpty() ? "" : " at index " + path;
+        if (expected == null) throw new AssertionFailedError(prefix + "expected array was <null>" + at);
+        if (actual == null) throw new AssertionFailedError(prefix + "actual array was <null>" + at);
+        int n = Array.getLength(expected), m = Array.getLength(actual);
+        if (n != m) failArrays("array lengths differ", path, n, m, message);
+        for (int i = 0; i < n; i++) {
+            Object e = Array.get(expected, i), a = Array.get(actual, i);
+            String here = path + "[" + i + "]";
+            boolean ea = e != null && e.getClass().isArray(), aa = a != null && a.getClass().isArray();
+            if ((ea || e == null) && (aa || a == null) && (ea || aa)) arraysEqual(e, a, here, message);
+            else if (!Objects.equals(e, a)) failArrays("array contents differ", here, e, a, message);
+        }
     }
 
     public static <V> V fail(String message) {
@@ -311,5 +336,77 @@ public final class Assertions {
 
     public static void assertEquals(double expected, double actual, double delta, String message) {
         if (!(same(expected, actual) || Math.abs(expected - actual) <= delta)) failNotEqual(expected, actual, message);
+    }
+
+    public static void assertArrayEquals(boolean[] expected, boolean[] actual) {
+        arraysEqual(expected, actual, "", null);
+    }
+
+    public static void assertArrayEquals(boolean[] expected, boolean[] actual, String message) {
+        arraysEqual(expected, actual, "", message);
+    }
+
+    public static void assertArrayEquals(char[] expected, char[] actual) {
+        arraysEqual(expected, actual, "", null);
+    }
+
+    public static void assertArrayEquals(char[] expected, char[] actual, String message) {
+        arraysEqual(expected, actual, "", message);
+    }
+
+    public static void assertArrayEquals(byte[] expected, byte[] actual) {
+        arraysEqual(expected, actual, "", null);
+    }
+
+    public static void assertArrayEquals(byte[] expected, byte[] actual, String message) {
+        arraysEqual(expected, actual, "", message);
+    }
+
+    public static void assertArrayEquals(short[] expected, short[] actual) {
+        arraysEqual(expected, actual, "", null);
+    }
+
+    public static void assertArrayEquals(short[] expected, short[] actual, String message) {
+        arraysEqual(expected, actual, "", message);
+    }
+
+    public static void assertArrayEquals(int[] expected, int[] actual) {
+        arraysEqual(expected, actual, "", null);
+    }
+
+    public static void assertArrayEquals(int[] expected, int[] actual, String message) {
+        arraysEqual(expected, actual, "", message);
+    }
+
+    public static void assertArrayEquals(long[] expected, long[] actual) {
+        arraysEqual(expected, actual, "", null);
+    }
+
+    public static void assertArrayEquals(long[] expected, long[] actual, String message) {
+        arraysEqual(expected, actual, "", message);
+    }
+
+    public static void assertArrayEquals(float[] expected, float[] actual) {
+        arraysEqual(expected, actual, "", null);
+    }
+
+    public static void assertArrayEquals(float[] expected, float[] actual, String message) {
+        arraysEqual(expected, actual, "", message);
+    }
+
+    public static void assertArrayEquals(double[] expected, double[] actual) {
+        arraysEqual(expected, actual, "", null);
+    }
+
+    public static void assertArrayEquals(double[] expected, double[] actual, String message) {
+        arraysEqual(expected, actual, "", message);
+    }
+
+    public static void assertArrayEquals(Object[] expected, Object[] actual) {
+        arraysEqual(expected, actual, "", null);
+    }
+
+    public static void assertArrayEquals(Object[] expected, Object[] actual, String message) {
+        arraysEqual(expected, actual, "", message);
     }
 }

@@ -28,7 +28,7 @@
   }
   <span style="color: #d73948">return</span> result;
 }</code></pre></div><ol class="choices"><li data-correct><code>names = [ghopper, null, null]</code></li><li><code>names = [alovelace, null, null]</code><div class="why">Every run of the body writes to <code>result[0]</code>, so each username replaces the one before it. The last one stays.</div></li><li><code>names = [alovelace, aturing, ghopper]</code><div class="why">Without <code>index += 1</code>, <code>index</code> is <code>0</code> every time, so the body only ever changes <code>result[0]</code>.</div></li><li>It doesn’t compile<div class="why">Nothing is wrong with the program’s types, so it compiles. It just doesn’t do what the method promises.</div></li></ol></div></article>
-<nav class="pagenav"><a class="prev" href="builder.html">← Making Arrays</a> <a class="next" href="../pict-library/pict-library.html">Pict Library Reference →</a></nav>
+<nav class="pagenav"><a class="prev" href="builder.html">← Making Arrays</a> <a class="next" href="../memory/where-things-are.html">When Some Values are More Equal than Others →</a></nav>
 </main>
 <footer>Fall 2026 rewrite · runs Java in your browser via
 <a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
@@ -36,6 +36,7 @@
 <script src="../assets/runner.js"></script>
 <script src="../assets/exercise.js"></script>
 <script src="../assets/memory.js"></script>
+<script src="../assets/trace.js"></script>
 <script src="../assets/gate.js"></script>
 <script src="../assets/report.js"></script>
 <script src="../assets/nav.js"></script>

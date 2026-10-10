@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checking Contents vs Checking Identity — How Java Runs</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">How Java Runs</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Checking Contents vs Checking Identity</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, so can we ever compare the contents of strings or arrays?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Absolutely! Many objects have a method called <code>equals</code> that helps with this. So for strings, just use <code>s1.equals(s2)</code> instead of <code>s1 == s2</code>. That’s actually what’s happening with records and strings in <code>assertEquals</code>:</div></div><div class="runner" id="w4120012340" data-engine="java17" data-expect="compiles" data-gate><textarea class="code" rows="16" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(int x, int y) { }
+void main() {
+  Point p1 = new Point(4, 5);
+  Point p2 = new Point(4, 5);
+  System.out.println("p1 == p2? " + (p1 == p2));
+  System.out.println("p1.equals(p2)? " + p1.equals(p2));
+  assertEquals(p1, p2); // succeeds!
+
+  String tp1 = "trash panda";
+  String trash = "trash";
+  String tp2 = trash + " panda";
+  System.out.println("tp1 == tp2? " + (tp1 == tp2));
+  System.out.println("tp1.equals(tp2)? " + tp1.equals(tp2));
+  assertEquals(tp1, tp2); // succeeds!
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh, OK. So I should always use <code>.equals()</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, we may see some cases where we want <span class="term" data-term="reference equality">reference equality</span>. We don’t have any right now. So it’s true, we mostly care about the <code>.equals()</code> kind, which is called <span class="term" data-term="structural equality">structural equality</span> (it inspects the structure). But we can’t get rid of <code>==</code> entirely because we need it for comparing, say, <code>int</code> values. Those are called <span class="term" data-term="primitive types">primitive types</span>, as opposed to objects which are <span class="term" data-term="reference types">reference types</span>, and they compare the numbers themselves with <code>==</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm I see. OK so we need <code>==</code> for numbers. What about arrays? You didn’t give an example of structural equality for those.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>It’s a little trickier there. Arrays’ <code>equals</code> method checks reference equality, not structural. So there’s actually a separate helper for arrays called <code>Arrays.equals</code>; it takes two array arguments and compares them structurally. And JUnit has a separate <code>assertArrayEquals</code>.</div></div><div class="runner" id="w186043797" data-engine="java17" data-expect="assert" data-gate><textarea class="code" rows="11" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.Arrays;
+void main() {
+  int[] nums1 = { 6, 7 };
+  int[] nums2 = { 6, 7 };
+  System.out.println("nums1 == nums2? " + (nums1 == nums2));
+  System.out.println("nums1.equals(nums2)? " + nums1.equals(nums2) + ", surprise!");
+  System.out.println("Arrays.equals(nums1, nums2)? " + Arrays.equals(nums1, nums2));
+  assertArrayEquals(nums1, nums2); // succeeds!
+  assertEquals(nums1, nums2);      // fails!
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But why?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, part of the issue is that because arrays can <strong>change</strong>, two arrays could have the same contents at one point in the program, but differ later.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Huh?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Because of array update, which we saw in the last section. Here, I’ll show you:</div></div><div class="runner" id="w180547777" data-engine="java17" data-expect="assert" data-gate data-edit><textarea class="code" rows="15" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.Arrays;
+void main() {
+  int[] nums1 = { 6, 7 };
+  int[] nums2 = { 6, 7 };
+  System.out.println("nums1 == nums2? " + (nums1 == nums2));
+  System.out.println("nums1.equals(nums2)? " + nums1.equals(nums2) + ", surprise!");
+  
+  System.out.println("Arrays.equals(nums1, nums2)? " + Arrays.equals(nums1, nums2));
+  assertArrayEquals(nums1, nums2); // succeeds!
+  
+  nums2[0] = 999;
+  System.out.println("Arrays.equals(nums1, nums2)? " + Arrays.equals(nums1, nums2));
+  assertArrayEquals(nums1, nums2); // fails
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So one way I think about it is that Java makes sure that <code>.equals()</code> between arrays only returns true if they are the same reference, because that’s the only way to guarantee that they will <strong>always</strong> be the same now and in the future. If they are different references, it could change. So you have to use <code>Arrays.equals</code> to “opt-in”, and acknowledge that you know you mean “equal right now”. The final memory diagram at the point the assertion fails looks like this:</div></div><div class="memory"><div class="mem-stack"><div class="mem-title">Names (the stack)</div><div class="frame"><div class="frame-head"><code>main()</code></div><div class="binding"><code>nums1 = <span class="addr" data-addr="@1001" style="--hue: 20">@1001</span></code></div><div class="binding"><code>nums2 = <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></code></div></div><div class="frame"><div class="frame-head">top level</div></div></div><div class="mem-heap"><div class="mem-title">Heap</div><div class="slot-line"><code><span class="addr slot" data-addr="@1001" style="--hue: 20">@1001</span>: [6, 7]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1002" style="--hue: 157">@1002</span>: [999, 7]</code></div></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm, that seems like a lot to remember.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>It is. The main thing to think through is what you’re asking in an equality check. If it involves objects (which includes <code>String</code>), reach for <code>.equals()</code>. If it involves arrays, there may be more to check.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I’ll have to sit with that a little bit.</div></div><h3 class="practice">Practice</h3><div class="exercise" data-kind="blanks" data-seed="1995537109"><div class="stem"><p>Each pair below holds the same contents, built separately. Pick the check that gives <code>true</code> for each pair:</p><pre><code data-lang="java">record <span style="color: #4b69c6">Point</span>(<span style="color: #d73948">int</span> x, <span style="color: #d73948">int</span> y) { }
+<span style="color: #d73948">int</span> a <span style="color: #d73948">=</span> <span style="color: #b60157">6</span> <span style="color: #d73948">+</span> <span style="color: #b60157">7</span>;
+<span style="color: #d73948">int</span> b <span style="color: #d73948">=</span> <span style="color: #b60157">13</span>;
+<span style="color: #4b69c6">String</span> trash <span style="color: #d73948">=</span> <span style="color: #198810">"</span><span style="color: #198810">trash</span><span style="color: #198810">"</span>;
+<span style="color: #4b69c6">String</span> s1 <span style="color: #d73948">=</span> <span style="color: #198810">"</span><span style="color: #198810">trash panda</span><span style="color: #198810">"</span>;
+<span style="color: #4b69c6">String</span> s2 <span style="color: #d73948">=</span> trash <span style="color: #d73948">+</span> <span style="color: #198810">"</span><span style="color: #198810"> panda</span><span style="color: #198810">"</span>;
+<span style="color: #4b69c6">Point</span> p1 <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">4</span>, <span style="color: #b60157">5</span>);
+<span style="color: #4b69c6">Point</span> p2 <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">4</span>, <span style="color: #b60157">5</span>);
+<span style="color: #d73948">int</span><span style="color: #d73948">[]</span> n1 <span style="color: #d73948">=</span> { <span style="color: #b60157">6</span>, <span style="color: #b60157">7</span> };
+<span style="color: #d73948">int</span><span style="color: #d73948">[]</span> n2 <span style="color: #d73948">=</span> { <span style="color: #b60157">6</span>, <span style="color: #b60157">7</span> };</code></pre></div><div class="cloze code">boolean sameInts<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>=<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>a == b</option><option>a.equals(b)</option><option>Arrays.equals(a, b)</option></select>;<br>boolean sameStrings =<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>s1 == s2</option><option data-correct>s1.equals(s2)</option><option>Arrays.equals(s1, s2)</option></select>;<br>boolean samePoints<span style="white-space: pre-wrap">&#x20;&#x20;</span>=<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>p1 == p2</option><option data-correct>p1.equals(p2)</option><option>Arrays.equals(p1, p2)</option></select>;<br>boolean sameArrays<span style="white-space: pre-wrap">&#x20;&#x20;</span>=<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>n1 == n2</option><option>n1.equals(n2)</option><option data-correct>Arrays.equals(n1, n2)</option></select>;</div></div></article>
+<nav class="pagenav"><a class="prev" href="where-things-are.html">← When Some Values are More Equal than Others</a> <a class="next" href="stack-frames.html">Methods and Memory →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "memory", "title": "How Java Runs", "current": 1, "steps": [{"title": "When Some Values are More Equal than Others", "slug": "where-things-are", "url": "where-things-are.html", "path": "/memory/where-things-are.html"}, {"title": "Checking Contents vs Checking Identity", "slug": "checking-contents", "url": "checking-contents.html", "path": "/memory/checking-contents.html"}, {"title": "Methods and Memory", "slug": "stack-frames", "url": "stack-frames.html", "path": "/memory/stack-frames.html"}, {"title": "Methods that Update Arrays", "slug": "updater-method", "url": "updater-method.html", "path": "/memory/updater-method.html"}, {"title": "Objects, Methods, and Memory", "slug": "multiple-objects", "url": "multiple-objects.html", "path": "/memory/multiple-objects.html"}, {"title": "Aliasing", "slug": "aliasing", "url": "aliasing.html", "path": "/memory/aliasing.html"}, {"title": "Nuanced and Nested Structures", "slug": "arrays-as-fields", "url": "arrays-as-fields.html", "path": "/memory/arrays-as-fields.html"}, {"title": "How Java Runs in Summary", "slug": "summary", "url": "summary.html", "path": "/memory/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/trace.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

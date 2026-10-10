@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methods that Update Arrays — How Java Runs</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">How Java Runs</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Methods that Update Arrays</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>So I was thinking about how we just saw a builder example again. My friend told me they never write methods that make new arrays because it’s inefficient, they just write methods that change the arrays.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Your friend sounds very opinionated.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>They know so much stuff! It’s hard to argue with them.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, you can take it on my authority that both kinds are useful; we should study the kind that changes arrays now. We can do the same thing as before, but instead of returning a <strong>new</strong> array, we can change the one stored in the record. Sometimes we call this an <span class="term" data-term="update">update</span> or an <span class="term" data-term="in-place update">in-place update</span> of the array.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK great now I’ll be able to compare them myself.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So, we had <code>discounted</code> in the last step. Let’s write <code>discountInPlace</code>. What do you think the return type should be?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ummm, <code>int[]</code> again?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So our goal here is to write a method that <strong>changes</strong> the existing array, rather than returning a new one. Do we know a type for methods that have effects and don’t return anything?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ummm. <code>void</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right. So let’s set up the method with a <code>void</code> return type, and try to change the existing array without making a new one.</div></div><div class="runner" id="w863848304" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="12" spellcheck="false" autocorrect="off" autocapitalize="off">record Menu(int[] pricesCents) {
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu menu = new Menu(regular);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Wait what’s that <code>I@</code> thing</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Ah, that’s how <strong>Java</strong> prints arrays. The <code>I</code> means <code>int</code>, and the <code>@</code> followed by the numbers is a reference number made by Java. By default this is what Java shows when you print an array – it prints its reference!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Interesting. OK. Back to the code. So instead of having a new <code>result</code> and filling that in, you just… change the <code>pricesCents</code>? And that works?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s see! How do we call it?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I guess… <code>menu.discountInPlace()</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great idea. It turns out we aren’t allowed to write a method call outside of a definition at the top level! So if we just write <code>menu.discountInPlace()</code> we’d get a syntax error. <code>void</code>-returning methods have to be called from another method body – <code>main</code> works. Have a look at this program; do you notice anything interesting about the output?</div></div><div class="runner" id="w3816336150" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="15" spellcheck="false" autocorrect="off" autocapitalize="off">record Menu(int[] pricesCents) {
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu menu = new Menu(regular);
+void main() {
+  menu.discountInPlace();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Whoa, the contents of <code>regular</code> changed?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right. <code>main</code> ran and called <code>discountInPlace</code>, and that <strong>changed</strong> the contents of the array stored in <code>regular</code>. Here’s a memory diagram of what things look like in the middle of the loop for <strong>this</strong> program:</div></div><div class="memory"><div class="mem-stack"><div class="mem-title">Names (the stack)</div><div class="frame"><div class="frame-head"><code>menu.discountInPlace()</code> on <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></div><div class="binding"><code>index = 2</code></div><div class="binding"><code>p = 500</code></div></div><div class="frame"><div class="frame-head"><code>main()</code></div></div><div class="frame"><div class="frame-head">top level</div><div class="binding"><code>regular = <span class="addr" data-addr="@1001" style="--hue: 20">@1001</span></code></div><div class="binding"><code>menu = <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></code></div></div></div><div class="mem-heap"><div class="mem-title">Heap</div><div class="slot-line"><code><span class="addr slot" data-addr="@1001" style="--hue: 20">@1001</span>: [<del>2000</del> 1800, <del>1000</del> 900, 500, 800]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1002" style="--hue: 157">@1002</span>: Menu[pricesCents=<span class="addr" data-addr="@1001" style="--hue: 20">@1001</span>]</code></div></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Huh so that <code class="ptr">@1001</code> is referred to by… <code>regular</code>, and by the <code>pricesCents</code> field. And so that reference is being used in the loop?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right, and that’s why you see the object reference <code class="ptr">@1002</code> in the frame header. That was the receiver for the method call, and so we know that <code>pricesCents</code> is referring to the field of <strong>that</strong> object.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>That… went a little over my head.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So when we use <code>pricesCents</code> in the body of the loop, it has to refer to <strong>some</strong> value. It isn’t a parameter of the method; it’s a field of the receiver we called it with. The receiver is <code class="ptr">@1002</code>, and <strong>its</strong> <code>pricesCents</code> field is <code class="ptr">@1001</code>, so that’s how that lookup occurs.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, I think I kind of get it. I definitely understand that there is only one array made in this example, and it’s changing inside the method.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s a good lesson to take from this conversation. This is called an <span class="term" data-term="updater">updater</span> method for an array.</div></div><h3 class="practice">Practice</h3><div class="innercise"><p>This <code>Menu</code> has both methods from this chapter. The builder runs first, at the top level, then <code>main</code> runs the updater:</p><pre><code data-lang="java">record <span style="color: #4b69c6">Menu</span>(<span style="color: #d73948">int</span><span style="color: #d73948">[]</span> pricesCents) {
+  <span style="color: #d73948">int</span><span style="color: #d73948">[]</span> <span style="color: #4b69c6">discounted</span>() {
+    <span style="color: #d73948">int</span><span style="color: #d73948">[]</span> result <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[pricesCents.length];
+    <span style="color: #d73948">int</span> index <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;
+    <span style="color: #d73948">for</span>(<span style="color: #d73948">int</span> p<span style="color: #d73948">:</span> pricesCents) {
+      result[index] <span style="color: #d73948">=</span> p <span style="color: #d73948">*</span> <span style="color: #b60157">90</span> <span style="color: #d73948">/</span> <span style="color: #b60157">100</span>;
+      index <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>;
+    }
+    <span style="color: #d73948">return</span> result;
+  }
+  void <span style="color: #4b69c6">discountInPlace</span>() {
+    <span style="color: #d73948">int</span> index <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;
+    <span style="color: #d73948">for</span>(<span style="color: #d73948">int</span> p<span style="color: #d73948">:</span> pricesCents) {
+      pricesCents[index] <span style="color: #d73948">=</span> p <span style="color: #d73948">*</span> <span style="color: #b60157">90</span> <span style="color: #d73948">/</span> <span style="color: #b60157">100</span>;
+      index <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>;
+    }
+  }
+}
+<span style="color: #d73948">int</span><span style="color: #d73948">[]</span> regular <span style="color: #d73948">=</span> { <span style="color: #b60157">2000</span>, <span style="color: #b60157">1000</span>, <span style="color: #b60157">500</span>, <span style="color: #b60157">800</span> };
+<span style="color: #4b69c6">Menu</span> menu <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Menu</span>(regular);
+<span style="color: #d73948">int</span><span style="color: #d73948">[]</span> sale <span style="color: #d73948">=</span> menu.<span style="color: #4b69c6">discounted</span>();
+void <span style="color: #4b69c6">main</span>() {
+  menu.<span style="color: #4b69c6">discountInPlace</span>();
+}</code></pre><div class="exercise" data-kind="number" data-seed="2380082593"><div class="stem">How many arrays does this program create in total?</div><p><input class="blank num" data-answer="2" data-tolerance="0"></p></div><div class="exercise" data-kind="blanks" data-seed="3714473297"><div class="stem">What does each array hold once <code>main</code> finishes?</div><div class="cloze code">regular =<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>[2000, 1000, 500, 800]</option><option data-correct>[1800, 900, 450, 720]</option><option>[1620, 810, 405, 648]</option></select><br>sale<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>=<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>[2000, 1000, 500, 800]</option><option data-correct>[1800, 900, 450, 720]</option><option>[1620, 810, 405, 648]</option></select></div></div><div class="exercise" data-kind="choice" data-seed="1001269923" data-multi><div class="stem">While <code>discountInPlace</code> runs, which top-level names hold the same reference as <code>pricesCents</code>?</div><ol class="choices"><li data-correct><code>regular</code></li><li><code>sale</code><div class="why"><code>sale</code> holds the array the builder made, a separate reference. Once <code>main</code> finishes it has the same <strong>contents</strong> as <code>regular</code>, but <code>==</code> between them is <code>false</code>.</div></li><li><code>menu</code><div class="why"><code>menu</code> holds a reference to the <code>Menu</code> record. That record’s field holds the array’s reference, but <code>menu</code> itself does not.</div></li></ol></div></div></article>
+<nav class="pagenav"><a class="prev" href="stack-frames.html">← Methods and Memory</a> <a class="next" href="multiple-objects.html">Objects, Methods, and Memory →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "memory", "title": "How Java Runs", "current": 3, "steps": [{"title": "When Some Values are More Equal than Others", "slug": "where-things-are", "url": "where-things-are.html", "path": "/memory/where-things-are.html"}, {"title": "Checking Contents vs Checking Identity", "slug": "checking-contents", "url": "checking-contents.html", "path": "/memory/checking-contents.html"}, {"title": "Methods and Memory", "slug": "stack-frames", "url": "stack-frames.html", "path": "/memory/stack-frames.html"}, {"title": "Methods that Update Arrays", "slug": "updater-method", "url": "updater-method.html", "path": "/memory/updater-method.html"}, {"title": "Objects, Methods, and Memory", "slug": "multiple-objects", "url": "multiple-objects.html", "path": "/memory/multiple-objects.html"}, {"title": "Aliasing", "slug": "aliasing", "url": "aliasing.html", "path": "/memory/aliasing.html"}, {"title": "Nuanced and Nested Structures", "slug": "arrays-as-fields", "url": "arrays-as-fields.html", "path": "/memory/arrays-as-fields.html"}, {"title": "How Java Runs in Summary", "slug": "summary", "url": "summary.html", "path": "/memory/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/trace.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

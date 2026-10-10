@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Java Runs in Summary — How Java Runs</title>
+<link rel="stylesheet" href="../assets/book.css">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">How Java Runs</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>How Java Runs in Summary</h1>
+<article class="prose"><div class="innercise"><div class="runner" id="w1092910044" data-engine="java17" data-expect="compiles" data-trace="1092910044" data-trace-steps="calls"><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Bag(int[] counts) {
+  int[] doubled() {
+    int[] result = new int[counts.length];
+    int index = 0;
+    for(int n: counts) {
+      result[index] = n * 2;
+      index += 1;
+    }
+    return result;
+  }
+  void addOne() {
+    int index = 0;
+    for(int n: counts) {
+      counts[index] = n + 1;
+      index += 1;
+    }
+  }
+}
+int[] start = { 1, 2 };
+Bag x = new Bag(start);
+Bag y = new Bag(x.counts);
+int[] more = y.doubled();
+void main() {
+  x.addOne();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="exercise" data-kind="blanks" data-seed="2014769203"><div class="stem">Java hands out references in the order objects are created, starting at <code class="ptr">@1001</code>. Fill in the memory picture for when <code>main</code> finishes.</div><div class="cloze code">Names<br>top level: start = @1001, x = @1002, y = @1003, more =<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>@1001</option><option>@1003</option><option data-correct>@1004</option></select><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>y.doubled() on<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>@1002</option><option data-correct>@1003</option></select>, returns @1004<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>main()<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>x.addOne() on<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>@1002</option><option>@1003</option></select><br><br>Heap<br>@1001:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>[1, 2]</option><option data-correct>[2, 3]</option><option>[2, 4]</option></select><br>@1002: Bag[counts=@1001]<br>@1003: Bag[counts=<select class="blank code"><option data-correct>@1001</option><option>@1004</option></select>]<br>@1004:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>[2, 4]</option><option>[4, 6]</option><option>[2, 3]</option></select></div></div><div class="exercise" data-kind="blanks" data-seed="193258860"><div class="stem">Still at the end of <code>main</code>, what does each expression produce?</div><div class="cloze code">x == y<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span><select class="blank code"><option>true</option><option data-correct>false</option></select><br>x.equals(y)<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span><select class="blank code"><option data-correct>true</option><option>false</option></select><br>start == y.counts<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span><select class="blank code"><option data-correct>true</option><option>false</option></select><br>Arrays.equals(start, more)<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>true</option><option data-correct>false</option></select></div></div></div><div class="exercise" data-kind="choice" data-seed="3127890676"><div class="stem"><p>This test fails. Why?</p><pre><code data-lang="java">record <span style="color: #4b69c6">Bag</span>(<span style="color: #d73948">int</span><span style="color: #d73948">[]</span> counts) { }
+void <span style="color: #4b69c6">main</span>() {
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Bag</span>(<span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[]{ <span style="color: #b60157">1</span>, <span style="color: #b60157">2</span> }), <span style="color: #d73948">new</span> <span style="color: #4b69c6">Bag</span>(<span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[]{ <span style="color: #b60157">1</span>, <span style="color: #b60157">2</span> }));
+}</code></pre></div><ol class="choices"><li data-correct>The two <code>counts</code> fields hold different arrays, and a record’s <code>equals</code> compares an array field with the array’s own <code>equals</code>, which checks the reference.</li><li><code>assertEquals</code> compares the two <code>Bag</code>s with <code>==</code>.<div class="why"><code>assertEquals</code> uses <code>.equals()</code>, not <code>==</code>. That is why two <code>Car</code>s with only <code>String</code> and <code>int</code> fields passed.</div></li><li>The two arrays have different contents.<div class="why">Both arrays are <code>{ 1, 2 }</code>. Their contents are the same; they are just two separate arrays.</div></li><li>Records always compare by reference.<div class="why">A record with only <code>String</code> and <code>int</code> fields passes this kind of test, like the first <code>Car</code>. It’s the array field that compares by reference.</div></li></ol></div></article>
+<nav class="pagenav"><a class="prev" href="arrays-as-fields.html">← Nuanced and Nested Structures</a> <a class="next" href="../pict-library/pict-library.html">Pict Library Reference →</a></nav>
+</main>
+<footer>Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "memory", "title": "How Java Runs", "current": 7, "steps": [{"title": "When Some Values are More Equal than Others", "slug": "where-things-are", "url": "where-things-are.html", "path": "/memory/where-things-are.html"}, {"title": "Checking Contents vs Checking Identity", "slug": "checking-contents", "url": "checking-contents.html", "path": "/memory/checking-contents.html"}, {"title": "Methods and Memory", "slug": "stack-frames", "url": "stack-frames.html", "path": "/memory/stack-frames.html"}, {"title": "Methods that Update Arrays", "slug": "updater-method", "url": "updater-method.html", "path": "/memory/updater-method.html"}, {"title": "Objects, Methods, and Memory", "slug": "multiple-objects", "url": "multiple-objects.html", "path": "/memory/multiple-objects.html"}, {"title": "Aliasing", "slug": "aliasing", "url": "aliasing.html", "path": "/memory/aliasing.html"}, {"title": "Nuanced and Nested Structures", "slug": "arrays-as-fields", "url": "arrays-as-fields.html", "path": "/memory/arrays-as-fields.html"}, {"title": "How Java Runs in Summary", "slug": "summary", "url": "summary.html", "path": "/memory/summary.html"}]}</script>
+<script src="../assets/runner.js"></script>
+<script src="../assets/exercise.js"></script>
+<script src="../assets/memory.js"></script>
+<script src="../assets/trace.js"></script>
+<script src="../assets/gate.js"></script>
+<script src="../assets/report.js"></script>
+<script src="../assets/nav.js"></script>
+</body>
+</html>

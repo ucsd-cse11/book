@@ -49,8 +49,13 @@ body.toc .subtitle { opacity: .75; }
 .prose li { margin: 1rem 0; }
 .prose li > pre { margin: .3rem 0; }
 .prose h2 { margin-top: 2.2rem; }
+.prose h3.practice {
+  margin: 2.4rem 0 0; padding-top: 1rem;
+  border-top: 1px solid var(--card-border);
+}
 /* a glossary term (every use); <dfn> kept for a first-use promotion pass */
 .prose .term, .prose dfn { font-style: normal; font-weight: 650; }
+.prose code.ptr { font-weight: 700; }
 .prose img { max-width: 100%; height: auto; }
 
 /* a shell transcript (#term): static, unlike the .runner widgets. The
@@ -256,7 +261,7 @@ body.toc .subtitle { opacity: .75; }
 .exercise .response { margin: 0; }
 
 /* conversation gating (gate.js) */
-.gated { display: none; }
+.gated { display: none !important; }
 .gate-open { animation: gate-reveal .45s ease; }
 @keyframes gate-reveal {
   from { opacity: 0; transform: translateY(8px); }
@@ -411,6 +416,7 @@ body.sheets .links { margin-left: auto; display: flex; gap: .8rem; font-size: .8
   font-size: .8rem; opacity: .8; margin-bottom: .15rem;
 }
 .memory .binding, .memory .returns { padding: .1rem 0; }
+.memory del { opacity: .6; }
 .memory .slot-line { padding: .1rem 0 .1rem .4rem; }
 .memory .returns { opacity: .75; font-style: italic; }
 .memory .addr {
@@ -452,3 +458,44 @@ body.sheets .links { margin-left: auto; display: flex; gap: .8rem; font-size: .8
   max-width: calc(var(--span) * var(--col) + (var(--span) - 1) * .3rem - 1rem);
   width: max-content;
 }
+
+/* a recorded trace (#run(trace: true), trace.js) */
+.trace { border-top: 1px solid var(--card-border); padding: .5rem .8rem .2rem; outline: none; }
+.trace.engaged { box-shadow: inset 3px 0 0 var(--accent); }
+.trace-bar { display: flex; align-items: center; gap: .5rem; font-size: .85rem; flex-wrap: wrap; }
+.trace-bar input[type=range] { flex: 1; min-width: 6rem; accent-color: var(--accent); }
+.trace-bar button {
+  background: color-mix(in srgb, currentColor 6%, transparent); color: inherit;
+  border-color: var(--card-border);
+}
+.trace-pos { font-variant-numeric: tabular-nums; opacity: .8; white-space: nowrap; }
+.trace-hint { font-size: .78rem; opacity: .6; margin-top: .15rem; }
+.trace .memory { margin: .4rem 0; border: 0; padding: .3rem 0; }
+.trace .memory.flame .flame-chart { margin-bottom: .8rem; }
+.trace .frame.future { background: transparent; border-style: dashed; opacity: .4; }
+.trace .frame.future { min-height: 2.2rem; }
+.trace .frame.past { opacity: .6; }
+.trace .frame.active { border-color: color-mix(in srgb, var(--accent) 45%, var(--frame-border)); }
+.trace .frame.now { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.trace .changed { background: color-mix(in srgb, #f2c230 32%, transparent); border-radius: .2rem; }
+.trace-out {
+  margin: .2rem 0 .5rem; padding: .3rem .5rem; background: var(--soft-bg);
+  font-size: .85rem; white-space: pre-wrap; max-height: 10rem; overflow: auto;
+}
+.trace.stale .trace-bar, .trace.stale .memory, .trace.stale .trace-out-wrap {
+  opacity: .3; filter: grayscale(1); pointer-events: none;
+}
+.trace.stale .trace-hint { opacity: .85; }
+.runner .trace-line {
+  position: absolute; left: 0; right: 0; pointer-events: none;
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.trace .mem-title {
+  font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; opacity: .65;
+}
+.trace del { opacity: .55; }
+.trace del.older { opacity: .3; }
+.trace .changed { padding: 0 .1rem; }
+.trace-of { border: 1px solid var(--card-border); border-radius: .5rem; margin: 1rem 0; }
+.trace-of .trace { border-top: 0; }
