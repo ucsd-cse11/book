@@ -1,4 +1,4 @@
-{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":10},{"id":1,"parent":0,"call":"safe()","on":null,"enter":1,"exit":8},{"id":2,"parent":1,"call":"bad(0)","on":null,"enter":2,"exit":6,"threw":true},{"id":3,"parent":2,"call":"bad(x + 1)","on":null,"enter":4,"exit":6,"threw":true},{"id":4,"parent":3,"call":"bad(x + 1)","on":null,"enter":6,"exit":6,"threw":true}],
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":10},{"id":1,"parent":0,"call":"safe()","on":null,"enter":1,"exit":8},{"id":2,"parent":1,"call":"bad(0)","on":null,"enter":2,"exit":6,"threw":true},{"id":3,"parent":2,"call":"bad(x + 1)","on":null,"enter":4,"exit":6,"threw":true},{"id":4,"parent":3,"call":"bad(x + 1)","on":null,"enter":6,"exit":6,"threw":true}],
 "steps":[
 {"kind":"line","frame":0,"line":8,"names":{"0":[]},"heap":[]},
 {"kind":"line","frame":1,"line":6,"names":{"1":[],"0":[]}},

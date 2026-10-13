@@ -1,4 +1,4 @@
-{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":18},{"id":1,"parent":0,"call":"big.betterDeal(small)","on":"@1001","enter":5,"exit":16},{"id":2,"parent":1,"call":"area()","on":"@1001","enter":6,"exit":8},{"id":3,"parent":1,"call":"other.area()","on":"@1002","enter":11,"exit":13}],
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":18},{"id":1,"parent":0,"call":"big.betterDeal(small)","on":"@1001","enter":5,"exit":16},{"id":2,"parent":1,"call":"area()","on":"@1001","enter":6,"exit":8},{"id":3,"parent":1,"call":"other.area()","on":"@1002","enter":11,"exit":13}],
 "steps":[
 {"kind":"line","frame":0,"line":12,"names":{"0":[]},"heap":[]},
 {"kind":"line","frame":0,"line":12,"names":{"0":[]},"heap":[["@1001",{"type":"Pizza","fields":[["inches","16.0"],["costCents","1000"]]}]]},

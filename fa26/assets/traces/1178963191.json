@@ -1,4 +1,4 @@
-{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":27},{"id":1,"parent":0,"call":"main()","on":null,"enter":0,"exit":26},{"id":2,"parent":1,"call":"square(nums[i])","on":null,"enter":4,"exit":5},{"id":3,"parent":1,"call":"square(nums[i])","on":null,"enter":10,"exit":11},{"id":4,"parent":1,"call":"square(nums[i])","on":null,"enter":16,"exit":17},{"id":5,"parent":1,"call":"bump(nums)","on":null,"enter":22,"exit":24}],
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":27},{"id":1,"parent":0,"call":"main()","on":null,"enter":0,"exit":26},{"id":2,"parent":1,"call":"square(nums[i])","on":null,"enter":4,"exit":5},{"id":3,"parent":1,"call":"square(nums[i])","on":null,"enter":10,"exit":11},{"id":4,"parent":1,"call":"square(nums[i])","on":null,"enter":16,"exit":17},{"id":5,"parent":1,"call":"bump(nums)","on":null,"enter":22,"exit":24}],
 "steps":[
 {"kind":"line","frame":1,"line":8,"names":{"1":[],"0":[]},"heap":[]},
 {"kind":"line","frame":1,"line":9,"names":{"1":[["nums","@1001"]],"0":[]},"heap":[["@1001",{"items":["1","2","3"]}]]},

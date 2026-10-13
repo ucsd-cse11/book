@@ -1,4 +1,4 @@
-{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":31},{"id":1,"parent":0,"call":"y.doubled()","on":"@1003","enter":6,"exit":16},{"id":2,"parent":0,"call":"main()","on":null,"enter":18,"exit":30},{"id":3,"parent":2,"call":"x.addOne()","on":"@1002","enter":19,"exit":28}],
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":31},{"id":1,"parent":0,"call":"y.doubled()","on":"@1003","enter":6,"exit":16},{"id":2,"parent":0,"call":"main()","on":null,"enter":18,"exit":30},{"id":3,"parent":2,"call":"x.addOne()","on":"@1002","enter":19,"exit":28}],
 "steps":[
 {"kind":"line","frame":0,"line":19,"names":{"0":[]},"heap":[]},
 {"kind":"line","frame":0,"line":20,"names":{"0":[["start","@1001"]]},"heap":[["@1001",{"items":["1","2"]}]]},

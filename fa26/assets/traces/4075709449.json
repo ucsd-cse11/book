@@ -1,4 +1,4 @@
-{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":20},{"id":1,"parent":0,"call":"main()","on":null,"enter":0,"exit":19},{"id":2,"parent":1,"call":"square(i)","on":null,"enter":3,"exit":4},{"id":3,"parent":1,"call":"square(i)","on":null,"enter":8,"exit":9},{"id":4,"parent":1,"call":"square(i)","on":null,"enter":13,"exit":14}],
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":20},{"id":1,"parent":0,"call":"main()","on":null,"enter":0,"exit":19},{"id":2,"parent":1,"call":"square(i)","on":null,"enter":3,"exit":4},{"id":3,"parent":1,"call":"square(i)","on":null,"enter":8,"exit":9},{"id":4,"parent":1,"call":"square(i)","on":null,"enter":13,"exit":14}],
 "steps":[
 {"kind":"line","frame":1,"line":5,"names":{"1":[],"0":[]},"heap":[]},
 {"kind":"line","frame":1,"line":6,"names":{"1":[["total","0"]],"0":[]}},

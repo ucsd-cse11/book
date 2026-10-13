@@ -1,4 +1,4 @@
-{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":20},{"id":1,"parent":0,"call":"sum(lst)","on":null,"enter":5,"exit":18},{"id":2,"parent":1,"call":"sum(l.rest)","on":null,"enter":7,"exit":16},{"id":3,"parent":2,"call":"sum(l.rest)","on":null,"enter":9,"exit":14},{"id":4,"parent":3,"call":"sum(l.rest)","on":null,"enter":11,"exit":12}],
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":20},{"id":1,"parent":0,"call":"sum(lst)","on":null,"enter":5,"exit":18},{"id":2,"parent":1,"call":"sum(l.rest)","on":null,"enter":7,"exit":16},{"id":3,"parent":2,"call":"sum(l.rest)","on":null,"enter":9,"exit":14},{"id":4,"parent":3,"call":"sum(l.rest)","on":null,"enter":11,"exit":12}],
 "steps":[
 {"kind":"line","frame":0,"line":6,"names":{"0":[]},"heap":[]},
 {"kind":"line","frame":0,"line":6,"names":{"0":[]},"heap":[["@1001",{"type":"Link","fields":[["first","3"],["rest","null"]]}]]},

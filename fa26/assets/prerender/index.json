@@ -621,5 +621,89 @@
   "state": "done",
   "text": "regular = [1800, 900, 450, 720]\nmenu = Menu[pricesCents=[I@924]\n",
   "images": 0
+ },
+ "984957d1": {
+  "slug": "nested-and-2d/2d-arrays",
+  "widget": 0,
+  "state": "done",
+  "text": "top = [true, false, true, true, true, true]\nmiddle = [true, false, false, false, true]\nbottom = [true, true, false, false]\nseats = [[true, false, true, true, true, true], [true, false, false, false, true], [true, true, false, false]]\n",
+  "images": 0
+ },
+ "decc1123": {
+  "slug": "nested-and-2d/2d-arrays",
+  "widget": 1,
+  "state": "done",
+  "text": "top = [true, false, true, true, true, true]\nmiddle = [true, false, false, false, true]\nbottom = [true, true, false, false]\nseats = [[true, false, true, true, true, true], [true, false, false, false, true], [true, true, false, false]]\ntheater = Theater[seats=[[Z@92b]\nemptySeats = 9\n",
+  "images": 0
+ },
+ "2408dba2": {
+  "slug": "nested-and-2d/2d-arrays-more",
+  "widget": 0,
+  "state": "done",
+  "text": "top = [true, false, true, true, true, true]\nmiddle = [true, false, false, false, true]\nbottom = [true, true, false, false]\nseats = [[true, false, true, true, true, true], [true, false, false, false, true], [true, true, false, false]]\ntheater = Theater[seats=[[Z@75e]\nrowHasSeats = true\n",
+  "images": 0
+ },
+ "06d54b44": {
+  "slug": "nested-and-2d/2d-arrays-more",
+  "widget": 1,
+  "state": "done",
+  "text": "top = [true, false, true, true, true, true]\nmiddle = [true, false, false, false, true]\nbottom = [true, true, false, false]\nseats = [[true, false, true, true, true, true], [true, false, false, false, true], [true, true, false, false]]\ntheater = Theater[seats=[[Z@8ca]\nrowHasSeats = true\ntheaterHasSeats = true\n",
+  "images": 0
+ },
+ "f53ca704": {
+  "slug": "nested-and-2d/raster",
+  "widget": 0,
+  "state": "done",
+  "text": "rect = Rect[width=3, height=4, color=red]\n[[IMG:0]]rastered = Raster[3x4]\n[[IMG:1]]",
+  "images": 2
+ },
+ "95ccdcfb": {
+  "slug": "nested-and-2d/raster",
+  "widget": 1,
+  "state": "done",
+  "text": "rect = Rect[width=3, height=4, color=red]\n[[IMG:0]]rastered = Raster[3x4]\n[[IMG:1]]colors = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]]]\nrastered2 = Raster[3x4]\n[[IMG:2]]",
+  "images": 3
+ },
+ "97571ced": {
+  "slug": "nested-and-2d/raster",
+  "widget": 2,
+  "state": "done",
+  "text": "rect = Rect[width=3, height=4, color=red]\n[[IMG:0]]rastered = Raster[3x4]\n[[IMG:1]]teal = java.awt.Color[r=0,g=100,b=150]\ncolors = [[java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150]], [java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150]], [java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150]], [java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150]]]\nrastered2 = Raster[3x4]\n[[IMG:2]]",
+  "images": 3
+ },
+ "4b9bf3f8": {
+  "slug": "nested-and-2d/image-filters",
+  "widget": 0,
+  "state": "done",
+  "text": "r = Raster[240x189]\n[[IMG:0]]",
+  "images": 1
+ },
+ "38c5d052": {
+  "slug": "nested-and-2d/image-filters",
+  "widget": 1,
+  "state": "done",
+  "text": "r = Raster[240x189]\n[[IMG:0]]topLeft = java.awt.Color[r=6,g=9,b=42]\nsky = java.awt.Color[r=11,g=41,b=103]\n",
+  "images": 1
+ },
+ "8808027e": {
+  "slug": "nested-and-2d/image-filters",
+  "widget": 2,
+  "state": "done",
+  "text": "salk = Raster[240x189]\n[[IMG:0]]salkAvg = java.awt.Color[r=81,g=91,b=109]\nredblue = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=0,g=0,b=255], java.awt.Color[r=0,g=0,b=255]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=0,g=0,b=255]]]\nredblueAvgs = java.awt.Color[r=127,g=0,b=127]\n",
+  "images": 1
+ },
+ "e16ffb11": {
+  "slug": "nested-and-2d/more-filters",
+  "widget": 0,
+  "state": "done",
+  "text": "purple = java.awt.Color[r=255,g=0,b=255]\nnegPurple = java.awt.Color[r=0,g=255,b=0]\ntiny = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=255,b=255]], [java.awt.Color[r=0,g=0,b=0], java.awt.Color[r=50,g=100,b=200]]]\ntinyNeg = Raster[2x2]\n[[IMG:0]]",
+  "images": 1
+ },
+ "326505a0": {
+  "slug": "nested-and-2d/more-filters",
+  "widget": 1,
+  "state": "done",
+  "text": "salk = Raster[240x189]\n[[IMG:0]]salkNeg = Raster[240x189]\n[[IMG:1]]pier = Raster[180x240]\n[[IMG:2]]pierNeg = Raster[180x240]\n[[IMG:3]]",
+  "images": 4
  }
 }

@@ -348,8 +348,27 @@ class Raster {
         }
     }
 
-    private Raster(Color[][] pixels) {
-        this.pixels = pixels;
+    Raster(Color[][] pixels) {
+        if (pixels == null) throw new IllegalArgumentException("pixels is null");
+        if (pixels.length == 0) throw new IllegalArgumentException("pixels has no rows");
+        if (pixels[0] == null) throw new IllegalArgumentException("pixels[0] is null");
+        int width = pixels[0].length;
+        if (width == 0) throw new IllegalArgumentException("pixels[0] is empty");
+        Color[][] copy = new Color[pixels.length][width];
+        for (int y = 0; y < pixels.length; y++) {
+            if (pixels[y] == null) throw new IllegalArgumentException("pixels[" + y + "] is null");
+            if (pixels[y].length != width) {
+                throw new IllegalArgumentException("pixels[" + y + "] has length " + pixels[y].length
+                    + ", but pixels[0] has length " + width + "; every row needs the same length");
+            }
+            for (int x = 0; x < width; x++) {
+                if (pixels[y][x] == null) {
+                    throw new IllegalArgumentException("pixels[" + y + "][" + x + "] is null");
+                }
+                copy[y][x] = pixels[y][x];
+            }
+        }
+        this.pixels = copy;
     }
 
     static Raster fromBufferedImage(BufferedImage img) {
@@ -401,7 +420,7 @@ class ImageIO_ {
 
     static Raster load(String filename) {
         try {
-            return Raster.fromBufferedImage(ImageIO.read(resolve(filename)));
+            return Raster.fromBufferedImage(ImageIO.read(findImage(filename)));
         } catch (IOException e) {
             throw new RuntimeException("Failed to load image: " + e.getMessage());
         }
@@ -413,7 +432,9 @@ class ImageIO_ {
 
     static void save(Raster r, String filename) {
         try {
-            ImageIO.write(toBufferedImage(r), "png", resolve(filename));
+            File out = resolve(filename);
+            if (out.getParentFile() != null) out.getParentFile().mkdirs();
+            ImageIO.write(toBufferedImage(r), "png", out);
         } catch (IOException e) {
             throw new RuntimeException("Failed to save image: " + e.getMessage());
         }
@@ -440,6 +461,20 @@ class ImageIO_ {
         // The browser's writable filesystem is mounted at /files/.
         return filename.startsWith("/")
             ? new File(filename) : new File("/files/", filename);
+    }
+
+    // A relative name the reader has not saved falls back to the book's
+    // assets/ directory, found next to pict17.jar on the classpath.
+    private static File findImage(String filename) {
+        File own = resolve(filename);
+        if (own.exists() || filename.startsWith("/")) return own;
+        for (String entry : System.getProperty("java.class.path", "").split(File.pathSeparator)) {
+            if (entry.endsWith("pict17.jar")) {
+                File book = new File(new File(entry).getParentFile(), filename);
+                if (book.exists()) return book;
+            }
+        }
+        throw new RuntimeException("Failed to load image: no file named \"" + filename + "\"");
     }
 
     private static BufferedImage toBufferedImage(Raster r) {

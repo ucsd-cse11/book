@@ -1,4 +1,4 @@
-{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":26},{"id":1,"parent":0,"call":"main()","on":null,"enter":7,"exit":25},{"id":2,"parent":1,"call":"lunch.discountInPlace()","on":"@1002","enter":8,"exit":23}],
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":26},{"id":1,"parent":0,"call":"main()","on":null,"enter":7,"exit":25},{"id":2,"parent":1,"call":"lunch.discountInPlace()","on":"@1002","enter":8,"exit":23}],
 "steps":[
 {"kind":"line","frame":0,"line":19,"names":{"0":[]},"heap":[]},
 {"kind":"line","frame":0,"line":20,"names":{"0":[["regular","@1001"]]},"heap":[["@1001",{"items":["2000","1000","500","800"]}]]},

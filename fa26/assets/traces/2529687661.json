@@ -1,0 +1,14 @@
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":11},{"id":1,"parent":0,"call":"main()","on":null,"enter":2,"exit":10}],
+"steps":[
+{"kind":"line","frame":0,"line":1,"names":{"0":[]},"heap":[]},
+{"kind":"line","frame":0,"line":2,"names":{"0":[["nums","@1001"]]},"heap":[["@1001",{"items":["1","2","3"]}]]},
+{"kind":"line","frame":1,"line":4,"names":{"1":[],"0":[["nums","@1001"],["total","0"]]}},
+{"kind":"line","frame":1,"line":5,"names":{"1":[["n","1"]],"0":[["nums","@1001"],["total","0"]]}},
+{"kind":"line","frame":1,"line":4,"names":{"1":[],"0":[["nums","@1001"],["total","1"]]}},
+{"kind":"line","frame":1,"line":5,"names":{"1":[["n","2"]],"0":[["nums","@1001"],["total","1"]]}},
+{"kind":"line","frame":1,"line":4,"names":{"1":[],"0":[["nums","@1001"],["total","3"]]}},
+{"kind":"line","frame":1,"line":5,"names":{"1":[["n","3"]],"0":[["nums","@1001"],["total","3"]]}},
+{"kind":"line","frame":1,"line":4,"names":{"1":[],"0":[["nums","@1001"],["total","6"]]}},
+{"kind":"line","frame":1,"line":7,"names":{"1":[],"0":[["nums","@1001"],["total","6"]]}},
+{"kind":"return","frame":1,"line":7,"names":{"1":[],"0":[["nums","@1001"],["total","6"]]}},
+{"kind":"end","frame":0,"names":{"0":[["nums","@1001"],["total","6"]]}}]}

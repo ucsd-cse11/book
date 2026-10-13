@@ -1,4 +1,4 @@
-{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":59},{"id":1,"parent":0,"call":"main()","on":null,"enter":6,"exit":58},{"id":2,"parent":1,"call":"menu.discountInPlace()","on":"@1002","enter":7,"exit":22},{"id":3,"parent":1,"call":"pricyMenu.discountInPlace()","on":"@1004","enter":24,"exit":39},{"id":4,"parent":1,"call":"menu.discountInPlace()","on":"@1002","enter":41,"exit":56}],
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":59},{"id":1,"parent":0,"call":"main()","on":null,"enter":6,"exit":58},{"id":2,"parent":1,"call":"menu.discountInPlace()","on":"@1002","enter":7,"exit":22},{"id":3,"parent":1,"call":"pricyMenu.discountInPlace()","on":"@1004","enter":24,"exit":39},{"id":4,"parent":1,"call":"menu.discountInPlace()","on":"@1002","enter":41,"exit":56}],
 "steps":[
 {"kind":"line","frame":0,"line":19,"names":{"0":[]},"heap":[]},
 {"kind":"line","frame":0,"line":20,"names":{"0":[["regular","@1001"]]},"heap":[["@1001",{"items":["2000","1000","500","800"]}]]},

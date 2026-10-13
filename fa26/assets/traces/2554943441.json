@@ -1,0 +1,7 @@
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":4}],
+"steps":[
+{"kind":"line","frame":0,"line":1,"names":{"0":[]},"heap":[]},
+{"kind":"line","frame":0,"line":2,"names":{"0":[["top","@1001"]]},"heap":[["@1001",{"items":["true","false","true","true","true","true"]}]]},
+{"kind":"line","frame":0,"line":3,"names":{"0":[["top","@1001"],["middle","@1002"]]},"heap":[["@1001",{"items":["true","false","true","true","true","true"]}],["@1002",{"items":["true","false","false","false","true"]}]]},
+{"kind":"line","frame":0,"line":4,"names":{"0":[["top","@1001"],["middle","@1002"],["bottom","@1003"]]},"heap":[["@1001",{"items":["true","false","true","true","true","true"]}],["@1002",{"items":["true","false","false","false","true"]}],["@1003",{"items":["true","true","false","false"]}]]},
+{"kind":"end","frame":0,"names":{"0":[["top","@1001"],["middle","@1002"],["bottom","@1003"],["seats","@1004"]]},"heap":[["@1001",{"items":["true","false","true","true","true","true"]}],["@1002",{"items":["true","false","false","false","true"]}],["@1003",{"items":["true","true","false","false"]}],["@1004",{"items":["@1001","@1002","@1003"]}]]}]}

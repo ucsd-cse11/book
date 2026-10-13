@@ -99,7 +99,7 @@
             next.set(id, hist);
             return { name, hist, changed: i > 0 && hist !== before };
           });
-          return { a, type: obj.type || null, list: !!obj.items, opaque: !obj.items && !obj.fields,
+          return { a, type: obj.type || null, list: !!obj.items, more: obj.more || 0, opaque: !obj.items && !obj.fields,
             parts, fresh: i > 0 && !hists.has(a) };
         });
         for (const [a] of s.heap) next.set(a, []);
@@ -165,7 +165,7 @@
   }
 
   function objectHtml(t, o) {
-    if (o.list) return '[' + o.parts.map((p) => valued(t, p)).join(', ') + ']';
+    if (o.list) return '[' + o.parts.map((p) => valued(t, p)).concat(o.more ? [`… ${o.more} more`] : []).join(', ') + ']';
     if (o.opaque) return esc(o.type);
     return esc(o.type) + '[' + o.parts.map((p) => esc(p.name) + '=' + valued(t, p)).join(', ') + ']';
   }

@@ -1,4 +1,4 @@
-{"v":3,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":68},{"id":1,"parent":0,"call":"main()","on":null,"enter":6,"exit":67},{"id":2,"parent":1,"call":"morning.curved()","on":"@1002","enter":7,"exit":20},{"id":3,"parent":1,"call":"evening.curveInPlace()","on":"@1004","enter":23,"exit":35},{"id":4,"parent":1,"call":"morning.curved()","on":"@1002","enter":37,"exit":50},{"id":5,"parent":1,"call":"evening.curveInPlace()","on":"@1004","enter":53,"exit":65}],
+{"v":4,"frames":[{"id":0,"parent":null,"call":null,"on":null,"enter":0,"exit":68},{"id":1,"parent":0,"call":"main()","on":null,"enter":6,"exit":67},{"id":2,"parent":1,"call":"morning.curved()","on":"@1002","enter":7,"exit":20},{"id":3,"parent":1,"call":"evening.curveInPlace()","on":"@1004","enter":23,"exit":35},{"id":4,"parent":1,"call":"morning.curved()","on":"@1002","enter":37,"exit":50},{"id":5,"parent":1,"call":"evening.curveInPlace()","on":"@1004","enter":53,"exit":65}],
 "steps":[
 {"kind":"line","frame":0,"line":19,"names":{"0":[]},"heap":[]},
 {"kind":"line","frame":0,"line":20,"names":{"0":[["morningScores","@1001"]]},"heap":[["@1001",{"items":["80","92","75"]}]]},
