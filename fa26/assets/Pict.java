@@ -464,12 +464,13 @@ class ImageIO_ {
     }
 
     // A relative name the reader has not saved falls back to the book's
-    // assets/ directory, found next to pict17.jar on the classpath.
+    // assets/ directory, found next to pict17*.jar on the classpath.
     private static File findImage(String filename) {
         File own = resolve(filename);
         if (own.exists() || filename.startsWith("/")) return own;
         for (String entry : System.getProperty("java.class.path", "").split(File.pathSeparator)) {
-            if (entry.endsWith("pict17.jar")) {
+            String jar = new File(entry).getName();
+            if (jar.startsWith("pict17.") && jar.endsWith(".jar")) {
                 File book = new File(new File(entry).getParentFile(), filename);
                 if (book.exists()) return book;
             }

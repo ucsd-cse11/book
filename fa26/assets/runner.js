@@ -74,7 +74,8 @@
 
   function ensureChannel() {
     if (channel) return channel;
-    const url = new URL('../assets/runner-worker.js', document.baseURI);
+    const meta = document.querySelector('meta[name="book-runner"]');
+    const url = new URL('../assets/' + (meta ? meta.content : 'runner-worker.js'), document.baseURI);
     let target = null;
     let terminate = null;
     let mode = 'dedicated';

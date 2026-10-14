@@ -67,9 +67,11 @@ for (const level of ['log', 'error', 'warn', 'info', 'debug']) {
 importScripts('https://cjrtnc.leaningtech.com/4.3/loader.js');
 
 const ASSETS = '/app' + self.location.pathname.replace(/[^/]*$/, '');
-const COMPILER_CP = `${ASSETS}bookc.jar:${ASSETS}ecj.jar`;
-const COMPILE_CP = `${ASSETS}platform17.jar:${ASSETS}pict17.jar:/files/`;
-const RUN_CP = `${ASSETS}pict17.jar:/files/`;
+const JARS = new URLSearchParams(self.location.search);
+const jar = (name) => ASSETS + (JARS.get(name) || name + '.jar');
+const COMPILER_CP = `${jar('bookc')}:${jar('ecj')}`;
+const COMPILE_CP = `${jar('platform17')}:${jar('pict17')}:/files/`;
+const RUN_CP = `${jar('pict17')}:/files/`;
 // (resolved at call time: the loader defines these only once the JVM is up)
 const addStringFile = (path, data) =>
   (self.cheerpOSAddStringFile || self.cheerpjAddStringFile)(path, data);
