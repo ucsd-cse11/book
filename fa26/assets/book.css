@@ -53,8 +53,34 @@ body.toc .subtitle { opacity: .75; }
   margin: 2.4rem 0 0; padding-top: 1rem;
   border-top: 1px solid var(--card-border);
 }
-/* a glossary term (every use); <dfn> kept for a first-use promotion pass */
-.prose .term, .prose dfn { font-style: normal; font-weight: 650; }
+/* a glossary term (every use); build.py makes the first use a <dfn> */
+.prose .term, .prose dfn { font-style: normal; font-weight: 650; scroll-margin-top: 4rem; }
+/* a term with a written glossary entry links to it (build.py) and
+   previews it on hover (glossary.js); the link stays the term's color */
+.prose a.term-link {
+  color: inherit; text-decoration: underline dotted;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  text-underline-offset: .2em;
+}
+.prose a.term-link:hover { text-decoration-color: var(--accent); }
+.gloss-pop {
+  position: absolute; z-index: 20;
+  max-width: min(24rem, calc(100vw - 16px));
+  background: Canvas; color: CanvasText;
+  border: 1px solid var(--card-border); border-radius: .5rem;
+  box-shadow: 0 4px 16px rgb(0 0 0 / .15);
+  padding: .55rem .8rem; font-size: .9rem; line-height: 1.45;
+}
+.gloss-pop[hidden] { display: none; }
+.gloss-pop .gloss-name { font-weight: 650; margin-bottom: .2rem; }
+.gloss-pop p { margin: .3rem 0; }
+.gloss-pop code { background: var(--soft-bg); padding: .05rem .3rem; border-radius: .25rem; }
+/* the glossary page (build.py) */
+body.toc .glossary-link { margin-top: 2rem; }
+.glossary .gloss { margin: 1.75rem 0; scroll-margin-top: 4rem; }
+.glossary .gloss h2 { font-size: 1.15rem; margin: 0 0 .3rem; }
+.glossary .gloss:target h2 { color: var(--accent); }
+.glossary .gloss-uses { font-size: .85rem; opacity: .75; margin: .4rem 0 0; }
 .prose code.ptr { font-weight: 700; }
 .prose img { max-width: 100%; height: auto; }
 

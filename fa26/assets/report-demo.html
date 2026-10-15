@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Progress Tracking Demo</title>
+<link rel="stylesheet" href="book.css">
+<style>
+  /* Stands in for PrairieLearn: opens chapters in report mode (report.js,
+     docs/exercise-contract.md "Progress reports") and shows what they send. */
+  .demo table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .92rem; }
+  .demo th, .demo td { text-align: left; padding: .5rem .4rem; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
+  .demo th { font-weight: 600; font-size: .8rem; opacity: .7; }
+  .demo td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .demo .bar { display: block; height: .4rem; border-radius: .2rem; background: var(--soft-bg); margin-top: .25rem; min-width: 5rem; overflow: hidden; }
+  .demo .bar > span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .4s; }
+  .demo tr.flash td { animation: flash 1s; }
+  @keyframes flash { from { background: color-mix(in srgb, var(--accent) 22%, transparent); } }
+  .demo .idle { opacity: .5; }
+  .demo button { font: inherit; padding: .3rem .8rem; border-radius: .3rem; cursor: pointer;
+    border: 1px solid var(--card-border); background: Canvas; color: CanvasText; }
+  .demo button.open { border: 0; background: var(--accent); color: white; }
+  .demo .log { font-size: .8rem; max-height: 18rem; overflow: auto; }
+  .demo .toolbar { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+  .demo .meta { font-size: .8rem; opacity: .65; }
+  .demo .prose code { white-space: nowrap; }
+  @media (max-width: 600px) { .demo .hide-narrow { display: none; } }
+</style>
+</head>
+<body>
+<header><a class="home" href="../index.html">☰ Contents</a></header>
+<main class="demo">
+<h1>Progress Tracking Demo</h1>
+<div class="prose">
+<p>This page plays the part of a course site like PrairieLearn. <strong>Open</strong>
+opens a chapter in a new window with <code>?report=</code> set to this page's
+origin. As the reader works through the chapter (running code, answering
+questions, moving between steps), the chapter posts a progress snapshot back
+here. This page acknowledges each one, and the chapter's header then shows
+"Progress recorded".</p>
+<p>Progress is tracked in the reader's own browser and is a nudge, not a
+grade: the chapter only reports what it saw happen.</p>
+</div>
+
+<table>
+  <thead><tr>
+    <th>Chapter</th><th>Steps done</th>
+    <th class="hide-narrow">This step's gates</th><th class="hide-narrow">Exercises on this step</th>
+    <th class="hide-narrow">Last report</th><th></th>
+  </tr></thead>
+  <tbody id="rows"><tr><td colspan="6" class="meta">Reading the table of contents…</td></tr></tbody>
+</table>
+
+<div class="toolbar">
+  <button id="reset" type="button">Reset progress in this browser</button>
+  <span class="meta" id="reset-note"></span>
+</div>
+
+<details class="prose">
+  <summary>Messages received (newest first)</summary>
+  <pre class="log"><code id="log">Nothing yet. Open a chapter.</code></pre>
+</details>
+</main>
+<script>
+'use strict';
+(function () {
+  const rows = document.getElementById('rows');
+  const bySection = new Map();  // section slug -> row parts
+  const log = [];
+
+  function cell(cls) { const td = document.createElement('td'); if (cls) td.className = cls; return td; }
+
+  function addRow(slug, title, href) {
+    const tr = document.createElement('tr');
+    const name = cell(); name.textContent = title;
+    const steps = cell('num');
+    const count = document.createElement('span'); count.className = 'idle'; count.textContent = 'not opened';
+    const bar = document.createElement('span'); bar.className = 'bar';
+    const fill = document.createElement('span'); bar.append(fill);
+    steps.append(count, bar);
+    const gates = cell('num hide-narrow'); gates.textContent = '—';
+    const exercises = cell('num hide-narrow'); exercises.textContent = '—';
+    const when = cell('num hide-narrow meta'); when.textContent = '—';
+    const act = cell();
+    const btn = document.createElement('button');
+    btn.className = 'open'; btn.type = 'button'; btn.textContent = 'Open';
+    btn.addEventListener('click', () => {
+      const url = new URL(href, location.href);
+      url.searchParams.set('report', location.origin);
+      window.open(url.href, 'book-' + slug);
+    });
+    act.append(btn);
+    tr.append(name, steps, gates, exercises, when, act);
+    rows.append(tr);
+    bySection.set(slug, { tr, count, fill, gates, exercises, when });
+  }
+
+  // The chapter list is the book's own table of contents.
+  fetch('../index.html')
+    .then((r) => r.text())
+    .then((t) => {
+      const doc = new DOMParser().parseFromString(t, 'text/html');
+      rows.replaceChildren();
+      for (const a of doc.querySelectorAll('main > ol > li > a')) {
+        const href = new URL(a.getAttribute('href'), new URL('../index.html', location.href)).href;
+        const slug = new URL(href).pathname.split('/').slice(-2)[0];
+        addRow(slug, a.textContent.trim(), href);
+      }
+    })
+    .catch(() => { rows.firstElementChild.firstElementChild.textContent = 'Could not read the table of contents.'; });
+
+  window.addEventListener('message', (e) => {
+    if (e.origin !== location.origin || !e.data || e.data.type !== 'book-progress') return;
+    const d = e.data;
+    e.source.postMessage({ type: 'book-progress-ack', page: d.page }, e.origin);
+
+    const row = bySection.get(d.section);
+    if (row) {
+      row.count.className = '';
+      row.count.textContent = `${d.steps.done} / ${d.steps.total}`;
+      row.fill.style.width = d.steps.total ? `${100 * d.steps.done / d.steps.total}%` : '0';
+      row.gates.textContent = d.gates.total ? `${d.gates.passed} / ${d.gates.total}` : 'none';
+      row.exercises.textContent = d.exercises.total ? `${d.exercises.answered} / ${d.exercises.total}` : 'none';
+      row.when.textContent = new Date(d.at).toLocaleTimeString();
+      row.tr.classList.remove('flash'); void row.tr.offsetWidth; row.tr.classList.add('flash');
+    }
+    log.unshift(JSON.stringify(d, null, 2));
+    if (log.length > 20) log.pop();
+    document.getElementById('log').textContent = log.join('\n\n');
+  });
+
+  // Gating and step ticks live in this origin's localStorage (gate.js):
+  // clearing them starts every chapter over, for a demo from zero.
+  document.getElementById('reset').addEventListener('click', () => {
+    let n = 0;
+    try {
+      for (const k of Object.keys(localStorage)) {
+        if (k.startsWith('done:') || k.startsWith('gate:')) { localStorage.removeItem(k); n++; }
+      }
+    } catch (e) { /* private mode */ }
+    document.getElementById('reset-note').textContent =
+      `Cleared ${n} saved ${n === 1 ? 'entry' : 'entries'}. Reload any open chapter windows.`;
+  });
+})();
+</script>
+</body>
+</html>
