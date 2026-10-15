@@ -5,8 +5,8 @@
 // and the image teachpack from How to Design Programs by Felleisen, Flatt,
 // Findler, and Krishnamurthi.
 //
-// The fa26 edition of the CSE 11 book's library, desktop build.
-// Generated from pict/ in the book's source by build.py; changes go there.
+// The CSE 11 book's picture library. This one file is what the book's pages
+// run (compiled into pict17.jar) and what the take-home kit ships.
 // ==========================================================================
 
 import java.awt.*;
@@ -635,8 +635,15 @@ class ImageIO_ {
 
     static void show(Raster r) {
         Raster visible = shownForm(r);
+        if (inBook) {
+            int n = shown++;
+            save(visible, ".shown-" + n + ".png");
+            // the page replaces this line with the image (runner.js)
+            System.out.println(SHOWN_MARK + n + "\u0001");
+            return;
+        }
         if (GraphicsEnvironment.isHeadless()) {
-            String filename = SHOWN_PREFIX + (shown++) + ".png";
+            String filename = "shown-" + (shown++) + ".png";
             save(visible, filename);
             System.out.println("[no display: wrote " + filename + "]");
             return;
@@ -657,17 +664,46 @@ class ImageIO_ {
         frame.setVisible(true);
     }
 
-    private static final String SHOWN_PREFIX = "shown-";
     private static int shown = 0;
 
-    // Relative filenames are relative to where java was started.
+    // Relative filenames are relative to where java was started, or in the
+    // book, to the page's writable filesystem, mounted at /files/.
     private static File resolve(String filename) {
-        return new File(filename);
+        if (filename.startsWith("/") || !inBook) return new File(filename);
+        return new File("/files/", filename);
     }
 
-    // The book's images live with the book, so on the desktop a load is
-    // just a file next to where java was started.
+    // A relative name the reader has not saved falls back to the book's
+    // assets/ directory, found next to pict17*.jar on the classpath.
     private static File findImage(String filename) {
-        return resolve(filename);
+        File own = resolve(filename);
+        if (own.exists() || filename.startsWith("/")) return own;
+        for (String entry : System.getProperty("java.class.path", "").split(File.pathSeparator)) {
+            String jar = new File(entry).getName();
+            if (jar.startsWith("pict17.") && jar.endsWith(".jar")) {
+                File book = new File(new File(entry).getParentFile(), filename);
+                if (book.exists()) return book;
+            }
+        }
+        throw new RuntimeException("Failed to load image: no file named \"" + filename + "\"");
+    }
+
+    // -- the book's in-browser runner --------------------------------------
+    // The runner calls __reset() before every run, and that call is how this
+    // class knows it is on a book page: show() then writes the image where
+    // the page picks it up instead of opening a window. Nothing else calls
+    // it, so on a desktop JVM inBook stays false.
+
+    private static final String SHOWN_MARK = "\u0001__SHOWN__";
+    private static boolean inBook = false;
+
+    static void __reset() {
+        inBook = true;
+        shown = 0;
+        File[] leftovers = new File("/files/").listFiles(
+            (dir, name) -> name.startsWith(".shown-"));
+        if (leftovers != null) {
+            for (File f : leftovers) f.delete();
+        }
     }
 }
