@@ -1,13 +1,21 @@
 // Browser build of the Pict library. Differs from the desktop version only
 // in ImageIO_: show() displays the image below the code widget (instead of
 // opening a window), and relative filenames live in the page's sandbox.
+//
+// Generated from pict/ by build.py; edit those files, not this one.
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriter;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
 
 // ==========================================================================
 // Pict — composable image descriptions
@@ -19,6 +27,9 @@ interface Pict {
 
     /** Render this Pict into a Raster of pixels. */
     default Raster render() {
+        // an image with no area has no pixels to draw (and AWT refuses to
+        // make one)
+        if (width() == 0 || height() == 0) return new Raster(width(), height());
         var img = new BufferedImage(width(), height(), BufferedImage.TYPE_INT_ARGB);
         var g = img.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -33,6 +44,12 @@ interface Pict {
     default Pict overlay(Pict other) { return new Overlay(this, other); }
     default Pict overlayAt(int x, int y, Pict other) { return new OverlayAt(this, x, y, other); }
     default Pict overlayAt(double x, double y, Pict other) { return new OverlayAt(this, x, y, other); }
+    default Pict overlayAtAlign(int x, int y, String align, Pict other) {
+        return new OverlayAtAlign(this, x, y, align, other);
+    }
+    default Pict overlayAtAlign(double x, double y, String align, Pict other) {
+        return new OverlayAtAlign(this, x, y, align, other);
+    }
     default Pict addLine(int x1, int y1, int x2, int y2, String color) {
         return new AddLine(this, x1, y1, x2, y2, color);
     }
@@ -61,6 +78,11 @@ final class Px {
             throw new IllegalArgumentException("measurement must be a number, got " + v);
         }
         return (int) Math.round(v);
+    }
+    /** A width, height, or radius: zero is fine (an empty picture), negative is not. */
+    static int size(String what, int v) {
+        if (v < 0) throw new IllegalArgumentException(what + " is negative: " + v);
+        return v;
     }
 }
 
@@ -112,6 +134,7 @@ final class Colors {
 // --- Primitive shapes ---
 
 record Circle(int radius, Color color) implements Pict {
+    Circle { Px.size("radius", radius); }
     Circle(int radius, String color) { this(radius, Colors.named(color)); }
     Circle(double radius, String color) { this(Px.of(radius), Colors.named(color)); }
     public String toString() { return "Circle[radius=" + radius + ", color=" + Colors.nameOf(color) + "]"; }
@@ -124,6 +147,7 @@ record Circle(int radius, Color color) implements Pict {
 }
 
 record CircleOutline(int radius, Color color) implements Pict {
+    CircleOutline { Px.size("radius", radius); }
     CircleOutline(int radius, String color) { this(radius, Colors.named(color)); }
     CircleOutline(double radius, String color) { this(Px.of(radius), Colors.named(color)); }
     public String toString() { return "CircleOutline[radius=" + radius + ", color=" + Colors.nameOf(color) + "]"; }
@@ -136,6 +160,7 @@ record CircleOutline(int radius, Color color) implements Pict {
 }
 
 record Rect(int width, int height, Color color) implements Pict {
+    Rect { Px.size("width", width); Px.size("height", height); }
     Rect(int width, int height, String color) { this(width, height, Colors.named(color)); }
     Rect(double width, double height, String color) { this(Px.of(width), Px.of(height), Colors.named(color)); }
     public String toString() { return "Rect[width=" + width + ", height=" + height + ", color=" + Colors.nameOf(color) + "]"; }
@@ -146,6 +171,7 @@ record Rect(int width, int height, Color color) implements Pict {
 }
 
 record RectOutline(int width, int height, Color color) implements Pict {
+    RectOutline { Px.size("width", width); Px.size("height", height); }
     RectOutline(int width, int height, String color) { this(width, height, Colors.named(color)); }
     RectOutline(double width, double height, String color) { this(Px.of(width), Px.of(height), Colors.named(color)); }
     public String toString() { return "RectOutline[width=" + width + ", height=" + height + ", color=" + Colors.nameOf(color) + "]"; }
@@ -157,6 +183,7 @@ record RectOutline(int width, int height, Color color) implements Pict {
 
 /** An isosceles triangle: base along the bottom, apex at the top center. */
 record Triangle(int width, int height, Color color) implements Pict {
+    Triangle { Px.size("width", width); Px.size("height", height); }
     Triangle(int width, int height, String color) { this(width, height, Colors.named(color)); }
     Triangle(double width, double height, String color) { this(Px.of(width), Px.of(height), Colors.named(color)); }
     public String toString() { return "Triangle[width=" + width + ", height=" + height + ", color=" + Colors.nameOf(color) + "]"; }
@@ -168,6 +195,7 @@ record Triangle(int width, int height, Color color) implements Pict {
 }
 
 record TriangleOutline(int width, int height, Color color) implements Pict {
+    TriangleOutline { Px.size("width", width); Px.size("height", height); }
     TriangleOutline(int width, int height, String color) { this(width, height, Colors.named(color)); }
     TriangleOutline(double width, double height, String color) { this(Px.of(width), Px.of(height), Colors.named(color)); }
     public String toString() { return "TriangleOutline[width=" + width + ", height=" + height + ", color=" + Colors.nameOf(color) + "]"; }
@@ -262,6 +290,40 @@ record OverlayAt(Pict front, int x, int y, Pict back) implements Pict {
     }
 }
 
+// OverlayAt with a choice of which point of front lands on (x, y): "center",
+// "bottom-left" (what OverlayAt does), "bottom-right", "top-left" or
+// "top-right". Same coordinates as OverlayAt: from back's bottom-left, y up.
+// (Isaac Zhang's suggestion.)
+record OverlayAtAlign(Pict front, int x, int y, String align, Pict back) implements Pict {
+    private static final java.util.List<String> ALIGNS =
+        java.util.List.of("center", "bottom-left", "bottom-right", "top-left", "top-right");
+    OverlayAtAlign {
+        if (!ALIGNS.contains(align)) {
+            throw new IllegalArgumentException("unknown align \"" + align + "\"; use one of: "
+                + String.join(", ", ALIGNS));
+        }
+    }
+    OverlayAtAlign(Pict front, double x, double y, String align, Pict back) {
+        this(front, Px.of(x), Px.of(y), align, back);
+    }
+    public int width() { return this.back.width(); }
+    public int height() { return this.back.height(); }
+    public void draw(Graphics2D g, int gx, int gy) {
+        int w = this.front.width(), h = this.front.height();
+        int left = switch (this.align) {
+            case "center" -> this.x - w / 2;
+            case "bottom-right", "top-right" -> this.x - w;
+            default -> this.x;
+        };
+        int bottom = switch (this.align) {
+            case "center" -> this.y - h / 2;
+            case "top-left", "top-right" -> this.y - h;
+            default -> this.y;
+        };
+        new OverlayAt(this.front, left, bottom, this.back).draw(g, gx, gy);
+    }
+}
+
 // A line from (x1, y1) to (x2, y2) drawn over base, in base's coordinates:
 // origin at base's bottom-left pixel, y up (as OverlayAt). The result is
 // base's size; the line is clipped to it.
@@ -338,8 +400,12 @@ record FromRaster(Raster raster) implements Pict {
 
 class Raster {
     private final Color[][] pixels;
+    // kept apart from pixels: a 5x0 raster has no rows to measure a width from
+    private final int width, height;
 
     Raster(int width, int height) {
+        this.width = Px.size("width", width);
+        this.height = Px.size("height", height);
         this.pixels = new Color[height][width];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -349,12 +415,15 @@ class Raster {
     }
 
     Raster(Color[][] pixels) {
+        this(checkedWidth(pixels), pixels.length, copyOf(pixels));
+    }
+
+    private static int checkedWidth(Color[][] pixels) {
         if (pixels == null) throw new IllegalArgumentException("pixels is null");
         if (pixels.length == 0) throw new IllegalArgumentException("pixels has no rows");
         if (pixels[0] == null) throw new IllegalArgumentException("pixels[0] is null");
         int width = pixels[0].length;
         if (width == 0) throw new IllegalArgumentException("pixels[0] is empty");
-        Color[][] copy = new Color[pixels.length][width];
         for (int y = 0; y < pixels.length; y++) {
             if (pixels[y] == null) throw new IllegalArgumentException("pixels[" + y + "] is null");
             if (pixels[y].length != width) {
@@ -365,10 +434,21 @@ class Raster {
                 if (pixels[y][x] == null) {
                     throw new IllegalArgumentException("pixels[" + y + "][" + x + "] is null");
                 }
-                copy[y][x] = pixels[y][x];
             }
         }
-        this.pixels = copy;
+        return width;
+    }
+
+    private static Color[][] copyOf(Color[][] pixels) {
+        Color[][] copy = new Color[pixels.length][];
+        for (int y = 0; y < pixels.length; y++) copy[y] = pixels[y].clone();
+        return copy;
+    }
+
+    private Raster(int width, int height, Color[][] pixels) {
+        this.width = width;
+        this.height = height;
+        this.pixels = pixels;
     }
 
     static Raster fromBufferedImage(BufferedImage img) {
@@ -378,11 +458,11 @@ class Raster {
                 pixels[y][x] = new Color(img.getRGB(x, y), true);
             }
         }
-        return new Raster(pixels);
+        return new Raster(img.getWidth(), img.getHeight(), pixels);
     }
 
-    int width() { return this.pixels[0].length; }
-    int height() { return this.pixels.length; }
+    int width() { return this.width; }
+    int height() { return this.height; }
 
     Color colorAt(int x, int y) { return this.pixels[y][x]; }
     void setColorAt(int x, int y, Color color) { this.pixels[y][x] = color; }
@@ -431,6 +511,10 @@ class ImageIO_ {
     }
 
     static void save(Raster r, String filename) {
+        if (r.width() == 0 || r.height() == 0) {
+            throw new IllegalArgumentException("can't save an empty (" + r.width() + "x" + r.height()
+                + ") image: a PNG needs at least one pixel");
+        }
         try {
             File out = resolve(filename);
             if (out.getParentFile() != null) out.getParentFile().mkdirs();
@@ -440,13 +524,112 @@ class ImageIO_ {
         }
     }
 
+    static void save(Pict[] frames, String filename) {
+        save(frames, 100, true, filename);
+    }
+
+    static void save(Pict[] frames, int delayMs, String filename) {
+        save(frames, delayMs, true, filename);
+    }
+
+    // An animated GIF, delayMs per frame (GIF keeps hundredths of a second).
+    // Frames are centered on a white canvas as large as the largest frame; GIF
+    // has no partial transparency, so "transparent" shows the white.
+    // loop: repeat forever, or play once and stop on the last frame (the loop
+    // flag was Aiden Wang's suggestion).
+    static void save(Pict[] frames, int delayMs, boolean loop, String filename) {
+        if (frames.length == 0) throw new IllegalArgumentException("no frames to save");
+        if (delayMs < 0) throw new IllegalArgumentException("delayMs is negative: " + delayMs);
+        int w = 0, h = 0;
+        for (Pict p : frames) {
+            w = Math.max(w, p.width());
+            h = Math.max(h, p.height());
+        }
+        if (w == 0 || h == 0) {
+            throw new IllegalArgumentException("can't save frames that are all empty (" + w + "x" + h
+                + "): a GIF needs at least one pixel");
+        }
+        ImageWriter writer = ImageIO.getImageWritersByFormatName("gif").next();
+        try (var out = ImageIO.createImageOutputStream(new FileOutputStream(resolve(filename)))) {
+            writer.setOutput(out);
+            writer.prepareWriteSequence(null);
+            for (int i = 0; i < frames.length; i++) {
+                var img = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+                var g = img.createGraphics();
+                g.setColor(Color.WHITE);
+                g.fillRect(0, 0, w, h);
+                g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                frames[i].draw(g, (w - frames[i].width()) / 2, (h - frames[i].height()) / 2);
+                g.dispose();
+                writer.writeToSequence(new IIOImage(img, null, gifFrameMetadata(writer, img, delayMs, loop && i == 0)), null);
+            }
+            writer.endWriteSequence();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to save image: " + e.getMessage());
+        } finally {
+            writer.dispose();
+        }
+    }
+
+    private static IIOMetadata gifFrameMetadata(ImageWriter writer, BufferedImage img, int delayMs, boolean loopForever)
+            throws IOException {
+        IIOMetadata meta = writer.getDefaultImageMetadata(ImageTypeSpecifier.createFromRenderedImage(img), null);
+        String format = meta.getNativeMetadataFormatName();
+        var root = new IIOMetadataNode(format);
+        var gce = new IIOMetadataNode("GraphicControlExtension");
+        gce.setAttribute("disposalMethod", "none");
+        gce.setAttribute("userInputFlag", "FALSE");
+        gce.setAttribute("transparentColorFlag", "FALSE");
+        gce.setAttribute("delayTime", Integer.toString(Math.round(delayMs / 10f)));
+        gce.setAttribute("transparentColorIndex", "0");
+        root.appendChild(gce);
+        if (loopForever) {
+            // the NETSCAPE2.0 block: loop count 0 = forever; without it the
+            // GIF plays once
+            var apps = new IIOMetadataNode("ApplicationExtensions");
+            var app = new IIOMetadataNode("ApplicationExtension");
+            app.setAttribute("applicationID", "NETSCAPE");
+            app.setAttribute("authenticationCode", "2.0");
+            app.setUserObject(new byte[] { 1, 0, 0 });
+            apps.appendChild(app);
+            root.appendChild(apps);
+        }
+        meta.mergeTree(format, root);
+        return meta;
+    }
+
+    // What show() puts up for an image with no area, which has nothing of its
+    // own to show: a small gray dotted circle.
+    private static Raster shownForm(Raster r) {
+        if (r.width() > 0 && r.height() > 0) return r;
+        var img = new BufferedImage(20, 20, BufferedImage.TYPE_INT_ARGB);
+        var g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setColor(Color.GRAY);
+        g.setStroke(new BasicStroke(1.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND,
+            1, new float[] { 0.1f, 3.5f }, 0));
+        g.drawOval(2, 2, 15, 15);
+        g.dispose();
+        return Raster.fromBufferedImage(img);
+    }
+
+    private static BufferedImage toBufferedImage(Raster r) {
+        var img = new BufferedImage(r.width(), r.height(), BufferedImage.TYPE_INT_ARGB);
+        for (int y = 0; y < r.height(); y++) {
+            for (int x = 0; x < r.width(); x++) {
+                img.setRGB(x, y, r.colorAt(x, y).getRGB());
+            }
+        }
+        return img;
+    }
+
     static void show(Pict p) {
         show(p.render());
     }
 
     static void show(Raster r) {
         int n = shown++;
-        save(r, SHOWN_PREFIX + n + ".png");
+        save(shownForm(r), SHOWN_PREFIX + n + ".png");
         // the page replaces this line with the image (runner.js)
         System.out.println(SHOWN_MARK + n + "\u0001");
     }
@@ -476,16 +659,6 @@ class ImageIO_ {
             }
         }
         throw new RuntimeException("Failed to load image: no file named \"" + filename + "\"");
-    }
-
-    private static BufferedImage toBufferedImage(Raster r) {
-        var img = new BufferedImage(r.width(), r.height(), BufferedImage.TYPE_INT_ARGB);
-        for (int y = 0; y < r.height(); y++) {
-            for (int x = 0; x < r.width(); x++) {
-                img.setRGB(x, y, r.colorAt(x, y).getRGB());
-            }
-        }
-        return img;
     }
 
     static void __reset() {

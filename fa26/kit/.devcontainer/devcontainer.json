@@ -1,0 +1,9 @@
+{
+  "name": "CSE 11",
+  "image": "mcr.microsoft.com/devcontainers/java:3-25-bookworm",
+  "customizations": {
+    "vscode": {
+      "extensions": ["vscjava.vscode-java-pack"]
+    }
+  }
+}
