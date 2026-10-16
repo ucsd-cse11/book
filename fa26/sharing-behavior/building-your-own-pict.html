@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building Your Own Pict — Classes that Share Behavior</title>
+<link rel="stylesheet" href="../assets/book.css?v=46bd78cc8520">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Classes that Share Behavior</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Building Your Own Pict</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok, time to make my own <code>Pict</code>! Mine will be called <code>Art</code>, so it doesn’t collide with the real one that we have been using so far.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Good plan. Drawing is the hard part of <code>Pict</code>, so let’s skip it. Let’s just focus on the size of your <code>Art</code>. Write that as an interface, plus one simple record like the <code>Rect</code> from <code>Pict.java</code>.</div></div><div class="runner" id="w1238648949" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="13" spellcheck="false" autocorrect="off" autocapitalize="off">interface Art {
+  int width();
+  int height();
+}
+
+record Block(int width, int height) implements Art {}
+
+void main() {
+  Art wall = new Block(3, 2);
+  assertEquals(3, wall.width());
+  assertEquals(2, wall.height());
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Wait, <code>Block</code> doesn’t have a <code>width</code> method. Did I need to write it?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Nope. Every record gets a method for each of its fields, with the same name. <code>wall.width()</code> is one of those, and it is what the interface asked for.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok. So now I should add something like <code>Beside</code>. How about <code>SideBySide</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Go ahead. What is the width of two pictures next to each other? What is the height?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>The widths add up, and the height is whichever is taller. And I want a <code>nextTo</code> method, like <code>beside</code>, so I don’t have to type <code>new SideBySide(...)</code>.</div></div><div class="runner" id="w1747455112" data-engine="java17" data-expect="compiles" data-gate data-edit><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">interface Art {
+  int width();
+  int height();
+
+  default Art nextTo(Art other) {
+    return new SideBySide(this, other);
+  }
+}
+
+record Block(int width, int height) implements Art {}
+
+record SideBySide(Art left, Art right) implements Art {
+  public int width() {
+    return this.left.width() + this.right.width();
+  }
+  public int height() {
+    return Math.max(this.left.height(), this.right.height());
+  }
+}
+
+void main() {
+  Art wall = new Block(3, 2);
+  Art tower = new Block(2, 4);
+  Art both = wall.nextTo(tower);
+  assertEquals(5, both.width());
+  assertEquals(4, both.height());
+  assertEquals(7, both.nextTo(new Block(2, 1)).width());
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>The last line is a <code>SideBySide</code> inside another <code>SideBySide</code>, and it still works.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Because <code>left</code> and <code>right</code> are <code>Art</code>s, not <code>Block</code>s. It’s the same trick as <code>And</code> holding two <code>ImageQuery</code>s. Now one that holds a single picture: a <code>Frame</code> that adds a border, one unit thick on every side, around another <code>Art</code>.</div></div><div class="runner" id="w834232244" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;record Block(int width, int height) implements Art {} …&quot;,&quot;code&quot;:&quot;record Block(int width, int height) implements Art {}\n\nrecord SideBySide(Art left, Art right) implements Art {\n  public int width() {\n    return this.left.width() + this.right.width();\n  }\n  public int height() {\n    return Math.max(this.left.height(), this.right.height());\n  }\n}&quot;}]" data-gate data-edit><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">interface Art {
+  int width();
+  int height();
+
+  default Art nextTo(Art other) {
+    return new SideBySide(this, other);
+  }
+  default Art framed() {
+    return new Frame(this);
+  }
+}
+
+record Block(int width, int height) implements Art {} …
+
+record Frame(Art inner) implements Art {
+  public int width() {
+    return this.inner.width() + 2;
+  }
+  public int height() {
+    return this.inner.height() + 2;
+  }
+}
+
+void main() {
+  Art wall = new Block(3, 2);
+  assertEquals(5, wall.framed().width());
+  assertEquals(7, wall.framed().framed().width());
+  assertEquals(7, wall.nextTo(new Block(2, 4)).framed().width());
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>A frame of a frame is 4 wider, since each <code>Frame</code> asks the picture inside it for its width and adds 2.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly, and the picture inside might itself be a <code>Frame</code> or a <code>SideBySide</code>. Each one only has to know about its own parts. That is the same design as <code>ImageQuery</code> and as the <code>Pict</code> library. It’s an interface that describes what every value can do, simple records, combinator records that hold other values of the interface, and <code>default</code> methods that build them.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Step through this one to watch each part get asked in turn:</div></div><div class="runner" id="w1463131688" data-engine="java17" data-expect="compiles" data-echo data-gate data-trace="1463131688" data-trace-steps="calls"><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">interface Art {
+  int width();
+  int height();
+
+  default Art nextTo(Art other) {
+    return new SideBySide(this, other);
+  }
+  default Art framed() {
+    return new Frame(this);
+  }
+}
+
+record Block(int width, int height) implements Art {}
+
+record SideBySide(Art left, Art right) implements Art {
+  public int width() {
+    return this.left.width() + this.right.width();
+  }
+  public int height() {
+    return Math.max(this.left.height(), this.right.height());
+  }
+}
+
+record Frame(Art inner) implements Art {
+  public int width() {
+    return this.inner.width() + 2;
+  }
+  public int height() {
+    return this.inner.height() + 2;
+  }
+}
+
+void main() {
+  Art wall = new Block(3, 2);
+  Art tower = new Block(2, 4);
+  Art framed = wall.nextTo(tower).framed();
+  int w = framed.width();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><h3 class="practice">Practice</h3><div class="innercise"><p><strong>Exercise 1.</strong> <code>Stacked</code> puts one picture on top of another, like <code>Above</code> in the Pict library. Fill in its width and its height.</p><div class="exercise" data-kind="code" data-seed="267882787" data-check="new Stacked(new Block(3, 2), new Block(5, 1)).width() == 5 &amp;&amp; new Stacked(new Block(3, 2), new Block(5, 1)).height() == 3 &amp;&amp; new Stacked(new Block(4, 1), new Block(1, 1)).width() == 4" data-check-message="That compiles, but stacked, the width is the wider of the two, and the height is the two heights added together."><div class="cloze code">interface Art {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int width();<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int height();<br>}<br><br>record Block(int width, int height) implements Art {}<br><br>record Stacked(Art top, Art bottom) implements Art {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public int width() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="Math.max(this.top.width(), this.bottom.width())|Math.max(this.bottom.width(), this.top.width())" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public int height() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="this.top.height() + this.bottom.height()|this.bottom.height() + this.top.height()" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println("All tests succeeded!");<br>}<br></div></div></div><div class="innercise"><p><strong>Exercise 2.</strong> Finish <code>Frame</code>, which puts a border one unit thick around another picture, and the <code>framed</code> default method that builds it.</p><div class="exercise" data-kind="code" data-seed="103134856" data-check="new Block(3, 2).framed().width() == 5 &amp;&amp; new Block(3, 2).framed().height() == 4 &amp;&amp; new Block(3, 2).framed().framed().width() == 7" data-check-message="That compiles, but a Frame is two wider and two taller than the picture inside it."><div class="cloze code">interface Art {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int width();<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int height();<br><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>default Art framed() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="new Frame(this)" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>record Block(int width, int height) implements Art {}<br><br>record Frame(Art inner) implements Art {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public int width() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="this.inner.width() + 2|2 + this.inner.width()" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public int height() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="this.inner.height() + 2|2 + this.inner.height()" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println("All tests succeeded!");<br>}<br></div></div></div></article>
+<nav class="pagenav"><a class="prev" href="the-pict-library.html">← The Pict Library, Revisited</a> <a class="next" href="../pict-library/pict-library.html">Pict Library Reference →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "sharing-behavior", "title": "Classes that Share Behavior", "current": 5, "steps": [{"title": "Searching for Images", "slug": "searching-for-images", "url": "searching-for-images.html", "path": "/sharing-behavior/searching-for-images.html"}, {"title": "Combining Queries", "slug": "combining-queries", "url": "combining-queries.html", "path": "/sharing-behavior/combining-queries.html"}, {"title": "Queries as Data", "slug": "queries-as-data", "url": "queries-as-data.html", "path": "/sharing-behavior/queries-as-data.html"}, {"title": "Growing ImageData", "slug": "growing-imagedata", "url": "growing-imagedata.html", "path": "/sharing-behavior/growing-imagedata.html"}, {"title": "The Pict Library, Revisited", "slug": "the-pict-library", "url": "the-pict-library.html", "path": "/sharing-behavior/the-pict-library.html"}, {"title": "Building Your Own Pict", "slug": "building-your-own-pict", "url": "building-your-own-pict.html", "path": "/sharing-behavior/building-your-own-pict.html"}]}</script>
+<script src="../assets/runner.js?v=6c9809f8c492"></script>
+<script src="../assets/exercise.js?v=eaa35f281f55"></script>
+<script src="../assets/memory.js?v=e3148ff37b4d"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=ca6a3b6818e8"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Queries as Data — Classes that Share Behavior</title>
+<link rel="stylesheet" href="../assets/book.css?v=46bd78cc8520">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Classes that Share Behavior</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Queries as Data</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok, so how do I “pass around queries like values”? I don’t get that.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>First we have to talk about a new concept called an <dfn class="term" data-term="interface" id="term-interface-1">interface</dfn>. An interface is a way to describe shared functionality across records. So in our <code>ImageData</code> example, what do all of the methods we have been writing share?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm, I guess we are asking a true/false question.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Correct, but go into more detail. What are we saying is true or false?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, in <code>matchesExtension</code> we were checking whether the extension matches a certain file type, and in <code>largerThan</code> we are checking whether the size is larger than some value… which is a kind of matching as well. So really, it’s all checking for matches.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly. Here, I will show you an example and we can work through it together. What new keywords do you notice in this code snippet?</div></div><div class="runner" id="w1173960211" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record ImageData(String keywords, String fileType, int width, int height) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth &amp;&amp; img.height() >= this.minHeight;
+  }
+}
+
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+ImageQuery isPng = new HasExtension("png");
+ImageQuery isBig = new LargerThan(600, 400);
+boolean pngResult = isPng.matches(i1);
+boolean bigResult = isBig.matches(i1);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, there is that <code>interface</code> word you mentioned: you created an <code>ImageQuery</code>. It looks like a record, but it doesn’t seem to be storing anything. And I think you forgot to write the code for the <code>matches</code> method!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Hmm, you’re right. <code>ImageQuery</code> isn’t storing any data, is it? And the <code>matches</code> method doesn’t have a return statement… let’s keep going. What is the other detail you notice?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>You used a new keyword, <dfn class="term" data-term="implement" id="term-implement-1"><code>implements</code></dfn>, and you put it outside the record? When I read it out it says “record <code>LargerThan</code> implements <code>ImageQuery</code>.” And then each of the new records you created has a <code>matches</code> method with the same signature as in the interface.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Good noticing!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But I don’t understand <em>why</em>. Why do you have to make <code>ImageQuery</code> if you are going to have to write out the method for <code>matches</code> every time anyway? In that case we could just make sure each record has the <code>matches</code> method and we could call <code>matches</code> on whatever we wanted?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, there is one other detail at the end. Notice how we are able to declare both of these records as an <code>ImageQuery</code>. How about you try writing out your idea and seeing what happens.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok, I bet my way will work.</div></div><div class="runner" id="w3891459399" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="20" spellcheck="false" autocorrect="off" autocapitalize="off">record ImageData(String keywords, String fileType, int width, int height) {}
+
+record HasExtension(String ext) {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth &amp;&amp; img.height() >= this.minHeight;
+  }
+}
+
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+HasExtension isPng = new HasExtension("png");
+LargerThan isBig = new LargerThan(600, 400);
+boolean pngResult = isPng.matches(i1);
+boolean bigResult = isBig.matches(i1);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>See, it works perfectly! And no interface needed.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>You’re right, for now. But, let’s see what happens when we get back to the idea of combining queries: check out what happens when I try to add this new record in. We said we wanted to check for relationships between queries, such as an <code>Or</code>.</div></div><div class="runner" id="w49011629" data-engine="java17" data-expect="error" data-echo data-gate data-edit><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record ImageData(String keywords, String fileType, int width, int height) {}
+
+record HasExtension(String ext) {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth &amp;&amp; img.height() >= this.minHeight;
+  }
+}
+
+record Or(HasExtension left, HasExtension right) {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) || this.right.matches(img);
+  }
+}
+
+ImageData i2 = new ImageData("little cat", "jpg", 200, 200);
+ImageData i3 = new ImageData("cat waving", "gif", 200, 200);
+Or pngOrJpg = new Or(new HasExtension("jpg"), new HasExtension("png"));
+boolean jpgResult = pngOrJpg.matches(i2);
+boolean gifResult = pngOrJpg.matches(i3);
+// Below expected to fail
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+Or bigOrPng = new Or(new LargerThan(600, 400), new HasExtension("png"));
+boolean bigPngResult = bigOrPng.matches(i1);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, but it has an error.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right. What would you do to fix it? How can you change <code>Or</code> so that you can construct both <code>bigOrPng</code> and <code>pngOrJpg</code>?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I guess I can’t. I have to pick either <code>HasExtension</code> or <code>LargerThan</code> for the fields of <code>Or</code>, and neither works for both combinat– OHHH! Wait so the interface helps with this?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right! When we have <code>interface ImageQuery</code> and records that <code>implement<br>ImageQuery</code>, we are allowed to use <code>ImageQuery</code> as <strong>the type of any value that implements ImageQuery</strong>. So the implements lines let us replace the field types of <code>Or</code> with <code>ImageQuery</code>. And <strong>then</strong> we can construct both versions.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>That’s so cool! And I bet with that we can do <code>And</code> and stuff too.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Indeed. Give it a try with <code>And</code> and <code>Not</code> included as well.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Sure, I think I understand the format now.</div></div><div class="runner" id="w3524074887" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record ImageData(String keywords, String fileType, int width, int height) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth &amp;&amp; img.height() >= this.minHeight;
+  }
+}
+
+record And(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) &amp;&amp; this.right.matches(img);
+  }
+}
+
+record Or(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) || this.right.matches(img);
+  }
+}
+
+record Not(ImageQuery query) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return !this.query.matches(img);
+  }
+}
+
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+ImageQuery pngOrJpg = new Or(new HasExtension("png"), new HasExtension("jpg"));
+ImageQuery bigPngOrJpg = new And(new LargerThan(600, 400), pngOrJpg);
+ImageQuery notPng = new Not(new HasExtension("png"));
+boolean r1 = bigPngOrJpg.matches(i1);
+boolean r2 = notPng.matches(i1);</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>You know, these interfaces are actually kinda nice. But wait a second, you never explained what <code>public</code> means? I guess I just started copying your record examples without thinking about it.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Good catch. <code>public</code> is an <dfn class="term" data-term="access modifier" id="term-access-modifier-1">access modifier</dfn>. It says who is allowed to use a method. A <code>public</code> method can be called by code anywhere.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So why did I have to write it here? We have been calling methods all the time.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Methods in an interface must be <code>public</code>, since the whole point of an interface is that anyone holding an <code>ImageQuery</code> can call <code>matches</code> on it. A record that implements the interface isn’t allowed to make that method <em>less</em> available than the interface promised. Try leaving it off:</div></div><div class="runner" id="w3061532552" data-engine="java17" data-expect="error" data-echo data-gate data-edit><textarea class="code" rows="12" spellcheck="false" autocorrect="off" autocapitalize="off">record ImageData(String keywords, String fileType, int width, int height) {}
+  
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasExtension(String ext) implements ImageQuery {
+  boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I see, the compiler complains that it “cannot reduce the visibility of the inherited method”.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok, these interfaces are cool and all. But, I wish I didn’t have to type out <code>new And(new LargerThan(600, 400), new Or(new HasExtension("png"), new HasExtension("jpg")))</code>. That’s a lot of <code>new</code>s to keep track of.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>You’re right. Perhaps you want something in the chaining style we talked about earlier? Something like <code>isBig.and(isPng)</code>? We will go over that next.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Yeah, that’d be nice.</div></div><h3 class="practice">Practice</h3><div class="innercise"><p>Fill in the blanks to write a new query, <code>Xor</code>, that matches an image when <em>exactly one</em> of its two queries matches (one is true and the other is false).</p><div class="exercise" data-kind="code" data-seed="2678033695" data-check="new Xor(new HasExtension(&quot;png&quot;), new LargerThan(600, 400)).matches(new ImageData(&quot;cat&quot;, &quot;png&quot;, 320, 240)) &amp;&amp; new Xor(new HasExtension(&quot;jpg&quot;), new LargerThan(600, 400)).matches(new ImageData(&quot;cat&quot;, &quot;png&quot;, 640, 480)) &amp;&amp; !new Xor(new HasExtension(&quot;png&quot;), new LargerThan(600, 400)).matches(new ImageData(&quot;cat&quot;, &quot;png&quot;, 640, 480)) &amp;&amp; !new Xor(new HasExtension(&quot;jpg&quot;), new LargerThan(600, 400)).matches(new ImageData(&quot;cat&quot;, &quot;png&quot;, 320, 240))" data-check-message="That compiles, but Xor should match only when exactly one of the two queries matches."><div class="cloze code">record ImageData(String keywords, String fileType, int width, int height) {}<br><br>interface ImageQuery {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>boolean matches(ImageData img);<br>}<br><br>record HasExtension(String ext) implements ImageQuery {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public boolean matches(ImageData img) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return img.fileType().equals(this.ext);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>record LargerThan(int minWidth, int minHeight) implements ImageQuery {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public boolean matches(ImageData img) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return img.width() >= this.minWidth &amp;&amp; img.height() >= this.minHeight;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>record Xor(ImageQuery left, ImageQuery right) <input class="blank" data-answer="implements ImageQuery" spellcheck="false" autocorrect="off" autocapitalize="off"> {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public boolean matches(ImageData img) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="this.left.matches(img) != this.right.matches(img)|this.right.matches(img) != this.left.matches(img)" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println("All tests succeeded!");<br>}<br></div></div></div></article>
+<nav class="pagenav"><a class="prev" href="combining-queries.html">← Combining Queries</a> <a class="next" href="growing-imagedata.html">Growing ImageData →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "sharing-behavior", "title": "Classes that Share Behavior", "current": 2, "steps": [{"title": "Searching for Images", "slug": "searching-for-images", "url": "searching-for-images.html", "path": "/sharing-behavior/searching-for-images.html"}, {"title": "Combining Queries", "slug": "combining-queries", "url": "combining-queries.html", "path": "/sharing-behavior/combining-queries.html"}, {"title": "Queries as Data", "slug": "queries-as-data", "url": "queries-as-data.html", "path": "/sharing-behavior/queries-as-data.html"}, {"title": "Growing ImageData", "slug": "growing-imagedata", "url": "growing-imagedata.html", "path": "/sharing-behavior/growing-imagedata.html"}, {"title": "The Pict Library, Revisited", "slug": "the-pict-library", "url": "the-pict-library.html", "path": "/sharing-behavior/the-pict-library.html"}, {"title": "Building Your Own Pict", "slug": "building-your-own-pict", "url": "building-your-own-pict.html", "path": "/sharing-behavior/building-your-own-pict.html"}]}</script>
+<script src="../assets/runner.js?v=6c9809f8c492"></script>
+<script src="../assets/exercise.js?v=eaa35f281f55"></script>
+<script src="../assets/memory.js?v=e3148ff37b4d"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=ca6a3b6818e8"></script>
+</body>
+</html>

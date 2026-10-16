@@ -705,5 +705,152 @@
   "state": "done",
   "text": "salk = Raster[240x189]\n[[IMG:0]]salkNeg = Raster[240x189]\n[[IMG:1]]pier = Raster[180x240]\n[[IMG:2]]pierNeg = Raster[180x240]\n[[IMG:3]]",
   "images": 4
+ },
+ "61bc7a77": {
+  "slug": "arrays/loops",
+  "widget": 0,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@78a]\nclosestOrigin = Point[x=3.0, y=4.0]\nclosesttTopRight = Point[x=7.0, y=8.0]\n",
+  "images": 0
+ },
+ "2b79d5e2": {
+  "slug": "arrays/more-loops",
+  "widget": 0,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@7a4]\navgToOrigin = 6.909721775442478\navgToY10 = 8.69045326512482\n",
+  "images": 0
+ },
+ "304c9408": {
+  "slug": "arrays/more-loops",
+  "widget": 1,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@919]\nwithin6Origin = 2\nwithin1OfTenTen = 0\n",
+  "images": 0
+ },
+ "0d555b15": {
+  "slug": "sharing-behavior/searching-for-images",
+  "widget": 0,
+  "state": "done",
+  "text": "i1 = ImageData[keywords=cat sleeping, fileType=png]\npngLiteral = true\npngTyped = true\njpg = false\n",
+  "images": 0
+ },
+ "a9ee3333": {
+  "slug": "sharing-behavior/searching-for-images",
+  "widget": 1,
+  "state": "compile error",
+  "text": "line 6: error: Cannot invoke equals(int) on the primitive type int\n",
+  "images": 0
+ },
+ "40c1c3cc": {
+  "slug": "sharing-behavior/searching-for-images",
+  "widget": 2,
+  "state": "done",
+  "text": "i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]\nwidth640 = true\nwidth800 = false\n",
+  "images": 0
+ },
+ "a089156a": {
+  "slug": "sharing-behavior/searching-for-images",
+  "widget": 3,
+  "state": "done",
+  "text": "i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]\nbigEnough = true\ntooWide = false\ntooTall = false\n",
+  "images": 0
+ },
+ "565b5296": {
+  "slug": "sharing-behavior/searching-for-images",
+  "widget": 4,
+  "state": "done",
+  "text": "i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]\nbigEnough = true\ntooWide = false\ntooTall = false\n",
+  "images": 0
+ },
+ "4a2b246b": {
+  "slug": "sharing-behavior/combining-queries",
+  "widget": 0,
+  "state": "done",
+  "text": "i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]\nbigPng = true\nbigJpg = false\n",
+  "images": 0
+ },
+ "45f93613": {
+  "slug": "sharing-behavior/queries-as-data",
+  "widget": 0,
+  "state": "done",
+  "text": "i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]\nisPng = HasExtension[ext=png]\nisBig = LargerThan[minWidth=600, minHeight=400]\npngResult = true\nbigResult = true\n",
+  "images": 0
+ },
+ "e7f2f547": {
+  "slug": "sharing-behavior/queries-as-data",
+  "widget": 1,
+  "state": "done",
+  "text": "i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]\nisPng = HasExtension[ext=png]\nisBig = LargerThan[minWidth=600, minHeight=400]\npngResult = true\nbigResult = true\n",
+  "images": 0
+ },
+ "02ebdbad": {
+  "slug": "sharing-behavior/queries-as-data",
+  "widget": 2,
+  "state": "compile error",
+  "text": "line 28: error: The constructor Or(LargerThan, HasExtension) is undefined\n",
+  "images": 0
+ },
+ "d20d1d87": {
+  "slug": "sharing-behavior/queries-as-data",
+  "widget": 3,
+  "state": "done",
+  "text": "i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]\npngOrJpg = Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]\nbigPngOrJpg = And[left=LargerThan[minWidth=600, minHeight=400], right=Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]]\nnotPng = Not[query=HasExtension[ext=png]]\nr1 = true\nr2 = false\n",
+  "images": 0
+ },
+ "b67b4788": {
+  "slug": "sharing-behavior/queries-as-data",
+  "widget": 4,
+  "state": "compile error",
+  "text": "line 8: error: Cannot reduce the visibility of the inherited method from ImageQuery\n",
+  "images": 0
+ },
+ "1fe1e62a": {
+  "slug": "sharing-behavior/growing-imagedata",
+  "widget": 0,
+  "state": "failed",
+  "text": "Exception in thread \"Thread-0\" org.opentest4j.AssertionFailedError: expected: <true> but was: <false>\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "feafc712": {
+  "slug": "sharing-behavior/growing-imagedata",
+  "widget": 1,
+  "state": "done",
+  "text": "i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480, sizeKb=300]\ncat = HasKeyword[word=cat]\nlight = SmallerThanKb[limitKb=500]\nr1 = true\nr2 = true\nr3 = false\nr4 = true\n",
+  "images": 0
+ },
+ "eee0f1f8": {
+  "slug": "sharing-behavior/the-pict-library",
+  "widget": 0,
+  "state": "done",
+  "text": "dot = Circle[radius=20, color=red]\n[[IMG:0]]square = Rect[width=40, height=40, color=blue]\n[[IMG:1]]viaRecord = Beside[left=Circle[radius=20, color=red], right=Rect[width=40, height=40, color=blue]]\n[[IMG:2]]viaMethod = Beside[left=Circle[radius=20, color=red], right=Rect[width=40, height=40, color=blue]]\n[[IMG:3]]stacked = Above[top=Beside[left=Circle[radius=20, color=red], right=Rect[width=40, height=40, color=blue]], bottom=Rect[width=60, height=10, color=green]]\n[[IMG:4]]",
+  "images": 5
+ },
+ "49d44875": {
+  "slug": "sharing-behavior/building-your-own-pict",
+  "widget": 0,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "68280c88": {
+  "slug": "sharing-behavior/building-your-own-pict",
+  "widget": 1,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "73e088dc": {
+  "slug": "sharing-behavior/building-your-own-pict",
+  "widget": 2,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "57359e28": {
+  "slug": "sharing-behavior/building-your-own-pict",
+  "widget": 3,
+  "state": "done",
+  "text": "",
+  "images": 0
  }
 }

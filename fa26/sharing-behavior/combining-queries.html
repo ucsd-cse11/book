@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combining Queries — Classes that Share Behavior</title>
+<link rel="stylesheet" href="../assets/book.css?v=46bd78cc8520">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Classes that Share Behavior</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Combining Queries</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok, so now I want to find images that are both larger than a minimum size and a PNG. So I should write a new method.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Sure, how would this method work? What arguments would it take, and what would it return?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, it should combine <code>largerThan</code> and <code>matchesExtension</code>, so it needs the arguments of both methods, and it returns a <code>boolean</code>. But I’m clever! I’ll just call <code>largerThan</code> and <code>matchesExtension</code> from inside my new method and join them with <code>&amp;&amp;</code>. That way it’s only one line.</div></div><div class="runner" id="w2386422520" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  boolean largerThanAndMatchesExtension(int minWidth, int minHeight, String ext) { … }&quot;,&quot;code&quot;:&quot;  boolean largerThanAndMatchesExtension(int minWidth, int minHeight, String ext) {\n    return this.largerThan(minWidth, minHeight) &amp;&amp; this.matchesExtension(ext);\n  }&quot;}]" data-echo data-gate><textarea class="code" rows="13" spellcheck="false" autocorrect="off" autocapitalize="off">record ImageData(String keywords, String fileType, int width, int height) {
+  boolean matchesExtension(String ext) {
+    return this.fileType.equals(ext);
+  }
+  boolean largerThan(int minWidth, int minHeight) {
+    return this.width >= minWidth &amp;&amp; this.height >= minHeight;
+  }
+  boolean largerThanAndMatchesExtension(int minWidth, int minHeight, String ext) { … }
+}
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+boolean bigPng = i1.largerThanAndMatchesExtension(600, 400, "png");
+boolean bigJpg = i1.largerThanAndMatchesExtension(600, 400, "jpg");</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>There we go, <code>bigPng</code> is <code>true</code> and <code>bigJpg</code> is <code>false</code>. Clever, right?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Nice work. Now, what if you want images that are a PNG <em>or</em> a JPG?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm, I’d need another method, <code>largerThanAndMatchesPngOrJpg</code>. And then if I wanted images that are larger than a minimum size <em>or</em> a WEBP…</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Keep going. Every new way of combining queries needs a new method. And what happens as we add more fields to <code>ImageData</code>?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh no. Every possible combination of queries needs its own method. I would never finish. I mean, also, there’s no way this is how someone at Google would do this, right? So what am I supposed to do instead?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What if a query was something you could pass around, like a value?</div></div><h3 class="practice">Practice</h3><div class="innercise"><p>Fill in the blanks so that <code>largerThanAndMatchesExtension</code> is <code>true</code> only when the image is big enough <em>and</em> has the right extension, by calling the two queries that already exist.</p><div class="exercise" data-kind="code" data-seed="1069354650" data-check="new ImageData(&quot;cat&quot;, &quot;png&quot;, 640, 480).largerThanAndMatchesExtension(600, 400, &quot;png&quot;) &amp;&amp; !new ImageData(&quot;cat&quot;, &quot;png&quot;, 640, 480).largerThanAndMatchesExtension(600, 400, &quot;jpg&quot;) &amp;&amp; !new ImageData(&quot;cat&quot;, &quot;png&quot;, 640, 480).largerThanAndMatchesExtension(700, 400, &quot;png&quot;)" data-check-message="That compiles, but the combined query should be true only when the image is big enough AND has the right extension."><div class="cloze code">record ImageData(String keywords, String fileType, int width, int height) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>boolean matchesExtension(String ext) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return this.fileType.equals(ext);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>boolean largerThan(int minWidth, int minHeight) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return this.width >= minWidth &amp;&amp; this.height >= minHeight;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>boolean largerThanAndMatchesExtension(int minWidth, int minHeight, String ext) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="this.largerThan(minWidth, minHeight)" spellcheck="false" autocorrect="off" autocapitalize="off"> &amp;&amp; <input class="blank" data-answer="this.matchesExtension(ext)" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println("All tests succeeded!");<br>}<br></div></div></div></article>
+<nav class="pagenav"><a class="prev" href="searching-for-images.html">← Searching for Images</a> <a class="next" href="queries-as-data.html">Queries as Data →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "sharing-behavior", "title": "Classes that Share Behavior", "current": 1, "steps": [{"title": "Searching for Images", "slug": "searching-for-images", "url": "searching-for-images.html", "path": "/sharing-behavior/searching-for-images.html"}, {"title": "Combining Queries", "slug": "combining-queries", "url": "combining-queries.html", "path": "/sharing-behavior/combining-queries.html"}, {"title": "Queries as Data", "slug": "queries-as-data", "url": "queries-as-data.html", "path": "/sharing-behavior/queries-as-data.html"}, {"title": "Growing ImageData", "slug": "growing-imagedata", "url": "growing-imagedata.html", "path": "/sharing-behavior/growing-imagedata.html"}, {"title": "The Pict Library, Revisited", "slug": "the-pict-library", "url": "the-pict-library.html", "path": "/sharing-behavior/the-pict-library.html"}, {"title": "Building Your Own Pict", "slug": "building-your-own-pict", "url": "building-your-own-pict.html", "path": "/sharing-behavior/building-your-own-pict.html"}]}</script>
+<script src="../assets/runner.js?v=6c9809f8c492"></script>
+<script src="../assets/exercise.js?v=eaa35f281f55"></script>
+<script src="../assets/memory.js?v=e3148ff37b4d"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=ca6a3b6818e8"></script>
+</body>
+</html>
