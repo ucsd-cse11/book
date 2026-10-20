@@ -901,5 +901,26 @@
   "state": "done",
   "text": "reg = RegularPost[message=Hello world!]\nr = Repost[message=what he said, original=Repost[message=what she said, original=RegularPost[message=I love to post]]]\nhasWorld = true\nhasPotato = false\nhasPost = true\nhasSaid = true\nhasThey = false\n",
   "images": 0
+ },
+ "178a3f36": {
+  "slug": "recursive-data/null",
+  "widget": 0,
+  "state": "done",
+  "text": "p = Person[name=Bob, parent1=Person[name=Brenda, parent1=null, parent2=null], parent2=null]\n",
+  "images": 0
+ },
+ "006142da": {
+  "slug": "recursive-data/null",
+  "widget": 1,
+  "state": "failed",
+  "text": "Exception in thread \"Thread-0\" java.lang.NullPointerException\n\tat Program$Person.oldestKnownGeneration(Unknown Source)\n\tat <init>(Unknown Source)\n",
+  "images": 0
+ },
+ "3374e5d7": {
+  "slug": "recursive-data/null",
+  "widget": 2,
+  "state": "done",
+  "text": "p = Person[name=Bob, parent1=Person[name=Brenda, parent1=null, parent2=null], parent2=null]\noldest = 2\n",
+  "images": 0
  }
 }
