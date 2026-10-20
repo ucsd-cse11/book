@@ -852,5 +852,54 @@
   "state": "done",
   "text": "",
   "images": 0
+ },
+ "36b7ae6b": {
+  "slug": "recursive-data/naming-it",
+  "widget": 0,
+  "state": "done",
+  "text": "img = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480, sizeKb=300]\ncat = HasKeyword[word=cat]\npng = HasExtension[ext=png]\njpg = HasExtension[ext=jpg]\nlight = SmallerThanKb[limitKb=500]\npngOrJpg = Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]\ncatPic = And[left=HasKeyword[word=cat], right=Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]]\nquery = And[left=And[left=HasKeyword[word=cat], right=Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]], right=SmallerThanKb[limitKb=500]]\nfound = true\n",
+  "images": 0
+ },
+ "2967cd11": {
+  "slug": "recursive-data/base-cases",
+  "widget": 0,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "0ae7d272": {
+  "slug": "recursive-data/base-case-code",
+  "widget": 0,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "7b682676": {
+  "slug": "recursive-data/base-case-code",
+  "widget": 1,
+  "state": "compile error",
+  "text": "line 4: error: The constructor Repost(String, Repost) is undefined\nline 4: error: Type mismatch: cannot convert from Repost to Post\nline 5: error: The constructor Repost(String, RegularPost) is undefined\n",
+  "images": 0
+ },
+ "395fd4ae": {
+  "slug": "recursive-data/base-case-code",
+  "widget": 2,
+  "state": "done",
+  "text": "r = Repost[message=what he said, original=Repost[message=what she said, original=RegularPost[message=I love to post]]]\n",
+  "images": 0
+ },
+ "a7c9a88e": {
+  "slug": "recursive-data/recursive-methods",
+  "widget": 0,
+  "state": "done",
+  "text": "reg = RegularPost[message=Hello world!]\nr = Repost[message=what he said, original=Repost[message=what she said, original=RegularPost[message=I love to post]]]\nhasWorld = false\nhasPotato = false\nhasPost = false\nhasSaid = false\nhasThey = false\n",
+  "images": 0
+ },
+ "c4cab972": {
+  "slug": "recursive-data/tracing-recursion",
+  "widget": 0,
+  "state": "done",
+  "text": "reg = RegularPost[message=Hello world!]\nr = Repost[message=what he said, original=Repost[message=what she said, original=RegularPost[message=I love to post]]]\nhasWorld = true\nhasPotato = false\nhasPost = true\nhasSaid = true\nhasThey = false\n",
+  "images": 0
  }
 }
