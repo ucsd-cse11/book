@@ -46,6 +46,15 @@ body.toc .subtitle { opacity: .75; }
 }
 .prose code { background: var(--soft-bg); padding: .05rem .3rem; border-radius: .25rem; }
 .prose pre code { background: none; padding: 0; }
+/* #kit-quote: a listing copied from the kit, with its source line attached */
+.prose .kit-quote { margin: .5rem 0; }
+.prose .kit-quote pre { margin: 0; border-radius: .4rem .4rem 0 0; }
+.prose .kit-quote-source {
+  margin: 0; padding: .15rem .5rem; text-align: right; font-size: .8rem;
+  background: var(--soft-bg); border-top: 1px solid var(--card-border);
+  border-radius: 0 0 .4rem .4rem; opacity: .85;
+}
+.prose .kit-quote-source code { background: none; padding: 0; }
 .prose li { margin: 1rem 0; }
 .prose li > pre { margin: .3rem 0; }
 .prose h2 { margin-top: 2.2rem; }

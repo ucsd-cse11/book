@@ -323,7 +323,7 @@
   // exist — CheerpJ tops out at Java 17, which has no implicit main — but
   // the reader should never meet it, so the compiler's own messages get its
   // name swapped for one the reader recognises.
-  function fixLineNumbers(text, headerLines, name, studentLines) {
+  function fixLineNumbers(text, headerLines, name, studentLines, nested) {
     const toStudentLine = (n) => (Number(n) > headerLines ? Number(n) - 1 : Number(n));
     // A complaint about the wrapper's own lines — "no main", say — maps past
     // the end of what the reader wrote. Citing a line they do not have is
@@ -351,11 +351,15 @@
       // wrapper class ("Duplicate field __Prog.x"): drop the prefix, the
       // student never wrote it
       .replace(/\b__Prog\./g, '')
+      // the reader's own classes are nested in the wrapper (Point prints as
+      // __Prog$Point@1b6): a named file keeps the prefix java really prints
+      // for it, a plain widget has no file to name, so it drops it
+      .replace(/\b__Prog\$/g, nested)
+      .replace(/\[L__Prog\$/g, '[L' + nested)
       // and where the class itself is the subject ("The method main() is
       // undefined for the type __Prog" — what a program with no main says)
       // it takes the name of the file the reader thinks they are running
-      .replace(/\b__Prog\b/g, name || 'Program')
-      .replace(/\[L__Prog\$/g, '[L' + (name || 'Program') + '$');
+      .replace(/\b__Prog\b/g, name || 'Program');
   }
 
   // ImageIO_.show prints one of these per image; the image itself arrives
@@ -445,7 +449,7 @@
   }
 
   function render(job, images) {
-    const text = fixLineNumbers(job.buffer, job.headerLines, job.name, job.studentLines);
+    const text = fixLineNumbers(job.buffer, job.headerLines, job.name, job.studentLines, job.nested);
     paintOutput(job.out, text, SHOWN, (n) => {
       const buf = images && images[n];
       return buf ? URL.createObjectURL(new Blob([buf], { type: 'image/png' })) : null;
@@ -527,7 +531,9 @@
   function run({ source: student, echo, widget, button, state, out }) {
     return new Promise((resolve) => {
       const { source, headerLines, studentLines } = wrap(student, !!echo);
-      const name = ((widget && widget.dataset.file) || '').replace(/\.java$/, '') || 'Program';
+      const file = ((widget && widget.dataset.file) || '').replace(/\.java$/, '');
+      const name = file || 'Program';
+      const nested = file ? file + '$' : '';
       button.disabled = true;
       setRunning(widget, true);
       out.hidden = true;
@@ -537,7 +543,7 @@
 
       const id = nextId++;
       jobs.set(id, {
-        widget, button, state, out, headerLines, studentLines, name,
+        widget, button, state, out, headerLines, studentLines, name, nested,
         buffer: '', resolve, nudge: 0, frame: 0,
       });
       state.textContent = warmupState || 'queued…';

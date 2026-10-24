@@ -426,34 +426,6 @@
   "text": "names = [Anya, Rachel, Neelkanth, Sydney, Daniela, Gonzalo]\nanya = Anya\nrachel = Rachel\nsydney = Sydney\ngonzaloIndex = 5\ngonzalo = Gonzalo\nnumberOfNames = 6\n",
   "images": 0
  },
- "add93f9b": {
-  "slug": "arrays/arrays-and-records",
-  "widget": 0,
-  "state": "done",
-  "text": "",
-  "images": 0
- },
- "81aed54f": {
-  "slug": "arrays/arrays-and-records",
-  "widget": 1,
-  "state": "compile error",
-  "text": "line 6: error: The constructor Positions(Point, Point, Point) is undefined\n",
-  "images": 0
- },
- "6308afc9": {
-  "slug": "arrays/arrays-and-records",
-  "widget": 2,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@98f]\n",
-  "images": 0
- },
- "a4225294": {
-  "slug": "arrays/arrays-and-records",
-  "widget": 3,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@b06]\nclosestOrigin = Point[x=3.0, y=4.0]\nclosesttTopRight = Point[x=3.0, y=4.0]\n",
-  "images": 0
- },
  "838ebaac": {
   "slug": "arrays/more-array-creation",
   "widget": 0,
@@ -468,46 +440,11 @@
   "text": "strs = [null, null, null, null]\n",
   "images": 0
  },
- "cb955a59": {
-  "slug": "arrays/builder",
-  "widget": 0,
-  "state": "done",
-  "text": "ada = Student[displayName=Ada Lovelace, username=alovelace, id=A10000001]\nalan = Student[displayName=Alan Turing, username=aturing, id=A10000002]\ngrace = Student[displayName=Grace Hopper, username=ghopper, id=A10000003]\nenrolled = [Student[displayName=Ada Lovelace, username=alovelace, id=A10000001], Student[displayName=Alan Turing, username=aturing, id=A10000002], Student[displayName=Grace Hopper, username=ghopper, id=A10000003]]\ncse11 = CourseRoster[students=[LProgram$Student;@76b]\n",
-  "images": 0
- },
- "a2d1f770": {
-  "slug": "arrays/builder",
-  "widget": 1,
-  "state": "done",
-  "text": "ada = Student[displayName=Ada Lovelace, username=alovelace, id=A10000001]\nalan = Student[displayName=Alan Turing, username=aturing, id=A10000002]\ngrace = Student[displayName=Grace Hopper, username=ghopper, id=A10000003]\nenrolled = [Student[displayName=Ada Lovelace, username=alovelace, id=A10000001], Student[displayName=Alan Turing, username=aturing, id=A10000002], Student[displayName=Grace Hopper, username=ghopper, id=A10000003]]\ncse11 = CourseRoster[students=[LProgram$Student;@8e7]\nucsdEmails = [alovelace@ucsd.edu, aturing@ucsd.edu, ghopper@ucsd.edu]\n",
-  "images": 0
- },
  "b8cda1a1": {
   "slug": "arrays/combining-patterns",
   "widget": 0,
   "state": "done",
   "text": "groceryItems = [eggs, milk, bread]\ngroceries = ItemList[items=[Ljava.lang.String;@7b4]\nlist = 1. eggs\n2. milk\n3. bread\n\n",
-  "images": 0
- },
- "ead4c3a9": {
-  "slug": "arrays/loops",
-  "widget": 0,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@7cd]\nclosestOrigin = Point[x=3.0, y=4.0]\nclosesttTopRight = Point[x=7.0, y=8.0]\n",
-  "images": 0
- },
- "8a1a07a0": {
-  "slug": "arrays/more-loops",
-  "widget": 0,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@7a9]\navgToOrigin = 6.909721775442478\navgToY10 = 8.69045326512482\n",
-  "images": 0
- },
- "eb466d5e": {
-  "slug": "arrays/more-loops",
-  "widget": 1,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@91e]\nwithin6Origin = 2\nwithin1OfTenTen = 0\n",
   "images": 0
  },
  "2aa47331": {
@@ -706,27 +643,6 @@
   "text": "salk = Raster[240x189]\n[[IMG:0]]salkNeg = Raster[240x189]\n[[IMG:1]]pier = Raster[180x240]\n[[IMG:2]]pierNeg = Raster[180x240]\n[[IMG:3]]",
   "images": 4
  },
- "61bc7a77": {
-  "slug": "arrays/loops",
-  "widget": 0,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@78a]\nclosestOrigin = Point[x=3.0, y=4.0]\nclosesttTopRight = Point[x=7.0, y=8.0]\n",
-  "images": 0
- },
- "2b79d5e2": {
-  "slug": "arrays/more-loops",
-  "widget": 0,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@7a4]\navgToOrigin = 6.909721775442478\navgToY10 = 8.69045326512482\n",
-  "images": 0
- },
- "304c9408": {
-  "slug": "arrays/more-loops",
-  "widget": 1,
-  "state": "done",
-  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LProgram$Point;@919]\nwithin6Origin = 2\nwithin1OfTenTen = 0\n",
-  "images": 0
- },
  "0d555b15": {
   "slug": "sharing-behavior/searching-for-images",
   "widget": 0,
@@ -902,6 +818,97 @@
   "text": "reg = RegularPost[message=Hello world!]\nr = Repost[message=what he said, original=Repost[message=what she said, original=RegularPost[message=I love to post]]]\nhasWorld = true\nhasPotato = false\nhasPost = true\nhasSaid = true\nhasThey = false\n",
   "images": 0
  },
+ "a282d3dc": {
+  "slug": "java-details/things-you-havent-told-me",
+  "widget": 0,
+  "state": "done",
+  "text": "t1 = Got int 5\nt2 = Got double 5.0\nt3 = Got int[][] [[4, 5]]\n",
+  "images": 0
+ },
+ "60b1674d": {
+  "slug": "java-details/things-you-havent-told-me",
+  "widget": 1,
+  "state": "done",
+  "text": "s = trash panda\nrest = panda\nfront = trash\n",
+  "images": 0
+ },
+ "4574144f": {
+  "slug": "java-details/things-you-havent-told-me",
+  "widget": 2,
+  "state": "done",
+  "text": "rr = RectRegion[]\nr = RectRegion[]\nc = CircleRegion[]\nt1 = Got Region RectRegion[]\nt2 = Got RectRegion RectRegion[]\nt3 = Got RectRegion RectRegion[]\nt4 = Got Region CircleRegion[]\n",
+  "images": 0
+ },
+ "56d39085": {
+  "slug": "java-details/under-construction",
+  "widget": 0,
+  "state": "done",
+  "text": "r = RectangleRegion[p=Point[x=1.0, y=2.0], w=4.0, h=5.0]\nr2 = RectangleRegion[p=Point[x=0.0, y=0.0], w=4.0, h=5.0]\n",
+  "images": 0
+ },
+ "add93f9b": {
+  "slug": "arrays/arrays-and-records",
+  "widget": 0,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "81aed54f": {
+  "slug": "arrays/arrays-and-records",
+  "widget": 1,
+  "state": "compile error",
+  "text": "line 6: error: The constructor Positions(Point, Point, Point) is undefined\n",
+  "images": 0
+ },
+ "6308afc9": {
+  "slug": "arrays/arrays-and-records",
+  "widget": 2,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LPoint;@a01]\n",
+  "images": 0
+ },
+ "a4225294": {
+  "slug": "arrays/arrays-and-records",
+  "widget": 3,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LPoint;@b82]\nclosestOrigin = Point[x=3.0, y=4.0]\nclosesttTopRight = Point[x=3.0, y=4.0]\n",
+  "images": 0
+ },
+ "cb955a59": {
+  "slug": "arrays/builder",
+  "widget": 0,
+  "state": "done",
+  "text": "ada = Student[displayName=Ada Lovelace, username=alovelace, id=A10000001]\nalan = Student[displayName=Alan Turing, username=aturing, id=A10000002]\ngrace = Student[displayName=Grace Hopper, username=ghopper, id=A10000003]\nenrolled = [Student[displayName=Ada Lovelace, username=alovelace, id=A10000001], Student[displayName=Alan Turing, username=aturing, id=A10000002], Student[displayName=Grace Hopper, username=ghopper, id=A10000003]]\ncse11 = CourseRoster[students=[LStudent;@793]\n",
+  "images": 0
+ },
+ "a2d1f770": {
+  "slug": "arrays/builder",
+  "widget": 1,
+  "state": "done",
+  "text": "ada = Student[displayName=Ada Lovelace, username=alovelace, id=A10000001]\nalan = Student[displayName=Alan Turing, username=aturing, id=A10000002]\ngrace = Student[displayName=Grace Hopper, username=ghopper, id=A10000003]\nenrolled = [Student[displayName=Ada Lovelace, username=alovelace, id=A10000001], Student[displayName=Alan Turing, username=aturing, id=A10000002], Student[displayName=Grace Hopper, username=ghopper, id=A10000003]]\ncse11 = CourseRoster[students=[LStudent;@919]\nucsdEmails = [alovelace@ucsd.edu, aturing@ucsd.edu, ghopper@ucsd.edu]\n",
+  "images": 0
+ },
+ "ead4c3a9": {
+  "slug": "arrays/loops",
+  "widget": 0,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LPoint;@78a]\nclosestOrigin = Point[x=3.0, y=4.0]\nclosesttTopRight = Point[x=7.0, y=8.0]\n",
+  "images": 0
+ },
+ "8a1a07a0": {
+  "slug": "arrays/more-loops",
+  "widget": 0,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LPoint;@7aa]\navgToOrigin = 6.909721775442478\navgToY10 = 8.69045326512482\n",
+  "images": 0
+ },
+ "eb466d5e": {
+  "slug": "arrays/more-loops",
+  "widget": 1,
+  "state": "done",
+  "text": "p1 = Point[x=3.0, y=4.0]\np2 = Point[x=7.0, y=8.0]\np3 = Point[x=5.0, y=-1.0]\nparray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]\nposns = Positions[points=[LPoint;@929]\nwithin6Origin = 2\nwithin1OfTenTen = 0\n",
+  "images": 0
+ },
  "178a3f36": {
   "slug": "recursive-data/null",
   "widget": 0,
@@ -913,7 +920,7 @@
   "slug": "recursive-data/null",
   "widget": 1,
   "state": "failed",
-  "text": "Exception in thread \"Thread-0\" java.lang.NullPointerException\n\tat Program$Person.oldestKnownGeneration(Unknown Source)\n\tat <init>(Unknown Source)\n",
+  "text": "Exception in thread \"Thread-0\" java.lang.NullPointerException\n\tat Person.oldestKnownGeneration(Unknown Source)\n\tat <init>(Unknown Source)\n",
   "images": 0
  },
  "3374e5d7": {
@@ -921,6 +928,118 @@
   "widget": 2,
   "state": "done",
   "text": "p = Person[name=Bob, parent1=Person[name=Brenda, parent1=null, parent2=null], parent2=null]\noldest = 2\n",
+  "images": 0
+ },
+ "d249677e": {
+  "slug": "java-details/programming-with-class",
+  "widget": 0,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "4445b6b9": {
+  "slug": "java-details/programming-with-class",
+  "widget": 1,
+  "state": "compile error",
+  "text": "line 1: error: Syntax error on token \"class\", char expected\n",
+  "images": 0
+ },
+ "3f69f38c": {
+  "slug": "java-details/programming-with-class",
+  "widget": 2,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "1d22be26": {
+  "slug": "java-details/programming-with-class",
+  "widget": 3,
+  "state": "compile error",
+  "text": "line 5: error: The constructor Point(double, double) is undefined\n",
+  "images": 0
+ },
+ "2c802605": {
+  "slug": "java-details/programming-with-class",
+  "widget": 4,
+  "state": "done",
+  "text": "p = Point@b62\n",
+  "images": 0
+ },
+ "73094ff0": {
+  "slug": "java-details/programming-with-class",
+  "widget": 5,
+  "state": "done",
+  "text": "p = Point@cc0\n",
+  "images": 0
+ },
+ "cfc3f02e": {
+  "slug": "java-details/class-equality",
+  "widget": 0,
+  "state": "done",
+  "text": "c1 = PointC@777\nc2 = PointC@782\nc1Equalsc2 = false\nr1 = PointR[x=4.0, y=5.0]\nr2 = PointR[x=4.0, y=5.0]\nr1Equalse2 = true\n",
+  "images": 0
+ },
+ "c2ff7a96": {
+  "slug": "java-details/class-equality",
+  "widget": 1,
+  "state": "done",
+  "text": "c1 = PointC@8f0\nc2 = PointC@8fb\nc1Equalsc2 = true\nr1 = PointR[x=4.0, y=5.0]\nr2 = PointR[x=4.0, y=5.0]\nr1Equalse2 = true\n",
+  "images": 0
+ },
+ "d6d3164c": {
+  "slug": "java-details/class-equality",
+  "widget": 2,
+  "state": "done",
+  "text": "rect = Rect[width=3, height=2, color=red]\n[[IMG:0]]r1 = Raster[3x2]\n[[IMG:1]]colors = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]]]\nr2 = Raster[3x2]\n[[IMG:2]]",
+  "images": 3
+ },
+ "31b2da2e": {
+  "slug": "java-details/class-equality",
+  "widget": 3,
+  "state": "done",
+  "text": "rect = Rect[width=3, height=2, color=red]\n[[IMG:0]]r1 = Raster[3x2]\n[[IMG:1]]colors = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]]]\nr2 = Raster[3x2]\n[[IMG:2]]sameImage = true\nsameObject = false\n",
+  "images": 3
+ },
+ "648e6765": {
+  "slug": "java-details/static",
+  "widget": 0,
+  "state": "failed",
+  "text": "Should be just 4 4\nException in thread \"Thread-0\" java.lang.IllegalArgumentException: test is negative: -3\n\tat Px.size(Unknown Source)\n\tat anotherMethod(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "86d9d66e": {
+  "slug": "java-details/casting",
+  "widget": 0,
+  "state": "done",
+  "text": "x = 2147483647\ny = 2147483647\n",
+  "images": 0
+ },
+ "b4e60e6c": {
+  "slug": "java-details/access",
+  "widget": 0,
+  "state": "compile error",
+  "text": "line 2: error: The field Circle.radius is not visible\n",
+  "images": 0
+ },
+ "4a931c9d": {
+  "slug": "java-details/access",
+  "widget": 1,
+  "state": "done",
+  "text": "c = Circle[radius=4, color=red]\n[[IMG:0]]radius = 4\n",
+  "images": 1
+ },
+ "20c5804c": {
+  "slug": "java-details/access",
+  "widget": 2,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "e0411ddc": {
+  "slug": "java-details/access",
+  "widget": 3,
+  "state": "done",
+  "text": "",
   "images": 0
  }
 }

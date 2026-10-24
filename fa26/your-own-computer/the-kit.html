@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Kit — Appendix: Working on Your Own Computer</title>
-<link rel="stylesheet" href="../assets/book.css?v=46bd78cc8520">
+<link rel="stylesheet" href="../assets/book.css?v=4fd60153aa3a">
 <meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
 </head>
 <body>
@@ -18,12 +18,12 @@
 <h1>The Kit</h1>
 <article class="prose"><p>Everything in this book runs in the page. When you want your programs in files of your own, start from the <em>kit</em>: the book’s <code>Pict</code> library, JUnit for testing, and a small example of each. There are two ways to get it.</p><h2>In a Codespace</h2><p><a href="https://codespaces.new/ucsd-cse11/kit?ref=fa26">Open the kit in a GitHub Codespace</a>. A Codespace is VS Code running in your browser on a computer GitHub provides, with Java 25 and the Java extensions already installed; the first start takes a minute or two. You need a GitHub account, and a Codespace you leave alone for a few weeks is deleted, so download anything you want to keep.</p><h2>On your own computer</h2><p><a href="../kit/cse11-kit.zip">Download the kit</a> (a zip; it is also on GitHub as <a href="https://github.com/ucsd-cse11/kit/tree/fa26">the kit repository</a>). You will need Java 25 or newer: install a JDK from <a href="https://adoptium.net">adoptium.net</a>, then check with</p><pre><code>java -version</code></pre><h2>What is in it</h2><ul><li><a href="../kit/Pict.java"><code>Pict.java</code></a> — the library this book uses, the same file the book’s pages run. On your computer <code>ImageIO_.show</code> opens a window instead of drawing below the code (a Codespace has no display, so there it saves <code>shown-0.png</code>), and file names are relative to the folder you run <code>java</code> in.</li><li><a href="../kit/Example.java"><code>Example.java</code></a> — a program that uses it.</li><li><a href="../kit/ExampleTest.java"><code>ExampleTest.java</code></a> — JUnit tests.</li><li><a href="../kit/lib/junit.jar"><code>lib/junit.jar</code></a> — JUnit itself, under <a href="../kit/lib/LICENSE-junit.md">its license</a>.</li><li><a href="../kit/README.md"><code>README.md</code></a> — these instructions, short.</li></ul><h2>Running a program</h2><p>In the kit’s folder:</p><pre><code>java -ea Example.java</code></pre><p>Java compiles <code>Example.java</code>, and the <code>Pict.java</code> next to it, as it starts; <code>-ea</code> turns on <code>assert</code>, as the book’s widgets do. This one saves <code>example.png</code>.</p><h2>Running the tests</h2><pre><code>javac -d out -cp lib/junit.jar *.java
 java -jar lib/junit.jar execute --class-path out --scan-class-path</code></pre><p>The first line compiles everything into <code>out/</code>; the second finds every <code>@Test</code> there and runs it. In VS Code, the Testing panel does the same.</p></article>
-<nav class="pagenav"><a class="prev" href="../pict-library/pict-library.html">← Pict Library Reference</a> </nav>
+<nav class="pagenav"><a class="prev" href="../pict-library/pict-library.html">← Pict Library Reference</a> <a class="next" href="../credits/credits.html">Credits →</a></nav>
 </main>
 <footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
 <a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
 <script type="application/x-steps">{"section": "your-own-computer", "title": "Appendix: Working on Your Own Computer", "current": 0, "steps": [{"title": "The Kit", "slug": "the-kit", "url": "the-kit.html", "path": "/your-own-computer/the-kit.html"}]}</script>
-<script src="../assets/runner.js?v=6c9809f8c492"></script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
 <script src="../assets/exercise.js?v=eaa35f281f55"></script>
 <script src="../assets/memory.js?v=e3148ff37b4d"></script>
 <script src="../assets/trace.js?v=a349e52d2634"></script>
