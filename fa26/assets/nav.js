@@ -70,6 +70,7 @@
     if (window.bookRunner) window.bookRunner.hydrate(newArticle);
     if (window.bookExercises) window.bookExercises.hydrate(newArticle);
     if (window.bookTrace) window.bookTrace.hydrate(newArticle);
+    if (window.bookMemory) window.bookMemory.hydrate(newArticle);
     if (window.bookGates) window.bookGates.init(newArticle);
   }
 

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overriding equals and Casting to a Class — Extending Classes</title>
+<link rel="stylesheet" href="../assets/book.css?v=b20e427a0bc7">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Extending Classes</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Overriding equals and Casting to a Class</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Professor, the thing you showed me about <code>equals()</code> doesn’t work.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>How do you mean?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, I wanted to write some tests, like you suggested, and I tried using <code>assertEquals</code> with the class definition for <code>Point</code>.</div></div><div class="runner" id="w786851646" data-engine="java17" data-expect="assert" data-gate><textarea class="code" rows="17" spellcheck="false" autocorrect="off" autocapitalize="off">class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  boolean equals(Point other) {
+    return this.x == other.x &amp;&amp; this.y == other.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>See, it fails! But if I make <code>Point</code> a record and get rid of <code>equals</code>, the assert passes.</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>Ah I see. Yeah this is a pretty subtle point! Here’s what’s going on. The default <code>equals()</code> on <code>Object</code> looks like this:</p><pre><code data-lang="java"><span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">equals</span>(<span style="color: #4b69c6">Object</span> other)</code></pre><p>See the issue?</p></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>No…</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s try two things. First, add an <code>@Override</code> on your <code>equals</code> method for <code>Point</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK…</div></div><div class="runner" id="w415904412" data-engine="java17" data-expect="error" data-gate data-edit><textarea class="code" rows="18" spellcheck="false" autocorrect="off" autocapitalize="off">class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  @Override
+  boolean equals(Point other) {
+    return this.x == other.x &amp;&amp; this.y == other.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Huh. It fails now. But I <strong>am</strong> overriding <code>equals</code>.</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>So this is where it’s a little tricky, and we need to be precise. We override a method not just by name, but by <strong>type</strong>. So let’s put the two methods right next to each other:</p><pre><code data-lang="java"><span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">equals</span>(<span style="color: #4b69c6">Object</span> other) <span style="color: #74747c">//</span><span style="color: #74747c"> the one in Java's Object</span>
+<span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">equals</span>(<span style="color: #4b69c6">Point</span> other)  <span style="color: #74747c">//</span><span style="color: #74747c"> the one in your Point class</span></code></pre></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So… how do I fix it? Do I have to write the <code>Object</code> version? OK, I can change the signature…</div></div><div class="runner" id="w3031842598" data-engine="java17" data-expect="error" data-gate data-edit><textarea class="code" rows="18" spellcheck="false" autocorrect="off" autocapitalize="off">class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  @Override
+  public boolean equals(Object other) {
+    return this.x == other.x &amp;&amp; this.y == other.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Huh? It doesn’t work now</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right – since that parameter is type <code>Object</code>, Java can’t prove that it has <code>x</code> and <code>y</code> fields. You could call <code>new Point(4.0, 5.0).equals("a string")</code>, for example, and the string certainly doesn’t have those fields.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ugh, OK. Oh wait! I can use <code>instanceof</code>! Because I just want to do the x and y checks if I know it’s a <code>Point</code>!</div></div><div class="runner" id="w620261388" data-engine="java17" data-expect="error" data-gate data-edit><textarea class="code" rows="19" spellcheck="false" autocorrect="off" autocapitalize="off">class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  @Override
+  public boolean equals(Object other) {
+    if(!(other instanceof Point)) { return false; }
+    return this.x == other.x &amp;&amp; this.y == other.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ugh what’s wrong?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Wow, nice job. I just need to give you one more step. This is something that comes up in programming a lot – even though something is obvious to <strong>us</strong>, the programmer, it is not obvious to the <strong>programming language</strong>. Here <strong>you</strong> know that <code>other</code> must be a <code>Point</code> after the <code>if</code>. But Java doesn’t!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well that’s silly.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>I know. But it’s actually a pretty common scenario. Here we need to tell Java “trust me, it’s a <code>Point</code>”. We can do that with a <dfn class="term" data-term="class cast" id="term-class-cast-1">class cast</dfn>. We write <code>(C)o</code> for some class <code>C</code> and value <code>o</code>. Java will make sure <code>o instanceof<br>C</code>, and if it is, it will let us treat <code>o</code> as a <code>C</code>. If it’s not, that’s an error (a <code>ClassCastException</code>). So you could do that with <code>other</code> and <code>Point</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So like… where? Like after the if?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s the right spot, because it’s where you <strong>know</strong> you have a <code>Point</code>, and not some other subclass of <code>Object</code> like <code>String</code> or <code>Location</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Here goes…</div></div><div class="runner" id="w1694020197" data-engine="java17" data-expect="compiles" data-gate data-edit><textarea class="code" rows="20" spellcheck="false" autocorrect="off" autocapitalize="off">class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  @Override
+  public boolean equals(Object other) {
+    if(!(other instanceof Point)) { return false; }
+    Point p = (Point)other;
+    return this.x == p.x &amp;&amp; this.y == p.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hey, that works!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right – this also helps fully explain what was going on in the <code>equals</code> for <code>Raster</code>. This is a super common pattern: do the <code>instanceof</code> check, do the cast, and then do the checks.</div></div><div class="kit-quote" data-kit-path="Pict.java" data-match="L476-L485"><pre><code data-lang="java"><span style="color: #301414">@</span><span style="color: #301414">Override</span>
+<span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">equals</span>(<span style="color: #4b69c6">Object</span> other) {
+    <span style="color: #d73948">if</span> (<span style="color: #d73948">this</span> <span style="color: #d73948">==</span> other) <span style="color: #d73948">return</span> <span style="color: #d73948">true</span>;
+    <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span>(other <span style="color: #d73948">instanceof</span> <span style="color: #4b69c6">Raster</span> r)) <span style="color: #d73948">return</span> <span style="color: #d73948">false</span>;
+    <span style="color: #d73948">if</span> (<span style="color: #d73948">this</span>.<span style="color: #4b69c6">width</span>() <span style="color: #d73948">!=</span> r.<span style="color: #4b69c6">width</span>() <span style="color: #d73948">||</span> <span style="color: #d73948">this</span>.<span style="color: #4b69c6">height</span>() <span style="color: #d73948">!=</span> r.<span style="color: #4b69c6">height</span>()) <span style="color: #d73948">return</span> <span style="color: #d73948">false</span>;
+    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> y <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>; y <span style="color: #d73948">&lt;</span> <span style="color: #d73948">this</span>.<span style="color: #4b69c6">height</span>(); y<span style="color: #d73948">++</span>) {
+        <span style="color: #d73948">if</span> (<span style="color: #d73948">!</span><span style="color: #4b69c6">Arrays</span>.<span style="color: #4b69c6">equals</span>(<span style="color: #d73948">this</span>.pixels[y], r.pixels[y])) <span style="color: #d73948">return</span> <span style="color: #d73948">false</span>;
+    }
+    <span style="color: #d73948">return</span> <span style="color: #d73948">true</span>;
+}</code></pre><p class="kit-quote-source"><a href="https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L476-L485"><code>Pict.java</code>, lines 476–485</a></p></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But that has one more line, with <code>==</code> at the top.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, so if two objects are reference equal, they are certainly <code>.equals()</code>, so that check is also at the top of most <code>equals()</code> methods. You could add it to yours!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Thanks, I will</div></div><h3 class="practice">Practice</h3><div class="innercise"><div class="exercise" data-kind="choice" data-seed="724738026"><div class="stem"><p>Suppose <code>Point</code>’s <code>equals</code> skipped the <code>instanceof</code> check and cast right away:</p><pre><code data-lang="java"><span style="color: #301414">@</span><span style="color: #301414">Override</span>
+<span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">equals</span>(<span style="color: #4b69c6">Object</span> other) {
+  <span style="color: #4b69c6">Point</span> p <span style="color: #d73948">=</span> (<span style="color: #4b69c6">Point</span>)other;
+  <span style="color: #d73948">return</span> <span style="color: #d73948">this</span>.x <span style="color: #d73948">==</span> p.x <span style="color: #d73948">&amp;&amp;</span> <span style="color: #d73948">this</span>.y <span style="color: #d73948">==</span> p.y;
+}</code></pre><p>What happens with <code>new Point(4.0, 5.0).equals("a string")</code>?</p></div><ol class="choices"><li data-correct>It crashes with a <code>ClassCastException</code><div class="why">The cast checks that <code>other</code> really is a <code>Point</code> when it runs. A <code>String</code> isn’t, so the program stops with a <code>ClassCastException</code>.</div></li><li>It returns <code>false</code><div class="why">Nothing in this version returns <code>false</code> for a non-<code>Point</code>. That was the job of the <code>instanceof</code> check.</div></li><li>It doesn’t compile<div class="why">Java accepts the cast, because an <code>Object</code> might be a <code>Point</code>. The problem only shows up when the program runs.</div></li></ol></div></div></article>
+<nav class="pagenav"><a class="prev" href="instanceof.html">← Navigating the Class Hierarchy 2</a> <a class="next" href="summary.html">Extending Classes in Summary →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "extending-classes", "title": "Extending Classes", "current": 4, "steps": [{"title": "Overriding Methods", "slug": "tostring-override", "url": "tostring-override.html", "path": "/extending-classes/tostring-override.html"}, {"title": "Sharing Fields", "slug": "abstracting-shared-fields", "url": "abstracting-shared-fields.html", "path": "/extending-classes/abstracting-shared-fields.html"}, {"title": "Navigating Class Hierarchies", "slug": "the-class-hierarchy", "url": "the-class-hierarchy.html", "path": "/extending-classes/the-class-hierarchy.html"}, {"title": "Navigating the Class Hierarchy 2", "slug": "instanceof", "url": "instanceof.html", "path": "/extending-classes/instanceof.html"}, {"title": "Overriding equals and Casting to a Class", "slug": "class-cast", "url": "class-cast.html", "path": "/extending-classes/class-cast.html"}, {"title": "Extending Classes in Summary", "slug": "summary", "url": "summary.html", "path": "/extending-classes/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=eaa35f281f55"></script>
+<script src="../assets/memory.js?v=99ba09564d4a"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>

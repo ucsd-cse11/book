@@ -95,4 +95,51 @@
     pinned = ref;
     show(ref);
   });
+
+  function edges(grid) {
+    const old = grid.querySelector(':scope > svg.hier-edges');
+    if (old) old.remove();
+    const box = grid.getBoundingClientRect();
+    if (!box.width) return;
+    const nodes = new Map([...grid.querySelectorAll('.hier-node')].map((n) => [n.dataset.name, n]));
+    const svg = document.createElementNS(SVG, 'svg');
+    svg.setAttribute('class', 'hier-edges');
+    svg.setAttribute('aria-hidden', 'true');
+    const heads = new Map();
+    for (const [name, child] of nodes) {
+      for (const up of child.dataset.parents.split(' ').filter(Boolean)) {
+        const parent = nodes.get(up);
+        const c = child.getBoundingClientRect();
+        const p = parent.getBoundingClientRect();
+        const px = p.left + p.width / 2 - box.left;
+        const py = p.bottom - box.top + 3;
+        const impl = parent.classList.contains('iface');
+        const line = document.createElementNS(SVG, 'path');
+        line.setAttribute('d', `M ${c.left + c.width / 2 - box.left} ${c.top - box.top - 3}`
+          + ` L ${px} ${py + 11}`);
+        line.setAttribute('class', impl ? 'edge impl' : 'edge');
+        line.dataset.from = name;
+        line.dataset.to = up;
+        svg.append(line);
+        heads.set(up, [px, py]);
+      }
+    }
+    for (const [up, [px, py]] of heads) {
+      const head = document.createElementNS(SVG, 'path');
+      head.setAttribute('d', `M ${px} ${py} L ${px - 7} ${py + 11} L ${px + 7} ${py + 11} Z`);
+      head.setAttribute('class', 'head');
+      head.dataset.to = up;
+      svg.append(head);
+    }
+    grid.append(svg);
+  }
+
+  const resized = new ResizeObserver((entries) => {
+    for (const e of entries) edges(e.target);
+  });
+  function hydrate(root) {
+    for (const grid of root.querySelectorAll('.hier-grid')) resized.observe(grid);
+  }
+  window.bookMemory = { hydrate };
+  hydrate(document);
 })();

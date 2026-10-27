@@ -1041,5 +1041,89 @@
   "state": "done",
   "text": "",
   "images": 0
+ },
+ "086be030": {
+  "slug": "extending-classes/tostring-override",
+  "widget": 0,
+  "state": "done",
+  "text": "p1: PointR[x=4.0, y=5.0]\np2: PointC@730\n",
+  "images": 0
+ },
+ "d8bf74a2": {
+  "slug": "extending-classes/tostring-override",
+  "widget": 1,
+  "state": "done",
+  "text": "b1 = Objekt@8c1\nsc1 = SubClass1@8c9\nsc2 = SubClass2@8ca\nb1A = Objekt\nsc1A = SubClass1[x=0]\nsc2A = Objekt\n",
+  "images": 0
+ },
+ "2ee6673e": {
+  "slug": "extending-classes/class-cast",
+  "widget": 0,
+  "state": "failed",
+  "text": "Exception in thread \"Thread-0\" org.opentest4j.AssertionFailedError: expected: <Point@6ef> but was: <Point@6f0>\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "8f086db5": {
+  "slug": "extending-classes/abstracting-shared-fields",
+  "widget": 0,
+  "state": "done",
+  "text": "Taco Shop (4.5 stars)\nBus 30\n",
+  "images": 0
+ },
+ "e70073b5": {
+  "slug": "extending-classes/abstracting-shared-fields",
+  "widget": 1,
+  "state": "done",
+  "text": "Taco Shop (4.5 stars)\nBus 30\n",
+  "images": 0
+ },
+ "b469f36b": {
+  "slug": "extending-classes/instanceof",
+  "widget": 0,
+  "state": "done",
+  "text": "c = Circle[radius=20, color=red]\n[[IMG:0]]isCircle = true\nisRectangle = false\n",
+  "images": 1
+ },
+ "f4f8894a": {
+  "slug": "extending-classes/instanceof",
+  "widget": 1,
+  "state": "done",
+  "text": "r = Rect[width=20, height=40, color=red]\n[[IMG:0]]isCircle = false\nisRectangle = true\nisPict = true\n",
+  "images": 1
+ },
+ "869057ea": {
+  "slug": "extending-classes/instanceof",
+  "widget": 2,
+  "state": "done",
+  "text": "b = BusStop@aef\nisPlace = true\nisLocation = true\n",
+  "images": 0
+ },
+ "18ca329c": {
+  "slug": "extending-classes/class-cast",
+  "widget": 1,
+  "state": "compile error",
+  "text": "line 8: error: The method equals(Point) of type Point must override or implement a supertype method\n",
+  "images": 0
+ },
+ "b4b63f26": {
+  "slug": "extending-classes/class-cast",
+  "widget": 2,
+  "state": "compile error",
+  "text": "line 9: error: x cannot be resolved or is not a field\nline 9: error: y cannot be resolved or is not a field\n",
+  "images": 0
+ },
+ "24f8700c": {
+  "slug": "extending-classes/class-cast",
+  "widget": 3,
+  "state": "compile error",
+  "text": "line 10: error: x cannot be resolved or is not a field\nline 10: error: y cannot be resolved or is not a field\n",
+  "images": 0
+ },
+ "64f8b265": {
+  "slug": "extending-classes/class-cast",
+  "widget": 4,
+  "state": "done",
+  "text": "",
+  "images": 0
  }
 }

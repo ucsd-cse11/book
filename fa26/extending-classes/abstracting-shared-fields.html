@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sharing Fields — Extending Classes</title>
+<link rel="stylesheet" href="../assets/book.css?v=b20e427a0bc7">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Extending Classes</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Sharing Fields</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>When do I use inheritance?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There are a few different cases people talk about. One I think is important is <strong>sharing fields</strong> across classes.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Sharing fields?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s think about representing locations on a service like Google Maps. They might want to have a bunch of different classes for them, and an interface that ties them together. A heads up, we’re getting into some longer examples:</div></div><div class="runner" id="w2399694261" data-engine="java17" data-expect="compiles" data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">interface Place {
+  String pinLabel();
+  boolean onScreen(double south, double north, double west, double east);
+}
+class Restaurant implements Place {
+  String name;
+  double lat;
+  double lng;
+  double stars;
+  Restaurant(String name, double lat, double lng, double stars) {
+    this.name = name;
+    this.lat = lat;
+    this.lng = lng;
+    this.stars = stars;
+  }
+  public String pinLabel() { return name + " (" + stars + " stars)"; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south &amp;&amp; lat &lt;= north &amp;&amp; lng >= west &amp;&amp; lng &lt;= east;
+  }
+}
+class Park implements Place {
+  String name;
+  double lat;
+  double lng;
+  int acres;
+  Park(String name, double lat, double lng, int acres) {
+    this.name = name;
+    this.lat = lat;
+    this.lng = lng;
+    this.acres = acres;
+  }
+  public String pinLabel() { return name + " (" + acres + " acres)"; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south &amp;&amp; lat &lt;= north &amp;&amp; lng >= west &amp;&amp; lng &lt;= east;
+  }
+}
+class BusStop implements Place {
+  int route;
+  double lat;
+  double lng;
+  BusStop(int route, double lat, double lng) {
+    this.route = route;
+    this.lat = lat;
+    this.lng = lng;
+  }
+  public String pinLabel() { return "Bus " + route; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south &amp;&amp; lat &lt;= north &amp;&amp; lng >= west &amp;&amp; lng &lt;= east;
+  }
+}
+void main() {
+  Place[] places = {
+    new Restaurant("Taco Shop", 32.8795, -117.2359, 4.5),
+    new Park("Balboa Park", 32.7341, -117.1446, 1200),
+    new BusStop(30, 32.8790, -117.2368),
+  };
+  double south = 32.86;
+  double north = 32.90;
+  double west = -117.25;
+  double east = -117.22;
+  for (Place p : places) {
+    if (p.onScreen(south, north, west, east)) {
+      System.out.println(p.pinLabel());
+    }
+  }
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Wow you weren’t kidding that it’s longer.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, we’re talking about some more substantial design questions, so our programs do need to grow a bit! What do you notice and wonder?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, I notice that each of these classes <code>implements Place</code> – there is no inheritance yet, because I don’t see <code>extends</code>.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Good, good. Other things?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I wonder what a Pin is.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Oh good question. That’s a word for a point on a virtual map. So like a little icon or shape that shows up. The example is meant to capture different kinds of places and the information they might show. For example, the restaurant has a star rating but the bus stop just names its bus route.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I see. And I notice that classes are being used instead of records.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, <code>extends</code> only works with classes, and we’ll see how it does help us a bit here. There is something shared across all the classes: do you see it?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmmm… I guess lat and lng are shared across all of them.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right. And with what we have, can we do anything to avoid having all those copies of <code>lat</code> and <code>lng</code>?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Can we put <code>lat</code> and <code>lng</code> in one class, and then extend it from all of these?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right! So the base class might be like this, though we’d have one problem:</div></div><pre><code data-lang="java"><span style="color: #d73948">class</span> <span style="color: #4b69c6">Location</span> <span style="color: #d73948">implements</span> <span style="color: #8b41b1">Place</span> {
+  <span style="color: #d73948">double</span> lat;
+  <span style="color: #d73948">double</span> lng;
+  <span style="color: #4b69c6">Location</span>(<span style="color: #d73948">double</span> lat, <span style="color: #d73948">double</span> lng) { <span style="color: #d73948">this</span>.lat <span style="color: #d73948">=</span> lat; <span style="color: #d73948">this</span>.lng <span style="color: #d73948">=</span> lng; }
+  <span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">onScreen</span>(<span style="color: #d73948">double</span> south, <span style="color: #d73948">double</span> north, <span style="color: #d73948">double</span> west, <span style="color: #d73948">double</span> east) {
+    <span style="color: #d73948">return</span> lat <span style="color: #d73948">>=</span> south <span style="color: #d73948">&amp;&amp;</span> lat <span style="color: #d73948">&lt;=</span> north <span style="color: #d73948">&amp;&amp;</span> lng <span style="color: #d73948">>=</span> west <span style="color: #d73948">&amp;&amp;</span> lng <span style="color: #d73948">&lt;=</span> east;
+  }
+}
+<span style="color: #74747c">//</span><span style="color: #74747c"> Then BusStop, Restaurant, etc can extend Location</span></code></pre><div class="speech student"><div class="bubble"><span class="who">Student: </span>It says it implements <code>Place</code>, but has no <code>pinLabel</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yup. So we have to fill in some <code>pinLabel</code> if we want this to compile.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>What should it return?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>It’s hard to say. At some point I’ll show you how to avoid having to choose, for now I’ll just fill something in:</div></div><pre><code data-lang="java"><span style="color: #d73948">class</span> <span style="color: #4b69c6">Location</span> <span style="color: #d73948">implements</span> <span style="color: #8b41b1">Place</span> {
+  <span style="color: #74747c">//</span><span style="color: #74747c"> ...</span>
+  <span style="color: #d73948">public</span> <span style="color: #4b69c6">String</span> <span style="color: #4b69c6">pinLabel</span>() { <span style="color: #d73948">return</span> <span style="color: #198810">"</span><span style="color: #198810">Unknown Location</span><span style="color: #198810">"</span>; }
+}</code></pre><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, so then what do the other classes look like?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, they gain <code>extends</code> and lose their <code>lat</code>/<code>lng</code> fields. But we have to decide what to do in the constructor. There is a special keyword, <code>super(...)</code> that we’ll need to use. In a constructor it calls the <strong>parent class constructor</strong> with the given arguments. It lets us re-use the constructor from the class we inherited.</div></div><div class="runner" id="w1291017515" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;interface Place { … }&quot;,&quot;code&quot;:&quot;interface Place {\n  String pinLabel();\n  boolean onScreen(double south, double north, double west, double east);\n}&quot;},{&quot;line&quot;:&quot;void main() { … }&quot;,&quot;code&quot;:&quot;void main() {\n  Place[] places = {\n    new Restaurant(\&quot;Taco Shop\&quot;, 32.8795, -117.2359, 4.5),\n    new Park(\&quot;Balboa Park\&quot;, 32.7341, -117.1446, 1200),\n    new BusStop(30, 32.8790, -117.2368),\n  };\n  double south = 32.86;\n  double north = 32.90;\n  double west = -117.25;\n  double east = -117.22;\n  for (Place p : places) {\n    if (p.onScreen(south, north, west, east)) {\n      System.out.println(p.pinLabel());\n    }\n  }\n}&quot;}]" data-gate data-edit><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">interface Place { … }
+class Location implements Place {
+  double lat;
+  double lng;
+  Location(double lat, double lng) {
+    this.lat = lat;
+    this.lng = lng;
+  }
+  public String pinLabel() { return "Unknown Location"; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south &amp;&amp; lat &lt;= north &amp;&amp; lng >= west &amp;&amp; lng &lt;= east;
+  }
+}
+class Restaurant extends Location {
+  String name;
+  double stars;
+  Restaurant(String name, double lat, double lng, double stars) {
+    super(lat, lng);
+    this.name = name;
+    this.stars = stars;
+  }
+  @Override
+  public String pinLabel() { return name + " (" + stars + " stars)"; }
+}
+class Park extends Location {
+  String name;
+  int acres;
+  Park(String name, double lat, double lng, int acres) {
+    super(lat, lng);
+    this.name = name;
+    this.acres = acres;
+  }
+  @Override
+  public String pinLabel() { return name + " (" + acres + " acres)"; }
+}
+class BusStop extends Location {
+  int route;
+  BusStop(int route, double lat, double lng) {
+    super(lat, lng);
+    this.route = route;
+  }
+  @Override
+  public String pinLabel() { return "Bus " + route; }
+}
+void main() { … }</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So we’ve moved the idea of a location out of all these places, and made that be the job of <code>Location</code>, which can also have the correct implementation of <code>onScreen</code> shared by all the subclasses. Now each of the subclasses is solely responsible for the implementation of <code>pinLabel</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Interesting!</div></div><h3 class="practice">Practice</h3><div class="innercise"><div class="exercise" data-kind="code" data-seed="4132308314" data-echo data-check="third.equals(&quot;My cat learns Java [video, 42s]&quot;) &amp;&amp; aboutCats &amp;&amp; !feed[2].mentions(&quot;dog&quot;)" data-check-message="That runs, but feed[2] should preview as &quot;My cat learns Java [video, 42s]&quot; and mention &quot;cat&quot;."><div class="stem">Here is a social media feed, already refactored so <code>Message</code> holds the <code>message</code> field that every post shares. <code>TextPost</code> and <code>Repost</code> are done. Fill in <code>VideoPost</code> the same way.</div><div class="cloze code">interface Post {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>String preview();<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>boolean mentions(String word);<br>}<br>class Message implements Post {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>String message;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Message(String message) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>this.message = message;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public String preview() { return message; }<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public boolean mentions(String word) { return message.contains(word); }<br>}<br>class TextPost extends Message {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>boolean edited;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>TextPost(String message, boolean edited) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>super(message);<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>this.edited = edited;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>@Override<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public String preview() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>if (edited) { return message + " (edited)"; }<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return message;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>class Repost extends Message {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>String from;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Repost(String message, String from) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>super(message);<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>this.from = from;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>@Override<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public String preview() { return "Reposted from " + from + ": " + message; }<br>}<br>class VideoPost <input class="blank" data-answer="extends Message|extends Message implements Post" spellcheck="false" autocorrect="off" autocapitalize="off"> {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int seconds;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>VideoPost(String message, int seconds) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span><input class="blank" data-answer="super(message);" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>this.seconds = seconds;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>@Override<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public String preview() { return message + " [video, " + seconds + "s]"; }<br>}<br><br>Post[] feed = {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>new TextPost("Exam moved to Friday", true),<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>new Repost("Free pizza in the CSE lobby", "tritons"),<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>new VideoPost("My cat learns Java", 42),<br>};<br>String third = feed[2].preview();<br>boolean aboutCats = feed[2].mentions("cat");<br></div></div></div></article>
+<nav class="pagenav"><a class="prev" href="tostring-override.html">← Overriding Methods</a> <a class="next" href="the-class-hierarchy.html">Navigating Class Hierarchies →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "extending-classes", "title": "Extending Classes", "current": 1, "steps": [{"title": "Overriding Methods", "slug": "tostring-override", "url": "tostring-override.html", "path": "/extending-classes/tostring-override.html"}, {"title": "Sharing Fields", "slug": "abstracting-shared-fields", "url": "abstracting-shared-fields.html", "path": "/extending-classes/abstracting-shared-fields.html"}, {"title": "Navigating Class Hierarchies", "slug": "the-class-hierarchy", "url": "the-class-hierarchy.html", "path": "/extending-classes/the-class-hierarchy.html"}, {"title": "Navigating the Class Hierarchy 2", "slug": "instanceof", "url": "instanceof.html", "path": "/extending-classes/instanceof.html"}, {"title": "Overriding equals and Casting to a Class", "slug": "class-cast", "url": "class-cast.html", "path": "/extending-classes/class-cast.html"}, {"title": "Extending Classes in Summary", "slug": "summary", "url": "summary.html", "path": "/extending-classes/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=eaa35f281f55"></script>
+<script src="../assets/memory.js?v=99ba09564d4a"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>

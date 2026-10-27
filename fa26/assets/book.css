@@ -85,7 +85,6 @@ body.toc .subtitle { opacity: .75; }
 .gloss-pop p { margin: .3rem 0; }
 .gloss-pop code { background: var(--soft-bg); padding: .05rem .3rem; border-radius: .25rem; }
 /* the glossary page (build.py) */
-body.toc .glossary-link { margin-top: 2rem; }
 .glossary .gloss { margin: 1.75rem 0; scroll-margin-top: 4rem; }
 .glossary .gloss h2 { font-size: 1.15rem; margin: 0 0 .3rem; }
 .glossary .gloss:target h2 { color: var(--accent); }
@@ -534,3 +533,25 @@ body.sheets .links { margin-left: auto; display: flex; gap: .8rem; font-size: .8
 .trace .changed { padding: 0 .1rem; }
 .trace-of { border: 1px solid var(--card-border); border-radius: .5rem; margin: 1rem 0; }
 .trace-of .trace { border-top: 0; }
+
+/* class hierarchies (#hierarchy) */
+.hierarchy { margin: 1.2rem 0; overflow-x: auto; }
+.hier-grid {
+  position: relative;
+  display: grid; grid-template-columns: repeat(var(--cols), minmax(min-content, 1fr));
+  row-gap: 2.6rem; column-gap: .6rem;
+  min-width: min-content; padding: .2rem 0 .4rem;
+}
+.hier-node {
+  justify-self: center; align-self: start; text-align: center; line-height: 1.35;
+  min-width: 6rem; max-width: 15rem; padding: 0 .3rem;
+}
+.hier-name { font-weight: 700; }
+.hier-node.iface .hier-name { font-style: italic; font-weight: 600; }
+.hier-kind { font-size: .72rem; letter-spacing: .05em; opacity: .65; }
+.hier-member { font-size: .85rem; opacity: .75; }
+.hier-member.over { color: var(--accent); opacity: 1; font-weight: 600; }
+.hier-edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.hier-edges .edge { stroke: currentColor; stroke-width: 1.3; fill: none; }
+.hier-edges .edge.impl { stroke-dasharray: 5 4; }
+.hier-edges .head { fill: Canvas; stroke: currentColor; stroke-width: 1.3; }
