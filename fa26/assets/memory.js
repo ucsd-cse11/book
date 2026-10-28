@@ -105,6 +105,11 @@
     const svg = document.createElementNS(SVG, 'svg');
     svg.setAttribute('class', 'hier-edges');
     svg.setAttribute('aria-hidden', 'true');
+    const rowBottom = new Map();
+    for (const n of nodes.values()) {
+      const row = n.style.gridRow;
+      rowBottom.set(row, Math.max(rowBottom.get(row) ?? -Infinity, n.getBoundingClientRect().bottom));
+    }
     const heads = new Map();
     for (const [name, child] of nodes) {
       for (const up of child.dataset.parents.split(' ').filter(Boolean)) {
@@ -112,7 +117,7 @@
         const c = child.getBoundingClientRect();
         const p = parent.getBoundingClientRect();
         const px = p.left + p.width / 2 - box.left;
-        const py = p.bottom - box.top + 3;
+        const py = rowBottom.get(parent.style.gridRow) - box.top + 3;
         const impl = parent.classList.contains('iface');
         const line = document.createElementNS(SVG, 'path');
         line.setAttribute('d', `M ${c.left + c.width / 2 - box.left} ${c.top - box.top - 3}`
@@ -121,10 +126,17 @@
         line.dataset.from = name;
         line.dataset.to = up;
         svg.append(line);
-        heads.set(up, [px, py]);
+        heads.set(up, [px, py, p.bottom - box.top + 3]);
       }
     }
-    for (const [up, [px, py]] of heads) {
+    for (const [up, [px, py, own]] of heads) {
+      if (py > own + 1) {
+        const stub = document.createElementNS(SVG, 'path');
+        stub.setAttribute('d', `M ${px} ${own} L ${px} ${py}`);
+        stub.setAttribute('class', 'stub');
+        stub.dataset.to = up;
+        svg.append(stub);
+      }
       const head = document.createElementNS(SVG, 'path');
       head.setAttribute('d', `M ${px} ${py} L ${px - 7} ${py + 11} L ${px + 7} ${py + 11} Z`);
       head.setAttribute('class', 'head');

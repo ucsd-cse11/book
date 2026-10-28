@@ -552,6 +552,6 @@ body.sheets .links { margin-left: auto; display: flex; gap: .8rem; font-size: .8
 .hier-member { font-size: .85rem; opacity: .75; }
 .hier-member.over { color: var(--accent); opacity: 1; font-weight: 600; }
 .hier-edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.hier-edges .edge { stroke: currentColor; stroke-width: 1.3; fill: none; }
+.hier-edges .edge, .hier-edges .stub { stroke: currentColor; stroke-width: 1.3; fill: none; }
 .hier-edges .edge.impl { stroke-dasharray: 5 4; }
 .hier-edges .head { fill: Canvas; stroke: currentColor; stroke-width: 1.3; }
