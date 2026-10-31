@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Liking a Post — Abstract Classes and Mutation</title>
+<link rel="stylesheet" href="../assets/book.css?v=7de607a639d9">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Abstract Classes and Mutation</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Liking a Post</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>I tried something, and I’m not sure I get what happened.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>I’m all ears.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I was thinking about how to represent an Instagram post. It has a user, and text, and images, but also you can like it. And that makes a counter go up that everyone can see. So I tried writing a class for a post like that</div></div><div class="runner" id="w1948909780" data-engine="java17" data-expect="compiles" data-gate><textarea class="code" rows="23" spellcheck="false" autocorrect="off" autocapitalize="off">class Post {
+  String user;
+  String message;
+  int likes;
+  Post(String user, String message, int likes) {
+    this.user = user;
+    this.message = message;
+    this.likes = likes;
+  }
+  String summary() {
+    return "@" + user + ": " + message + " | ❤️" + likes;
+  }
+  void like() {
+    this.likes = likes + 1;
+  }
+}
+void main() {
+  Post p1 = new Post("joe", "CSE-PACE next Tuesday!", 22);
+  System.out.println(p1.summary());
+  p1.like();
+  System.out.println(p1.summary());
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Did I do that right? Am I allowed to write that?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>For sure! Why were you worried you might not have?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, we haven’t written the <code>this.likes =</code> lines outside of a constructor before. And a record won’t let us do it.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What do you mean a record won’t let you?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, look:</div></div><div class="runner" id="w3625765877" data-engine="java17" data-expect="error" data-gate><textarea class="code" rows="15" spellcheck="false" autocorrect="off" autocapitalize="off">record Post(String user, String message, int likes) {
+  String summary() {
+    return "@" + user + ": " + message + " | ❤️" + likes;
+  }
+  void like() {
+    this.likes = likes + 1;
+  }
+}
+void main() {
+  Post p1 = new Post("joe", "CSE-PACE next Tuesday!", 22);
+  System.out.println(p1.summary());
+  p1.like();
+  System.out.println(p1.summary());
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It says the <code>final</code> field cannot be assigned?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, so that’s one more modifier to learn about. <code>final</code> on a field says that it cannot be updated <strong>outside of the constructor</strong>. All the fields of a <code>record</code> are implicitly <code>final</code>. But you can get the same error message with a class:</div></div><div class="runner" id="w1913596873" data-engine="java17" data-expect="error" data-echo data-gate><textarea class="code" rows="10" spellcheck="false" autocorrect="off" autocapitalize="off">class C {
+  final int x;
+  C() {
+    this.x = 10;
+  }
+  void tryToChangeMe() {
+    this.x = 1;
+  }
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What you’re seeing in your program is actually the <strong>default</strong> for classes: fields are <dfn class="term" data-term="mutable" id="term-mutable-1">mutable</dfn> unless we ask them to be <dfn class="term" data-term="immutable" id="term-immutable-1">immutable</dfn> with <code>final</code>. The <span class="term" data-term="field update" id="term-field-update-3">field update</span> statement <code>this.x = v;</code> will only work on non-final fields.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Is there any way to do field update on a record field, then?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>No. You could say that’s a reason to not… <code>like()</code> records.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>…</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Get it?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>… Yes.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Anyway, I think your program is great. It captures the idea of using a field update to model the likes of a post, and that’s something that can <strong>only</strong> be done with with a <code>class</code>, not with a <code>record</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And you can still assign <code>final</code> fields inside the constructor, though?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Correct. Otherwise there would be no way to initialize those values. So Java simply will error if you write field updates in other places, but allows it in constructors.</div></div><h3 class="practice">Practice</h3><div class="innercise"><p>This <code>Post</code> keeps its hashtags in an array, and <code>retag</code> swaps in a new one:</p><pre><code data-lang="java"><span style="color: #d73948">class</span> <span style="color: #4b69c6">Post</span> {
+  <span style="color: #4b69c6">String</span> user;
+  <span style="color: #4b69c6">String</span> message;
+  <span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> tags;
+  <span style="color: #4b69c6">Post</span>(<span style="color: #4b69c6">String</span> user, <span style="color: #4b69c6">String</span> message, <span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> tags) {
+    <span style="color: #d73948">this</span>.user <span style="color: #d73948">=</span> user;
+    <span style="color: #d73948">this</span>.message <span style="color: #d73948">=</span> message;
+    <span style="color: #d73948">this</span>.tags <span style="color: #d73948">=</span> tags;
+  }
+  <span style="color: #d73948">void</span> <span style="color: #4b69c6">retag</span>(<span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> newTags) {
+    <span style="color: #d73948">this</span>.tags <span style="color: #d73948">=</span> newTags;
+  }
+}
+<span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> a <span style="color: #d73948">=</span> {<span style="color: #198810">"</span><span style="color: #198810">cse11</span><span style="color: #198810">"</span>, <span style="color: #198810">"</span><span style="color: #198810">java</span><span style="color: #198810">"</span>};
+<span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> b <span style="color: #d73948">=</span> {<span style="color: #198810">"</span><span style="color: #198810">pizza</span><span style="color: #198810">"</span>};
+<span style="color: #4b69c6">Post</span> p <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Post</span>(<span style="color: #198810">"</span><span style="color: #198810">joe</span><span style="color: #198810">"</span>, <span style="color: #198810">"</span><span style="color: #198810">Free pizza in the CSE lobby</span><span style="color: #198810">"</span>, a);
+void <span style="color: #4b69c6">main</span>() {
+  p.<span style="color: #4b69c6">retag</span>(b);
+}</code></pre><p>Here is memory just as <code>retag</code> starts, before its field update runs:</p><div class="memory"><div class="mem-stack"><div class="mem-title">Names (the stack)</div><div class="frame"><div class="frame-head"><code>p.retag(b)</code> on <span class="addr" data-addr="@1003" style="--hue: 294">@1003</span></div><div class="binding"><code>newTags = <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></code></div></div><div class="frame"><div class="frame-head"><code>main()</code></div></div><div class="frame"><div class="frame-head">top level</div><div class="binding"><code>a = <span class="addr" data-addr="@1001" style="--hue: 20">@1001</span></code></div><div class="binding"><code>b = <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></code></div><div class="binding"><code>p = <span class="addr" data-addr="@1003" style="--hue: 294">@1003</span></code></div></div></div><div class="mem-heap"><div class="mem-title">Heap</div><div class="slot-line"><code><span class="addr slot" data-addr="@1001" style="--hue: 20">@1001</span>: [cse11, java]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1002" style="--hue: 157">@1002</span>: [pizza]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1003" style="--hue: 294">@1003</span>: Post[user=joe, message=Free pizza in the CSE lobby, tags=<span class="addr" data-addr="@1001" style="--hue: 20">@1001</span>]</code></div></div></div><div class="exercise" data-kind="blanks" data-seed="301809081"><div class="stem">After <code>p.retag(b)</code> finishes:</div><div class="cloze">the <code>tags</code> field of <code class="ptr">@1003</code> holds<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>@1001</option><option data-correct>@1002</option><option>@1003</option></select><br><code>a</code> holds<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>@1001</option><option>@1002</option><option>@1003</option></select><br><code>p.tags[0]</code> is <input class="blank code" data-answer="pizza|&quot;pizza&quot;"><br><code>a[0]</code> is <input class="blank code" data-answer="cse11|&quot;cse11&quot;"></div></div></div></article>
+<nav class="pagenav"><a class="prev" href="dynamic-dispatch.html">← Dynamic Dispatch</a> <a class="next" href="sharing-vs-copying.html">Sharing vs. Copying →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "abstract-classes-and-mutation", "title": "Abstract Classes and Mutation", "current": 2, "steps": [{"title": "Default Implementations vs. Abstract Methods", "slug": "abstract-classes", "url": "abstract-classes.html", "path": "/abstract-classes-and-mutation/abstract-classes.html"}, {"title": "Dynamic Dispatch", "slug": "dynamic-dispatch", "url": "dynamic-dispatch.html", "path": "/abstract-classes-and-mutation/dynamic-dispatch.html"}, {"title": "Liking a Post", "slug": "likes", "url": "likes.html", "path": "/abstract-classes-and-mutation/likes.html"}, {"title": "Sharing vs. Copying", "slug": "sharing-vs-copying", "url": "sharing-vs-copying.html", "path": "/abstract-classes-and-mutation/sharing-vs-copying.html"}, {"title": "Abstract Classes and Mutation in Summary", "slug": "summary", "url": "summary.html", "path": "/abstract-classes-and-mutation/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=eaa35f281f55"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>

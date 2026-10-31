@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abstract Classes and Mutation in Summary — Abstract Classes and Mutation</title>
+<link rel="stylesheet" href="../assets/book.css?v=7de607a639d9">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Abstract Classes and Mutation</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Abstract Classes and Mutation in Summary</h1>
+<article class="prose"><div class="exercise" data-kind="choice" data-seed="3056858326"><div class="stem">With the posts from the first step, where <code>Message</code> is an <code>abstract class</code>, which line does <strong>not</strong> compile?</div><ol class="choices"><li data-correct><code>Post m = new Message("ben", "My cat learns Java", 7);</code><div class="why"><code>Message</code> is abstract, so <code>new Message(...)</code> is a compile error. Its constructor only runs through <code>super(...)</code> in a subclass.</div></li><li><code>Post v = new VideoPost("ben", "My cat learns Java", 7, 42);</code><div class="why"><code>VideoPost</code> is not abstract and gives its own <code>preview</code>, so it can be constructed.</div></li><li><code>Message t = new TextPost("cse11", "Exam moved to Friday", 12, true);</code><div class="why">A variable can have an abstract class as its type. The object in it is a <code>TextPost</code>.</div></li></ol></div><div class="exercise" data-kind="blanks" data-seed="45826111"><div class="stem">Still with the posts from the first step, and <code>Post v = new VideoPost("ben", "My cat learns Java", 7, 42);</code>:</div><div class="cloze"><code>v.snippet()</code> runs the one in<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>Post</option><option data-correct>Message</option><option>VideoPost</option></select><br><code>v.preview()</code> runs the one in<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>Post</option><option>Message</option><option data-correct>VideoPost</option></select><br><code>v.snippet()</code> returns <input class="blank code" data-answer="@ben: My cat lea...|&quot;@ben: My cat lea...&quot;"></div></div><div class="exercise" data-kind="choice" data-seed="3468145581"><div class="stem"><p>What happens with this class?</p><pre><code data-lang="java"><span style="color: #d73948">class</span> <span style="color: #4b69c6">Post</span> {
+  <span style="color: #d73948">final</span> <span style="color: #d73948">int</span> likes;
+  <span style="color: #4b69c6">Post</span>(<span style="color: #d73948">int</span> likes) { <span style="color: #d73948">this</span>.likes <span style="color: #d73948">=</span> likes; }
+  <span style="color: #d73948">void</span> <span style="color: #4b69c6">like</span>() { <span style="color: #d73948">this</span>.likes <span style="color: #d73948">=</span> likes <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>; }
+}</code></pre></div><ol class="choices"><li data-correct>It does not compile, because of the line in <code>like</code><div class="why">A <code>final</code> field can only be assigned in the constructor. Java reports <code>cannot assign a value to final variable<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>likes</code>.</div></li><li>It does not compile, because of the line in the constructor<div class="why">Assigning a <code>final</code> field inside the constructor is exactly what’s allowed; that’s how it gets its value.</div></li><li>It compiles, and <code>like</code> leaves <code>likes</code> the same<div class="why">Java checks <code>final</code> when it compiles, so the program never gets to run.</div></li></ol></div><div class="exercise" data-kind="blanks" data-seed="3610938746"><div class="stem"><p>With the <code>Post</code>, <code>RepostCopy</code>, and <code>RepostRef</code> classes from the sharing step:</p><pre><code data-lang="java"><span style="color: #4b69c6">Post</span> p <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Post</span>(<span style="color: #198810">"</span><span style="color: #198810">joe</span><span style="color: #198810">"</span>, <span style="color: #198810">"</span><span style="color: #198810">CSE-PACE next Tuesday!</span><span style="color: #198810">"</span>, <span style="color: #b60157">22</span>);
+p.<span style="color: #4b69c6">like</span>();
+<span style="color: #4b69c6">RepostCopy</span> copy <span style="color: #d73948">=</span> p.<span style="color: #4b69c6">repostCopy</span>(<span style="color: #198810">"</span><span style="color: #198810">ana</span><span style="color: #198810">"</span>);
+<span style="color: #4b69c6">RepostRef</span> ref <span style="color: #d73948">=</span> p.<span style="color: #4b69c6">repostRef</span>(<span style="color: #198810">"</span><span style="color: #198810">ben</span><span style="color: #198810">"</span>);
+p.<span style="color: #4b69c6">like</span>();
+p.<span style="color: #4b69c6">like</span>();</code></pre></div><div class="cloze"><code>copy.likes</code> is <input class="blank" data-answer="23"><br><code>ref.original.likes</code> is <input class="blank" data-answer="25"></div></div></article>
+<nav class="pagenav"><a class="prev" href="sharing-vs-copying.html">← Sharing vs. Copying</a> <a class="next" href="../pict-library/pict-library.html">Pict Library Reference →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "abstract-classes-and-mutation", "title": "Abstract Classes and Mutation", "current": 4, "steps": [{"title": "Default Implementations vs. Abstract Methods", "slug": "abstract-classes", "url": "abstract-classes.html", "path": "/abstract-classes-and-mutation/abstract-classes.html"}, {"title": "Dynamic Dispatch", "slug": "dynamic-dispatch", "url": "dynamic-dispatch.html", "path": "/abstract-classes-and-mutation/dynamic-dispatch.html"}, {"title": "Liking a Post", "slug": "likes", "url": "likes.html", "path": "/abstract-classes-and-mutation/likes.html"}, {"title": "Sharing vs. Copying", "slug": "sharing-vs-copying", "url": "sharing-vs-copying.html", "path": "/abstract-classes-and-mutation/sharing-vs-copying.html"}, {"title": "Abstract Classes and Mutation in Summary", "slug": "summary", "url": "summary.html", "path": "/abstract-classes-and-mutation/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=eaa35f281f55"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>

@@ -1125,5 +1125,54 @@
   "state": "done",
   "text": "",
   "images": 0
+ },
+ "d8d4f522": {
+  "slug": "abstract-classes-and-mutation/abstract-classes",
+  "widget": 0,
+  "state": "compile error",
+  "text": "line 5: error: The type Location must implement the inherited abstract method Place.pinLabel()\n",
+  "images": 0
+ },
+ "9717f3bb": {
+  "slug": "abstract-classes-and-mutation/abstract-classes",
+  "widget": 1,
+  "state": "done",
+  "text": "",
+  "images": 0
+ },
+ "a40eb6bd": {
+  "slug": "abstract-classes-and-mutation/dynamic-dispatch",
+  "widget": 0,
+  "state": "done",
+  "text": "r = Rect[width=10, height=20, color=blue]\n[[IMG:0]]c = Circle[radius=50, color=green]\n[[IMG:1]]rPix = Raster[10x20]\n[[IMG:2]]cPix = Raster[100x100]\n[[IMG:3]]",
+  "images": 4
+ },
+ "742a00d4": {
+  "slug": "abstract-classes-and-mutation/likes",
+  "widget": 0,
+  "state": "done",
+  "text": "@joe: CSE-PACE next Tuesday! | ❤️22\n@joe: CSE-PACE next Tuesday! | ❤️23\n",
+  "images": 0
+ },
+ "d81ccbf5": {
+  "slug": "abstract-classes-and-mutation/likes",
+  "widget": 1,
+  "state": "compile error",
+  "text": "line 6: error: The final field Post.likes cannot be assigned\n",
+  "images": 0
+ },
+ "720f2bc9": {
+  "slug": "abstract-classes-and-mutation/likes",
+  "widget": 2,
+  "state": "compile error",
+  "text": "line 7: error: The final field C.x cannot be assigned\n",
+  "images": 0
+ },
+ "c875f432": {
+  "slug": "abstract-classes-and-mutation/sharing-vs-copying",
+  "widget": 0,
+  "state": "done",
+  "text": "@joe: CSE-PACE next Tuesday! | ❤️24\ncopy has 22 likes\nref has 24 likes\n",
+  "images": 0
  }
 }

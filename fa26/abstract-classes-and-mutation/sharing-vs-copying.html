@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sharing vs. Copying — Abstract Classes and Mutation</title>
+<link rel="stylesheet" href="../assets/book.css?v=7de607a639d9">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Abstract Classes and Mutation</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Sharing vs. Copying</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>I have a question – when make a repost on Instagram, does it make a copy of the post or does it store something more like a reference?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>More like a reference. It probably stores something like a “post id number” of the original post. Why do you ask?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well I was thinking about how that would look in Java.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Oh that’s a good question. They’d look pretty different, here’s how I’d think of them:</div></div><div class="runner" id="w3363173426" data-engine="java17" data-expect="compiles" data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">class Post {
+  String user;
+  String message;
+  int likes;
+  Post(String user, String message, int likes) {
+    this.user = user;
+    this.message = message;
+    this.likes = likes;
+  }
+  String summary() {
+    return "@" + user + ": " + message + " | ❤️" + likes;
+  }
+  void like() {
+    this.likes = likes + 1;
+  }
+  RepostCopy repostCopy(String reposter) {
+    return new RepostCopy(reposter, user, message, likes);
+  }
+  RepostRef repostRef(String reposter) {
+    return new RepostRef(reposter, this);
+  }
+}
+
+class RepostCopy {
+  String user;
+  String originalUser;
+  String message;
+  int likes;
+  RepostCopy(String user, String originalUser, String message, int likes) {
+    this.user = user;
+    this.originalUser = originalUser;
+    this.message = message;
+    this.likes = likes;
+  }
+}
+class RepostRef {
+  String user;
+  Post original;
+  RepostRef(String user, Post original) {
+    this.user = user;
+    this.original = original;
+  }
+}
+void main() {
+  Post p = new Post("joe", "CSE-PACE next Tuesday!", 22);
+  RepostCopy copy = p.repostCopy("ana");
+  RepostRef ref = p.repostRef("ben");
+  p.like();
+  p.like();
+  System.out.println(p.summary());
+  System.out.println("copy has " + copy.likes + " likes");
+  System.out.println("ref has " + ref.original.likes + " likes");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What are some things you notice and wonder about here?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, the printed out likes are different for the last three lines.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Which one <strong>didn’t</strong> change, the copy or the reference?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Um, the copy didn’t change. Oh, interesing. Because it made a new object with its own <code>likes</code> field?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right. If we look at the memory diagram when we call <code>p.like()</code>, we can see that we’re updating a reference that is <strong>aliased</strong> with the <code>RepostRef</code> object but not with the <code>RepostCopy</code> object. So the change doesn’t show up when we look at the <code>RepostCopy</code></div></div><div class="memory"><div class="mem-stack"><div class="mem-title">Names (the stack)</div><div class="frame"><div class="frame-head"><code>p.like()</code> on <span class="addr" data-addr="@1001" style="--hue: 20">@1001</span></div></div><div class="frame"><div class="frame-head"><code>main()</code></div><div class="binding"><code>p = <span class="addr" data-addr="@1001" style="--hue: 20">@1001</span></code></div><div class="binding"><code>copy = <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></code></div><div class="binding"><code>ref = <span class="addr" data-addr="@1003" style="--hue: 294">@1003</span></code></div></div><div class="frame"><div class="frame-head">top level</div></div></div><div class="mem-heap"><div class="mem-title">Heap</div><div class="slot-line"><code><span class="addr slot" data-addr="@1001" style="--hue: 20">@1001</span>: Post[user=joe, message=CSE-PACE next Tuesday!, likes=<del>22</del> 23]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1002" style="--hue: 157">@1002</span>: RepostCopy[user=ana, originalUser=joe, message=CSE-PACE next Tuesday!, likes=22]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1003" style="--hue: 294">@1003</span>: RepostRef[user=ben, original=<span class="addr" data-addr="@1001" style="--hue: 20">@1001</span>]</code></div></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I see! So that really is like there is <strong>one</strong> orginal post, if we use the ref. And when you like a repost, it likes the original.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, and that’s why resharing ought to have a reference to the original, not a copy of its contents.</div></div><h3 class="practice">Practice</h3><div class="innercise"><p>Here are the two reposts again, this time with the <code>tags</code> array and <code>retag</code> from before:</p><pre><code data-lang="java"><span style="color: #d73948">class</span> <span style="color: #4b69c6">Post</span> {
+  <span style="color: #4b69c6">String</span> user;
+  <span style="color: #4b69c6">String</span> message;
+  <span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> tags;
+  <span style="color: #4b69c6">Post</span>(<span style="color: #4b69c6">String</span> user, <span style="color: #4b69c6">String</span> message, <span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> tags) {
+    <span style="color: #d73948">this</span>.user <span style="color: #d73948">=</span> user;
+    <span style="color: #d73948">this</span>.message <span style="color: #d73948">=</span> message;
+    <span style="color: #d73948">this</span>.tags <span style="color: #d73948">=</span> tags;
+  }
+  <span style="color: #d73948">void</span> <span style="color: #4b69c6">retag</span>(<span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> newTags) { <span style="color: #d73948">this</span>.tags <span style="color: #d73948">=</span> newTags; }
+  <span style="color: #4b69c6">RepostCopy</span> <span style="color: #4b69c6">repostCopy</span>(<span style="color: #4b69c6">String</span> reposter) {
+    <span style="color: #d73948">return</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">RepostCopy</span>(reposter, user, message, tags);
+  }
+  <span style="color: #4b69c6">RepostRef</span> <span style="color: #4b69c6">repostRef</span>(<span style="color: #4b69c6">String</span> reposter) {
+    <span style="color: #d73948">return</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">RepostRef</span>(reposter, <span style="color: #d73948">this</span>);
+  }
+}
+<span style="color: #d73948">class</span> <span style="color: #4b69c6">RepostCopy</span> {
+  <span style="color: #4b69c6">String</span> user;
+  <span style="color: #4b69c6">String</span> originalUser;
+  <span style="color: #4b69c6">String</span> message;
+  <span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> tags;
+  <span style="color: #4b69c6">RepostCopy</span>(<span style="color: #4b69c6">String</span> user, <span style="color: #4b69c6">String</span> originalUser, <span style="color: #4b69c6">String</span> message, <span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> tags) {
+    <span style="color: #d73948">this</span>.user <span style="color: #d73948">=</span> user;
+    <span style="color: #d73948">this</span>.originalUser <span style="color: #d73948">=</span> originalUser;
+    <span style="color: #d73948">this</span>.message <span style="color: #d73948">=</span> message;
+    <span style="color: #d73948">this</span>.tags <span style="color: #d73948">=</span> tags;
+  }
+}
+<span style="color: #d73948">class</span> <span style="color: #4b69c6">RepostRef</span> {
+  <span style="color: #4b69c6">String</span> user;
+  <span style="color: #4b69c6">Post</span> original;
+  <span style="color: #4b69c6">RepostRef</span>(<span style="color: #4b69c6">String</span> user, <span style="color: #4b69c6">Post</span> original) {
+    <span style="color: #d73948">this</span>.user <span style="color: #d73948">=</span> user;
+    <span style="color: #d73948">this</span>.original <span style="color: #d73948">=</span> original;
+  }
+}
+<span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> a <span style="color: #d73948">=</span> {<span style="color: #198810">"</span><span style="color: #198810">cse11</span><span style="color: #198810">"</span>, <span style="color: #198810">"</span><span style="color: #198810">java</span><span style="color: #198810">"</span>};
+<span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> b <span style="color: #d73948">=</span> {<span style="color: #198810">"</span><span style="color: #198810">pizza</span><span style="color: #198810">"</span>};
+<span style="color: #4b69c6">Post</span> p <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Post</span>(<span style="color: #198810">"</span><span style="color: #198810">joe</span><span style="color: #198810">"</span>, <span style="color: #198810">"</span><span style="color: #198810">Free pizza in the CSE lobby</span><span style="color: #198810">"</span>, a);
+<span style="color: #4b69c6">RepostCopy</span> copy <span style="color: #d73948">=</span> p.<span style="color: #4b69c6">repostCopy</span>(<span style="color: #198810">"</span><span style="color: #198810">ana</span><span style="color: #198810">"</span>);
+<span style="color: #4b69c6">RepostRef</span> ref <span style="color: #d73948">=</span> p.<span style="color: #4b69c6">repostRef</span>(<span style="color: #198810">"</span><span style="color: #198810">ben</span><span style="color: #198810">"</span>);
+void <span style="color: #4b69c6">main</span>() {
+  a[<span style="color: #b60157">1</span>] <span style="color: #d73948">=</span> <span style="color: #198810">"</span><span style="color: #198810">food</span><span style="color: #198810">"</span>;
+  p.<span style="color: #4b69c6">retag</span>(b);
+}</code></pre><div class="exercise" data-kind="blanks" data-seed="1753067480"><div class="stem">After <code>main</code> runs:</div><div class="cloze"><code>copy.tags</code> is the same array as<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>a</option><option>b</option></select><br><code>ref.original.tags</code> is the same array as<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>a</option><option data-correct>b</option></select><br><code>copy.tags[1]</code> is <input class="blank code" data-answer="food|&quot;food&quot;"><br><code>ref.original.tags[0]</code> is <input class="blank code" data-answer="pizza|&quot;pizza&quot;"></div></div></div></article>
+<nav class="pagenav"><a class="prev" href="likes.html">← Liking a Post</a> <a class="next" href="summary.html">Abstract Classes and Mutation in Summary →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "abstract-classes-and-mutation", "title": "Abstract Classes and Mutation", "current": 3, "steps": [{"title": "Default Implementations vs. Abstract Methods", "slug": "abstract-classes", "url": "abstract-classes.html", "path": "/abstract-classes-and-mutation/abstract-classes.html"}, {"title": "Dynamic Dispatch", "slug": "dynamic-dispatch", "url": "dynamic-dispatch.html", "path": "/abstract-classes-and-mutation/dynamic-dispatch.html"}, {"title": "Liking a Post", "slug": "likes", "url": "likes.html", "path": "/abstract-classes-and-mutation/likes.html"}, {"title": "Sharing vs. Copying", "slug": "sharing-vs-copying", "url": "sharing-vs-copying.html", "path": "/abstract-classes-and-mutation/sharing-vs-copying.html"}, {"title": "Abstract Classes and Mutation in Summary", "slug": "summary", "url": "summary.html", "path": "/abstract-classes-and-mutation/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=eaa35f281f55"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>
