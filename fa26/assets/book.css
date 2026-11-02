@@ -331,7 +331,7 @@ body.toc .subtitle { opacity: .75; }
   border: 1px solid var(--card-border); border-radius: .3rem;
   background: Canvas; color: inherit;
 }
-.exercise input.blank { width: 7rem; }
+.exercise input.blank { width: 7rem; max-width: 100%; }
 .exercise input.blank.num { width: 9rem; }
 /* a cloze that is code with holes: monospace, with literal spacing kept so
    indented lines line up (a string part carries its own newlines) */

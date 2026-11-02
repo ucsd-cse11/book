@@ -98,6 +98,10 @@
     h.size = Math.max(3, (h.value || h.placeholder).length + 1);
   }
 
+  function grow(h) {
+    h.style.width = `max(7rem, ${h.value.length + 2}ch)`;
+  }
+
   // Each kind returns {check(button): boolean | Promise<{ok, label}>,
   // reveal()?, buttonLabel?, footer?: [nodes], after?: [nodes]}.
   const kinds = {
@@ -136,6 +140,9 @@
     blanks(ex, rand) {
       const cs = ex.hasAttribute('data-case-sensitive');
       prepareSelects(ex, rand);
+      for (const b of ex.querySelectorAll('input.blank')) {
+        b.addEventListener('input', () => grow(b));
+      }
       return {
         check() {
           let ok = true;
