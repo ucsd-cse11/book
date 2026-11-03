@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Using ArrayList with Post — Collections and Generics</title>
+<link rel="stylesheet" href="../assets/book.css?v=fa4d2e038929">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collections and Generics</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Using ArrayList with Post</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok Professor, I think I’m ready to use an <code>ArrayList</code> in my own programs.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Sure, let’s go back to an example we have gone over before. We made a <code>Post</code> class.</div></div><div class="runner" id="w411027167" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="23" spellcheck="false" autocorrect="off" autocapitalize="off">class Post {
+  String user;
+  String message;
+  int likes;
+
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+  }
+
+  void like() {
+    this.likes = this.likes + 1;
+  }
+}
+
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int likes;
+void main() {
+  original.like();
+  likes = original.likes;
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Imagine we wanted to support replies on our posts. How would you go about implementing replies to a post using an <code>ArrayList</code>?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I should have every <code>Post</code> contain an <code>ArrayList</code> of replies, and the type should be other posts, so I’ll use an <code>ArrayList&lt;Post></code>.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Good idea. You should also include a reference to the <code>Post</code> it’s replying to, since each reply is also a <code>Post</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok, I understand.</div></div><div class="runner" id="w1051116056" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList&lt;Post> replies;
+  Post replyTo;
+
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+    this.replies = new ArrayList&lt;Post>();
+    this.replyTo = null;
+  }
+
+  void like() {
+    this.likes = this.likes + 1;
+  }
+}
+
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int count;
+void main() {
+  count = original.replies.size();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok now I am going to add a <code>reply()</code> method. It needs to make a <code>new Post()</code> and set <code>replyTo</code> to be the original <code>Post</code>. And then add this new reply to the <code>ArrayList</code>.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Implement that method. After you run it, let’s take a moment to think through what it actually builds in memory.</div></div><div class="runner" id="w621172280" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList&lt;Post> replies;
+  Post replyTo;
+
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+    this.replies = new ArrayList&lt;Post>();
+    this.replyTo = null;
+  }
+
+  void like() {
+    this.likes = this.likes + 1;
+  }
+
+  Post reply(String user, String message) {
+    Post r = new Post(user, message);
+    r.replyTo = this;
+    this.replies.add(r);
+    return r;
+  }
+}
+
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int count;
+String backUser;
+void main() {
+  Post r = original.reply("ada", "I'll be there");
+  original.reply("grace", "Is there pizza?");
+  count = original.replies.size();
+  backUser = r.replyTo.user;
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Here’s the picture just after both <code>reply</code> calls, but before we read <code>count</code> and <code>backUser</code>:</div></div><div class="memory"><div class="mem-stack"><div class="mem-title">Names (the stack)</div><div class="frame"><div class="frame-head"><code>main()</code></div><div class="binding"><code>r = <span class="addr" data-addr="@1003" style="--hue: 294">@1003</span></code></div></div><div class="frame"><div class="frame-head">top level</div><div class="binding"><code>original = <span class="addr" data-addr="@1001" style="--hue: 20">@1001</span></code></div><div class="binding"><code>count = 0</code></div><div class="binding"><code>backUser = null</code></div></div></div><div class="mem-heap"><div class="mem-title">Heap</div><div class="slot-line"><code><span class="addr slot" data-addr="@1001" style="--hue: 20">@1001</span>: Post[user=joe, message=CSE-PACE next Tuesday!, likes=0, replies=<span class="addr" data-addr="@1002" style="--hue: 157">@1002</span>, replyTo=null]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1002" style="--hue: 157">@1002</span>: [<span class="addr" data-addr="@1003" style="--hue: 294">@1003</span>, <span class="addr" data-addr="@1005" style="--hue: 208">@1005</span>]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1003" style="--hue: 294">@1003</span>: Post[user=ada, message=I'll be there, likes=0, replies=<span class="addr" data-addr="@1004" style="--hue: 71">@1004</span>, replyTo=<span class="addr" data-addr="@1001" style="--hue: 20">@1001</span>]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1004" style="--hue: 71">@1004</span>: []</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1005" style="--hue: 208">@1005</span>: Post[user=grace, message=Is there pizza?, likes=0, replies=<span class="addr" data-addr="@1006" style="--hue: 345">@1006</span>, replyTo=<span class="addr" data-addr="@1001" style="--hue: 20">@1001</span>]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1006" style="--hue: 345">@1006</span>: []</code></div></div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Each <code>reply</code> did two things at once: it made a new <code>Post</code> and pointed that post’s <code>replyTo</code> back at the one it was replying to. That leaves a link from the original to the reply through the list, and from the reply back to the original through <code>replyTo</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Now for the likes. Since we are using references, whenever we like a <code>Post</code> it shouldn’t matter whether I reach it through the variable <code>r</code> or through <code>original.replies.get(0)</code>. They both point at the same object, so liking one should show up on the other.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly, the posts are mutable. They can be changed without making a copy.</div></div><div class="runner" id="w3532553490" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList&lt;Post> replies;
+  Post replyTo;
+
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+    this.replies = new ArrayList&lt;Post>();
+    this.replyTo = null;
+  }
+
+  void like() {
+    this.likes = this.likes + 1;
+  }
+
+  Post reply(String user, String message) {
+    Post r = new Post(user, message);
+    r.replyTo = this;
+    this.replies.add(r);
+    return r;
+  }
+}
+
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int viaVariable;
+int viaList;
+void main() {
+  Post r = original.reply("ada", "I'll be there");
+  original.replies.get(0).like();
+  viaVariable = r.likes;
+  viaList = original.replies.get(0).likes;
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So we’ve been using <code>ArrayList</code>, <code>HashSet</code>, and <code>HashMap</code>. They have a lot of similarities — are they connected in any way?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>They sure are. Each one of these classes <strong>implements</strong> an interface. <code>ArrayList</code> is one kind of <code>List</code>, and a <code>List</code> is a kind of <code>Collection</code>. <code>HashSet</code> is a <code>Set</code>, which is also a <code>Collection</code>. <code>HashMap</code> is a bit different as a <code>Map</code> holds key/value pairs rather than single elements. Here’s the class hierarchy for that.</div></div><div class="hierarchy"><div class="hier-grid" style="--cols: 6"><div class="hier-node iface" data-name="Collection" data-parents style="grid-column: 1 / span 2; grid-row: 1"><div class="hier-kind">interface</div><div class="hier-name">Collection</div><div class="hier-member">add(E e)</div><div class="hier-member">contains(Object o)</div><div class="hier-member">remove(Object o)</div><div class="hier-member">size()</div></div><div class="hier-node iface" data-name="List" data-parents="Collection" style="grid-column: 1 / span 1; grid-row: 2"><div class="hier-kind">interface</div><div class="hier-name">List</div><div class="hier-member">get(int index)</div><div class="hier-member">add(int index, E e)</div><div class="hier-member">set(int index, E e)</div><div class="hier-member">remove(int index)</div></div><div class="hier-node iface" data-name="Set" data-parents="Collection" style="grid-column: 2 / span 1; grid-row: 2"><div class="hier-kind">interface</div><div class="hier-name">Set</div></div><div class="hier-node iface" data-name="Map" data-parents style="grid-column: 3 / span 1; grid-row: 1"><div class="hier-kind">interface</div><div class="hier-name">Map</div><div class="hier-member">put(K key, V value)</div><div class="hier-member">get(Object key)</div><div class="hier-member">containsKey(Object key)</div><div class="hier-member">getOrDefault(Object key, V d)</div></div><div class="hier-node" data-name="ArrayList" data-parents="List" style="grid-column: 4 / span 1; grid-row: 3"><div class="hier-name">ArrayList</div></div><div class="hier-node" data-name="HashSet" data-parents="Set" style="grid-column: 5 / span 1; grid-row: 3"><div class="hier-name">HashSet</div></div><div class="hier-node" data-name="HashMap" data-parents="Map" style="grid-column: 6 / span 1; grid-row: 2"><div class="hier-name">HashMap</div></div></div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Because <code>ArrayList</code> is a <code>List</code>, you will sometimes see the field written as <code>List&lt;Post> replies</code> instead of <code>ArrayList&lt;Post></code>. We only covered one type of list, but you will learn about others in future classes. The full set of methods each one offers is in the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html">Java documentation</a>.</div></div><h3 class="practice">Practice</h3><div class="exercise" data-kind="choice" data-seed="2332986"><div class="stem">After <code>Post r = p.reply("ada", "hi");</code> runs, which of these is <strong>true</strong>?</div><ol class="choices"><li data-correct><code>p.replies</code> contains <code>r</code> and <code>r.replyTo</code> is <code>p</code></li><li><code>p.replies</code> contains a copy of <code>r</code>, and <code>r.replyTo</code> is <code>null</code></li><li><code>r.replies</code> contains <code>p</code> and <code>p.replyTo</code> is <code>r</code></li><li><code>p.replies</code> is unchanged until <code>like()</code> is called</li></ol></div><div class="exercise" data-kind="code" data-seed="544663454" data-prints="1
+joe"><div class="stem">Fill in <code>reply</code> so the new post is linked in both directions: it remembers its parent, and the parent remembers it. <code>main</code> should end with <code>1</code> printed for the number of replies.</div><div class="cloze code">import java.util.ArrayList;<br><br>class Post {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>String user;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>ArrayList&lt;Post> replies = new ArrayList&lt;Post>();<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Post replyTo;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Post(String user) { this.user = user; }<br><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Post reply(String user) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>Post r = new Post(user);<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span><input class="blank" data-answer="r.replyTo = this;" placeholder="point the new post back at this one" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span><input class="blank" data-answer="this.replies.add(r);" placeholder="record it in this post's list" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return r;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Post p = new Post("joe");<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Post r = p.reply("ada");<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println(p.replies.size());<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println(r.<input class="blank" data-answer="replyTo" placeholder="the parent" spellcheck="false" autocorrect="off" autocapitalize="off">.user);<br>}<br></div></div></article>
+<nav class="pagenav"><a class="prev" href="hashmap-intro.html">← HashMap Introduction</a> <a class="next" href="generics-overview.html">Generics Overview →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "collections-and-generics", "title": "Collections and Generics", "current": 3, "steps": [{"title": "ArrayList Intro", "slug": "arraylist-intro", "url": "arraylist-intro.html", "path": "/collections-and-generics/arraylist-intro.html"}, {"title": "HashSet Introduction", "slug": "hashset-intro", "url": "hashset-intro.html", "path": "/collections-and-generics/hashset-intro.html"}, {"title": "HashMap Introduction", "slug": "hashmap-intro", "url": "hashmap-intro.html", "path": "/collections-and-generics/hashmap-intro.html"}, {"title": "Using ArrayList with Post", "slug": "arraylist-use-case", "url": "arraylist-use-case.html", "path": "/collections-and-generics/arraylist-use-case.html"}, {"title": "Generics Overview", "slug": "generics-overview", "url": "generics-overview.html", "path": "/collections-and-generics/generics-overview.html"}, {"title": "Collections and Generics in Summary", "slug": "summary", "url": "summary.html", "path": "/collections-and-generics/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=8182a1702132"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>

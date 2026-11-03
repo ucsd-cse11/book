@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generics Overview — Collections and Generics</title>
+<link rel="stylesheet" href="../assets/book.css?v=fa4d2e038929">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collections and Generics</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Generics Overview</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok Professor, you said you’d teach me what the angle brackets in <code>ArrayList&lt;String></code> mean.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Those are <dfn class="term" data-term="generics" id="term-generics-1">generics</dfn>. <code>ArrayList</code> is one class that can hold any kind of object, so it needs to be told which kind you want for this particular list. The thing in the angle brackets is called the <dfn class="term" data-term="type argument" id="term-type-argument-1">type argument</dfn>. <code>ArrayList&lt;String></code> is a list of <code>String</code>s, and <code>ArrayList&lt;Integer></code> is a list of <code>Integer</code>s.</div></div><div class="runner" id="w2382184552" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="13" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+ArrayList&lt;String> words = new ArrayList&lt;String>();
+ArrayList&lt;Integer> nums = new ArrayList&lt;Integer>();
+String w;
+int n;
+void main() {
+  words.add("hello");
+  nums.add(42);
+  w = words.get(0);
+  n = nums.get(0);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Look at the types of what comes out. <code>words.get(0)</code> is a <code>String</code>, and <code>nums.get(0)</code> is an <code>Integer</code>. The type argument decides what <code>get</code> gives back and what <code>add</code> accepts.</div></div><div class="runner" id="w3097711276" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="11" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+record Point(int x, int y) { }
+
+ArrayList&lt;Point> points = new ArrayList&lt;Point>();
+int x;
+void main() {
+  points.add(new Point(3, 4));
+  x = points.get(0).x();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>What stops me from putting the wrong thing in? Like using <code>add(3)</code> to an <code>ArrayList&lt;String></code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>The compiler would stop you. Before your program runs, Java checks every use of <code>words</code> against the type argument. If you try to add something that isn’t a <code>String</code>, you get a compile error.</div></div><div class="runner" id="w2204099451" data-engine="java17" data-expect="error" data-echo data-gate><textarea class="code" rows="7" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+ArrayList&lt;String> words = new ArrayList&lt;String>();
+void main() {
+  words.add(3);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>This is the same reason <code>ArrayList&lt;int></code> didn’t work earlier. A type argument has to be a reference type, like a class or record, not a primitive, so for whole numbers we use <code>Integer</code>. It’s also why you can call <code>words.get(0).length()</code>: the compiler already knows the element is a <code>String</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span><code>HashMap</code> had two things in its brackets. Does that work the same way?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yes, you just give one type argument for each blank, in order. Remember that for a <code>HashMap&lt;Integer, String></code> the first is the type of the <strong>keys</strong> and the second is the type of the <strong>values</strong>.</div></div><div class="runner" id="w917099341" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="9" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+HashMap&lt;Integer, String> directory = new HashMap&lt;Integer, String>();
+String name;
+void main() {
+  directory.put(12345, "Ricardo");
+  name = directory.get(12345);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>When you read the Java documentation, you’ll see these written as <code>ArrayList&lt;E></code> and <code>HashMap&lt;K, V></code>. The letters are placeholders that your type arguments fill in. The <code>E</code> stands for the <strong>element</strong> type, and <code>K</code> and <code>V</code> for the <strong>key</strong> and <strong>value</strong> types. So when the documentation says that <code>get</code> returns an <code>E</code>, for your <code>ArrayList&lt;String></code> that means a <code>String</code>. You’ll learn how to write classes with placeholders like these in later courses.</div></div><h3 class="practice">Practice</h3><div class="exercise" data-kind="choice" data-seed="3798755934"><div class="stem">Which line creates a list that holds <code>String</code>s?</div><ol class="choices"><li><code>ArrayList(String) names = new ArrayList(String)();</code></li><li data-correct><code>ArrayList&lt;String> names = new ArrayList&lt;String>();</code></li><li><code>ArrayList names = new ArrayList&lt;String>;</code></li><li><code>String&lt;ArrayList> names = new String&lt;ArrayList>();</code></li></ol></div><div class="exercise" data-kind="choice" data-seed="89271634"><div class="stem">Given <code>ArrayList&lt;Integer> nums = new ArrayList&lt;Integer>();</code>, which of these will <strong>not</strong> compile?</div><ol class="choices"><li><code>nums.add(7);</code></li><li><code>int first = nums.get(0);</code></li><li data-correct><code>nums.add("seven");</code></li><li><code>int count = nums.size();</code></li></ol></div><div class="exercise" data-kind="choice" data-seed="3322842933"><div class="stem">In <code>HashMap&lt;String, Integer> ages</code>, what is the type of <code>ages.get("Ada")</code>?</div><ol class="choices"><li><code>String</code></li><li data-correct><code>Integer</code></li><li><code>HashMap</code></li><li><code>K</code></li></ol></div></article>
+<nav class="pagenav"><a class="prev" href="arraylist-use-case.html">← Using ArrayList with Post</a> <a class="next" href="summary.html">Collections and Generics in Summary →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "collections-and-generics", "title": "Collections and Generics", "current": 4, "steps": [{"title": "ArrayList Intro", "slug": "arraylist-intro", "url": "arraylist-intro.html", "path": "/collections-and-generics/arraylist-intro.html"}, {"title": "HashSet Introduction", "slug": "hashset-intro", "url": "hashset-intro.html", "path": "/collections-and-generics/hashset-intro.html"}, {"title": "HashMap Introduction", "slug": "hashmap-intro", "url": "hashmap-intro.html", "path": "/collections-and-generics/hashmap-intro.html"}, {"title": "Using ArrayList with Post", "slug": "arraylist-use-case", "url": "arraylist-use-case.html", "path": "/collections-and-generics/arraylist-use-case.html"}, {"title": "Generics Overview", "slug": "generics-overview", "url": "generics-overview.html", "path": "/collections-and-generics/generics-overview.html"}, {"title": "Collections and Generics in Summary", "slug": "summary", "url": "summary.html", "path": "/collections-and-generics/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=8182a1702132"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>

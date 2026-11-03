@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ArrayList Intro — Collections and Generics</title>
+<link rel="stylesheet" href="../assets/book.css?v=fa4d2e038929">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collections and Generics</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>ArrayList Intro</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Professor, something has been annoying me about arrays. Sometimes when making an array, I don’t yet know how many elements I would like to store in it. Should I just make the array be really long? That seems like it would be a waste of space.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>You’re right, creating a really long empty array is a bad idea in many cases. That is a limit of arrays: whenever we want to make an array longer, we have to make a whole new array and copy all the data over. That is pretty annoying. Here, let me introduce you to a class that Java provides to us to help with this issue. Java provides us with <dfn class="term" data-term="collection" id="term-collection-1">collections</dfn>, data structures for storing a collection of objects. One of these collections is <code>ArrayList</code>.</div></div><div class="runner" id="w2920397680" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="9" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+ArrayList&lt;String> names = new ArrayList&lt;String>();
+void main() {
+  names.add("Ada");
+  names.add("Grace");
+  names.add("Alan");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What do you notice from this code?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>You are creating a new <code>ArrayList</code> object.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Correct. Based on the definition, what type of data is this ArrayList called <code>names</code> storing?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It looks like <code>String</code>, but it’s using notation we haven’t talked about before, it has <code>String</code> inside of arrows?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>We will go over the specifics of that notation later, for now you are correct that it is storing elements of type <code>String</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok, and then after that we are adding names to the <code>ArrayList names</code>.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Notice that <code>add()</code> is a method. We can’t use <code>names[index] = "Ada"</code>, that isn’t valid code. When we use <code>add()</code>, it appends the element to the end of our <code>ArrayList</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And whenever we append a new element, that means that the <code>ArrayList</code> is now one element longer. So can I use <code>names.length</code> like I do with arrays?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>It’s different with <code>ArrayList</code>, you instead check using a method called <code>size()</code>. You also access elements with a method as well: <code>get()</code>, which allows you to fetch an element at a specific index, similar to an array.</div></div><div class="runner" id="w4090534919" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="14" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+ArrayList&lt;String> names = new ArrayList&lt;String>();
+String first;
+int count;
+void main() {
+  names.add("Ada");
+  names.add("Grace");
+  names.add("Alan");
+
+  first = names.get(0);
+  count = names.size();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But what if I don’t want to add an element at the end? Or what if I want to replace one of the names in the list?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There are other methods you can use, such as <code>add(index, value)</code> and <code>set(index, value)</code>. And you can use <code>remove(index)</code> to get rid of elements as well.</div></div><div class="runner" id="w3207234715" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="18" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+ArrayList&lt;String> names = new ArrayList&lt;String>();
+String removed;
+int count;
+String all;
+void main() {
+  names.add("Ada");
+  names.add("Grace");
+  names.add("Alan");
+
+  names.add(1, "Edsger");
+  removed = names.remove(0);
+  names.set(0, "Margaret");
+  count = names.size();
+  all = names.toString();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>When you remove an element at index 0, and don’t replace it, what would you get if you tried to use <code>get(0)</code>?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well that index would be empty, so it wouldn’t contain a <code>String</code> object. In that case it must be <code>null</code>!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s a good guess if this were an array, but an <code>ArrayList</code> never leaves a gap. When you <code>remove</code> an element, everything after it shifts down one index to close the gap, and <code>size()</code> goes down by one. So <code>get(0)</code> gives you the element that used to be at index 1. Likewise, <code>add(index, value)</code> shifts the later elements up to make room.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Now <code>ArrayList</code> also comes with some other helpful methods. One of the most useful is <code>contains()</code>, which tells you whether or not the <code>ArrayList</code> contains a certain element. Since duplicate values are allowed in an <code>ArrayList</code>, all it tells you is that the element is in the ArrayList at least once.</div></div><div class="runner" id="w272818902" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="15" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+ArrayList&lt;String> names = new ArrayList&lt;String>();
+boolean hasAda;
+boolean hasLinus;
+int count;
+void main() {
+  names.add("Ada");
+  names.add("Ada");
+
+  hasAda = names.contains("Ada");
+  hasLinus = names.contains("Linus");
+  count = names.size();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hey Professor? I just tried to make an ArrayList of type int, but it doesn’t seem to be working.</div></div><div class="runner" id="w931203670" data-engine="java17" data-expect="error" data-echo data-gate><textarea class="code" rows="4" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+ArrayList&lt;int> nums = new ArrayList&lt;int>();</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Collections in Java, such as an ArrayList, can only store objects. You can’t put primitives in a collection.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But what if I want to store a list of whole numbers?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>You can still do that, Java has a version for each primitive that is an object instead. For <code>int</code> you can instead use <code>Integer</code>, and Java turns an <code>int</code> like <code>3</code> into an <code>Integer</code> for you when you <code>add</code> it. Try re-writing your code with that instead.</div></div><div class="runner" id="w227355421" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="11" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+ArrayList&lt;Integer> nums = new ArrayList&lt;Integer>();
+int total;
+void main() {
+  nums.add(3);
+  nums.add(10);
+  nums.add(3);
+  total = nums.get(0) + nums.get(1);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There you go. Remember that <code>ArrayList</code> is ordered like standard arrays, and that the first element is index 0. But unlike an array their size can be changed when using <code>add()</code> and <code>remove()</code>. From here, we will talk about some other types of collections in Java that are less like arrays.</div></div><h3 class="practice">Practice</h3><div class="exercise" data-kind="code" data-seed="572281070" data-prints="[Grace, Alan]
+2"><div class="stem"><code>names</code> starts as <code>[Ada, Alan]</code>. Fill in the three missing pieces so that it ends as <code>[Grace, Alan]</code>: insert <code>"Grace"</code> at index 1, then remove the element at index 0, then record how many elements are left.</div><div class="cloze code">import java.util.ArrayList;<br><br>ArrayList&lt;String> names = new ArrayList&lt;String>();<br>void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>names.add("Ada");<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>names.add("Alan");<br><span style="white-space: pre-wrap">&#x20;&#x20;</span><input class="blank" data-answer="names.add(1, &quot;Grace&quot;);" placeholder="insert Grace at index 1" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;</span><input class="blank" data-answer="names.remove(0);" placeholder="remove index 0" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int count = <input class="blank" data-answer="names.size()" placeholder="how many" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println(names);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println(count);<br>}<br></div></div></article>
+<nav class="pagenav"><a class="prev" href="../abstract-classes-and-mutation/summary.html">← Abstract Classes and Mutation in Summary</a> <a class="next" href="hashset-intro.html">HashSet Introduction →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "collections-and-generics", "title": "Collections and Generics", "current": 0, "steps": [{"title": "ArrayList Intro", "slug": "arraylist-intro", "url": "arraylist-intro.html", "path": "/collections-and-generics/arraylist-intro.html"}, {"title": "HashSet Introduction", "slug": "hashset-intro", "url": "hashset-intro.html", "path": "/collections-and-generics/hashset-intro.html"}, {"title": "HashMap Introduction", "slug": "hashmap-intro", "url": "hashmap-intro.html", "path": "/collections-and-generics/hashmap-intro.html"}, {"title": "Using ArrayList with Post", "slug": "arraylist-use-case", "url": "arraylist-use-case.html", "path": "/collections-and-generics/arraylist-use-case.html"}, {"title": "Generics Overview", "slug": "generics-overview", "url": "generics-overview.html", "path": "/collections-and-generics/generics-overview.html"}, {"title": "Collections and Generics in Summary", "slug": "summary", "url": "summary.html", "path": "/collections-and-generics/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=8182a1702132"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>

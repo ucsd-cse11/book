@@ -1,9 +1,23 @@
 {
+ "18566461": {
+  "slug": "collections-and-generics/hashmap-intro",
+  "widget": 7,
+  "state": "done",
+  "text": "points = {Grace=75, Alan=60, Ada=90}\ntotal = 225\nsameTotal = 225\n",
+  "images": 0
+ },
  "20287871": {
   "slug": "programs-and-values/string-definitions",
   "widget": 0,
   "state": "compile error",
   "text": "line 1: error: string cannot be resolved to a type\nline 2: error: string cannot be resolved to a type\nline 3: error: string cannot be resolved to a type\n",
+  "images": 0
+ },
+ "25065638": {
+  "slug": "collections-and-generics/arraylist-use-case",
+  "widget": 2,
+  "state": "done",
+  "text": "original = Post@a5d\ncount = 2\nbackUser = joe\n",
   "images": 0
  },
  "25171444": {
@@ -1173,6 +1187,195 @@
   "widget": 0,
   "state": "done",
   "text": "@joe: CSE-PACE next Tuesday! | ❤️24\ncopy has 22 likes\nref has 24 likes\n",
+  "images": 0
+ },
+ "ae11bb70": {
+  "slug": "collections-and-generics/arraylist-intro",
+  "widget": 0,
+  "state": "done",
+  "text": "names = [Ada, Grace, Alan]\n",
+  "images": 0
+ },
+ "f3d09c07": {
+  "slug": "collections-and-generics/arraylist-intro",
+  "widget": 1,
+  "state": "done",
+  "text": "names = [Ada, Grace, Alan]\nfirst = Ada\ncount = 3\n",
+  "images": 0
+ },
+ "bf2a849b": {
+  "slug": "collections-and-generics/arraylist-intro",
+  "widget": 2,
+  "state": "done",
+  "text": "names = [Margaret, Grace, Alan]\nremoved = Ada\ncount = 3\nall = [Margaret, Grace, Alan]\n",
+  "images": 0
+ },
+ "1042e2d6": {
+  "slug": "collections-and-generics/arraylist-intro",
+  "widget": 3,
+  "state": "done",
+  "text": "names = [Ada, Ada]\nhasAda = true\nhasLinus = false\ncount = 2\n",
+  "images": 0
+ },
+ "37810a56": {
+  "slug": "collections-and-generics/arraylist-intro",
+  "widget": 4,
+  "state": "compile error",
+  "text": "line 3: error: Syntax error, insert \"Dimensions\" to complete ReferenceType\nline 3: error: Syntax error, insert \"Dimensions\" to complete ReferenceType\n",
+  "images": 0
+ },
+ "0d8d2b1d": {
+  "slug": "collections-and-generics/arraylist-intro",
+  "widget": 5,
+  "state": "done",
+  "text": "nums = [3, 10, 3]\ntotal = 13\n",
+  "images": 0
+ },
+ "3b01d73a": {
+  "slug": "collections-and-generics/hashset-intro",
+  "widget": 0,
+  "state": "done",
+  "text": "courses = [CSE 12, CSE 11]\ncount = 2\nall = [CSE 12, CSE 11]\n",
+  "images": 0
+ },
+ "254d23d2": {
+  "slug": "collections-and-generics/hashset-intro",
+  "widget": 1,
+  "state": "done",
+  "text": "courses = [CSE 11]\nfirst = true\nsecond = false\n",
+  "images": 0
+ },
+ "d2a7794d": {
+  "slug": "collections-and-generics/hashset-intro",
+  "widget": 2,
+  "state": "done",
+  "text": "courses = [CSE 12]\nhasCse11 = true\nremoved = true\nremovedAgain = false\nstillHasCse11 = false\ncount = 1\n",
+  "images": 0
+ },
+ "ee94620c": {
+  "slug": "collections-and-generics/hashset-intro",
+  "widget": 3,
+  "state": "done",
+  "text": "scores = [90, 75, 60]\ntotal = 225\n",
+  "images": 0
+ },
+ "297eb5dd": {
+  "slug": "collections-and-generics/hashset-intro",
+  "widget": 4,
+  "state": "done",
+  "text": "points = [Point[x=1, y=2], Point[x=2, y=1]]\ncount = 2\n",
+  "images": 0
+ },
+ "fc0ffbb5": {
+  "slug": "collections-and-generics/hashset-intro",
+  "widget": 5,
+  "state": "done",
+  "text": "requests = [CSE 11, CSE 12, CSE 11, MATH 18, CSE 12]\ndistinct = [MATH 18, CSE 12, CSE 11]\ntotal = 5\noffered = 3\n",
+  "images": 0
+ },
+ "e7e0eed3": {
+  "slug": "collections-and-generics/hashmap-intro",
+  "widget": 0,
+  "state": "done",
+  "text": "directory = {67890=Navya, 12345=Ricardo, 13579=Sofia}\nname = Navya\ncount = 3\nall = {67890=Navya, 12345=Ricardo, 13579=Sofia}\n",
+  "images": 0
+ },
+ "9e0b9dd2": {
+  "slug": "collections-and-generics/hashmap-intro",
+  "widget": 1,
+  "state": "done",
+  "text": "directory = {67890=Navya, 24680=Maitrayee, 12345=Maitrayee}\nbefore = Ricardo\nfresh = null\ncurrent = Maitrayee\ncount = 3\n",
+  "images": 0
+ },
+ "3e9e30ba": {
+  "slug": "collections-and-generics/hashmap-intro",
+  "widget": 2,
+  "state": "done",
+  "text": "directory = {67890=Navya, 12345=Ricardo}\nmissing = null\n",
+  "images": 0
+ },
+ "2dc347d2": {
+  "slug": "collections-and-generics/hashmap-intro",
+  "widget": 3,
+  "state": "done",
+  "text": "directory = {67890=Navya}\nhasRicardo = true\nhasNobody = false\nremoved = Ricardo\nremovedAgain = null\ncount = 1\n",
+  "images": 0
+ },
+ "584c53ff": {
+  "slug": "collections-and-generics/hashmap-intro",
+  "widget": 4,
+  "state": "failed",
+  "text": "Exception in thread \"Thread-0\" java.lang.NullPointerException\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "98b010b9": {
+  "slug": "collections-and-generics/hashmap-intro",
+  "widget": 5,
+  "state": "done",
+  "text": "points = {Ada=90}\nadaPoints = 90\nlinusPoints = 0\n",
+  "images": 0
+ },
+ "62ab334d": {
+  "slug": "collections-and-generics/hashmap-intro",
+  "widget": 6,
+  "state": "compile error",
+  "text": "line 10: error: Can only iterate over an array or an instance of java.lang.Iterable\n",
+  "images": 0
+ },
+ "4c5d91f1": {
+  "slug": "collections-and-generics/hashmap-intro",
+  "widget": 8,
+  "state": "done",
+  "text": "words = [to, be, or, not, to, be]\ncounts = {not=1, be=2, or=1, to=2}\ntoCount = 2\ndistinct = 4\n",
+  "images": 0
+ },
+ "187fc6df": {
+  "slug": "collections-and-generics/arraylist-use-case",
+  "widget": 0,
+  "state": "done",
+  "text": "original = Post@737\nlikes = 1\n",
+  "images": 0
+ },
+ "3ea6c218": {
+  "slug": "collections-and-generics/arraylist-use-case",
+  "widget": 1,
+  "state": "done",
+  "text": "original = Post@8ca\ncount = 0\n",
+  "images": 0
+ },
+ "d28e7d12": {
+  "slug": "collections-and-generics/arraylist-use-case",
+  "widget": 3,
+  "state": "done",
+  "text": "original = Post@bee\nviaVariable = 1\nviaList = 1\n",
+  "images": 0
+ },
+ "8dfd4068": {
+  "slug": "collections-and-generics/generics-overview",
+  "widget": 0,
+  "state": "done",
+  "text": "words = [hello]\nnums = [42]\nw = hello\nn = 42\n",
+  "images": 0
+ },
+ "b8a352ac": {
+  "slug": "collections-and-generics/generics-overview",
+  "widget": 1,
+  "state": "done",
+  "text": "points = [Point[x=3, y=4]]\nx = 3\n",
+  "images": 0
+ },
+ "835fe37b": {
+  "slug": "collections-and-generics/generics-overview",
+  "widget": 2,
+  "state": "compile error",
+  "text": "line 5: error: The method add(int, String) in the type ArrayList<String> is not applicable for the arguments (int)\n",
+  "images": 0
+ },
+ "36a9d34d": {
+  "slug": "collections-and-generics/generics-overview",
+  "widget": 3,
+  "state": "done",
+  "text": "directory = {12345=Ricardo}\nname = Ricardo\n",
   "images": 0
  }
 }

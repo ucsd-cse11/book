@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HashSet Introduction — Collections and Generics</title>
+<link rel="stylesheet" href="../assets/book.css?v=fa4d2e038929">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collections and Generics</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>HashSet Introduction</h1>
+<article class="prose"><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Can you think of any situation where you wouldn’t want duplicates in a collection? Where you only care whether an element is present at least once?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Maybe a list of all the CSE courses at UC San Diego? A course can’t be in the catalog twice.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Good example. Let’s use that to introduce another type of collection in Java, the <code>HashSet</code>.</div></div><div class="runner" id="w989976378" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="13" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashSet;
+
+HashSet&lt;String> courses = new HashSet&lt;String>();
+int count;
+String all;
+void main() {
+  courses.add("CSE 11");
+  courses.add("CSE 12");
+  courses.add("CSE 11");
+  count = courses.size();
+  all = courses.toString();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What do you notice about the <code>count</code> and output from <code>toString</code>?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Even though we added CSE 11 twice, it only shows up in the <code>HashSet</code> once.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly. Unlike an <code>ArrayList</code>, <code>HashSet</code> can’t contain duplicate elements. Also, the <code>add()</code> method for <code>HashSet</code> returns whether or not the element could be added.</div></div><div class="runner" id="w625812434" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="6" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashSet;
+
+HashSet&lt;String> courses = new HashSet&lt;String>();
+boolean first = courses.add("CSE 11");
+boolean second = courses.add("CSE 11");</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So, when <code>courses</code> was empty, the first <code>add()</code> appended “CSE 11”, but the second time nothing changed and it returned false.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Almost, but I notice you said appended, but that isn’t really the right word. <code>HashSet</code> is unordered, so when an element is added it doesn’t necessarily get appended to the end.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Am I able to use <code>contains()</code> like we did with <code>ArrayList</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yep. And <code>contains()</code> is usually why programmers choose to use a <code>HashSet</code>, since determining whether or not a <code>HashSet</code> contains a given value can be much faster than checking an array or <code>ArrayList</code>. We won’t go over the specifics in this class, but it is good to remember that the advantage of a <code>HashSet</code> is faster <code>contains()</code> and <code>remove()</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>For <code>ArrayList</code>, <code>remove()</code> took an index as the argument. But you said that <code>HashSet</code> doesn’t have indexes?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, so for <code>remove()</code> the argument is instead the element you would like to remove.</div></div><div class="runner" id="w3534190925" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="19" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashSet;
+
+HashSet&lt;String> courses = new HashSet&lt;String>();
+boolean hasCse11;
+boolean removed;
+boolean removedAgain;
+boolean stillHasCse11;
+int count;
+void main() {
+  courses.add("CSE 11");
+  courses.add("CSE 12");
+
+  hasCse11 = courses.contains("CSE 11");
+  removed = courses.remove("CSE 11");
+  removedAgain = courses.remove("CSE 11");
+  stillHasCse11 = courses.contains("CSE 11");
+  count = courses.size();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>How about you try creating a set of <code>Integer</code>, and then writing a for-each loop to sum all of the values in the <code>HashSet</code>. For-each loops work on <code>ArrayList</code> as well.</div></div><div class="runner" id="w4002701836" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="16" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashSet;
+
+HashSet&lt;Integer> scores = new HashSet&lt;Integer>();
+int total;
+void main() {
+  scores.add(90);
+  scores.add(75);
+  scores.add(90);
+  scores.add(60);
+
+  total = 0;
+  for (int score : scores) {
+    total += score;
+  }
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Now here’s a question: What order did you sum the scores in?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well I assume it did 90 + 75 + 60, since that was the order I put them into the <code>HashSet</code>, and second time I tried to add 90 it was already in the set.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Not necessarily, because the set is unordered, we don’t know what order it did the summation. But in this case, addition doesn’t result in a different value when you change the order.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Here, look at this example. Now we are going to create a set of <code>Point</code>, what do you think the <code>size()</code> for points will return?</div></div><div class="runner" id="w696169949" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="13" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashSet;
+
+record Point(int x, int y) { }
+
+HashSet&lt;Point> points = new HashSet&lt;Point>();
+int count;
+void main() {
+  points.add(new Point(1, 2));
+  points.add(new Point(1, 2));
+  points.add(new Point(2, 1));
+  count = points.size();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So <code>count</code> is 2. The two <code>new Point(1, 2)</code> are different objects, but the set only kept one of them.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right. Two records with the same fields count as the same element, and so do two <code>String</code>s with the same text. That works for <code>String</code> and for records. For a class you write yourself, it takes more work to make a set treat two objects as the same, and we won’t get into that here.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Now that we have learned about both <code>ArrayList</code> and <code>HashSet</code>, here is a nice trick that uses both of them. If we create an <code>ArrayList</code>, we can add duplicate elements to it. Normally with an array, if I asked you to give me a new array with all the duplicates removed what would you have to do?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I would probably create an empty array, then loop through the old one and add any that aren’t already in the new array. But then I would have to write another for-loop that checks if the new array already has that element…</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, here’s the helpful trick: You can create a <code>HashSet</code> from an <code>ArrayList</code> like this.</div></div><div class="runner" id="w4228905909" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="19" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+import java.util.HashSet;
+
+ArrayList&lt;String> requests = new ArrayList&lt;String>();
+HashSet&lt;String> distinct;
+int total;
+int offered;
+void main() {
+  requests.add("CSE 11");
+  requests.add("CSE 12");
+  requests.add("CSE 11");
+  requests.add("MATH 18");
+  requests.add("CSE 12");
+
+  distinct = new HashSet&lt;String>(requests);
+  total = requests.size();
+  offered = distinct.size();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok I see.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span><code>HashSet</code> is an important tool to keep in your Java toolbox. Remember that while <code>ArrayList</code> is needed when the position in your list matters, <code>HashSet</code> is better for questions about whether or not an element is present.</div></div><h3 class="practice">Practice</h3><div class="exercise" data-kind="code" data-seed="599668440" data-echo data-check="total == 6 &amp;&amp; offered == 3" data-check-message="That runs, but offered should be the number of distinct names in the list (3)."><div class="stem">The list below has repeats. Fill in the code that builds a <code>HashSet</code> from it, and then sets <code>offered</code> to the number of distinct names.</div><div class="cloze code">import java.util.ArrayList;<br>import java.util.HashSet;<br><br>ArrayList&lt;String> names = new ArrayList&lt;String>(<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>List.of("Ada", "Grace", "Ada", "Alan", "Grace", "Ada"));<br><br>HashSet&lt;String> distinct = new HashSet&lt;String>(<input class="blank" data-answer="names" placeholder="list" spellcheck="false" autocorrect="off" autocapitalize="off">);<br>int total = names.size();<br>int offered = <input class="blank" data-answer="distinct.size()" placeholder="expression" spellcheck="false" autocorrect="off" autocapitalize="off">;<br></div></div><div class="exercise" data-kind="blanks" data-seed="6579014"><div class="stem">Once that program has run, what are the values of <code>total</code> and <code>offered</code>?</div><div class="cloze code">total = <input class="blank" data-answer="6" placeholder="number" spellcheck="false" autocorrect="off" autocapitalize="off"><br>offered = <input class="blank" data-answer="3" placeholder="number" spellcheck="false" autocorrect="off" autocapitalize="off"><br></div></div></article>
+<nav class="pagenav"><a class="prev" href="arraylist-intro.html">← ArrayList Intro</a> <a class="next" href="hashmap-intro.html">HashMap Introduction →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "collections-and-generics", "title": "Collections and Generics", "current": 1, "steps": [{"title": "ArrayList Intro", "slug": "arraylist-intro", "url": "arraylist-intro.html", "path": "/collections-and-generics/arraylist-intro.html"}, {"title": "HashSet Introduction", "slug": "hashset-intro", "url": "hashset-intro.html", "path": "/collections-and-generics/hashset-intro.html"}, {"title": "HashMap Introduction", "slug": "hashmap-intro", "url": "hashmap-intro.html", "path": "/collections-and-generics/hashmap-intro.html"}, {"title": "Using ArrayList with Post", "slug": "arraylist-use-case", "url": "arraylist-use-case.html", "path": "/collections-and-generics/arraylist-use-case.html"}, {"title": "Generics Overview", "slug": "generics-overview", "url": "generics-overview.html", "path": "/collections-and-generics/generics-overview.html"}, {"title": "Collections and Generics in Summary", "slug": "summary", "url": "summary.html", "path": "/collections-and-generics/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=8182a1702132"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>

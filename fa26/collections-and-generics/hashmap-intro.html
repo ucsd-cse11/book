@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HashMap Introduction — Collections and Generics</title>
+<link rel="stylesheet" href="../assets/book.css?v=fa4d2e038929">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Collections and Generics</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>HashMap Introduction</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>So <code>ArrayList</code> lets me put things at specific positions, and <code>HashSet</code> ensures that there are no duplicates. But what if I wanted something different? Let’s say I was storing a bunch of students in a class, and some of them have the same first name. I can’t use a <code>HashSet</code> because then there would be no way to have two students with the same name, and an <code>ArrayList</code> would have no way to distinguish between the students.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Hmm, that is a real problem. In practice, when you turn in an assignment what do you put on your submission so that we can tell students with the same name apart?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>My student ID number? That’s unique. But if I created a <code>HashSet</code> of student ID numbers, how would I be able to know which name corresponds to which ID?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Java has a data structure that is perfect for this: <code>HashMap</code>. It stores data as <dfn class="term" data-term="key-value pair" id="term-key-value-pair-1">key-value pairs</dfn>. Here is your student example written out as a <code>HashMap</code>. What do you notice?</div></div><div class="runner" id="w3890278099" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="16" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+HashMap&lt;Integer, String> directory = new HashMap&lt;Integer, String>();
+String name;
+int count;
+String all;
+void main() {
+  directory.put(12345, "Ricardo");
+  directory.put(67890, "Navya");
+  directory.put(13579, "Sofia");
+
+  name = directory.get(67890);
+  count = directory.size();
+  all = directory.toString();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So when we define a HashMap, we give two different types inside the angle brackets. And then instead of using <code>add()</code>, we use <code>put()</code> and are passing in two values for each element?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yes, in this example the <code>Integer</code> student ID is the key, while the <code>String</code> student name is the value.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>What would happen if I put the same student ID number twice? Would it be ignored, like adding a duplicate to a <code>HashSet</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Not quite. The keys are unique, just like the elements of a <code>HashSet</code>, but a second <code>put</code> with the same key replaces the old value instead of being ignored. The values are not unique, though. This is important for our student directory example, as we want to be able to support multiple students with the same name.</div></div><div class="runner" id="w2651561426" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="17" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+HashMap&lt;Integer, String> directory = new HashMap&lt;Integer, String>();
+String before;
+String fresh;
+String current;
+int count;
+void main() {
+  directory.put(12345, "Ricardo");
+  directory.put(67890, "Navya");
+
+  before = directory.put(12345, "Maitrayee");
+  fresh = directory.put(24680, "Maitrayee");
+  current = directory.get(12345);
+  count = directory.size();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Notice what <code>put()</code> returns when you already have a value at that key?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It returns the old value, and replaces it in the <code>HashMap</code> with the new one. But when there wasn’t a value there yet, it returns <code>null</code>. And you also used a method we have seen before, <code>get()</code>. You passed in the key and it returned the value.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yep, <code>HashMap</code> is designed for you to fetch a value using a key.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>What if you try to fetch a value from a key that doesn’t exist? Will it give you an error?</div></div><div class="runner" id="w1050554554" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="11" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+HashMap&lt;Integer, String> directory = new HashMap&lt;Integer, String>();
+String missing;
+void main() {
+  directory.put(12345, "Ricardo");
+  directory.put(67890, "Navya");
+
+  missing = directory.get(11111);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ah so it’s <code>null</code>.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>A <code>null</code> value can be problematic for your program, so it’s a good idea to check if a key exists before attempting to fetch and use a value. <code>HashMap</code> provides a method for this called <code>containsKey()</code>. And just like <code>ArrayList</code> and <code>HashSet</code> you can remove elements. <code>remove()</code> takes the key and removes both the key and the value.</div></div><div class="runner" id="w767772626" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="20" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+HashMap&lt;Integer, String> directory = new HashMap&lt;Integer, String>();
+boolean hasRicardo;
+boolean hasNobody;
+String removed;
+String removedAgain;
+int count;
+void main() {
+  directory.put(12345, "Ricardo");
+  directory.put(67890, "Navya");
+
+  hasRicardo = directory.containsKey(12345);
+  hasNobody = directory.containsKey(11111);
+
+  removed = directory.remove(12345);
+  removedAgain = directory.remove(12345);
+  count = directory.size();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hey Professor, I made a <code>HashMap</code> of how many points each student has, and asked for a student I haven’t added yet. But, my program crashed! Do I need to use the <code>containsKey</code> here? Or is there a better way to deal with this problem?</div></div><div class="runner" id="w1481397247" data-engine="java17" data-expect="exception" data-echo data-gate><textarea class="code" rows="12" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+HashMap&lt;String, Integer> points = new HashMap&lt;String, Integer>();
+int adaPoints;
+int linusPoints;
+void main() {
+  points.put("Ada", 90);
+
+  adaPoints = points.get("Ada");
+  linusPoints = points.get("Linus");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>For situations like this, there is a special kind of get method. You can use <code>getOrDefault()</code> which takes a second argument representing the default value to use if the <code>HashMap</code> doesn’t contain that key.</div></div><div class="runner" id="w2561675449" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="12" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+HashMap&lt;String, Integer> points = new HashMap&lt;String, Integer>();
+int adaPoints;
+int linusPoints;
+void main() {
+  points.put("Ada", 90);
+
+  adaPoints = points.getOrDefault("Ada", 0);
+  linusPoints = points.getOrDefault("Linus", 0);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>What if I want to use a for-each loop? If I try to write it like this there is an error.</div></div><div class="runner" id="w1655386957" data-engine="java17" data-expect="error" data-echo data-gate><textarea class="code" rows="14" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+HashMap&lt;String, Integer> points = new HashMap&lt;String, Integer>();
+int total;
+void main() {
+  points.put("Ada", 90);
+  points.put("Grace", 75);
+
+  total = 0;
+  for (int p : points) {
+    total += p;
+  }
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Think about this: when you are looping through <code>points</code>, and setting <code>int p</code> to be each element, how are we supposed to know whether you want <code>int p</code> to be the key or the value?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well obviously I want it to be the value. The value is the one that is an <code>Integer</code>.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>We need to specify whether you are trying to loop through the keys or the values. Let’s start with an example of the keys. We can use <code>points.keySet()</code> to tell Java that we want to loop through the set of all keys in the <code>HashMap</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok, but what if I want to loop through all the point values?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>You can use <code>points.values()</code>. Remember that just like <code>HashSet</code>, there isn’t a set order. This is fine in this case for summation.</div></div><div class="runner" id="w408314977" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="21" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+HashMap&lt;String, Integer> points = new HashMap&lt;String, Integer>();
+int total;
+int sameTotal;
+void main() {
+  points.put("Ada", 90);
+  points.put("Grace", 75);
+  points.put("Alan", 60);
+
+  total = 0;
+  for (String student : points.keySet()) {
+    total += points.get(student);
+  }
+
+  sameTotal = 0;
+  for (int p : points.values()) {
+    sameTotal += p;
+  }
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Based on what we have talked about, try writing code that checks how many times each word appears in an array. I’ll give you a <code>String[]</code> array to start off with, try to use a <code>HashMap</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ok, to count the number of times a word appears, I would need to loop through the list and add 1 to the total for each appearance. So the keys should be the word, because that is unique, and the values should be the count. At the beginning the <code>HashMap</code> is empty, and whenever a word appears, I either add it to the <code>HashMap</code> if it is new, or increment the value by 1.</div></div><div class="runner" id="w1281200625" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="16" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.HashMap;
+
+String[] words = {"to", "be", "or", "not", "to", "be"};
+
+HashMap&lt;String, Integer> counts = new HashMap&lt;String, Integer>();
+int toCount;
+int distinct;
+void main() {
+  for (String w : words) {
+    counts.put(w, counts.getOrDefault(w, 0) + 1);
+  }
+
+  toCount = counts.get("to");
+  distinct = counts.size();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There you go. Now that we have seen all three, here is how to choose between them. Use an <code>ArrayList</code> when the position of your elements matters, or when you need to allow duplicates. Use a <code>HashSet</code> when you only care whether or not an element is present, and you don’t want duplicates. Use a <code>HashMap</code> when you want to look up a value using a key, like finding a student’s name from their ID. Keys are unique, but the values can be duplicates. Both <code>HashSet</code> and <code>HashMap</code> are unordered, and their advantage is fast lookups, so ask yourself what question your program is really asking.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So how would I use one of these in a real program, like with the <code>Post</code> class from before?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s look at that next.</div></div><h3 class="practice">Practice</h3><div class="exercise" data-kind="code" data-seed="3302743240" data-prints="4
+1"><div class="stem"><code>stock</code> starts out mapping <code>"apple"</code> to 3 and <code>"pear"</code> to 5. Fill in the missing pieces so that the apple count is replaced by 4, the pear is removed entirely, and <code>apples</code> holds the apple count afterwards.</div><div class="cloze code">import java.util.HashMap;<br><br>HashMap&lt;String, Integer> stock = new HashMap&lt;String, Integer>();<br>void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>stock.put("apple", 3);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>stock.put("pear", 5);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span><input class="blank" data-answer="stock.put(&quot;apple&quot;, 4);" placeholder="replace the apple count" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;</span><input class="blank" data-answer="stock.remove(&quot;pear&quot;);" placeholder="remove the pear" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int apples = <input class="blank" data-answer="stock.get(&quot;apple&quot;)" placeholder="look up the count" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println(apples);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println(stock.size());<br>}<br></div></div></article>
+<nav class="pagenav"><a class="prev" href="hashset-intro.html">← HashSet Introduction</a> <a class="next" href="arraylist-use-case.html">Using ArrayList with Post →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "collections-and-generics", "title": "Collections and Generics", "current": 2, "steps": [{"title": "ArrayList Intro", "slug": "arraylist-intro", "url": "arraylist-intro.html", "path": "/collections-and-generics/arraylist-intro.html"}, {"title": "HashSet Introduction", "slug": "hashset-intro", "url": "hashset-intro.html", "path": "/collections-and-generics/hashset-intro.html"}, {"title": "HashMap Introduction", "slug": "hashmap-intro", "url": "hashmap-intro.html", "path": "/collections-and-generics/hashmap-intro.html"}, {"title": "Using ArrayList with Post", "slug": "arraylist-use-case", "url": "arraylist-use-case.html", "path": "/collections-and-generics/arraylist-use-case.html"}, {"title": "Generics Overview", "slug": "generics-overview", "url": "generics-overview.html", "path": "/collections-and-generics/generics-overview.html"}, {"title": "Collections and Generics in Summary", "slug": "summary", "url": "summary.html", "path": "/collections-and-generics/summary.html"}]}</script>
+<script src="../assets/runner.js?v=8d3dd75b8dcf"></script>
+<script src="../assets/exercise.js?v=8182a1702132"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/gate.js?v=5c5470d23693"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=c4789642d426"></script>
+</body>
+</html>
