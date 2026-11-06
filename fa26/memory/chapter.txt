@@ -1,0 +1,1090 @@
+# How Java Runs
+
+## [When Some Values are More Equal than Others](where-things-are.html)
+
+Student: Professor, my Java is broken.
+
+Prof: What makes you say that?
+
+Student: Well, the same thing sometimes returns `true` and sometimes returns `false`:
+
+```java
+String tp1 = "trash panda";
+String trash = "trash";
+String tp2 = trash + " panda";
+String tp3 = tp2;
+boolean same1and2 = tp1 == tp2;
+boolean same1and3 = tp1 == tp3;
+boolean same2and3 = tp2 == tp3;
+```
+
+Output:
+
+```text
+tp1 = trash panda
+trash = trash
+tp2 = trash panda
+tp3 = trash panda
+same1and2 = false
+same1and3 = false
+same2and3 = true
+```
+
+Prof: Fascinating! That’s a cool example you came up with to test. And I think you’re frustrated because the behavior is different than for numbers?
+
+Student: Right. If I do `6 + 7 == 13` that’s clearly `true`. So why isn’t `trash + " panda" == "trash panda"`? And I don’t think it’s fascinating I think it’s annoying! The same thing happens with arrays, look:
+
+```java
+int[] nums1 = { 6, 7 };
+int[] nums2 = { 6, 7 };
+int[] nums3 = nums2;
+boolean same1and2 = nums1 == nums2;
+boolean same1and3 = nums1 == nums3;
+boolean same2and3 = nums2 == nums3;
+```
+
+Output:
+
+```text
+nums1 = [6, 7]
+nums2 = [6, 7]
+nums3 = [6, 7]
+same1and2 = false
+same1and3 = false
+same2and3 = true
+```
+
+Prof: Indeed. Alright, it’s time to unpack one of the things I told you to wait on. We need to talk about reference types vs primitive types and also introduce the idea of different parts of memory.
+
+Student: Yes, please, make it make sense!
+
+Prof: I often find it’s best to describe memory with a picture. I’ll focus on the array picture program. Here’s how I like to draw it:
+
+```
+Names (the stack)
+  top level
+    nums1 = @1001
+    nums2 = @1002
+    nums3 = @1002
+    same1and2 = false
+    same1and3 = false
+    same2and3 = true
+Heap
+  @1001: [6, 7]
+  @1002: [6, 7]
+```
+
+Hover over an address like `@1001` to draw an arrow to its object on the heap; click or tap it to keep the arrow showing.
+
+Prof: OK, so stepping way back – our computers store data in memory. You can think of memory in Java as being split into two parts:
+
+- The stack which holds all the definitions at the top level, all method arguments, and all definitions of variables inside methods
+- The heap which holds all created objects. The objects we’ve seen so far are record instances like `Point[...]` or `Student[...]`, arrays, and as it turns out, `String`s. When an object is created, like with `new` or with `{"array", "initialization"}`, Java makes space for it on the heap and returns a reference to it. Only the reference actually gets stored in variables, fields, or array elements.
+
+This picture makes that explicit. See the things that look like `@1001` and `@1002`? Those are the references. So we can see that the value stored in `nums2` and the value stored in `nums3` are **the same reference**. In contrast, `nums1` holds a separate reference to **a different array with the same contents**.
+
+The last piece we need to understand this is that `==` compares **references**, not **contents**, of objects. So `same1and2` is calculating `@1001` `==` `@1002`, which is `false`, while `same2and3` is calculating `@1002` `==` `@1002`, which is `true`.
+
+Whew, that was a lot. What do you think?
+
+Student: It’s helping a little bit. Can we see what’s going on with the first example?
+
+Prof: It looks like this in memory:
+
+```
+Names (the stack)
+  top level
+    tp1 = @1001
+    trash = @1002
+    tp2 = @1003
+    tp3 = @1003
+    same1and2 = false
+    same1and3 = false
+    same2and3 = true
+Heap
+  @1001: "trash panda"
+  @1002: "trash"
+  @1003: "trash panda"
+```
+
+Prof: Same shape, more or less, but the heap contents are the characters in the strings as opposed to arrays. Just like arrays, using `==` on strings compares the **references**, not the **contents**, which explains the output.
+
+Student: OK, this seems really complicated, but I guess it **does** explain what I was seeing.
+
+#### Practice
+
+Exercise:
+
+Java hands out references in the order objects are created, starting at `@1001`. Fill in the memory picture for this code:
+
+```java
+int[] a = { 3, 4 };
+int[] b = { 3, 4 };
+int[] c = b;
+int[] d = a;
+boolean ab = a == b;
+boolean bc = b == c;
+boolean ad = a == d;
+```
+
+```java
+Names
+a  = [@1002 / @1001]
+b  = [@1002 / @1001]
+c  = [@1002 / @1001]
+d  = [@1002 / @1001]
+ab = [false / true]
+bc = [false / true]
+ad = [false / true]
+
+Heap
+@1001: [3, 4]
+@1002: [3, 4]
+```
+
+Exercise:
+
+Same rules, starting again at `@1001`. This time one of the objects holds references of its own:
+
+```java
+String word = "hi";
+String loud = word + word;
+String same = loud;
+String[] pair = { word, loud };
+boolean match = pair[1] == same;
+```
+
+```java
+Names
+word  = [@1001 / @1003 / @1002]
+loud  = [@1001 / @1003 / @1002]
+same  = [@1001 / @1003 / @1002]
+pair  = [@1001 / @1003 / @1002]
+match = [false / true]
+
+Heap
+@1001: "hi"
+@1002: "hihi"
+@1003: [[@1001 / @1003 / @1002], [@1001 / @1003 / @1002]]
+```
+
+## [Checking Contents vs Checking Identity](checking-contents.html)
+
+Student: OK, so can we ever compare the contents of strings or arrays?
+
+Prof: Absolutely! Many objects have a method called `equals` that helps with this. So for strings, just use `s1.equals(s2)` instead of `s1 == s2`. That’s actually what’s happening with records and strings in `assertEquals`:
+
+```java
+record Point(int x, int y) { }
+void main() {
+  Point p1 = new Point(4, 5);
+  Point p2 = new Point(4, 5);
+  System.out.println("p1 == p2? " + (p1 == p2));
+  System.out.println("p1.equals(p2)? " + p1.equals(p2));
+  assertEquals(p1, p2); // succeeds!
+
+  String tp1 = "trash panda";
+  String trash = "trash";
+  String tp2 = trash + " panda";
+  System.out.println("tp1 == tp2? " + (tp1 == tp2));
+  System.out.println("tp1.equals(tp2)? " + tp1.equals(tp2));
+  assertEquals(tp1, tp2); // succeeds!
+}
+```
+
+Output:
+
+```text
+p1 == p2? false
+p1.equals(p2)? true
+tp1 == tp2? false
+tp1.equals(tp2)? true
+```
+
+Student: Oh, OK. So I should always use `.equals()`?
+
+Prof: Well, we may see some cases where we want reference equality. We don’t have any right now. So it’s true, we mostly care about the `.equals()` kind, which is called structural equality (it inspects the structure). But we can’t get rid of `==` entirely because we need it for comparing, say, `int` values. Those are called primitive types, as opposed to objects which are reference types, and they compare the numbers themselves with `==`.
+
+Student: Hmm I see. OK so we need `==` for numbers. What about arrays? You didn’t give an example of structural equality for those.
+
+Prof: It’s a little trickier there. Arrays’ `equals` method checks reference equality, not structural. So there’s actually a separate helper for arrays called `Arrays.equals`; it takes two array arguments and compares them structurally. And JUnit has a separate `assertArrayEquals`.
+
+```java
+import java.util.Arrays;
+void main() {
+  int[] nums1 = { 6, 7 };
+  int[] nums2 = { 6, 7 };
+  System.out.println("nums1 == nums2? " + (nums1 == nums2));
+  System.out.println("nums1.equals(nums2)? " + nums1.equals(nums2) + ", surprise!");
+  System.out.println("Arrays.equals(nums1, nums2)? " + Arrays.equals(nums1, nums2));
+  assertArrayEquals(nums1, nums2); // succeeds!
+  assertEquals(nums1, nums2);      // fails!
+}
+```
+
+Output (failed):
+
+```text
+nums1 == nums2? false
+nums1.equals(nums2)? false, surprise!
+Arrays.equals(nums1, nums2)? true
+Exception in thread "Thread-0" org.opentest4j.AssertionFailedError: expected: <[I@85a> but was: <[I@85b>
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)
+	at main(Unknown Source)
+```
+
+Student: But why?
+
+Prof: Well, part of the issue is that because arrays can **change**, two arrays could have the same contents at one point in the program, but differ later.
+
+Student: Huh?
+
+Prof: Because of array update, which we saw in the last section. Here, I’ll show you:
+
+```java
+import java.util.Arrays;
+void main() {
+  int[] nums1 = { 6, 7 };
+  int[] nums2 = { 6, 7 };
+  System.out.println("nums1 == nums2? " + (nums1 == nums2));
+  System.out.println("nums1.equals(nums2)? " + nums1.equals(nums2) + ", surprise!");
+  
+  System.out.println("Arrays.equals(nums1, nums2)? " + Arrays.equals(nums1, nums2));
+  assertArrayEquals(nums1, nums2); // succeeds!
+  
+  nums2[0] = 999;
+  System.out.println("Arrays.equals(nums1, nums2)? " + Arrays.equals(nums1, nums2));
+  assertArrayEquals(nums1, nums2); // fails
+}
+```
+
+Output (failed):
+
+```text
+nums1 == nums2? false
+nums1.equals(nums2)? false, surprise!
+Arrays.equals(nums1, nums2)? true
+Arrays.equals(nums1, nums2)? false
+Exception in thread "Thread-0" org.opentest4j.AssertionFailedError: array contents differ at index [0], expected: <6> but was: <999>
+	at org.junit.jupiter.api.Assertions.failArrays(Unknown Source)
+	at org.junit.jupiter.api.Assertions.arraysEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.assertArrayEquals(Unknown Source)
+	at main(Unknown Source)
+```
+
+Prof: So one way I think about it is that Java makes sure that `.equals()` between arrays only returns true if they are the same reference, because that’s the only way to guarantee that they will **always** be the same now and in the future. If they are different references, it could change. So you have to use `Arrays.equals` to “opt-in”, and acknowledge that you know you mean “equal right now”. The final memory diagram at the point the assertion fails looks like this:
+
+```
+Names (the stack)
+  main()
+    nums1 = @1001
+    nums2 = @1002
+  top level
+Heap
+  @1001: [6, 7]
+  @1002: [999, 7]
+```
+
+Student: Hmm, that seems like a lot to remember.
+
+Prof: It is. The main thing to think through is what you’re asking in an equality check. If it involves objects (which includes `String`), reach for `.equals()`. If it involves arrays, there may be more to check.
+
+Student: I’ll have to sit with that a little bit.
+
+#### Practice
+
+Exercise:
+
+Each pair below holds the same contents, built separately. Pick the check that gives `true` for each pair:
+
+```java
+record Point(int x, int y) { }
+int a = 6 + 7;
+int b = 13;
+String trash = "trash";
+String s1 = "trash panda";
+String s2 = trash + " panda";
+Point p1 = new Point(4, 5);
+Point p2 = new Point(4, 5);
+int[] n1 = { 6, 7 };
+int[] n2 = { 6, 7 };
+```
+
+```java
+boolean sameInts    = [a.equals(b) / Arrays.equals(a, b) / a == b];
+boolean sameStrings = [s1 == s2 / Arrays.equals(s1, s2) / s1.equals(s2)];
+boolean samePoints  = [p1.equals(p2) / p1 == p2 / Arrays.equals(p1, p2)];
+boolean sameArrays  = [Arrays.equals(n1, n2) / n1 == n2 / n1.equals(n2)];
+```
+
+## [Methods and Memory](stack-frames.html)
+
+Student: Wait a minute. Show me that last memory diagram again?
+
+Prof: This one?
+
+```java
+import java.util.Arrays;
+void main() {
+  int[] nums1 = { 6, 7 };
+  int[] nums2 = { 6, 7 };
+  System.out.println("nums1 == nums2? " + (nums1 == nums2));
+  System.out.println("nums1.equals(nums2)? " + nums1.equals(nums2) + ", surprise!");
+  
+  System.out.println("Arrays.equals(nums1, nums2)? " + Arrays.equals(nums1, nums2));
+  assertArrayEquals(nums1, nums2); // succeeds!
+  
+  nums2[0] = 999;
+  System.out.println("Arrays.equals(nums1, nums2)? " + Arrays.equals(nums1, nums2));
+  assertArrayEquals(nums1, nums2); // fails
+}
+```
+
+Output (failed):
+
+```text
+nums1 == nums2? false
+nums1.equals(nums2)? false, surprise!
+Arrays.equals(nums1, nums2)? true
+Arrays.equals(nums1, nums2)? false
+Exception in thread "Thread-0" org.opentest4j.AssertionFailedError: array contents differ at index [0], expected: <6> but was: <999>
+	at org.junit.jupiter.api.Assertions.failArrays(Unknown Source)
+	at org.junit.jupiter.api.Assertions.arraysEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.assertArrayEquals(Unknown Source)
+	at main(Unknown Source)
+```
+
+```
+Names (the stack)
+  main()
+    nums1 = @1001
+    nums2 = @1002
+  top level
+Heap
+  @1001: [6, 7]
+  @1002: [999, 7]
+```
+
+Student: Yeah. What’s going on with the stack there?
+
+Prof: Oh sharp eye! Right, so this is a program with a `main` method. That method is called to start the program. In this case, we didn’t have any definitions of values at the top level, so that’s empty. All the action is happening in `main`’s stack frame.
+
+Student: Stack frame?
+
+Prof: Every time a method is called, Java sets aside space for its parameters and its variables (the definitions in the method body) in what’s called a stack frame. So here we’re seeing that the two arrays were created inside `main`, which was called from the top level.
+
+Student: Huh. OK. So that happens for all methods? Or is this just a `main` thing?
+
+Prof: For all methods. It’s true even if we call some methods from the top level. For example if we have a builder pattern, there are some interesting aspects to the memory diagram:
+
+```java
+record Menu(int[] pricesCents) {
+  int[] discounted() {
+    int[] result = new int[pricesCents.length];
+    int index = 0;
+    for(int p: pricesCents) {
+      result[index] = p * 90 / 100;
+      index += 1;
+    }
+    return result;
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu menu = new Menu(regular);
+int[] sale = menu.discounted();
+```
+
+Output:
+
+```text
+regular = [2000, 1000, 500, 800]
+menu = Menu[pricesCents=[I@880]
+sale = [1800, 900, 450, 720]
+```
+
+Prof: So here we could talk about the memory diagram **in the middle of running the builder loop**. As in, what does memory look like when we are about to process the 3rd of the 4 elements in the array?
+
+```
+Names (the stack)
+  menu.discounted() on @1002
+    result = @1003
+    index = 2
+    p = 500
+  top level
+    regular = @1001
+    menu = @1002
+Heap
+  @1001: [2000, 1000, 500, 800]
+  @1002: Menu[pricesCents=@1001]
+  @1003: [1800, 900, 0, 0]
+```
+
+Student: Wait, **in the middle of the loop**, what does that mean?
+
+Prof: Well, Java runs code one step at a time, where “steps” are things like starting a method call, updating a variable, changing an array element, creating an object, and so on. So we can ask questions like “what does memory look like at a particular moment”.
+
+Student: OK, and this picture is right after updating the array with `900`.
+
+Prof: That’s right. We could also talk about the memory diagram at the end of the program
+
+```
+Names (the stack)
+  menu.discounted() on @1002
+    result = @1003
+    index = 4
+    returns @1003
+  top level
+    regular = @1001
+    menu = @1002
+    sale = @1003
+Heap
+  @1001: [2000, 1000, 500, 800]
+  @1002: Menu[pricesCents=@1001]
+  @1003: [1800, 900, 450, 720]
+```
+
+Prof: Now, Java may or may not actually keep track of the old stack frame like in this picture once the method call returns. But it’s a helpful picture!
+
+Student: So that reference for the new array was made… inside the method?
+
+Prof: That’s right!
+
+Student: And then it gets stored at the top level?
+
+Prof: In this example, that’s right.
+
+#### Practice
+
+Exercise:
+
+Picture memory while `big.area()` is running, just before its `return`. Where is each name stored?
+
+```java
+record Pizza(double inches, int costCents) {
+  double area() {
+    double radius = inches / 2;
+    return radius * radius * Math.PI;
+  }
+}
+String shop = "Trash Panda Pizza";
+void main() {
+  Pizza big = new Pizza(16, 1000);
+  double bigArea = big.area();
+  System.out.println(shop + ": " + bigArea);
+}
+```
+
+```java
+shop   [a field on the heap / top level / main() / big.area()]
+big    [a field on the heap / top level / main() / big.area()]
+radius [a field on the heap / top level / main() / big.area()]
+inches [a field on the heap / top level / main() / big.area()]
+```
+
+## [Methods that Update Arrays](updater-method.html)
+
+Student: So I was thinking about how we just saw a builder example again. My friend told me they never write methods that make new arrays because it’s inefficient, they just write methods that change the arrays.
+
+Prof: Your friend sounds very opinionated.
+
+Student: They know so much stuff! It’s hard to argue with them.
+
+Prof: Well, you can take it on my authority that both kinds are useful; we should study the kind that changes arrays now. We can do the same thing as before, but instead of returning a **new** array, we can change the one stored in the record. Sometimes we call this an update or an in-place update of the array.
+
+Student: OK great now I’ll be able to compare them myself.
+
+Prof: So, we had `discounted` in the last step. Let’s write `discountInPlace`. What do you think the return type should be?
+
+Student: Ummm, `int[]` again?
+
+Prof: So our goal here is to write a method that **changes** the existing array, rather than returning a new one. Do we know a type for methods that have effects and don’t return anything?
+
+Student: Ummm. `void`?
+
+Prof: Right. So let’s set up the method with a `void` return type, and try to change the existing array without making a new one.
+
+```java
+record Menu(int[] pricesCents) {
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu menu = new Menu(regular);
+```
+
+Output:
+
+```text
+regular = [2000, 1000, 500, 800]
+menu = Menu[pricesCents=[I@7ba]
+```
+
+Student: Wait what’s that `I@` thing
+
+Prof: Ah, that’s how **Java** prints arrays. The `I` means `int`, and the `@` followed by the numbers is a reference number made by Java. By default this is what Java shows when you print an array – it prints its reference!
+
+Student: Interesting. OK. Back to the code. So instead of having a new `result` and filling that in, you just… change the `pricesCents`? And that works?
+
+Prof: Let’s see! How do we call it?
+
+Student: I guess… `menu.discountInPlace()`?
+
+Prof: Great idea. It turns out we aren’t allowed to write a method call outside of a definition at the top level! So if we just write `menu.discountInPlace()` we’d get a syntax error. `void`-returning methods have to be called from another method body – `main` works. Have a look at this program; do you notice anything interesting about the output?
+
+```java
+record Menu(int[] pricesCents) {
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu menu = new Menu(regular);
+void main() {
+  menu.discountInPlace();
+}
+```
+
+Output:
+
+```text
+regular = [1800, 900, 450, 720]
+menu = Menu[pricesCents=[I@924]
+```
+
+Student: Whoa, the contents of `regular` changed?
+
+Prof: That’s right. `main` ran and called `discountInPlace`, and that **changed** the contents of the array stored in `regular`. Here’s a memory diagram of what things look like in the middle of the loop for **this** program:
+
+```
+Names (the stack)
+  menu.discountInPlace() on @1002
+    index = 2
+    p = 500
+  main()
+  top level
+    regular = @1001
+    menu = @1002
+Heap
+  @1001: [2000 1800, 1000 900, 500, 800]
+  @1002: Menu[pricesCents=@1001]
+```
+
+Student: Huh so that `@1001` is referred to by… `regular`, and by the `pricesCents` field. And so that reference is being used in the loop?
+
+Prof: That’s right, and that’s why you see the object reference `@1002` in the frame header. That was the receiver for the method call, and so we know that `pricesCents` is referring to the field of **that** object.
+
+Student: That… went a little over my head.
+
+Prof: So when we use `pricesCents` in the body of the loop, it has to refer to **some** value. It isn’t a parameter of the method; it’s a field of the receiver we called it with. The receiver is `@1002`, and **its** `pricesCents` field is `@1001`, so that’s how that lookup occurs.
+
+Student: OK, I think I kind of get it. I definitely understand that there is only one array made in this example, and it’s changing inside the method.
+
+Prof: That’s a good lesson to take from this conversation. This is called an updater method for an array.
+
+#### Practice
+
+This `Menu` has both methods from this chapter. The builder runs first, at the top level, then `main` runs the updater:
+
+```java
+record Menu(int[] pricesCents) {
+  int[] discounted() {
+    int[] result = new int[pricesCents.length];
+    int index = 0;
+    for(int p: pricesCents) {
+      result[index] = p * 90 / 100;
+      index += 1;
+    }
+    return result;
+  }
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu menu = new Menu(regular);
+int[] sale = menu.discounted();
+void main() {
+  menu.discountInPlace();
+}
+```
+
+Exercise:
+
+How many arrays does this program create in total?
+
+Answer: ____
+
+Exercise:
+
+What does each array hold once `main` finishes?
+
+```java
+regular = [[1800, 900, 450, 720] / [1620, 810, 405, 648] / [2000, 1000, 500, 800]]
+sale    = [[1800, 900, 450, 720] / [1620, 810, 405, 648] / [2000, 1000, 500, 800]]
+```
+
+Exercise:
+
+While `discountInPlace` runs, which top-level names hold the same reference as `pricesCents`?
+
+Choose all that apply:
+
+- `menu`
+- `sale`
+- `regular`
+
+## [Objects, Methods, and Memory](multiple-objects.html)
+
+Student: I think I still don’t get what’s going on with stack frames and method calls. What is the reference in the top of the stack frame for?
+
+Prof: Let’s build up an example with **two** objects whose methods we call.
+
+```java
+record Menu(int[] pricesCents) {
+  int[] discounted() {
+    int[] result = new int[pricesCents.length];
+    int index = 0;
+    for(int p: pricesCents) {
+      result[index] = p * 90 / 100;
+      index += 1;
+    }
+    return result;
+  }
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu menu = new Menu(regular);
+int[] pricy = { 10000, 5000, 9000, 8000 };
+Menu pricyMenu = new Menu(pricy);
+void main() {
+  menu.discountInPlace();
+  pricyMenu.discountInPlace();
+  menu.discountInPlace();
+}
+```
+
+Output:
+
+```text
+regular = [1620, 810, 405, 648]
+menu = Menu[pricesCents=[I@77d]
+pricy = [9000, 4500, 8100, 7200]
+pricyMenu = Menu[pricesCents=[I@77f]
+```
+
+Memory at the end:
+
+```
+Names
+  top level
+    regular = @1001
+    menu = @1002
+    pricy = @1003
+    pricyMenu = @1004
+Heap
+  @1001: [1620, 810, 405, 648]
+  @1002: Menu[pricesCents=@1001]
+  @1003: [9000, 4500, 8100, 7200]
+  @1004: Menu[pricesCents=@1003]
+```
+
+Student: Hmm… so there’s like… three frames? One for each time `discountInPlace` is called?
+
+Prof: Makes sense. So how are they different? The method doesn’t take any arguments, so what makes the frames different from one another?
+
+Student: Oh! So to tell apart the first two calls, it has to know which object is used for each, `menu` or `pricyMenu`.
+
+Prof: Exactly.
+
+Student: That’s cool. So the first call uses `menu`, the second uses `pricyMenu`. Oh and the values in the `menu` one get updated **twice**. Why is that?
+
+Prof: That corresponds to the **two** calls to `discountInPlace` on `menu`. The first time through, it updates all the values once. The second time is **still working with the same array**, so it updates it again.
+
+Student: I see!
+
+#### Practice
+
+This record has a builder and an updater too. Step through the trace to check your answers.
+
+```java
+record Section(int[] scores) {
+  int[] curved() {
+    int[] result = new int[scores.length];
+    int index = 0;
+    for(int s: scores) {
+      result[index] = s + 5;
+      index += 1;
+    }
+    return result;
+  }
+  void curveInPlace() {
+    int index = 0;
+    for(int s: scores) {
+      scores[index] = s + 5;
+      index += 1;
+    }
+  }
+}
+int[] morningScores = { 80, 92, 75 };
+Section morning = new Section(morningScores);
+int[] eveningScores = { 68, 88, 90 };
+Section evening = new Section(eveningScores);
+void main() {
+  int[] curved1 = morning.curved();
+  evening.curveInPlace();
+  int[] curved2 = morning.curved();
+  evening.curveInPlace();
+}
+```
+
+Exercise:
+
+How many times does the value at index 0 of `morningScores` change while this program runs?
+
+Answer: ____
+
+Exercise:
+
+How many times does the value at index 0 of `eveningScores` change while this program runs?
+
+Answer: ____
+
+Exercise:
+
+How many arrays does this program create in total?
+
+Answer: ____
+
+## [Aliasing](aliasing.html)
+
+Student: Professor I wrote a program and I don’t get why it’s running that way.
+
+Prof: Great! That probably means there’s something good to learn. Let’s see it!
+
+Student: I made two `Menu` instances, but it seems like updating one updates the other:
+
+```java
+record Menu(int[] pricesCents) {
+  int[] discounted() {
+    int[] result = new int[pricesCents.length];
+    int index = 0;
+    for(int p: pricesCents) {
+      result[index] = p * 90 / 100;
+      index += 1;
+    }
+    return result;
+  }
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu lunch = new Menu(regular);
+Menu dinner = new Menu(regular);
+int[] lunchPrices = lunch.pricesCents;
+int[] dinnerPrices = dinner.pricesCents;
+void main() {
+  lunch.discountInPlace();
+}
+```
+
+Output:
+
+```text
+regular = [1800, 900, 450, 720]
+lunch = Menu[pricesCents=[I@7bf]
+dinner = Menu[pricesCents=[I@7bf]
+lunchPrices = [1800, 900, 450, 720]
+dinnerPrices = [1800, 900, 450, 720]
+```
+
+Student: I’m confused because I thought `discountInPlace` would only update the `lunch` menu, not the `dinner` one. But when I show the arrays it seems like all the arrays updated.
+
+Prof: Very interesting! I think what’s happening here is there is only one array.
+
+Student: Only one array?
+
+Prof: That’s right. Let’s look at a memory diagram at the end:
+
+Memory at the end:
+
+```
+Names
+  top level
+    regular = @1001
+    lunch = @1002
+    dinner = @1003
+    lunchPrices = @1001
+    dinnerPrices = @1001
+Heap
+  @1001: [1800, 900, 450, 720]
+  @1002: Menu[pricesCents=@1001]
+  @1003: Menu[pricesCents=@1001]
+```
+
+Prof: So that one array is created and stored in `regular`, and **that same reference** is used to initialize both `lunch` and `dinner`. Look at the two objects – they have different references but both of the `pricesCents` fields store the same array reference!
+
+Student: I see, that one reference is referred to by five different places!
+
+Prof: Right, and the array updates change the elements on the heap, so then if we access those elements through any of the references, we see the updated values. This idea has a name: it is called aliasing, when different names in a program store the same reference. Aliasing makes it so updates through one reference are visible through all the others.
+
+Student: OK, I think I got it!
+
+#### Practice
+
+```java
+record Team(String[] players) {
+  void replaceFirst(String name) {
+    players[0] = name;
+  }
+}
+String[] varsity = { "Ana", "Ben", "Cy" };
+String[] jv = { "Dee", "Eli" };
+Team red = new Team(varsity);
+Team blue = new Team(jv);
+Team green = new Team(red.players);
+String[] roster = blue.players;
+Team gold = new Team(roster);
+void main() {
+  green.replaceFirst("Zed");
+}
+```
+
+Exercise:
+
+This program creates two arrays. Which one is stored in each team’s `players` field?
+
+`red.players`: [{ "Ana", "Ben", "Cy" } / { "Dee", "Eli" }]
+`blue.players`: [{ "Ana", "Ben", "Cy" } / { "Dee", "Eli" }]
+`green.players`: [{ "Ana", "Ben", "Cy" } / { "Dee", "Eli" }]
+`gold.players`: [{ "Ana", "Ben", "Cy" } / { "Dee", "Eli" }]
+
+Exercise:
+
+After `main` runs, how many of the four teams have `"Zed"` as their first player?
+
+Answer: ____
+
+## [Nuanced and Nested Structures](arrays-as-fields.html)
+
+Student: We talked about structural vs. reference equality – which one do records use?
+
+Prof: Great question, how would you know?
+
+Student: I guess I’d have to try `.equals()` on an object I created from a record?
+
+Prof: That’s right, or `assertEquals`.
+
+Student: OK let’s try both.
+
+```java
+record Car(String make, String model, int year) {}
+Car c1 = new Car("Honda", "Civic", 2008);
+Car c2 = new Car("Honda", "Civic", 2008);
+boolean refEqual = c1 == c2;
+boolean structEqual = c1.equals(c2);
+void main() {
+    assertEquals(c1, c2);
+    System.out.println("All tests passed!");
+}
+```
+
+Output:
+
+```text
+All tests passed!
+c1 = Car[make=Honda, model=Civic, year=2008]
+c2 = Car[make=Honda, model=Civic, year=2008]
+refEqual = false
+structEqual = true
+```
+
+Student: Great! Easy.
+
+Prof: OK, actually, I have some bad news. Let’s say these cars could have an array of ints representing the pressure of the 4 tires (it’ll always be 4 elements long). Just a quick tip, you can use `new int[]{ ... }` to make an int array with specific contents as a value, without defining a new name.
+
+Student: Sure, let’s do it!
+
+```java
+record Car(String make, String model, int year, int[] pressures) {}
+Car c1 = new Car("Honda", "Civic", 2008, new int[]{ 35, 35, 33, 33 });
+Car c2 = new Car("Honda", "Civic", 2008, new int[]{ 35, 35, 33, 33 });
+boolean refEqual = c1 == c2;
+boolean structEqual = c1.equals(c2);
+void main() {
+    assertEquals(c1, c2);
+    System.out.println("All tests passed!");
+}
+```
+
+Output (failed):
+
+```text
+Exception in thread "Thread-0" org.opentest4j.AssertionFailedError: expected: <Car[make=Honda, model=Civic, year=2008, pressures=[I@96d]> but was: <Car[make=Honda, model=Civic, year=2008, pressures=[I@97c]>
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)
+	at main(Unknown Source)
+```
+
+Student: Wait, what?
+
+Prof: Right, so that test succeeded before, and now it fails. This is a real gotcha when working with arrays and equality in Java.
+
+Student: What’s going on?
+
+Prof: Well, we need to be precise about what the “structural equality” does on `record` instances in Java. It works by calling `.equals()` on all the pairs of fields that are reference types, and uses `==` on the ones that are primitives. So for `Car` it’s like the method does
+
+```java
+boolean equals(Car other) {
+    return make.equals(other.make) && model.equals(other.model)
+            && year == other.year && pressures.equals(other.pressures);
+}
+```
+
+Student: But that looks fine?
+
+Prof: What did we learn about the `.equals()` method on arrays?
+
+Student: Ohhhhhh! That does **reference equality** on the two arrays, not structural. It would need to be `Arrays.equals` for that to work.
+
+Prof: That’s right. We’ll have a conversation in the future about how to write **our own** equals method. For now we just need to be careful and conscious of our equality comparisons. Sometimes we might want to use a field lookup to access arrays and compare them directly in a test, for example.
+
+Student: Noted. Wow, Java makes us remember a lot about equality.
+
+Prof: It’s true. Some of this is **necessary** complexity, in that most languages do expose both reference and structural equality (or [even more](https://pyret.org/docs/latest/equality.html)). But some of it is also **incidental** complexity related to arrays in Java, which have pretty specific rules. We’ll see ways to manage both kinds of complexity going forward.
+
+#### Practice
+
+Exercise:
+
+`c1` and `c2` have tire pressures with the same contents. Which line checks that in a test?
+
+```java
+void main() {
+  [assertArrayEquals(c1.pressures, c2.pressures); / assertEquals(c1.pressures, c2.pressures); / assertEquals(c1, c2); / assertArrayEquals(c1, c2);]
+}
+```
+
+```java
+record Car(String make, String model, int year, int[] pressures) {}
+int[] factory = { 35, 35, 33, 33 };
+Car car1 = new Car("Honda", "Civic", 2008, factory);
+Car car2 = new Car("Honda", "Civic", 2008, factory);
+Car car3 = new Car("Honda", "Civic", 2008, new int[]{ 35, 35, 33, 33 });
+void main() {
+  car1.pressures[0] = 30;
+}
+```
+
+Exercise:
+
+After `main` runs, what is true of each pair?
+
+`car1.pressures` and `car2.pressures`: [the same array / different arrays, different contents / different arrays, same contents]
+`car1.pressures` and `car3.pressures`: [the same array / different arrays, different contents / different arrays, same contents]
+`car2.pressures` and `car3.pressures`: [the same array / different arrays, different contents / different arrays, same contents]
+`car1.equals(car2)`: [false / true]
+`car2.equals(car3)`: [false / true]
+
+## [How Java Runs in Summary](summary.html)
+
+```java
+record Bag(int[] counts) {
+  int[] doubled() {
+    int[] result = new int[counts.length];
+    int index = 0;
+    for(int n: counts) {
+      result[index] = n * 2;
+      index += 1;
+    }
+    return result;
+  }
+  void addOne() {
+    int index = 0;
+    for(int n: counts) {
+      counts[index] = n + 1;
+      index += 1;
+    }
+  }
+}
+int[] start = { 1, 2 };
+Bag x = new Bag(start);
+Bag y = new Bag(x.counts);
+int[] more = y.doubled();
+void main() {
+  x.addOne();
+}
+```
+
+Exercise:
+
+Java hands out references in the order objects are created, starting at `@1001`. Fill in the memory picture for when `main` finishes.
+
+```java
+Names
+top level: start = @1001, x = @1002, y = @1003, more = [@1004 / @1001 / @1003]
+  y.doubled() on [@1002 / @1003], returns @1004
+  main()
+    x.addOne() on [@1002 / @1003]
+
+Heap
+@1001: [[2, 4] / [2, 3] / [1, 2]]
+@1002: Bag[counts=@1001]
+@1003: Bag[counts=[@1004 / @1001]]
+@1004: [[4, 6] / [2, 4] / [2, 3]]
+```
+
+Exercise:
+
+Still at the end of `main`, what does each expression produce?
+
+```java
+x == y                     [true / false]
+x.equals(y)                [true / false]
+start == y.counts          [true / false]
+Arrays.equals(start, more) [true / false]
+```
+
+Exercise:
+
+This test fails. Why?
+
+```java
+record Bag(int[] counts) { }
+void main() {
+  assertEquals(new Bag(new int[]{ 1, 2 }), new Bag(new int[]{ 1, 2 }));
+}
+```
+
+Choose one:
+
+- The two arrays have different contents.
+- `assertEquals` compares the two `Bag`s with `==`.
+- The two `counts` fields hold different arrays, and a record’s `equals` compares an array field with the array’s own `equals`, which checks the reference.
+- Records always compare by reference.

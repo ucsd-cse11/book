@@ -1,0 +1,686 @@
+# Abstract Classes and Mutation
+
+## [Default Implementations vs. Abstract Methods](abstract-classes.html)
+
+Student: There’s something bothering me. In the `Location` example we talked about before, the location class had that method that returned `Unknown Location`, and then all the other classes overrode it. It looked like this:
+
+```java
+  public String pinLabel() { return "Unknown Location"; }
+```
+
+Prof: Right. All the subclasses had a `pinLabel` method with `@Override` to give their own behavior.
+
+Student: Well, isn’t it weird that we have this code, but it’s not going to be used ever?
+
+Prof: Well, what if we made a `Location` directly?
+
+Student: I guess, but in all the examples we only made subclasses. Like we never used `new Location` as a constructor. So it seems just silly that it even **has** this method.
+
+Prof: That’s an interesting observation! So you are wondering if we could just leave it out, because it gets implemented on all the subclasses? What happens if we do? That’s pretty testable. Here was the setup:
+
+```java
+interface Place {
+  String pinLabel();
+  boolean onScreen(double south, double north, double west, double east);
+}
+class Location implements Place {
+  double lat;
+  double lng;
+  Location(double lat, double lng) {
+    this.lat = lat;
+    this.lng = lng;
+  }
+  // REMOVED: public String pinLabel() { return "Unknown Location"; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south && lat <= north && lng >= west && lng <= east;
+  }
+}
+```
+
+Output (compile error):
+
+```text
+line 5: error: The type Location must implement the inherited abstract method Place.pinLabel()
+```
+
+Student: Yeah, so it says it has to be there, because `Location` implements `Place`.
+
+Prof: This is a great observation. What would help here is a special kind of class – a class that is not meant for **creating on its own**, but is meant for describing some fields and methods shared across many classes, and then some methods that need to be implemented by subclasses. Does that sound right?
+
+Student: Yeah, that’s right
+
+Prof: This is called an abstract class or an abstract base class. Here’s what it looks like:
+
+```java
+interface Place {
+  String pinLabel();
+  boolean onScreen(double south, double north, double west, double east);
+}
+abstract class Location implements Place {
+  double lat;
+  double lng;
+  Location(double lat, double lng) {
+    this.lat = lat;
+    this.lng = lng;
+  }
+  public abstract String pinLabel();
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south && lat <= north && lng >= west && lng <= east;
+  }
+}
+```
+
+Prof: There are a few interesting consequences of this. First, `Location` being `abstract` means it’s a compile error to use `new Location`.
+
+Student: Really? A compile error? Then why have the constructor at all?
+
+Prof: You can still call the constructor using `super` from a subclass, so the code there is still relevant.
+
+Student: Hmm OK I get it. And so then the `abstract` method doesn’t have a body?
+
+Prof: Yes, in that way it’s very similar to an interface. Actually, in this case since `Location` declares that it implements `Place`, you could leave off the `abstract` method definition entirely, and it’d still compile and mean the same thing.
+
+Student: How does that work?
+
+Prof: Java figures it out – since `pinLabel` is part of the interface, that means any class that `extends Location` must implement it as well. So it counts the same as an `abstract` method.
+
+Student: Huh, interesting.
+
+#### Practice
+
+Exercise:
+
+Here are social media posts with an abstract base class. `Message` holds the fields every post shares and a `snippet` method they all use; each subclass gives its own `preview`. Write the body of each subclass constructor.
+
+```java
+interface Post {
+  String preview();
+  String snippet();
+}
+abstract class Message implements Post {
+  String username;
+  String message;
+  int likes;
+  Message(String username, String message, int likes) {
+    this.username = username;
+    this.message = message;
+    this.likes = likes;
+  }
+  public abstract String preview();
+  public String snippet() {
+    if (message.length() <= 10) { return "@" + username + ": " + message; }
+    return "@" + username + ": " + message.substring(0, 10) + "...";
+  }
+}
+class TextPost extends Message {
+  boolean edited;
+  TextPost(String username, String message, int likes, boolean edited) {
+    ____
+  }
+  public String preview() {
+    String text = "@" + username + ": " + message;
+    if (edited) { text = text + " (edited)"; }
+    return text + " | " + likes + " likes";
+  }
+}
+class Repost extends Message {
+  String from;
+  Repost(String username, String message, int likes, String from) {
+    ____
+  }
+  public String preview() {
+    return "@" + username + " reposted @" + from + ": " + message + " | " + likes + " likes";
+  }
+}
+class VideoPost extends Message {
+  int seconds;
+  VideoPost(String username, String message, int likes, int seconds) {
+    ____
+  }
+  public String preview() {
+    return "@" + username + ": " + message + " [video, " + seconds + "s] | " + likes + " likes";
+  }
+}
+
+Post[] feed = {
+  new TextPost("cse11", "Exam moved to Friday", 12, true),
+  new Repost("ana", "Free pizza in the CSE lobby", 40, "tritons"),
+  new VideoPost("ben", "My cat learns Java", 7, 42),
+};
+String[] previews = { feed[0].preview(), feed[1].preview(), feed[2].preview() };
+String[] snippets = { feed[0].snippet(), feed[1].snippet(), feed[2].snippet() };
+```
+
+## [Dynamic Dispatch](dynamic-dispatch.html)
+
+Student: I’m starting to kind of understand something that’s happening here, but I want to talk through it.
+
+Prof: Go for it.
+
+Student: So in Pict.java, there’s this part of the `render` method that calls `draw`:
+
+```java
+interface Pict {
+    // ...
+    default Raster render() {
+        // ...
+        var g = img.createGraphics();
+        // ...
+        draw(g, 0, 0);
+        // ...
+    }
+```
+
+[`Pict.java`, lines 30–45](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L30-L45)
+
+Student: And I’m trying to figure out how Java knows which `draw` method to call. Because `render` is written inside the `Pict` interface, so how does Java know whether it is calling `draw` on a `Circle` or a `Rectangle` or a `Beside` or whatever? There’s nothing in the `Pict` interface that can know.
+
+Prof: Oh that’s a terrific question. We can answer it with a pretty small memory diagram.
+
+```java
+Pict r = new Rect(10, 20, "blue");
+Pict c = new Circle(50, "green");
+Raster rPix = r.render();
+Raster cPix = c.render();
+```
+
+Output:
+
+```text
+r = Rect[width=10, height=20, color=blue]
+[image]
+c = Circle[radius=50, color=green]
+[image]
+rPix = Raster[10x20]
+[image]
+cPix = Raster[100x100]
+[image]
+```
+
+Prof: Let’s think about the memory diagram at the moment `draw` is called from the first `render` call:
+
+```
+Names (the stack)
+  draw(g, 0, 0) on @1001
+    g = @1004
+    x = 0
+    y = 0
+  r.render() on @1001
+    img = @1003
+    g = @1004
+  top level
+    r = @1001
+    c = @1002
+Heap
+  @1001: Rect[width=10, height=20, color=blue]
+  @1002: Circle[radius=50, color=green]
+  @1003: BufferedImage
+  @1004: Graphics2D
+```
+
+Prof: The key thing here is the instance referred to by `this`, which is the receiver of `render`. What class is that instance from?
+
+Student: `Rect`, right? But the type of the variable `r` was `Pict`.
+
+Prof: And that’s the key point – Java uses **the class of the instance** to find the method. Not the type you wrote down in the program. The name of the class used with `new` to construct the object is where Java starts its search for the method.
+
+Student: So then the second time, the receiver (or `this`) would be referring to `@1002`, so it would find the `Circle` one?
+
+Prof: Correct.
+
+Student: Wait so how does it find `render()`? That’s not on the `Circle` or `Rectangle` class.
+
+Prof: Java stores the class and interface hierarchy. If it can’t find the method on the class, it looks at its parent class or `implements` arrows to search for the implementation. There **must** be an implementation if the program compiled; that’s what all the compile checks are for.
+
+```
+Rect under Pict
+  int width
+  int height
+  Color color
+  width()
+  height()
+  draw(Graphics2D g, int x, int y)
+Circle under Pict
+  int radius
+  Color color
+  width()
+  height()
+  draw(Graphics2D g, int x, int y)
+Pict (interface)
+  width()
+  height()
+  render()
+  draw(Graphics2D g, int x, int y)
+```
+
+Student: OK, so if we had a `render` in `Circle` it would have used that one instead?
+
+Prof: That’s exactly right, and you’ve just reconstructed overriding!
+
+Student: Oh, I guess so.
+
+Prof: There’s a name for this: dynamic dispatch. This is a defining feature of object-oriented programming. The class of the object, not the type of the variable, is used to determine which method to call. That makes it so one line in the program, like the call to `draw()` in `render()`, can actually call many **different** methods in one run of a program, depending on the receiver’s class.
+
+Student: So that’s object-oriented programming?
+
+Prof: Yes, I’d say a program that relies on dynamic dispatch is very much written in an object-oriented style.
+
+#### Practice
+
+Exercise:
+
+Using these classes, whose method body runs for each call?
+
+```java
+interface Post {
+  String preview();
+  default String badge() { return ""; }
+  default String share() { return "Check this out: " + preview(); }
+}
+class TextPost implements Post {
+  String message;
+  TextPost(String message) { this.message = message; }
+  public String preview() { return message + badge(); }
+}
+class PinnedPost extends TextPost {
+  PinnedPost(String message) { super(message); }
+  @Override
+  public String badge() { return " [pinned]"; }
+}
+
+Post t = new TextPost("Free pizza in the CSE lobby");
+Post p = new PinnedPost("Exam moved to Friday");
+```
+
+`t.badge()` runs the one in [Post / TextPost / PinnedPost]
+`p.badge()` runs the one in [Post / TextPost / PinnedPost]
+`p.preview()` runs the one in [Post / TextPost / PinnedPost]
+`p.share()` runs the one in [Post / TextPost / PinnedPost]
+`t.share()` returns ____
+`p.share()` returns ____
+
+## [Liking a Post](likes.html)
+
+Student: I tried something, and I’m not sure I get what happened.
+
+Prof: I’m all ears.
+
+Student: I was thinking about how to represent an Instagram post. It has a user, and text, and images, but also you can like it. And that makes a counter go up that everyone can see. So I tried writing a class for a post like that
+
+```java
+class Post {
+  String user;
+  String message;
+  int likes;
+  Post(String user, String message, int likes) {
+    this.user = user;
+    this.message = message;
+    this.likes = likes;
+  }
+  String summary() {
+    return "@" + user + ": " + message + " | ❤️" + likes;
+  }
+  void like() {
+    this.likes = likes + 1;
+  }
+}
+void main() {
+  Post p1 = new Post("joe", "CSE-PACE next Tuesday!", 22);
+  System.out.println(p1.summary());
+  p1.like();
+  System.out.println(p1.summary());
+}
+```
+
+Output:
+
+```text
+@joe: CSE-PACE next Tuesday! | ❤️22
+@joe: CSE-PACE next Tuesday! | ❤️23
+```
+
+Student: Did I do that right? Am I allowed to write that?
+
+Prof: For sure! Why were you worried you might not have?
+
+Student: Well, we haven’t written the `this.likes =` lines outside of a constructor before. And a record won’t let us do it.
+
+Prof: What do you mean a record won’t let you?
+
+Student: Well, look:
+
+```java
+record Post(String user, String message, int likes) {
+  String summary() {
+    return "@" + user + ": " + message + " | ❤️" + likes;
+  }
+  void like() {
+    this.likes = likes + 1;
+  }
+}
+void main() {
+  Post p1 = new Post("joe", "CSE-PACE next Tuesday!", 22);
+  System.out.println(p1.summary());
+  p1.like();
+  System.out.println(p1.summary());
+}
+```
+
+Output (compile error):
+
+```text
+line 6: error: The final field Post.likes cannot be assigned
+```
+
+Student: It says the `final` field cannot be assigned?
+
+Prof: Right, so that’s one more modifier to learn about. `final` on a field says that it cannot be updated **outside of the constructor**. All the fields of a `record` are implicitly `final`. But you can get the same error message with a class:
+
+```java
+class C {
+  final int x;
+  C() {
+    this.x = 10;
+  }
+  void tryToChangeMe() {
+    this.x = 1;
+  }
+}
+```
+
+Output (compile error):
+
+```text
+line 7: error: The final field C.x cannot be assigned
+```
+
+Prof: What you’re seeing in your program is actually the **default** for classes: fields are mutable unless we ask them to be immutable with `final`. The field update statement `this.x = v;` will only work on non-final fields.
+
+Student: Is there any way to do field update on a record field, then?
+
+Prof: No. You could say that’s a reason to not… `like()` records.
+
+Student: …
+
+Prof: Get it?
+
+Student: … Yes.
+
+Prof: Anyway, I think your program is great. It captures the idea of using a field update to model the likes of a post, and that’s something that can **only** be done with a `class`, not with a `record`.
+
+Student: And you can still assign `final` fields inside the constructor, though?
+
+Prof: Correct. Otherwise there would be no way to initialize those values. So Java simply will error if you write field updates in other places, but allows it in constructors.
+
+#### Practice
+
+This `Post` keeps its hashtags in an array, and `retag` swaps in a new one:
+
+```java
+class Post {
+  String user;
+  String message;
+  String[] tags;
+  Post(String user, String message, String[] tags) {
+    this.user = user;
+    this.message = message;
+    this.tags = tags;
+  }
+  void retag(String[] newTags) {
+    this.tags = newTags;
+  }
+}
+String[] a = {"cse11", "java"};
+String[] b = {"pizza"};
+Post p = new Post("joe", "Free pizza in the CSE lobby", a);
+void main() {
+  p.retag(b);
+}
+```
+
+Here is memory just as `retag` starts, before its field update runs:
+
+```
+Names (the stack)
+  p.retag(b) on @1003
+    newTags = @1002
+  main()
+  top level
+    a = @1001
+    b = @1002
+    p = @1003
+Heap
+  @1001: [cse11, java]
+  @1002: [pizza]
+  @1003: Post[user=joe, message=Free pizza in the CSE lobby, tags=@1001]
+```
+
+Exercise:
+
+After `p.retag(b)` finishes:
+
+the `tags` field of `@1003` holds [@1002 / @1003 / @1001]
+`a` holds [@1002 / @1003 / @1001]
+`p.tags[0]` is ____
+`a[0]` is ____
+
+## [Sharing vs. Copying](sharing-vs-copying.html)
+
+Student: I have a question – when I make a repost on Instagram, does it make a copy of the post or does it store something more like a reference?
+
+Prof: More like a reference. It probably stores something like a “post id number” of the original post. Why do you ask?
+
+Student: Well I was thinking about how that would look in Java.
+
+Prof: Oh that’s a good question. They’d look pretty different, here’s how I’d think of them:
+
+```java
+class Post {
+  String user;
+  String message;
+  int likes;
+  Post(String user, String message, int likes) {
+    this.user = user;
+    this.message = message;
+    this.likes = likes;
+  }
+  String summary() {
+    return "@" + user + ": " + message + " | ❤️" + likes;
+  }
+  void like() {
+    this.likes = likes + 1;
+  }
+  RepostCopy repostCopy(String reposter) {
+    return new RepostCopy(reposter, user, message, likes);
+  }
+  RepostRef repostRef(String reposter) {
+    return new RepostRef(reposter, this);
+  }
+}
+
+class RepostCopy {
+  String user;
+  String originalUser;
+  String message;
+  int likes;
+  RepostCopy(String user, String originalUser, String message, int likes) {
+    this.user = user;
+    this.originalUser = originalUser;
+    this.message = message;
+    this.likes = likes;
+  }
+}
+class RepostRef {
+  String user;
+  Post original;
+  RepostRef(String user, Post original) {
+    this.user = user;
+    this.original = original;
+  }
+  void like() {
+    original.like();
+  }
+}
+void main() {
+  Post p = new Post("joe", "CSE-PACE next Tuesday!", 22);
+  RepostCopy copy = p.repostCopy("ana");
+  RepostRef ref = p.repostRef("ben");
+  p.like();
+  p.like();
+  System.out.println(p.summary());
+  System.out.println("copy has " + copy.likes + " likes");
+  System.out.println("ref has " + ref.original.likes + " likes");
+}
+```
+
+Output:
+
+```text
+@joe: CSE-PACE next Tuesday! | ❤️24
+copy has 22 likes
+ref has 24 likes
+```
+
+Prof: What are some things you notice and wonder about here?
+
+Student: Well, the printed out likes are different for the last three lines.
+
+Prof: Which one **didn’t** change, the copy or the reference?
+
+Student: Um, the copy didn’t change. Oh, interesting. Because it made a new object with its own `likes` field?
+
+Prof: Right. If we look at the memory diagram when we call `p.like()`, we can see that we’re updating a reference that is **aliased** with the `RepostRef` object but not with the `RepostCopy` object. So the change doesn’t show up when we look at the `RepostCopy`
+
+```
+Names (the stack)
+  p.like() on @1001
+  main()
+    p = @1001
+    copy = @1002
+    ref = @1003
+  top level
+Heap
+  @1001: Post[user=joe, message=CSE-PACE next Tuesday!, likes=22 23]
+  @1002: RepostCopy[user=ana, originalUser=joe, message=CSE-PACE next Tuesday!, likes=22]
+  @1003: RepostRef[user=ben, original=@1001]
+```
+
+Student: I see! So that really is like there is **one** orginal post, if we use the ref. And when you like a repost, it likes the original.
+
+Prof: Right, and that’s why resharing ought to have a reference to the original, not a copy of its contents.
+
+#### Practice
+
+Here are the two reposts again, this time with the `tags` array and `retag` from before:
+
+```java
+class Post {
+  String user;
+  String message;
+  String[] tags;
+  Post(String user, String message, String[] tags) {
+    this.user = user;
+    this.message = message;
+    this.tags = tags;
+  }
+  void retag(String[] newTags) { this.tags = newTags; }
+  RepostCopy repostCopy(String reposter) {
+    return new RepostCopy(reposter, user, message, tags);
+  }
+  RepostRef repostRef(String reposter) {
+    return new RepostRef(reposter, this);
+  }
+}
+class RepostCopy {
+  String user;
+  String originalUser;
+  String message;
+  String[] tags;
+  RepostCopy(String user, String originalUser, String message, String[] tags) {
+    this.user = user;
+    this.originalUser = originalUser;
+    this.message = message;
+    this.tags = tags;
+  }
+}
+class RepostRef {
+  String user;
+  Post original;
+  RepostRef(String user, Post original) {
+    this.user = user;
+    this.original = original;
+  }
+}
+String[] a = {"cse11", "java"};
+String[] b = {"pizza"};
+Post p = new Post("joe", "Free pizza in the CSE lobby", a);
+RepostCopy copy = p.repostCopy("ana");
+RepostRef ref = p.repostRef("ben");
+void main() {
+  a[1] = "food";
+  p.retag(b);
+}
+```
+
+Exercise:
+
+After `main` runs:
+
+`copy.tags` is the same array as [a / b]
+`ref.original.tags` is the same array as [a / b]
+`copy.tags[1]` is ____
+`ref.original.tags[0]` is ____
+
+## [Abstract Classes and Mutation in Summary](summary.html)
+
+Exercise:
+
+With the posts from the first step, where `Message` is an `abstract class`, which line does **not** compile?
+
+Choose one:
+
+- `Post v = new VideoPost("ben", "My cat learns Java", 7, 42);`
+- `Post m = new Message("ben", "My cat learns Java", 7);`
+- `Message t = new TextPost("cse11", "Exam moved to Friday", 12, true);`
+
+Exercise:
+
+Still with the posts from the first step, and `Post v = new VideoPost("ben", "My cat learns Java", 7, 42);`:
+
+`v.snippet()` runs the one in [Message / VideoPost / Post]
+`v.preview()` runs the one in [Message / VideoPost / Post]
+`v.snippet()` returns ____
+
+Exercise:
+
+What happens with this class?
+
+```java
+class Post {
+  final int likes;
+  Post(int likes) { this.likes = likes; }
+  void like() { this.likes = likes + 1; }
+}
+```
+
+Choose one:
+
+- It does not compile, because of the line in `like`
+- It compiles, and `like` leaves `likes` the same
+- It does not compile, because of the line in the constructor
+
+Exercise:
+
+With the `Post`, `RepostCopy`, and `RepostRef` classes from the sharing step:
+
+```java
+Post p = new Post("joe", "CSE-PACE next Tuesday!", 22);
+p.like();
+RepostCopy copy = p.repostCopy("ana");
+RepostRef ref = p.repostRef("ben");
+p.like();
+p.like();
+```
+
+`copy.likes` is ____
+`ref.original.likes` is ____

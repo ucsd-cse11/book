@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Overriding equals and Casting to a Class — Extending Classes</title>
 <link rel="stylesheet" href="../assets/book.css?v=fa4d2e038929">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
 <meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
 </head>
 <body>
@@ -114,7 +115,7 @@ void main() {
 }</code></pre><p>What happens with <code>new Point(4.0, 5.0).equals("a string")</code>?</p></div><ol class="choices"><li data-correct>It crashes with a <code>ClassCastException</code><div class="why">The cast checks that <code>other</code> really is a <code>Point</code> when it runs. A <code>String</code> isn’t, so the program stops with a <code>ClassCastException</code>.</div></li><li>It returns <code>false</code><div class="why">Nothing in this version returns <code>false</code> for a non-<code>Point</code>. That was the job of the <code>instanceof</code> check.</div></li><li>It doesn’t compile<div class="why">Java accepts the cast, because an <code>Object</code> might be a <code>Point</code>. The problem only shows up when the program runs.</div></li></ol></div></div></article>
 <nav class="pagenav"><a class="prev" href="instanceof.html">← Navigating the Class Hierarchy 2</a> <a class="next" href="summary.html">Extending Classes in Summary →</a></nav>
 </main>
-<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
 <a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
 <script type="application/x-steps">{"section": "extending-classes", "title": "Extending Classes", "current": 4, "steps": [{"title": "Overriding Methods", "slug": "tostring-override", "url": "tostring-override.html", "path": "/extending-classes/tostring-override.html"}, {"title": "Sharing Fields", "slug": "abstracting-shared-fields", "url": "abstracting-shared-fields.html", "path": "/extending-classes/abstracting-shared-fields.html"}, {"title": "Navigating Class Hierarchies", "slug": "the-class-hierarchy", "url": "the-class-hierarchy.html", "path": "/extending-classes/the-class-hierarchy.html"}, {"title": "Navigating the Class Hierarchy 2", "slug": "instanceof", "url": "instanceof.html", "path": "/extending-classes/instanceof.html"}, {"title": "Overriding equals and Casting to a Class", "slug": "class-cast", "url": "class-cast.html", "path": "/extending-classes/class-cast.html"}, {"title": "Extending Classes in Summary", "slug": "summary", "url": "summary.html", "path": "/extending-classes/summary.html"}]}</script>
 <script src="../assets/runner.js?v=8d3dd75b8dcf"></script>

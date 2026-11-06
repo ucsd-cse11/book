@@ -1,0 +1,1064 @@
+# Java Details
+
+## [Sweet Little Lies](things-you-havent-told-me.html)
+
+Student: Professor, I’ve been reading `Pict.java`, and there’s a lot you haven’t been telling me.
+
+Prof: Oh?
+
+Student: Just look at like, the `rotate` method. Sometimes the method header says `rotate(int)` and sometimes it says `rotate(double)`, but both seem to work. I remember `default` from earlier, but how can there be two defaults of the same method?
+
+```java
+default Pict rotate(int degrees) { return new Rotate(this, degrees); }
+default Pict rotate(double degrees) { return new Rotate(this, degrees); }
+```
+
+[`Pict.java`, lines 71–72](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L71-L72)
+
+Prof: Ah, I see what you mean. Yeah, there are a number of conveniences in `Pict.java` that we haven’t talked through. We can address some!
+
+Student: OK, so let’s do this one first. How are there two rotates?
+
+Prof: This is called overloading. We can write the same method name, in the same class, with different parameters. Java will use the arguments and types in the call to figure out which one to call. Here’s a very simple example:
+
+```java
+String whatType(int n) { return "Got int " + n; }
+String whatType(double d) { return "Got double " + d; }
+String whatType(int[][] arr) { return "Got int[][] " + Arrays.deepToString(arr); }
+
+String t1 = whatType(5);
+String t2 = whatType(5.0);
+String t3 = whatType(new int[][]{ { 4, 5 } });
+```
+
+Output:
+
+```text
+t1 = Got int 5
+t2 = Got double 5.0
+t3 = Got int[][] [[4, 5]]
+```
+
+Prof: It will work with most types, and a lot of built-in libraries use it in another way: for the same method taking different **numbers** of arguments. For example, `substring` can take just one argument, and then it takes the rest of the string starting from that index, or it can take an explicit end index:
+
+```java
+String s = "trash panda";
+String rest = s.substring(6);
+String front = s.substring(0, 5);
+```
+
+Output:
+
+```text
+s = trash panda
+rest = panda
+front = trash
+```
+
+Student: Oh that explains why sometimes documentation for Java lists the same method twice.
+
+Prof: That’s just it! So it is an incredibly handy convenience. I use it for both of these cases.
+
+Student: Wait, are there other cases?
+
+Prof: Yeah, so there are a ton of complex rules for what happens with overloading, mostly I don’t try to remember them all and look them up when needed.
+
+Student: You don’t remember them all?
+
+Prof: Honestly, yeah. Well, OK here’s a complex example:
+
+```java
+interface Region {}
+record RectRegion() implements Region {}
+record CircleRegion() implements Region {}
+
+String whatType(Region r) { return "Got Region " + r; }
+String whatType(RectRegion rr) { return "Got RectRegion " + rr; }
+
+RectRegion rr = new RectRegion();
+Region r = rr;
+Region c = new CircleRegion();
+
+String t1 = whatType(r);
+String t2 = whatType(rr);
+String t3 = whatType(new RectRegion());
+String t4 = whatType(c);
+```
+
+Output:
+
+```text
+rr = RectRegion[]
+r = RectRegion[]
+c = CircleRegion[]
+t1 = Got Region RectRegion[]
+t2 = Got RectRegion RectRegion[]
+t3 = Got RectRegion RectRegion[]
+t4 = Got Region CircleRegion[]
+```
+
+Student: What the heck? It’s the *same object* stored in `r` and `rr`, right?
+
+Prof: Yup, good noticing. `r` and `rr` would store the same reference, but **different code** is called for `whatType` on `r` and `rr`!
+
+Student: That’s so weird because I thought when you call methods the receiver decides it.
+
+Prof: Right, the receiver decides which class to look in. Here these are top-level methods so that detail isn’t involved. But once we figure out which class to find the methods in, Java does another round of selection based on the arguments. And here’s the tricky part – it does it based on the *types of the arguments*, not based on the *argument values*. So this is one place in Java where the type you use for a variable can change what code runs! If you change the type of `r` to `RectRegion` instead of `Region`, it will call the other method.
+
+Student: Hm. I’m not sure I like that.
+
+Prof: Frankly, me either. I definitely like overloading for simple cases, like taking a number or a string, or for different **lengths** of argument lists. But I find the interaction of overloading with interfaces and implements to be really tricky to think through. It has uses, so you should be aware it’s possible. But I mostly just use it for convenience. If you want to read more you can see both [tutorials](https://dev.java/learn/language/oop/classes-objects/defining-methods/#overloading) and [somewhat more dense references](https://docs.oracle.com/javase/specs/jls/se25/html/jls-8.html#jls-8.4.9).
+
+Student: Oh interesting. So it just makes it so you can rotate with either an int or a double? But the body is exactly the same for both! How can that work?
+
+Prof: Well, it turns out the `Rotate` constructor is **also** overloaded.
+
+Student: You can overload a constructor?
+
+Prof: Hold that thought :-)
+
+#### Practice
+
+`slice` builds a new array out of part of another one, from index `start` up to (but not including) index `end`, just like `substring` does for a `String`. Write an overload of `slice` that takes only `arr` and `start`, and slices all the way to the end of the array. It can call the `slice` that’s already there.
+
+Exercise:
+
+```java
+int[] slice(int[] arr, int start, int end) {
+  int[] result = new int[end - start];
+  int index = 0;
+  for (int i = start; i < end; i += 1) {
+    result[index] = arr[i];
+    index += 1;
+  }
+  return result;
+}
+
+____ {
+  ____
+}
+
+int[] nums = { 1, 2, 3, 4, 5, 6 };
+int[] middle = slice(nums, 1, 3);
+int[] rest = slice(nums, 1);
+```
+
+## [Records Under (or Over) Construction](under-construction.html)
+
+Student: I noticed that both `new Circle(5, "red")` and `new Circle(5, Color.RED)` work. Does that mean you can overload constructors, and how does that work?
+
+Prof: Yes, you can! Imagine we wanted a helpful constructor for a `RectangleRegion`, which has a corner point, a width and a height. The constructor just takes a width and a height, and always puts the corner at 0, 0:
+
+```java
+record Point(double x, double y) { }
+record RectangleRegion(Point p, double w, double h) {
+  RectangleRegion(double w, double h) {
+    this(new Point(0, 0), w, h);
+  }
+}
+RectangleRegion r = new RectangleRegion(new Point(1, 2), 4.0, 5.0);
+RectangleRegion r2 = new RectangleRegion(4.0, 5.0);
+```
+
+Output:
+
+```text
+r = RectangleRegion[p=Point[x=1.0, y=2.0], w=4.0, h=5.0]
+r2 = RectangleRegion[p=Point[x=0.0, y=0.0], w=4.0, h=5.0]
+```
+
+Prof: You can see that `r2` has the `Point[x=0.0, y=0.0]` – that was created in the constructor. What else do you notice about the syntax here?
+
+Student: Well, it uses `this` with parentheses after it.
+
+Prof: Right! So inside a constructor, `this(...)` means to call another constructor. In this case we’re calling the one Java wrote for the record (the one that takes a `Point` and two `double` values) from the one that takes just the two `double` arguments.
+
+Student: Interesting! So does `this` with the parentheses work everywhere?
+
+Prof: No it’s super specific – `this(...)` is actually only allowed inside constructors, and it always means to call another constructor!
+
+Student: Huh. Oh and so what **is** a constructor?
+
+Prof: Great question. A constructor is code that gets called when you use `new` on a record (or class) name. The constructor definition looks like a method definition, but instead of a separate return type and method name, it **just** has the class or record name.
+
+Student: Oh so that’s why it looks weird – `RectangleRegion` on its own looks like a return type of a method, but there’s no name for it.
+
+Prof: Exactly right – that’s the special syntax of a constructor definition. It is kind of like a method – it gets called on a new object and helps create it. In a `record` definition, there’s one that Java writes for the record (also called the canonical constructor) that sets the field values.
+
+Student: And that’s how `Circle` works?
+
+Prof: That’s right. There are several constructors in `Circle`:
+
+```java
+record Circle(int radius, Color color) implements Pict {
+    // ...
+    Circle(int radius, String color) { this(radius, Colors.named(color)); }
+    Circle(double radius, String color) { this(Px.of(radius), Colors.named(color)); }
+    // ...
+}
+```
+
+[`Pict.java`, lines 142–152](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L142-L152)
+
+Student: Huh, so that’s what’s been running all along? Wait whats `Px.of` and `Colors.named`?
+
+Prof: Great questions, we’ll get there! I’ll give a short answer now: `Px.of` is a method to turn `double` values in to specific pixel sizes – the `Pict` library assumes all sizes are in round pixel amounts. And `Colors.named` is a method that takes a friendly string name like `"red"` and produces `Color.RED`. They are more conveniences!
+
+Student: OK, I can sort of see it. I’ll wait for more.
+
+#### Practice
+
+Here `RectangleRegion` has two more constructors. Each one calls another with `this(...)`.
+
+```java
+record RectangleRegion(Point p, double w, double h) {
+  RectangleRegion(double w, double h) { this(new Point(0, 0), w, h); }
+  RectangleRegion(double side) { this(new Point(0, 0), side, side); }
+  RectangleRegion(Point p, double side) { this(p, side, side); }
+}
+```
+
+Exercise:
+
+What does each one make?
+
+`new RectangleRegion(3.0)` makes [a square at (0, 0) / a square at (1, 1) / a rectangle at (1, 1) that isn't square / a rectangle at (0, 0) that isn't square]
+`new RectangleRegion(3.0, 4.0)` makes [a square at (0, 0) / a square at (1, 1) / a rectangle at (1, 1) that isn't square / a rectangle at (0, 0) that isn't square]
+`new RectangleRegion(new Point(1, 1), 2.0)` makes [a square at (0, 0) / a square at (1, 1) / a rectangle at (1, 1) that isn't square / a rectangle at (0, 0) that isn't square]
+`new RectangleRegion(new Point(1, 1), 2.0, 3.0)` makes [a square at (0, 0) / a square at (1, 1) / a rectangle at (1, 1) that isn't square / a rectangle at (0, 0) that isn't square]
+`new RectangleRegion(3)` makes [a square at (0, 0) / a square at (1, 1) / a rectangle at (1, 1) that isn't square / a rectangle at (0, 0) that isn't square]
+
+## [Programming, with Class](programming-with-class.html)
+
+Student: OK professor we really need to talk about something. You keep accidentally saying `class` when you mean `record`, or saying “class or record”, and you won’t tell me what a `class` is. Can we please get that defined?
+
+Prof: Hah! It’s time, you’re right. So a `class` is the same thing as a `record`, but missing some stuff that we need to write ourselves if we want to program like we have with records.
+
+Student: What stuff?
+
+Prof: Kind of a lot of things, actually. I’ll take some of them piece by piece, and it might take a few conversations to fill it all in. But we will be telling very few lies by the end.
+
+Student: Very few, eh?
+
+Prof: Let’s dive in. So, let’s take a record we know and love, the `Point`. We’re going to slowly change it into a class. First we’ll just change the keyword from `record` to `class`
+
+```java
+record Point(double x, double y) { }
+```
+
+```java
+class Point(double x, double y) { }
+```
+
+Output (compile error):
+
+```text
+line 1: error: Syntax error on token "class", char expected
+```
+
+Student: Ummm that’s just an error.
+
+Prof: Indeed. In `class` declarations, we don’t put the field definitions in parentheses like that. We put them in the class body:
+
+```java
+class Point {
+  double x;
+  double y;
+}
+```
+
+Student: Why? That seems longer.
+
+Prof: It’s just how classes work! Now let’s try to create a `Point`:
+
+```java
+class Point {
+  double x;
+  double y;
+}
+Point p = new Point(4.0, 5.0);
+```
+
+Output (compile error):
+
+```text
+line 5: error: The constructor Point(double, double) is undefined
+```
+
+Student: Huh? Why an error? You made it correctly.
+
+Prof: Actually, I didn’t! The default constructor for a `class` takes no arguments, and all the fields are left as the placeholder or default value for their type:
+
+```java
+class Point {
+  double x;
+  double y;
+}
+Point p = new Point();
+```
+
+Output:
+
+```text
+p = Point@b62
+```
+
+Student: Wait… so are you going to say we have to write a constructor?
+
+Prof: That’s right! We have to write our own constructors in a class definition:
+
+```java
+class Point {
+  double x;
+  double y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+Point p = new Point(4.0, 5.0);
+```
+
+Output:
+
+```text
+p = Point@cc0
+```
+
+Student: That’s weird-looking. It uses `this`? What’s the difference between `this.x` and `x`?
+
+Prof: Great question. Let’s look at a memory diagram **during the call to the constructor**:
+
+```
+Names (the stack)
+  new Point(4.0, 5.0) on @1001
+    x = 4.0
+    y = 5.0
+  top level
+Heap
+  @1001: Point[x=0.0 4.0, y=0.0]
+```
+
+Prof: So we’ve got a freshly-created object, `@1001`. It has `x` and `y` fields, they started as the placeholder values `0.0`. The arguments to the constructor were `4.0` and `5.0` – that’s the parameters `x` and `y`. Then the body of the constructor **changes** the field values to hold the values of the parameters.
+
+Student: So `this.x = x` changes a value on the heap?
+
+Prof: That’s right, this is a new operation we haven’t seen called field update. It lets us change the value of a field of an object stored on the heap, just as you said. So the constructor does two field updates, and then the object is in the state we are used to after using a `record` canonical constructor. You can think of it as the record filling in this code for you, just based on the fields you put in parentheses after the record name.
+
+Student: Cool! Wait, so why bother using a class? Records just save typing, right?
+
+Prof: Well, there’s more to learn here, this is just the first of the things records do for us, but also we will need to talk more to explore their restrictions.
+
+#### Practice
+
+This `Point` class has three constructors, and each one prints something.
+
+```java
+class Point {
+  double x;
+  double y;
+  Point(double x, double y) {
+    System.out.println("two doubles");
+    this.x = x;
+    this.y = y;
+  }
+  Point(double both) {
+    this(both, both);
+    System.out.println("one double");
+  }
+  Point() {
+    System.out.println("nothing");
+  }
+}
+```
+
+Exercise:
+
+What does each one print?
+
+`new Point(1.0, 2.0)` prints [nothing / one double, then two doubles / two doubles, then one double / two doubles / one double]
+`new Point(3.0)` prints [nothing / one double, then two doubles / two doubles, then one double / two doubles / one double]
+`new Point()` prints [nothing / one double, then two doubles / two doubles, then one double / two doubles / one double]
+`new Point(3)` prints [nothing / one double, then two doubles / two doubles, then one double / two doubles / one double]
+
+Exercise:
+
+After `Point c = new Point();`, what is `c.x`?
+
+Choose one:
+
+- `0.0`
+- It doesn’t compile
+- `3.0`
+
+## [Classes and Equality](class-equality.html)
+
+Student: So what else is different between records and classes? You said there was more.
+
+Prof: One other big difference is equality.
+
+Student: Equality?
+
+Prof: Like `==` vs `.equals()`, and what those mean.
+
+Student: Oh, so objects with classes don’t have `.equals()` or something?
+
+Prof: Well… they kind of do.
+
+Student: Kind of?
+
+Prof: There **is** a default `.equals()` that every class gets, but it’s different from the one on records, and it just checks `==`:
+
+```java
+class PointC {
+  double x;
+  double y;
+  PointC(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+record PointR(double x, double y) { }
+
+PointC c1 = new PointC(4.0, 5.0);
+PointC c2 = new PointC(4.0, 5.0);
+boolean c1Equalsc2 = c1.equals(c2);
+PointR r1 = new PointR(4.0, 5.0);
+PointR r2 = new PointR(4.0, 5.0);
+boolean r1Equalse2 = r1.equals(r2);
+```
+
+Output:
+
+```text
+c1 = PointC@777
+c2 = PointC@782
+c1Equalsc2 = false
+r1 = PointR[x=4.0, y=5.0]
+r2 = PointR[x=4.0, y=5.0]
+r1Equalse2 = true
+```
+
+Student: So the `.equals` acts more like arrays’ equals method?
+
+Prof: That’s right, it’s the default. If you want, you can **define your own**.
+
+Student: You mean like, write my own equals method?
+
+Prof: That’s right:
+
+```java
+class PointC {
+  double x;
+  double y;
+  PointC(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  boolean equals(PointC other) {
+    return this.x == other.x && this.y == other.y;
+  }
+}
+record PointR(double x, double y) { }
+
+PointC c1 = new PointC(4.0, 5.0);
+PointC c2 = new PointC(4.0, 5.0);
+boolean c1Equalsc2 = c1.equals(c2);
+PointR r1 = new PointR(4.0, 5.0);
+PointR r2 = new PointR(4.0, 5.0);
+boolean r1Equalse2 = r1.equals(r2);
+```
+
+Output:
+
+```text
+c1 = PointC@8f0
+c2 = PointC@8fb
+c1Equalsc2 = true
+r1 = PointR[x=4.0, y=5.0]
+r2 = PointR[x=4.0, y=5.0]
+r1Equalse2 = true
+```
+
+Student: Huh, that’s interesting. But why would you ever want that? Won’t it always just compare the fields with either `==` or `.equals`?
+
+Prof: **Great** question. Consider this program:
+
+```java
+import java.awt.Color;
+Pict rect = new Rect(3, 2, "red");
+Raster r1 = rect.render();
+Color[][] colors = {
+  { Color.RED, Color.RED, Color.RED },
+  { Color.RED, Color.RED, Color.RED }
+};
+Raster r2 = new Raster(colors);
+```
+
+Output:
+
+```text
+rect = Rect[width=3, height=2, color=red]
+[image]
+r1 = Raster[3x2]
+[image]
+colors = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]]]
+r2 = Raster[3x2]
+[image]
+```
+
+Prof: Now, are `r1` and `r2` the same image?
+
+Student: Yeah, obviously.
+
+Prof: And should they be `.equals()`?
+
+Student: Well obviously they should be… Oh right but the fields are arrays. So the `record` version won’t work.
+
+Prof: Indeed! So `Raster` actually defines a `.equals` that provides this:
+
+```java
+@Override
+public boolean equals(Object other) {
+    if (this == other) return true;
+    if (!(other instanceof Raster r)) return false;
+    if (this.width() != r.width() || this.height() != r.height()) return false;
+    for (int y = 0; y < this.height(); y++) {
+        if (!Arrays.equals(this.pixels[y], r.pixels[y])) return false;
+    }
+    return true;
+}
+```
+
+[`Pict.java`, lines 476–485](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L476-L485)
+
+Prof: And that code is what compares the arrays in this example:
+
+```java
+import java.awt.Color;
+Pict rect = new Rect(3, 2, "red");
+Raster r1 = rect.render();
+Color[][] colors = {
+  { Color.RED, Color.RED, Color.RED },
+  { Color.RED, Color.RED, Color.RED }
+};
+Raster r2 = new Raster(colors);
+boolean sameImage = r1.equals(r2);
+boolean sameObject = r1 == r2;
+```
+
+Output:
+
+```text
+rect = Rect[width=3, height=2, color=red]
+[image]
+r1 = Raster[3x2]
+[image]
+colors = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]]]
+r2 = Raster[3x2]
+[image]
+sameImage = true
+sameObject = false
+```
+
+Student: I see. I feel like you’ve just brought up more questions though – what’s `Object`, and what’s `instanceof` and whats the `Raster` in parentheses doing?
+
+Prof: Yeah, it’s a lot. Trust me, we’ll get there. For now, I just want you to see that we compare the pixels of the rasters in this equals method, and there wouldn’t be a way to define equals this way with a `class` **or** a `record` without writing `equals` ourselves.
+
+Student: So we **need** `.equals()` for any comparisons between classes to be more than `==`, and sometimes we need it to check something more than just comparing field by field.
+
+Prof: Nice summary. It’s worth saying that our `.equals()` is cheating a little bit by not using `Object`, but that’s a lie I’ll make you live with a little longer.
+
+#### Practice
+
+Here is a class version of the image files from the search engine. Two `ImageFile`s should be equal when they have the same `name` and the same `sizeKb`. Fill in `equals`.
+
+Exercise:
+
+```java
+class ImageFile {
+  String name;
+  int sizeKb;
+  ImageFile(String name, int sizeKb) {
+    this.name = name;
+    this.sizeKb = sizeKb;
+  }
+  boolean equals(ImageFile other) {
+    return ____;
+  }
+}
+
+ImageFile a = new ImageFile("cat.png", 300);
+ImageFile b = new ImageFile("cat.png", 300);
+boolean same = a.equals(b);
+```
+
+Exercise:
+
+Why does `equals` compare the names with `.equals`, but the sizes with `==`?
+
+Choose one:
+
+- `name` is a field, and `sizeKb` isn’t
+- `==` doesn’t compile on `String`s
+- `name` is a `String`, an object, and `sizeKb` is an `int`
+
+## [A Static Shock](static.html)
+
+Student: I went and looked up the `Px` and `Colors` classes, because you wouldn’t tell me about them. What’s going on with the word `static` in them? I can kind of read them but I don’t know what that part means. And also what’s going on with `throw`?
+
+```java
+    /** A width, height, or radius: zero is fine (an empty picture), negative is not. */
+    static int size(String what, int v) {
+        if (v < 0) throw new IllegalArgumentException(what + " is negative: " + v);
+        return v;
+    }
+}
+```
+
+[`Pict.java`, lines 88–93](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L88-L93)
+
+Prof: Great questions. Let’s take them one at a time. First `throw` – this is Java’s built in way of reporting errors. When `throw ...` evaluates, it stops the current methods **and all methods on the stack**. It will report the error you created, and also the stack trace. This is called throwing an exception.
+
+Student: I’ve seen stack traces before! So you’re telling me if I give a negative number I’ll get an error from `size`?
+
+Prof: That’s right.
+
+Student: What is `IllegalArgumentException`?
+
+Prof: Java has many built in exceptions – they are descriptions of errors that can happen. In this case, the `size` method is just used to check if a number is non-negative. It’s used where we want to make sure a `radius` or a `width` is zero or more.
+
+Student: Huh, OK. Wait what’s `what`?
+
+Prof: What?
+
+Student: The parameter, it’s called `what`, but it’s only used in the error message?
+
+Prof: That’s right – reporting errors is important! So important that sometimes we have information included **just in case** an error occurs.
+
+Student: OK, so in this use in `Raster` it’s just to say whether width or height was wrong?
+
+```java
+    Raster(int width, int height) {
+        this.width = Px.size("width", width);
+        this.height = Px.size("height", height);
+        // ...
+```
+
+[`Pict.java`, lines 412–414](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L412-L414)
+
+Prof: That’s it – it assigns `width` or height to the value after checking it.
+
+Student: And I’m seeing something now that I look at this code. Can I make a guess about `static`?
+
+Prof: By all means!
+
+Student: Well, I see that `size` was declared `static`. And then we did one of those calls like we do on `Math` where it’s a capital thing before the dot, which ought to be a class. So is that how we call `size` because it’s static?
+
+Prof: Nice analysis! You got it. A `static` method has no receiver. We usually use it for library methods that aren’t associated with any object instance. So a lot of `Math` and `Arrays` are like that, because they work directly on numbers or arrays without constructing an object first. And in the Pict library, that’s what `Px` is doing.
+
+Student: OK now I want to see what it does.
+
+Prof: Try doing a call from another method, called from `main`, to see the trace.
+
+```java
+void anotherMethod() {
+  System.out.println("Should be just 4 " + Px.size("test", 4));
+  System.out.println("Throw an error" + Px.size("test", -3));
+}
+void main() {
+  anotherMethod();
+}
+```
+
+Output (failed):
+
+```text
+Should be just 4 4
+Exception in thread "Thread-0" java.lang.IllegalArgumentException: test is negative: -3
+	at Px.size(Unknown Source)
+	at anotherMethod(Unknown Source)
+	at main(Unknown Source)
+```
+
+*In the book, the version of Java that runs cannot show line numbers. When running in a full-fledged programming environment, you’d see something like this:*
+
+```text
+$ javac Throw.java Pict.java
+$ java Throw
+Should be just 4 4
+Exception in thread "main" java.lang.IllegalArgumentException: test is negative: -3
+	at Px.size(Pict.java:90)
+	at Throw.anotherMethod(Throw.java:3)
+	at Throw.main(Throw.java:6)
+```
+
+Student: Neat! So I can see that the stack has `Px.size`, then `anotherMethod`, then `main`. Wait! That’s the same order as the stack in a memory diagram!
+
+Prof: Indeed – the stack trace captures exactly the stack we draw. To draw it the way we usually do:
+
+```
+Names (the stack)
+  Px.size("test", -3)
+    what = test
+    v = -3
+    throws IllegalArgumentException
+  anotherMethod()
+  main()
+  top level
+Heap
+```
+
+Student: Interesting. So those diagrams really are what’s happening.
+
+Prof: They are pretty accurate!
+
+#### Practice
+
+Exercise:
+
+Each of these is a call we have made somewhere in the book. Is it a `static` method, or an instance method?
+
+`Math.sqrt(2.0)` is [instance: called on an object / static: called on a class]
+`"trash".length()` is [instance: called on an object / static: called on a class]
+`Integer.parseInt("42")` is [instance: called on an object / static: called on a class]
+`dot.beside(square)` is [instance: called on an object / static: called on a class]
+`Arrays.equals(a, b)` is [instance: called on an object / static: called on a class]
+`raster.colorAt(0, 0)` is [instance: called on an object / static: called on a class]
+`Colors.named("red")` is [instance: called on an object / static: called on a class]
+`query.matches(img)` is [instance: called on an object / static: called on a class]
+
+Exercise:
+
+None of these methods is marked `static` yet. Which ones *could* be `static`, because they never use `x` or `y` (or `this`)? Select all that could.
+
+```java
+record Point(double x, double y) {
+  double distanceTo(Point other) {
+    return Math.sqrt((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
+  }
+  Point flipped() { return new Point(y, x); }
+  Point origin() { return new Point(0, 0); }
+  double average(double a, double b) { return (a + b) / 2; }
+  boolean isOrigin() { return x == 0 && y == 0; }
+}
+```
+
+Choose all that apply:
+
+- `distanceTo`
+- `flipped`
+- `origin`
+- `isOrigin`
+- `average`
+
+## [Primitives: The Full `cast`](casting.html)
+
+Student: I’m looking at some other methods now. What’s going on in `Px.of`? Two weird things – what’s `isNaN`/`isInfinite`, and what’s the `(int)` at the bottom?
+
+```java
+  static int of(double v) {
+      if (Double.isNaN(v) || Double.isInfinite(v)) {
+          throw new IllegalArgumentException("measurement must be a number, got " + v);
+      }
+      return (int) Math.round(v);
+  }
+```
+
+[`Pict.java`, lines 82–87](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L82-L87)
+
+Prof: Great questions both. When `double` arithmetic was designed, a decision was made to have no **errors** be reported from it. So unlike `1 / 0` on ints, which reports an error, `1 / 0` evaluates to `Infinity`, which is a valid `double` value. Similarly, things like `Math.sqrt(-1)` don’t have a mathematical answer in terms of a `double`. These produce a special `NaN` (stands for “Not a Number”) value. The check here is making sure that the value is not one of those special nonsense values before converting it to an `int`.
+
+Student: Hmm OK. That’s a lot but I kind of see. And then what about `(int)` – you said that’s converting to an int?
+
+Prof: Right, `(int)v` is called a cast, which turns one primitive type into another. (There are other types of casts, but this is the one on primitives). Casting is actually super complex and fraught. The simple explanation is that it drops the decimal part of the double to make an int. It’s very useful because it allows us to go back and forth between the primitive types.
+
+Student: What’s so hard about that?
+
+Prof: The problem is that `int` can only represent numbers up to about 2^31, while double can reprsent much bigger numbers than that. So consider this weird example:
+
+```java
+int x = (int)1234567890123.0;
+int y = (int)9999999999999.0;
+```
+
+Output:
+
+```text
+x = 2147483647
+y = 2147483647
+```
+
+Student: Huh? They’re clearly not the same.
+
+Prof: Right, so casting “clamps” for the double to int conversion. That number is the biggest int, and it’s returned for any cast of a double larger than that.
+
+Student: Weird. Do I have to care?
+
+Prof: Kind of! In the Pict library these casts are used for pixels meant to be displayed on screen, so having a width of billions of them doesn’t make much sense. But in many applications we **do** have billions of things, like cents. So this can matter a lot, so it’s a choice to convert. There’s no easy answer either, you have to think about your data and what operations happen on it.
+
+Student: Hmmm, that seems important and also very hard.
+
+Prof: It leads to a lot of mistakes in real code. Keep it in mind. OK so while we are on the topic I want to mention **all** the primitive types:
+
+- `byte`: whole numbers from −128 to 127
+- `short`: whole numbers from −32,768 to 32,767
+- `int`: whole numbers from −2,147,483,648 to 2,147,483,647 (about ±2 billion)
+- `long`: whole numbers up to about ±9.2 × 1018
+- `float`: decimal numbers up to about ±3.4 × 1038
+- `double`: decimal numbers up to about ±1.8 × 10308
+- `char`: a single character, like `'a'`
+- `boolean`: `true` or `false`
+
+It’s good to know all of these for reading code.
+
+Student: So can I cast between any of them?
+
+Prof: In general casting from a smaller type to a bigger type works pretty well – `int` to `double` for example, because double is bigger. Casting from bigger to smaller, or between same-sized values, can lose information. So it’s important to look up the real rules, test, and so on when doing it.
+
+#### Practice
+
+Exercise:
+
+What does each expression evaluate to? (Write a `double` with its `.0`.)
+
+`(int) 3.99` is ____
+`(int) -3.99` is ____
+`(double) 7 / 2` is ____
+`(double) (7 / 2)` is ____
+`(int) 1e10` is ____
+`(int) Math.round(2.5)` is ____
+
+Exercise:
+
+Which of these does Java make you write a cast for? Select all that need one.
+
+Choose all that apply:
+
+- `int` to `double`
+- `double` to `int`
+- `long` to `int`
+- `int` to `long`
+
+## [Visibility Modifiers](access.html)
+
+Student: I have another confusion here. When I make a record, I can access its fields with dot, and you’ve shown that.
+
+Prof: Absolutely!
+
+Student: But I can’t do that with fields on stuff like `Circle`:
+
+```java
+Circle c = new Circle(4, "red");
+int radius = c.radius;
+```
+
+Output (compile error):
+
+```text
+line 2: error: The field Circle.radius is not visible
+```
+
+Student: Why won’t it let me access that?
+
+Prof: Great question! This has to do with visibility modifiers.
+
+Student: Visibility modifiers?
+
+Prof: Yeah. So we haven’t really bothered to write them except one – `public`. We had to add that when we implemented methods from an interface, remember?
+
+Student: Yeah I remember that. You told me to just write it and not question it.
+
+Prof: So all fields and methods can have one of several visibilities, which affect which other classes can use them directly. The ones we’ve been encountering implicitly are:
+
+- `private` – the field or method can be accessed only within the class or within classes declared in the same file, for the kind of programs we write (ones with a `void main()`)
+- No modifier given (called “package private”) – the field or method can be accessed only within the class or other classes in files in the same “package” (roughly a folder)
+- `public` – any context can access the field or method
+
+Student: But I don’t see any code where `radius` is made `private`:
+
+```java
+record Circle(int radius, Color color) implements Pict {
+```
+
+[`Pict.java`, lines 142–142](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L142-L142)
+
+Prof: That’s true. What’s happening is `record` fields have `private` access. It’s by default and it can’t be changed.
+
+Student: Really? So how have we been able to… oh because the other classes, or main or whatever, are in the same file. But wait, I can access it if I add parentheses:
+
+```java
+Circle c = new Circle(4, "red");
+int radius = c.radius();
+```
+
+Output:
+
+```text
+c = Circle[radius=4, color=red]
+[image]
+radius = 4
+```
+
+Prof: Correct. This is a trick `record`s pull off – it’s helpful to be able to see the private fields’ values. So records **also** add a public accessor method or getter with exactly the name of the field. So going back to our `Point` class that corresponds to a `record`, it would actually look like:
+
+```java
+// record Point(double x, double y) {} expands to...
+class Point {
+  private double x;
+  private double y;
+  public Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  public boolean equals(Point other) {
+    return other.x == this.x && other.y == this.y;
+  }
+  public double x() { return this.x; }
+  public double y() { return this.y; }
+}
+```
+
+Prof: For a record, making the constructor `public` makes sense because the job of a record is to construct data. So the defaults all make sense. And records are actually doing quite a bit of **typing** for us (and saving us tedious reading), because we want these patterns over and over.
+
+Student: And why would you want things to be private? It seems like it just adds errors to your program. Things should just be visible.
+
+Prof: You know, I partially agree with you. But there’s a good argument for keeping fields private, and it’s what most people actually recommend! The idea is that it limits where you have to look to see what happens to a particular field. If you want to ask a question like “does this `int` field only ever increase” that’s a very complicated question to answer if any code in a big program could change it. But if you have **all** the uses of the field in one place, you can audit that quickly.
+
+Especially these days with agents adding code all the time, things like `private` help set up some boundaries so you can still check a guarantee like “my field only increases” even if thousands of lines of code are added outside that class.
+
+Student: Huh, that’s actually pretty cool. So that’s it then, that’s how records and classes correspond? No more lies?
+
+Prof: Um, well, the `equals` method is a little weird. And I left out something called `hashCode` that is not relevant for what we’re doing right now. We will have to directly address updating `equals` when we talk about the `Object` class, but that’ll be another day. There’s one more detail of `record` that I want to share now, though.
+
+Record fields are what’s called `final`, which means you can’t do field **update** on them.
+
+Student: OK, why not?
+
+Prof: The idea with records is that they create fixed data for representing something that doesn’t change. This is super common in programming, and it’s something Java makes easy. In general, fields on `class` declarations **can** have field updates applied to those fields. So one step more honest would be to put `final` in:
+
+```java
+// record Point(double x, double y) {} expands to...
+class Point {
+  private final double x;
+  private final double y;
+  public Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  public boolean equals(Point other) {
+    return other.x == this.x && other.y == this.y;
+  }
+  public double x() { return this.x; }
+  public double y() { return this.y; }
+}
+```
+
+Prof: And **that** is as far as we will go for now.
+
+Student: So I can read all of Pict now?
+
+Prof: A lot more of it, for sure. There’s more to learn still, but I think that gives a good picture of a lot of what I was hiding or sliding past.
+
+#### Practice
+
+Exercise:
+
+`Raster` is a class in `Pict.java` with `private` fields `pixels`, `width`, and `height`, and methods `width()`, `height()`, and `colorAt(x, y)`. In *your* program, `r` is a `Raster` and `c` is a `Circle`. Which of these lines compile? Select all that do.
+
+Choose all that apply:
+
+- `Color first = r.colorAt(0, 0);`
+- `Color col = c.color;`
+- `Color col = c.color();`
+- `int w = r.width;`
+- `Color[][] all = r.pixels;`
+- `int w = r.width();`
+
+Exercise:
+
+A record’s fields are `private` *and* `final`. Which of these can code outside the record do?
+
+Choose one:
+
+- Change a field’s value after the record is built
+- Read a field directly, with `.` and the field name
+- Read a field’s value, with its accessor method
+
+## [Java Details in Summary](summary.html)
+
+Exercise:
+
+With these two methods, which one runs for `whatType(r)`?
+
+```java
+String whatType(Region r) { return "Got Region"; }
+String whatType(RectRegion rr) { return "Got RectRegion"; }
+
+Region r = new RectRegion();
+```
+
+Choose one:
+
+- `whatType(RectRegion rr)`
+- `whatType(Region r)`
+- Neither: it doesn’t compile
+
+Exercise:
+
+Finish `PointC`: the first constructor sets both fields, and the second makes a point whose `x` and `y` are both `both`, by calling the first.
+
+```java
+class PointC {
+  double x;
+  double y;
+  PointC(double x, double y) {
+____
+  }
+  PointC(double both) {
+    ____
+  }
+}
+PointC p = new PointC(1.0, 2.0);
+PointC q = new PointC(3.0);
+```
+
+Exercise:
+
+`PointC` has no `equals` method written. What is `new PointC(1.0, 2.0).equals(new PointC(1.0, 2.0))`?
+
+Choose one:
+
+- `true`
+- It doesn’t compile
+- `false`
+
+Exercise:
+
+`Px.size` is `static`. Which of these calls it the way `Pict.java` does?
+
+Choose one:
+
+- `size("width", w)`
+- `new Px().size("width", w)`
+- `Px.size("width", w)`
+
+Exercise:
+
+What does each one evaluate to? (Write a `double` with its `.0`.)
+
+`(int) 7.9` is ____
+`(int) Math.round(7.5)` is ____
+`(double) 1 / 4` is ____
+`(double) (1 / 4)` is ____
+
+Exercise:
+
+In your own program, `c` is a `Circle` and `r` is a `Raster`. Which lines compile? Select all that do.
+
+Choose all that apply:
+
+- `int rad = c.radius();`
+- `int h = r.height();`
+- `int h = r.height;`
+- `int rad = c.radius;`

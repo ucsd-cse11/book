@@ -1,0 +1,46 @@
+# Appendix: Working on Your Own Computer
+
+This page was written by Opus 5.5 (an AI model) on 2026-10-06 and has not yet been edited by the authors.
+
+## [The Kit](the-kit.html)
+
+Everything in this book runs in the page. When you want your programs in files of your own, start from the *kit*: the book’s `Pict` library, JUnit for testing, and a small example of each. There are two ways to get it.
+
+### In a Codespace
+
+[Open the kit in a GitHub Codespace](https://codespaces.new/ucsd-cse11/kit?ref=fa26). A Codespace is VS Code running in your browser on a computer GitHub provides, with Java 25 and the Java extensions already installed; the first start takes a minute or two. You need a GitHub account, and a Codespace you leave alone for a few weeks is deleted, so download anything you want to keep.
+
+### On your own computer
+
+[Download the kit](../kit/cse11-kit.zip) (a zip; it is also on GitHub as [the kit repository](https://github.com/ucsd-cse11/kit/tree/fa26)). You will need Java 25 or newer: install a JDK from [adoptium.net](https://adoptium.net), then check with
+
+```
+java -version
+```
+
+### What is in it
+
+- [`Pict.java`](../kit/Pict.java) — the library this book uses, the same file the book’s pages run. On your computer `ImageIO_.show` opens a window instead of drawing below the code (a Codespace has no display, so there it saves `shown-0.png`), and file names are relative to the folder you run `java` in.
+- [`Example.java`](../kit/Example.java) — a program that uses it.
+- [`ExampleTest.java`](../kit/ExampleTest.java) — JUnit tests.
+- [`lib/junit.jar`](../kit/lib/junit.jar) — JUnit itself, under [its license](../kit/lib/LICENSE-junit.md).
+- [`README.md`](../kit/README.md) — these instructions, short.
+
+### Running a program
+
+In the kit’s folder:
+
+```
+java -ea Example.java
+```
+
+Java compiles `Example.java`, and the `Pict.java` next to it, as it starts; `-ea` turns on `assert`, as the book’s widgets do. This one saves `example.png`.
+
+### Running the tests
+
+```
+javac -d out -cp lib/junit.jar *.java
+java -jar lib/junit.jar execute --class-path out --scan-class-path
+```
+
+The first line compiles everything into `out/`; the second finds every `@Test` there and runs it. In VS Code, the Testing panel does the same.

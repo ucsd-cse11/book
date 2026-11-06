@@ -1,0 +1,1147 @@
+# Recursive Data
+
+## [Self-Referential Data](naming-it.html)
+
+Student: Professor, I want to get the hard stuff. The real stuff about programming, the can’t-fake-it, no-nonsense big ideas. Stuff like recursion. My friends in upper division classes are always talking about that.
+
+Prof: Good news! We’ve done recursion already.
+
+Student: What?
+
+Prof: We wrote our first recursive methods the last time we talked. And we’ve been making recursive data since we composed the French flag.
+
+Student: How do you mean? Recursion is the hardest topic in CSE11. That’s what **everyone** says.
+
+Prof: Then you’re doing great, as long as you understood our last conversations!
+
+Student: Which parts?
+
+Prof: Well, let’s bring up an example again and talk through a definition.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height, int sizeKb) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasKeyword(String word) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.keywords().contains(this.word);
+  }
+}
+
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record SmallerThanKb(int limitKb) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.sizeKb() < this.limitKb;
+  }
+}
+
+record And(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return left.matches(img) && right.matches(img);
+  }
+}
+
+record Or(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return left.matches(img) || right.matches(img);
+  }
+}
+
+ImageData img = new ImageData("cat sleeping", "png", 640, 480, 300);
+ImageQuery cat = new HasKeyword("cat");
+ImageQuery png = new HasExtension("png");
+ImageQuery jpg = new HasExtension("jpg");
+ImageQuery light = new SmallerThanKb(500);
+ImageQuery pngOrJpg = new Or(png, jpg);
+ImageQuery catPic = new And(cat, pngOrJpg);
+ImageQuery query = new And(catPic, light);
+boolean found = query.matches(img);
+```
+
+Output:
+
+```text
+img = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480, sizeKb=300]
+cat = HasKeyword[word=cat]
+png = HasExtension[ext=png]
+jpg = HasExtension[ext=jpg]
+light = SmallerThanKb[limitKb=500]
+pngOrJpg = Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]
+catPic = And[left=HasKeyword[word=cat], right=Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]]
+query = And[left=And[left=HasKeyword[word=cat], right=Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]], right=SmallerThanKb[limitKb=500]]
+found = true
+```
+
+Prof: So, in terms of definitions:
+
+- The `And` record is a recursive datatype: it both implements `ImageQuery` and it has a field of type `ImageQuery`. That means a field of an `And` record can itself be an instance of `And`.
+- The `matches` method is a recursive method: when it calls `matches` on its fields, it may be calling **the exact method it is in**. That is, two stack frames right next to each other, each for the exact same method of the exact same class, just different receivers.
+
+These are the two important definitions of recursion in the object-oriented programs we will write.
+
+Student: Huh. OK. So the memory trace would have multiple stack frames for the `matches` method on `And` at the same time?
+
+Prof: Right, that’s the idea:
+
+```
+Names (the stack), over time →
+  top level
+    img = @1001
+    cat = @1002
+    png = @1003
+    jpg = @1004
+    light = @1005
+    pngOrJpg = @1006
+    catPic = @1007
+    query = @1008
+    found = true
+    query.matches(img) on @1008
+      img = @1001
+      returns true
+      left.matches(img) on @1007
+        img = @1001
+        returns true
+        left.matches(img) on @1002
+          img = @1001
+          returns true
+        right.matches(img) on @1006
+          img = @1001
+          returns true
+          left.matches(img) on @1003
+            img = @1001
+            returns true
+      right.matches(img) on @1005
+        img = @1001
+        returns true
+Heap
+  @1001: ImageData[keywords=cat sleeping, fileType=png, width=640, height=480, sizeKb=300]
+  @1002: HasKeyword[word=cat]
+  @1003: HasExtension[ext=png]
+  @1004: HasExtension[ext=jpg]
+  @1005: SmallerThanKb[limitKb=500]
+  @1006: Or[left=@1003, right=@1004]
+  @1007: And[left=@1002, right=@1006]
+  @1008: And[left=@1007, right=@1005]
+```
+
+Student: Hm, ok so recursive data is when a record could have other instances of the same record in its fields? And recursive methods are when a method can call itself?
+
+Prof: That’s right.
+
+#### Practice
+
+`Beside` from the Pict library is recursive data too: its `left` and `right` are `Pict`s, and its `width` method calls `width` on both of them.
+
+```java
+record Beside(Pict left, Pict right) implements Pict {
+  public int width() { return left.width() + right.width(); }
+  // ...
+}
+
+Pict dot = new Circle(10, "red");
+Pict box = new Rect(30, 20, "blue");
+Pict pair = new Beside(dot, box);
+Pict row = new Beside(pair, dot);
+int w = row.width();
+```
+
+These are the calls of `row.width()` over time, with the receivers left out.
+
+```
+Names (the stack), over time →
+  top level
+    dot = @1001
+    box = @1002
+    pair = @1003
+    row = @1004
+    w = 70
+    row.width() on @1004
+      returns 70
+      left.width() on ???
+        returns 50
+        left.width() on ???
+          returns 20
+        right.width() on ???
+          returns 30
+      right.width() on ???
+        returns 20
+Heap
+  @1001: Circle[radius=10, color=red]
+  @1002: Rect[width=30, height=20, color=blue]
+  @1003: Beside[left=@1001, right=@1002]
+  @1004: Beside[left=@1003, right=@1001]
+```
+
+Exercise:
+
+Fill in the receiver of each call.
+
+The call that returns `50` runs on ____.
+The call that returns `30` runs on ____.
+Both calls that return `20` run on ____.
+
+Exercise:
+
+Which two calls are next to each other on the stack, running the same method of the same record?
+
+Choose one:
+
+- the `this.left.width()` that returns `20` and the `this.right.width()` that returns `30`
+- the two calls that return `20`
+- `row.width()` and the `this.left.width()` that returns `50`
+
+## [Building Up](base-cases.html)
+
+Student: Professor, I was thinking about how social media posts work, and I think I have my own example of recursion! But it doesn’t work right.
+
+Prof: Let’s have a look!
+
+Student: So I was thinking about how you can repost someone’s post but add on your own text. But then someone else can repost your repost. And that seemed like recursive data. Here’s what I tried:
+
+```java
+record Post(String message, Post post) { }
+```
+
+Prof: Oh super interesting. I totally agree that reposting is an example of recursive data, great observation!
+
+Student: Here’s the issue: I can’t figure out how to create one. I wrote `new Post("check out this cool idea:", new Post(...`. But then I didn’t know what to put in the parentheses. How do I make a `Post` without making a `Post`?
+
+Prof: It’s frustrating right! There’s a good principle to learn here, though. All of the recursive data we’ve seen so far has a key feature: there are some records that have fields that refer back to the type, *and some that don’t*. For example in `ImageQuery`, the `And` and `Or` queries refer back to `ImageQuery`, but the ones that look directly at the image data like `HasExtension` or `HasKeyword` do not.
+
+We call the ones with self-reference the recursive cases and the ones with no self-reference the base cases. What do you think some of the recursive and base cases of data are for `Pict`?
+
+Student: Hmmm so I guess things like `Beside` are recursive cases, because they combine two `Pict`s and `Beside` implements `Pict`.
+
+Prof: Right, and the base cases?
+
+Student: Those must be the simple shapes like `Circle` and `Rect`.
+
+Prof: Right. We don’t need to construct a `Pict` to pass into a `Circle`, and a `Circle` doesn’t store another `Pict`. So this idea of base cases and recursive cases comes up over and over again in representing interesting data.
+
+Student: Really?
+
+Prof: Yeah, I’ll give a few more examples:
+
+- Math expressions like `(4 + 5) - x` → the base cases would be things like numbers and variable names. The recursive cases would be things like add and subtract expressions.
+- Files and folders in Google Drive → folders would be the recursive cases (because folders contain files and folders) and files would be base cases (files can’t contain folders).
+- Family trees of ancestors → people with known parents are the recursive cases (because they have parent fields that are also people), and the base cases are “unknown” places in the tree where there’s no information about an ancestor
+
+Student: I’ll try one. In a course system, the courses are the recursive cases and the students in the course are the base cases.
+
+Prof: Not quite! There’s no way for a course to contain a course, or a student to contain a student, so there’s no recursion in that example. It’s just nested data. That’s a really good example of the difference between data that is just nested, and data with a **self-reference**.
+
+Student: Can I try another one?
+
+Prof: Sure!
+
+Student: OK so how about course prerequisites. An upper division course is a recursive case, because it has some prerequisites, like CSE12 requires CSE11, so CSE12 must have a field or something that stores CSE11. But CSE11 has no official prerequisites, so it is a base case?
+
+Prof: Great example!
+
+#### Practice
+
+Exercise:
+
+Which of these are recursive data? Select all that are.
+
+Choose all that apply:
+
+- An email forwarded with the original message inside it
+- An employee record that includes an office address
+- An email with some attachments
+- A folder of playlists, which can also hold other folders
+- A repost on social media, with your own text added to someone else’s post
+- An org chart, where a manager has a list of the employees who report to them
+- A playlist of songs
+- A post on social media that mentions a user
+
+Here is a chain of reposts. Each post is either a regular post, or a repost that holds the post it reposts, shown inside it.
+
+```
+┌────────────────────────────────┐
+│ @cy: "same, every week"        │
+│ ┌────────────────────────────┐ │
+│ │ @ben: "never"              │ │
+│ │ ┌────────────────────────┐ │ │
+│ │ │ @ana: "Does anyone's   │ │ │
+│ │ │   code compile on the  │ │ │
+│ │ │   first try?"          │ │ │
+│ │ └────────────────────────┘ │ │
+│ └────────────────────────────┘ │
+└────────────────────────────────┘
+```
+
+Exercise:
+
+Holding only the outer post, how far in do you have to look to answer each question?
+
+Who wrote the outer post? [every post, down to the regular post / just the outer post / the outer post and the one it reposts]
+Is the outer post a repost? [every post, down to the regular post / just the outer post / the outer post and the one it reposts]
+Whose post did the outer post repost? [every post, down to the regular post / just the outer post / the outer post and the one it reposts]
+What did the regular post inside them all say? [every post, down to the regular post / just the outer post / the outer post and the one it reposts]
+How many posts are in the chain? [every post, down to the regular post / just the outer post / the outer post and the one it reposts]
+
+## [Building Up, with Code](base-case-code.html)
+
+Student: So I feel like I get the **idea** of recursion, but I don’t know how to turn your examples into code.
+
+Prof: Let’s get back to your original idea – how would this look for `Post`s, in code?
+
+Student: Do I have to write an interface first?
+
+Prof: That’s how we’ve been doing it; at some point I’ll show you another way, but for this example that’s a good idea.
+
+Student: OK so I need… an interface that represents posts? And then a recursive case and a base case.
+
+Prof: Right – so the recursive case is the one you started with.
+
+Student: A repost?
+
+Prof: Right. And if you think about how posts work, what has to be at the end of a long chain of reposts?
+
+Student: A… regular post?
+
+Prof: Right! OK try turning that into code.
+
+Student: Hmm so something like this?
+
+```java
+interface Post {}
+record Repost(String message, Post original) { }
+record RegularPost(String message) { }
+```
+
+Student: OHH so the base case just has the text. Like when you make one Tweet or whatever. I guess real posts have more stuff like images.
+
+Prof: Absolutely, but you’ve captured the recursive structure now: try creating an instance now!
+
+Student: OK…
+
+```java
+interface Post {}
+record Repost(String message, Post original) { }
+record RegularPost(String message) { }
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+```
+
+Output (compile error):
+
+```text
+line 4: error: The constructor Repost(String, Repost) is undefined
+line 4: error: Type mismatch: cannot convert from Repost to Post
+line 5: error: The constructor Repost(String, RegularPost) is undefined
+```
+
+Student: Wait, why didn’t that work?
+
+Prof: This is an important detail: there are two uses of the `Repost` constructor in your program. One of them is taking a `RegularPost`, and the other is taking a `Repost`. But neither of those are `Post` values according to Java!
+
+Student: Huh? I wrote the interface right there!
+
+Prof: Do you remember anything from `ImageQuery` about something we need to add to record definitions?
+
+Student: Oh! I need to say `implements`? Why?
+
+Prof: Well, it’s how we tell Java “I want all `Repost` objects to count as `Post` objects; **and** I want all `RegularPost` objects to count as `Post` objects. It’s also one of the **only** ways to get this kind of sharing of classes with one type in Java.
+
+Student: So without `implements`, there can never be a way to have `Repost` be a `Post`?
+
+Prof: That’s right. Let’s fix it!
+
+```java
+interface Post {}
+record Repost(String message, Post original) implements Post { }
+record RegularPost(String message) implements Post { }
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+```
+
+Output:
+
+```text
+r = Repost[message=what he said, original=Repost[message=what she said, original=RegularPost[message=I love to post]]]
+```
+
+Prof: Nice! Let’s look at the memory diagram.
+
+```
+Names (the stack)
+  top level
+    r = @1003
+Heap
+  @1001: RegularPost[message=I love to post]
+  @1002: Repost[message=what she said, original=@1001]
+  @1003: Repost[message=what he said, original=@1002]
+```
+
+Student: You know, this does just kind of look like nested data.
+
+Prof: That’s a good observation. There’s a big difference between what you can create with something like your `Post`, `Repost`, and `RegularPost`, though. You can make a chain of `Repost` instances **as long as you want**. With types that describe just nested data, not recursive data, it always has to stop at some point. We’ll explore why that’s special by writing some recursive methods next.
+
+#### Practice
+
+Write an interface `Ancestor`, and two records that implement it: `Known`, with a `String` field `name` and two `Ancestor` fields `parent1` and `parent2`, and `Unknown`, with no fields.
+
+Exercise:
+
+```java
+____
+
+Ancestor me = new Known("Sam",
+                new Known("Pat", new Unknown(), new Unknown()),
+                new Unknown());
+```
+
+A Google Drive is made of docs and folders. Write an interface `DriveItem`, and two records that implement it: `Doc`, with a `String` field `name` and an `int` field `sizeKb`, and `Folder`, with a `String` field `name` and a field `contents` that is an array of `DriveItem`s.
+
+Exercise:
+
+```java
+____
+
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+```
+
+Now the other way around. Here are records for math expressions. Write `e`, the expression `(4 + 5) - x`.
+
+Exercise:
+
+```java
+interface Expr {}
+record Num(int value) implements Expr {}
+record Var(String name) implements Expr {}
+record Plus(Expr left, Expr right) implements Expr {}
+record Minus(Expr left, Expr right) implements Expr {}
+
+Expr e = ____;
+```
+
+Exercise:
+
+Course prerequisites can be written with just one record:
+
+```java
+record Course(String name, Course[] prereqs) {}
+Course cse11 = new Course("CSE 11", new Course[] {});
+Course cse12 = new Course("CSE 12", new Course[] { cse11 });
+```
+
+There is no separate record for the base case. What plays the part of the base case here?
+
+Choose one:
+
+- A `Course` with something in its `prereqs` array, like `cse12`
+- A `Course` whose `prereqs` array is empty, like `cse11`
+- Nothing. Without a base record, no `Course` can ever be built
+- The `name` field, because it is a `String`
+
+## [Recursive Methods](recursive-methods.html)
+
+Student: How do I know how to make methods for recursive data?
+
+Prof: It can take a little practice! But the split of base case and recursive case helps a lot. The idea is that we implement the method in each class that is part of our recursive data definition – this is called structural recursion specifically, and it matches the examples we’ve seen so far.
+
+Student: So to implement a method I have to implement the same method over and over?
+
+Prof: Kind of! And we’ve seen this a few times. Like for the `matches` method, we had a method body for `HasExtension`, and a method body for `HasKeyword`, and a method body for `Or`, and so on. Each one handled just the behavior specific to its class. In the case of recursive cases like `Or`, it called the same method on its pieces to get its result.
+
+```java
+interface ImageQuery { boolean matches(ImageData im); }
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData im) { ... ext ... }
+}
+record HasKeyword(String keyword) implements ImageQuery {
+  public boolean matches(ImageData im) { ... keyword ... }
+}
+record Or(ImageQuery q1, ImageQuery q2) implements ImageQuery {
+  public boolean matches(ImageData im) { ... q1.matches(im) ... q2.matches(im) ... }
+}
+record And(ImageQuery q1, ImageQuery q2) implements ImageQuery {
+  public boolean matches(ImageData im) { ... q1.matches(im) ... q2.matches(im) ... }
+}
+```
+
+Prof: The same kind of shape is true of `Pict`
+
+```java
+interface Pict { int width(); /* plus many more methods */ }
+record Circle(int radius, String color) implements Pict {
+  public int width() { ... radius ... }
+}
+record Rect(int width, int height, String color) implements Pict {
+  public int width() { ... width ... }
+}
+record Beside(Pict left, Pict right) implements Pict {
+  public int width() { ... left.width() ... right.width() ... }
+}
+record Above(Pict top, Pict bottom) implements Pict {
+  public int width() { ... top.width() ... bottom.width() ... }
+}
+```
+
+Student: Hey, you left out a lot of detail in these!
+
+Prof: That’s on purpose – I want to illustrate a **common shape** between these. In all the base cases, the methods worked with just the parameters of the method, and the fields of the class. So `width` for a `Circle` uses the `radius`, `matches` for `HasKeyword` uses the `keyword`, and so on. In contrast the recursive cases make recursive calls using the same-named method on their pieces. It’s a general pattern!
+
+```java
+interface RecursiveData { Type recMethod(Param p, ...); }
+record BaseCase(Field field, ...) implements RecursiveData {
+  public Type recMethod(Param p, ...) { ... field ... }
+}
+record RecCase(Field field, ... RecursiveData d, ...) implements RecursiveData {
+  public Type recMethod(Param p, ...) { ... field ... d.recMethod(p, ...) ... }
+}
+// Could be several different BaseCase and RecCase classes for a recursive data
+// definition, not just base and rec
+```
+
+Student: Hmmm I think I’m starting to see. So the recursive case will always have a **field** that refers back to the interface?
+
+Prof: That’s right. Think you can apply it to your `Post` now?
+
+Student: So I already have the outline of my base case and my recursive case. I need to pick a method to try. Maybe like… if a word shows up anywhere in the chain of reposts? Like a search?
+
+Prof: Sounds like a good example. It’s useful to think about the base case first. Actually, before that, let’s think about a few examples. You had the example with two reposts and a regular post. What else should we test?
+
+Student: Probably a regular post on its own?
+
+Prof: Sounds like a good idea. Let’s get that down with placeholder values as answers.
+
+Student: All right.
+
+```java
+interface Post {
+  boolean hasWord(String word);
+}
+record Repost(String message, Post original) implements Post {
+  public boolean hasWord(String word) { return false; }
+}
+record RegularPost(String message) implements Post {
+  public boolean hasWord(String word) { return false; }
+}
+Post reg = new RegularPost("Hello world!");
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+boolean hasWorld = reg.hasWord("world");
+boolean hasPotato = reg.hasWord("potato");
+boolean hasPost = r.hasWord("post");
+boolean hasSaid = r.hasWord("said");
+boolean hasThey = r.hasWord("they");
+```
+
+Output:
+
+```text
+reg = RegularPost[message=Hello world!]
+r = Repost[message=what he said, original=Repost[message=what she said, original=RegularPost[message=I love to post]]]
+hasWorld = false
+hasPotato = false
+hasPost = false
+hasSaid = false
+hasThey = false
+```
+
+Student: Is that what you meant by placeholder values? They return `false`?
+
+Prof: Right. This makes it so we can run it, and we get the check for errors like making sure we spelled the method correctly everywhere. Now we can fill in the cases. Depending on the problem it can be easier to start with the base case or the recursive case, but for me it’s often that the base case is easier. How do we check if a word is in a post chain that’s **just** a regular post? Like what should the answer be for `hasWorld`, and how do we calculate it from `word` and `message`?
+
+Student: Hmm I guess we use `contains` on the string? Like it’d be `return message.contains(word);` or something?
+
+Prof: Awesome. We can fill that in. Then we need to think a little bit about the `Repost` case.
+
+Student: Well it’s like, we check `message.contains` here, too. Then if the `original` field is a `RegularPost`, then we just check that. If the `original` field is a `Repost`, then we need to check its message and its original more.
+
+Prof: Let’s try going from the pattern we had before. What does the pattern tell us should show up in the recursive method?
+
+Student: Hmm well I guess… a recursive call?
+
+Prof: And what would that recursive call look like in this case?
+
+Student: I guess like… hmm.. like `original.hasWord(word)`. So the pattern is like
+
+```java
+boolean hasWord(String word) { ... message ... original.hasWord(word) ... }
+```
+
+Prof: Right! And what does that recursive call tell you? Describe it.
+
+Student: It’s, I guess a boolean. And it always returns `false` right now.
+
+Prof: Ah, right, so this is important. When we write a recursive method, we need to trust ourselves a little bit. Say we trust ourselves that `hasWord` is going to be implemented perfectly. **Then** what does the return value of `original.hasWord` mean?
+
+Student: It’s whether the word appears in the original’s `message`. Oh wait, no, whether it appears in the whole chain starting at `original`?
+
+Prof: Indeed! And then we need to combine that information with information about this `Repost`. The word appears if it appears in **either** the `message` of this `Repost` **or** in the chain that starts with `original`.
+
+Student: So I combine them with `||` to get the answer?
+
+Prof: Try it!
+
+```java
+interface Post {
+  boolean hasWord(String word);
+}
+record Repost(String message, Post original) implements Post {
+  public boolean hasWord(String word) {
+    return message.contains(word) || original.hasWord(word);
+  }
+}
+record RegularPost(String message) implements Post {
+  public boolean hasWord(String word) { return message.contains(word); }
+}
+Post reg = new RegularPost("Hello world!");
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+boolean hasWorld = reg.hasWord("world");
+boolean hasPotato = reg.hasWord("potato");
+boolean hasPost = r.hasWord("post");
+boolean hasSaid = r.hasWord("said");
+boolean hasThey = r.hasWord("they");
+```
+
+Output:
+
+```text
+reg = RegularPost[message=Hello world!]
+r = Repost[message=what he said, original=Repost[message=what she said, original=RegularPost[message=I love to post]]]
+hasWorld = true
+hasPotato = false
+hasPost = true
+hasSaid = true
+hasThey = false
+```
+
+Student: Whoa, that worked.
+
+Prof: Pretty cool, right?
+
+#### Practice
+
+**Exercise 1.** Fill in `totalMessageLength`, which adds up the lengths of all the messages in a chain of posts. A `String`’s `length()` method gives its number of characters. Hint: in the recursive case, combine this post’s part and the answer of the recursive call with `+`.
+
+Exercise:
+
+```java
+interface Post {
+  int totalMessageLength();
+}
+record Repost(String message, Post original) implements Post {
+  public int totalMessageLength() {
+    return ____;
+  }
+}
+record RegularPost(String message) implements Post {
+  public int totalMessageLength() {
+    return ____;
+  }
+}
+Post reg = new RegularPost("Hello world!");
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+int regTotal = reg.totalMessageLength();
+int rTotal = r.totalMessageLength();
+```
+
+**Exercise 2.** Fill in `oldestKnownGeneration`, which says how many generations back a family tree goes before it runs out of known people. An `Unknown` goes back `0` generations. A `Known` whose parents are both `Unknown` goes back `1`: just that person. Hint: `Math.max(a, b)` gives the larger of two `int`s, and a `Known` has two parents to ask.
+
+Exercise:
+
+```java
+interface Ancestor {
+  int oldestKnownGeneration();
+}
+record Known(String name, Ancestor parent1, Ancestor parent2) implements Ancestor {
+  public int oldestKnownGeneration() {
+    return ____;
+  }
+}
+record Unknown() implements Ancestor {
+  public int oldestKnownGeneration() {
+    return ____;
+  }
+}
+Ancestor pat = new Known("Pat", new Unknown(), new Unknown());
+Ancestor lee = new Known("Lee", new Unknown(), new Unknown());
+Ancestor kim = new Known("Kim", lee, new Unknown());
+Ancestor sam = new Known("Sam", pat, kim);
+int samGenerations = sam.oldestKnownGeneration();
+```
+
+## [Tracing Recursive Methods](tracing-recursion.html)
+
+Student: So we wrote this `hasWord` method recursively, that’s great. How would it work on, like, a really big chain of posts? I feel like I’m not totally clear on **how** it runs.
+
+```java
+interface Post {
+  boolean hasWord(String word);
+}
+record Repost(String message, Post original) implements Post {
+  public boolean hasWord(String word) {
+    return message.contains(word) || original.hasWord(word);
+  }
+}
+record RegularPost(String message) implements Post {
+  public boolean hasWord(String word) { return message.contains(word); }
+}
+Post reg = new RegularPost("Hello world!");
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+boolean hasWorld = reg.hasWord("world");
+boolean hasPotato = reg.hasWord("potato");
+boolean hasPost = r.hasWord("post");
+boolean hasSaid = r.hasWord("said");
+boolean hasThey = r.hasWord("they");
+```
+
+Output:
+
+```text
+reg = RegularPost[message=Hello world!]
+r = Repost[message=what he said, original=Repost[message=what she said, original=RegularPost[message=I love to post]]]
+hasWorld = true
+hasPotato = false
+hasPost = true
+hasSaid = true
+hasThey = false
+```
+
+Prof: That’s a great question. Let’s first look at a memory trace for the call to `r.hasWord("post")` to see a small case, then we can think about generalizing to bigger ones.
+
+```
+Names (the stack), over time →
+  top level
+    reg = @1002
+    r = @1008
+    hasPost = true
+    r.hasWord("post") on @1008
+      word = @1009
+      returns (false || true) → true
+      message.contains(word) on @1003
+        s = @1009
+        returns false
+      original.hasWord(word) on @1007
+        word = @1009
+        returns (false || true) → true
+        message.contains(word) on @1004
+          s = @1009
+          returns false
+        original.hasWord(word) on @1006
+          word = @1009
+          returns true
+          message.contains(word) on @1005
+            s = @1009
+            returns true
+Heap
+  @1001: "Hello world!"
+  @1002: RegularPost[message=@1001]
+  @1003: "what he said"
+  @1004: "what she said"
+  @1005: "I love to post"
+  @1006: RegularPost[message=@1005]
+  @1007: Repost[message=@1004, original=@1006]
+  @1008: Repost[message=@1003, original=@1007]
+  @1009: "post"
+```
+
+Prof: So, notice there’s a moment where we have **three** active calls to `hasWord`. Two of them have receivers that are `Repost` instances, and one is a `RegularPost` instance (at the top). The stack “builds up” this computation, and then we’ll get a `true` from the topmost stack frame. We’ll then “unwind” through all the frames, returning `true`, using `||` to combine it with the `false` values that came back from the **other** calls to `message.contains`, and then finally result in `true`. In this example, I drew the strings on the heap, so you can see the receivers given to the `contains` method.
+
+Student: OK, I think I get it. So in `false || true`, the `false` is coming from `message.contains` and the `true` is coming from the recursive call?
+
+Prof: Good observation. That’s right. Do you think that will always be the case, or is that specific to this example?
+
+Student: Hmmm, well the next example looks for `"said"`, which is true on the first of the `Repost` instances. So there would be a true on the left, right?
+
+Prof: Great question, let’s trace that one.
+
+```
+Names (the stack), over time →
+  top level
+    reg = @1002
+    r = @1008
+    hasSaid = true
+    r.hasWord("said") on @1008
+      word = @1009
+      returns true || original.hasWord(word) → true
+      message.contains(word) on @1003
+        s = @1009
+        returns true
+Heap
+  @1001: "Hello world!"
+  @1002: RegularPost[message=@1001]
+  @1003: "what he said"
+  @1004: "what she said"
+  @1005: "I love to post"
+  @1006: RegularPost[message=@1005]
+  @1007: Repost[message=@1004, original=@1006]
+  @1008: Repost[message=@1003, original=@1007]
+  @1009: "said"
+```
+
+Student: Wait, where are all the recursive calls?
+
+Prof: In this case, it stops after the first `message.contains`, because if the left value of `||` is `true`, the whole `||` expression stops before evaluating the right hand side. This is called short circuiting.
+
+Student: So even though we wrote a recursive method, it might not actually make recursive calls?
+
+Prof: Right – it’s a search that returns as soon as it finds a match, and might never actually look at `original`. But it will make the recursive call if it needs to. Can you think of an example input that would make **one** recursive call on `r`, but not two?
+
+Student: Hmmm so it would have to match at the second repost but not the first… `"she"`?
+
+Prof: Right! OK now back to your original question. What if there were hundreds of `Repost` instances in a chain, and we searched for a word that **only** appeared in the innermost `RegularPost`. What would the memory diagram look like?
+
+Student: Hmmm so it would have lots and lots of frames at once all with `Repost` receivers, and then one at the very top that is a `RegularPost`? Like our first picture, but way more frames.
+
+```
+Names (the stack)
+  message.contains(word)
+    s = post
+    returns true
+  original.hasWord(word) on @1001
+    word = post
+  original.hasWord(word) on @1002
+    word = post
+  ⋮ 297 more original.hasWord(word) frames, each on a Repost
+  original.hasWord(word) on @1300
+    word = post
+  r.hasWord("post") on @1301
+    word = post
+  top level
+    r = @1301
+Heap
+  @1001: RegularPost[message=I love to post]
+  @1002: Repost[message=lol, original=@1001]
+  @1300: Repost[message=lol, original=…]
+  @1301: Repost[message=lol, original=@1300]
+```
+
+Prof: That’s a great sketch, and it is indeed what the stack looks like for very “deep” recursive calls.
+
+#### Practice
+
+Here is `totalMessageLength` from the last step, called on the chain from before. The lengths of the three messages are in the chart, and the values returned by `totalMessageLength` are left out.
+
+```java
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+int total = r.totalMessageLength();
+```
+
+```
+Names (the stack), over time →
+  top level
+    r = @1006
+    total = ???
+    r.totalMessageLength() on @1006
+      returns ???
+      message.length() on @1001
+        returns 12
+      original.totalMessageLength() on @1005
+        returns ???
+        message.length() on @1002
+          returns 13
+        original.totalMessageLength() on @1004
+          returns ???
+          message.length() on @1003
+            returns 14
+Heap
+  @1001: "what he said"
+  @1002: "what she said"
+  @1003: "I love to post"
+  @1004: RegularPost[message=@1003]
+  @1005: Repost[message=@1002, original=@1004]
+  @1006: Repost[message=@1001, original=@1005]
+```
+
+Exercise:
+
+Fill in what each call of `totalMessageLength` returns.
+
+`original.totalMessageLength()` on `@1004` returns ____
+`original.totalMessageLength()` on `@1005` returns `13 +` ____ → ____
+`r.totalMessageLength()` on `@1006` returns `12 +` ____ → ____
+
+## [A Universal Base Case](null.html)
+
+Student: My friend figured out how to make recursive data without an interface.
+
+Prof: Oh really?
+
+Student: Well, actually it was AI again. But I was trying to figure out some of this recursive data stuff, and it made a program that had `null` in it:
+
+```java
+record Person(String name, Person parent1, Person parent2) { }
+Person p = new Person("Bob", new Person("Brenda", null, null), null);
+```
+
+Output:
+
+```text
+p = Person[name=Bob, parent1=Person[name=Brenda, parent1=null, parent2=null], parent2=null]
+```
+
+Student: It looks like it uses `null` everywhere we would have had a base case like `Unknown`.
+
+Prof: Ah I see. Yes, you can do this! Java will let you store `null` in a field or variable or parameter of any reference type. So `null` can be stored in a `Person` field.
+
+Student: So why don’t we just use that all the time?
+
+Prof: You can, but it requires using a different style. The main reason is I like having the base case classes to put methods in. For example, if we want to have a `oldestKnownGeneration` method, how do we do that? Try to write it inside `Person`.
+
+Student: Ummm, let’s see, we need to check if either parent is `null` right? And if they are, then we return `1`, because there’s nothing more to visit.
+
+```java
+record Person(String name, Person parent1, Person parent2) {
+  int oldestKnownGeneration() {
+    if(parent1 == null && parent2 == null) { return 1; }
+    int oldestParents = Math.max(parent1.oldestKnownGeneration(), parent2.oldestKnownGeneration());
+    return 1 + oldestParents;
+  }
+}
+Person p = new Person("Bob", new Person("Brenda", null, null), null);
+int oldest = p.oldestKnownGeneration();
+```
+
+Output (failed):
+
+```text
+Exception in thread "Thread-0" java.lang.NullPointerException
+	at Person.oldestKnownGeneration(Unknown Source)
+	at <init>(Unknown Source)
+```
+
+Student: Wait, why is that an error?
+
+Prof: Let’s look at the trace
+
+```
+Names (the stack), over time →
+  top level
+    p = @1002
+    p.oldestKnownGeneration() on @1002
+      throws NullPointerException: parent2 is null
+      parent1.oldestKnownGeneration() on @1001
+        returns 1
+Heap
+  @1001: Person[name=Brenda, parent1=null, parent2=null]
+  @1002: Person[name=Bob, parent1=@1001, parent2=null]
+```
+
+Prof: On the person with name `"Bob"`, there’s one parent that’s null and another that isn’t. So we try to call `parent2.oldestKnownGeneration()`, but `parent2` is `null`. That is exactly what `NullPointerException` means: trying to use a field or call a method on the value `null`.
+
+So we’d actually need two checks – one for each parent. Those would be some number, or 0 if null. In my opinion, the code for this gets pretty complex:
+
+```java
+record Person(String name, Person parent1, Person parent2) {
+  int oldestKnownGeneration() {
+    int oldest = 0;
+    if(parent1 != null) { oldest = parent1.oldestKnownGeneration(); }
+    if(parent2 != null) { oldest = Math.max(oldest, parent2.oldestKnownGeneration()); }
+    return 1 + oldest;
+  }
+}
+Person p = new Person("Bob", new Person("Brenda", null, null), null);
+int oldest = p.oldestKnownGeneration();
+```
+
+Output:
+
+```text
+p = Person[name=Bob, parent1=Person[name=Brenda, parent1=null, parent2=null], parent2=null]
+oldest = 2
+```
+
+Student: Huh. How did you know to do both of those checks?
+
+Prof: Lots of experience. It’s not clear to me in all cases how to structure this code. I find the structural definition works better. Plus, this example had a clear “empty” case – when the ancestor is unknown. In other cases, like your `Post`, the base case actually has information in it, like the message of a `RegularPost`.
+
+Student: Hmm, OK. So sometimes we can use `null` for base cases?
+
+Prof: I think you **can**, but it’s not clear how often you **should**. And `NullPointerException` is not a fun one to get. My advice is to try to write `null`-free programs! And if you see `null` come up in a recursive program you’re reading, try to think of it like a base case class.
+
+Student: Huh. I’ll think about that.
+
+#### Practice
+
+Here is another method on the same `Person` record, which counts the known people in a family tree. It checks `parent1` for `null`, but not `parent2`.
+
+```java
+record Person(String name, Person parent1, Person parent2) {
+  int countKnown() {
+    int count = 1;
+    if(parent1 != null) { count += parent1.countKnown(); }
+    count += parent2.countKnown();
+    return count;
+  }
+}
+Person ana = new Person("Ana", new Person("Ben", null, null), new Person("Cy", null, null));
+int known = ana.countKnown();
+```
+
+Exercise:
+
+Running this crashes with a `NullPointerException`. Where does it happen?
+
+Choose one:
+
+- At `parent2.countKnown()`, in the call on Ana
+- At `parent1.countKnown()`, in the call on Ana
+- At `parent1.countKnown()`, in the call on Ben
+- At `parent2.countKnown()`, in the call on Ben
+
+Exercise:
+
+How many calls of `countKnown` start before the program crashes?
+
+Answer: ____
+
+## [Recursive Data in Summary](summary.html)
+
+Exercise:
+
+Which of these data definitions has no base case, so the only way to finish building a value is to pass `null`?
+
+Choose one:
+
+- ```java
+  interface Ancestor {}
+  record Known(String name, Ancestor parent1, Ancestor parent2) implements Ancestor {}
+  record Unknown() implements Ancestor {}
+  ```
+- ```java
+  record Course(String name, Course[] prereqs) {}
+  ```
+- ```java
+  record Post(String message, Post original) {}
+  ```
+- ```java
+  interface Post {}
+  record Repost(String message, Post original) implements Post {}
+  record RegularPost(String message) implements Post {}
+  ```
+
+Exercise:
+
+Fill in `firstMessage`, which gives the message of the regular post a chain of reposts started from.
+
+```java
+interface Post {
+  String firstMessage();
+}
+record Repost(String message, Post original) implements Post {
+  public String firstMessage() {
+    return ____;
+  }
+}
+record RegularPost(String message) implements Post {
+  public String firstMessage() {
+    return ____;
+  }
+}
+Post reg = new RegularPost("Hello world!");
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+String regFirst = reg.firstMessage();
+String rFirst = r.firstMessage();
+```
+
+Exercise:
+
+While `r.firstMessage()` runs, there is a moment when the stack holds the most calls of `firstMessage` at once. How many calls of `firstMessage` are on the stack at that moment?
+
+Answer: ____
+
+Exercise:
+
+Here is `hasWord` again:
+
+```java
+// in Repost
+public boolean hasWord(String word) { return message.contains(word) || original.hasWord(word); }
+// in RegularPost
+public boolean hasWord(String word) { return message.contains(word); }
+```
+
+How many calls of `hasWord` run, in all, for `r.hasWord("what")`?
+
+Answer: ____
+
+Exercise:
+
+Fill in `countKnown`, which says how many known people are in a family tree.
+
+```java
+interface Ancestor {
+  int countKnown();
+}
+record Known(String name, Ancestor parent1, Ancestor parent2) implements Ancestor {
+  public int countKnown() {
+    return ____;
+  }
+}
+record Unknown() implements Ancestor {
+  public int countKnown() {
+    return ____;
+  }
+}
+Ancestor pat = new Known("Pat", new Unknown(), new Unknown());
+Ancestor lee = new Known("Lee", new Unknown(), new Unknown());
+Ancestor kim = new Known("Kim", lee, new Unknown());
+Ancestor sam = new Known("Sam", pat, kim);
+int samKnown = sam.countKnown();
+```
+
+Exercise:
+
+Fill in `evaluate`, which works out an expression when every variable stands for the number `x`. With `x` as `2`, `(4 + 5) - x` is `7`.
+
+```java
+interface Expr {
+  int evaluate(int x);
+}
+record Num(int value) implements Expr {
+  public int evaluate(int x) {
+    return ____;
+  }
+}
+record Var(String name) implements Expr {
+  public int evaluate(int x) {
+    return ____;
+  }
+}
+record Plus(Expr left, Expr right) implements Expr {
+  public int evaluate(int x) {
+    return ____;
+  }
+}
+record Minus(Expr left, Expr right) implements Expr {
+  public int evaluate(int x) {
+    return ____;
+  }
+}
+Expr e = new Minus(new Plus(new Num(4), new Num(5)), new Var("x"));
+int seven = e.evaluate(2);
+```

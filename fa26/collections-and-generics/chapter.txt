@@ -1,0 +1,1224 @@
+# Collections and Generics
+
+## [ArrayList Intro](arraylist-intro.html)
+
+Student: Professor, something has been annoying me about arrays. Sometimes when making an array, I don’t yet know how many elements I would like to store in it. Should I just make the array be really long? That seems like it would be a waste of space.
+
+Prof: You’re right, creating a really long empty array is a bad idea in many cases. That is a limit of arrays: whenever we want to make an array longer, we have to make a whole new array and copy all the data over. That is pretty annoying. Here, let me introduce you to a class that Java provides to us to help with this issue. Java provides us with collections, data structures for storing a collection of objects. One of these collections is `ArrayList`.
+
+```java
+import java.util.ArrayList;
+
+ArrayList<String> names = new ArrayList<String>();
+void main() {
+  names.add("Ada");
+  names.add("Grace");
+  names.add("Alan");
+}
+```
+
+Output:
+
+```text
+names = [Ada, Grace, Alan]
+```
+
+Prof: What do you notice from this code?
+
+Student: You are creating a new `ArrayList` object.
+
+Prof: Correct. Based on the definition, what type of data is this ArrayList called `names` storing?
+
+Student: It looks like `String`, but it’s using notation we haven’t talked about before, it has `String` inside of arrows?
+
+Prof: We will go over the specifics of that notation later, for now you are correct that it is storing elements of type `String`.
+
+Student: Ok, and then after that we are adding names to the `ArrayList names`.
+
+Prof: Notice that `add()` is a method. We can’t use `names[index] = "Ada"`, that isn’t valid code. When we use `add()`, it appends the element to the end of our `ArrayList`.
+
+Student: And whenever we append a new element, that means that the `ArrayList` is now one element longer. So can I use `names.length` like I do with arrays?
+
+Prof: It’s different with `ArrayList`, you instead check using a method called `size()`. You also access elements with a method as well: `get()`, which allows you to fetch an element at a specific index, similar to an array.
+
+```java
+import java.util.ArrayList;
+
+ArrayList<String> names = new ArrayList<String>();
+String first;
+int count;
+void main() {
+  names.add("Ada");
+  names.add("Grace");
+  names.add("Alan");
+
+  first = names.get(0);
+  count = names.size();
+}
+```
+
+Output:
+
+```text
+names = [Ada, Grace, Alan]
+first = Ada
+count = 3
+```
+
+Student: But what if I don’t want to add an element at the end? Or what if I want to replace one of the names in the list?
+
+Prof: There are other methods you can use, such as `add(index, value)` and `set(index, value)`. And you can use `remove(index)` to get rid of elements as well.
+
+```java
+import java.util.ArrayList;
+
+ArrayList<String> names = new ArrayList<String>();
+String removed;
+int count;
+String all;
+void main() {
+  names.add("Ada");
+  names.add("Grace");
+  names.add("Alan");
+
+  names.add(1, "Edsger");
+  removed = names.remove(0);
+  names.set(0, "Margaret");
+  count = names.size();
+  all = names.toString();
+}
+```
+
+Output:
+
+```text
+names = [Margaret, Grace, Alan]
+removed = Ada
+count = 3
+all = [Margaret, Grace, Alan]
+```
+
+Prof: When you remove an element at index 0, and don’t replace it, what would you get if you tried to use `get(0)`?
+
+Student: Well that index would be empty, so it wouldn’t contain a `String` object. In that case it must be `null`!
+
+Prof: That’s a good guess if this were an array, but an `ArrayList` never leaves a gap. When you `remove` an element, everything after it shifts down one index to close the gap, and `size()` goes down by one. So `get(0)` gives you the element that used to be at index 1. Likewise, `add(index, value)` shifts the later elements up to make room.
+
+Prof: Now `ArrayList` also comes with some other helpful methods. One of the most useful is `contains()`, which tells you whether or not the `ArrayList` contains a certain element. Since duplicate values are allowed in an `ArrayList`, all it tells you is that the element is in the ArrayList at least once.
+
+```java
+import java.util.ArrayList;
+
+ArrayList<String> names = new ArrayList<String>();
+boolean hasAda;
+boolean hasLinus;
+int count;
+void main() {
+  names.add("Ada");
+  names.add("Ada");
+
+  hasAda = names.contains("Ada");
+  hasLinus = names.contains("Linus");
+  count = names.size();
+}
+```
+
+Output:
+
+```text
+names = [Ada, Ada]
+hasAda = true
+hasLinus = false
+count = 2
+```
+
+Student: Hey Professor? I just tried to make an ArrayList of type int, but it doesn’t seem to be working.
+
+```java
+import java.util.ArrayList;
+
+ArrayList<int> nums = new ArrayList<int>();
+```
+
+Output (compile error):
+
+```text
+line 3: error: Syntax error, insert "Dimensions" to complete ReferenceType
+line 3: error: Syntax error, insert "Dimensions" to complete ReferenceType
+```
+
+Prof: Collections in Java, such as an ArrayList, can only store objects. You can’t put primitives in a collection.
+
+Student: But what if I want to store a list of whole numbers?
+
+Prof: You can still do that, Java has a version for each primitive that is an object instead. For `int` you can instead use `Integer`, and Java turns an `int` like `3` into an `Integer` for you when you `add` it. Try re-writing your code with that instead.
+
+```java
+import java.util.ArrayList;
+
+ArrayList<Integer> nums = new ArrayList<Integer>();
+int total;
+void main() {
+  nums.add(3);
+  nums.add(10);
+  nums.add(3);
+  total = nums.get(0) + nums.get(1);
+}
+```
+
+Output:
+
+```text
+nums = [3, 10, 3]
+total = 13
+```
+
+Prof: There you go. Remember that `ArrayList` is ordered like standard arrays, and that the first element is index 0. But unlike an array their size can be changed when using `add()` and `remove()`. From here, we will talk about some other types of collections in Java that are less like arrays.
+
+#### Practice
+
+Exercise:
+
+`names` starts as `[Ada, Alan]`. Fill in the three missing pieces so that it ends as `[Grace, Alan]`: insert `"Grace"` at index 1, then remove the element at index 0, then record how many elements are left.
+
+```java
+import java.util.ArrayList;
+
+ArrayList<String> names = new ArrayList<String>();
+void main() {
+  names.add("Ada");
+  names.add("Alan");
+  ____
+  ____
+  int count = ____;
+  System.out.println(names);
+  System.out.println(count);
+}
+```
+
+## [HashSet Introduction](hashset-intro.html)
+
+Prof: Can you think of any situation where you wouldn’t want duplicates in a collection? Where you only care whether an element is present at least once?
+
+Student: Maybe a list of all the CSE courses at UC San Diego? A course can’t be in the catalog twice.
+
+Prof: Good example. Let’s use that to introduce another type of collection in Java, the `HashSet`.
+
+```java
+import java.util.HashSet;
+
+HashSet<String> courses = new HashSet<String>();
+int count;
+String all;
+void main() {
+  courses.add("CSE 11");
+  courses.add("CSE 12");
+  courses.add("CSE 11");
+  count = courses.size();
+  all = courses.toString();
+}
+```
+
+Output:
+
+```text
+courses = [CSE 12, CSE 11]
+count = 2
+all = [CSE 12, CSE 11]
+```
+
+Prof: What do you notice about the `count` and output from `toString`?
+
+Student: Even though we added CSE 11 twice, it only shows up in the `HashSet` once.
+
+Prof: Exactly. Unlike an `ArrayList`, `HashSet` can’t contain duplicate elements. Also, the `add()` method for `HashSet` returns whether or not the element could be added.
+
+```java
+import java.util.HashSet;
+
+HashSet<String> courses = new HashSet<String>();
+boolean first = courses.add("CSE 11");
+boolean second = courses.add("CSE 11");
+```
+
+Output:
+
+```text
+courses = [CSE 11]
+first = true
+second = false
+```
+
+Student: So, when `courses` was empty, the first `add()` appended “CSE 11”, but the second time nothing changed and it returned false.
+
+Prof: Almost, but I notice you said appended, but that isn’t really the right word. `HashSet` is unordered, so when an element is added it doesn’t necessarily get appended to the end.
+
+Student: Am I able to use `contains()` like we did with `ArrayList`?
+
+Prof: Yep. And `contains()` is usually why programmers choose to use a `HashSet`, since determining whether or not a `HashSet` contains a given value can be much faster than checking an array or `ArrayList`. We won’t go over the specifics in this class, but it is good to remember that the advantage of a `HashSet` is faster `contains()` and `remove()`.
+
+Student: For `ArrayList`, `remove()` took an index as the argument. But you said that `HashSet` doesn’t have indexes?
+
+Prof: Right, so for `remove()` the argument is instead the element you would like to remove.
+
+```java
+import java.util.HashSet;
+
+HashSet<String> courses = new HashSet<String>();
+boolean hasCse11;
+boolean removed;
+boolean removedAgain;
+boolean stillHasCse11;
+int count;
+void main() {
+  courses.add("CSE 11");
+  courses.add("CSE 12");
+
+  hasCse11 = courses.contains("CSE 11");
+  removed = courses.remove("CSE 11");
+  removedAgain = courses.remove("CSE 11");
+  stillHasCse11 = courses.contains("CSE 11");
+  count = courses.size();
+}
+```
+
+Output:
+
+```text
+courses = [CSE 12]
+hasCse11 = true
+removed = true
+removedAgain = false
+stillHasCse11 = false
+count = 1
+```
+
+Prof: How about you try creating a set of `Integer`, and then writing a for-each loop to sum all of the values in the `HashSet`. For-each loops work on `ArrayList` as well.
+
+```java
+import java.util.HashSet;
+
+HashSet<Integer> scores = new HashSet<Integer>();
+int total;
+void main() {
+  scores.add(90);
+  scores.add(75);
+  scores.add(90);
+  scores.add(60);
+
+  total = 0;
+  for (int score : scores) {
+    total += score;
+  }
+}
+```
+
+Output:
+
+```text
+scores = [90, 75, 60]
+total = 225
+```
+
+Prof: Now here’s a question: What order did you sum the scores in?
+
+Student: Well I assume it did 90 + 75 + 60, since that was the order I put them into the `HashSet`, and second time I tried to add 90 it was already in the set.
+
+Prof: Not necessarily, because the set is unordered, we don’t know what order it did the summation. But in this case, addition doesn’t result in a different value when you change the order.
+
+Prof: Here, look at this example. Now we are going to create a set of `Point`, what do you think the `size()` for points will return?
+
+```java
+import java.util.HashSet;
+
+record Point(int x, int y) { }
+
+HashSet<Point> points = new HashSet<Point>();
+int count;
+void main() {
+  points.add(new Point(1, 2));
+  points.add(new Point(1, 2));
+  points.add(new Point(2, 1));
+  count = points.size();
+}
+```
+
+Output:
+
+```text
+points = [Point[x=1, y=2], Point[x=2, y=1]]
+count = 2
+```
+
+Student: So `count` is 2. The two `new Point(1, 2)` are different objects, but the set only kept one of them.
+
+Prof: Right. Two records with the same fields count as the same element, and so do two `String`s with the same text. That works for `String` and for records. For a class you write yourself, it takes more work to make a set treat two objects as the same, and we won’t get into that here.
+
+Prof: Now that we have learned about both `ArrayList` and `HashSet`, here is a nice trick that uses both of them. If we create an `ArrayList`, we can add duplicate elements to it. Normally with an array, if I asked you to give me a new array with all the duplicates removed what would you have to do?
+
+Student: I would probably create an empty array, then loop through the old one and add any that aren’t already in the new array. But then I would have to write another for-loop that checks if the new array already has that element…
+
+Prof: Well, here’s the helpful trick: You can create a `HashSet` from an `ArrayList` like this.
+
+```java
+import java.util.ArrayList;
+import java.util.HashSet;
+
+ArrayList<String> requests = new ArrayList<String>();
+HashSet<String> distinct;
+int total;
+int offered;
+void main() {
+  requests.add("CSE 11");
+  requests.add("CSE 12");
+  requests.add("CSE 11");
+  requests.add("MATH 18");
+  requests.add("CSE 12");
+
+  distinct = new HashSet<String>(requests);
+  total = requests.size();
+  offered = distinct.size();
+}
+```
+
+Output:
+
+```text
+requests = [CSE 11, CSE 12, CSE 11, MATH 18, CSE 12]
+distinct = [MATH 18, CSE 12, CSE 11]
+total = 5
+offered = 3
+```
+
+Student: Ok I see.
+
+Prof: `HashSet` is an important tool to keep in your Java toolbox. Remember that while `ArrayList` is needed when the position in your list matters, `HashSet` is better for questions about whether or not an element is present.
+
+#### Practice
+
+Exercise:
+
+The list below has repeats. Fill in the code that builds a `HashSet` from it, and then sets `offered` to the number of distinct names.
+
+```java
+import java.util.ArrayList;
+import java.util.HashSet;
+
+ArrayList<String> names = new ArrayList<String>(
+  List.of("Ada", "Grace", "Ada", "Alan", "Grace", "Ada"));
+
+HashSet<String> distinct = new HashSet<String>(____);
+int total = names.size();
+int offered = ____;
+```
+
+Exercise:
+
+Once that program has run, what are the values of `total` and `offered`?
+
+```java
+total = ____
+offered = ____
+```
+
+## [HashMap Introduction](hashmap-intro.html)
+
+Student: So `ArrayList` lets me put things at specific positions, and `HashSet` ensures that there are no duplicates. But what if I wanted something different? Let’s say I was storing a bunch of students in a class, and some of them have the same first name. I can’t use a `HashSet` because then there would be no way to have two students with the same name, and an `ArrayList` would have no way to distinguish between the students.
+
+Prof: Hmm, that is a real problem. In practice, when you turn in an assignment what do you put on your submission so that we can tell students with the same name apart?
+
+Student: My student ID number? That’s unique. But if I created a `HashSet` of student ID numbers, how would I be able to know which name corresponds to which ID?
+
+Prof: Java has a data structure that is perfect for this: `HashMap`. It stores data as key-value pairs. Here is your student example written out as a `HashMap`. What do you notice?
+
+```java
+import java.util.HashMap;
+
+HashMap<Integer, String> directory = new HashMap<Integer, String>();
+String name;
+int count;
+String all;
+void main() {
+  directory.put(12345, "Ricardo");
+  directory.put(67890, "Navya");
+  directory.put(13579, "Sofia");
+
+  name = directory.get(67890);
+  count = directory.size();
+  all = directory.toString();
+}
+```
+
+Output:
+
+```text
+directory = {67890=Navya, 12345=Ricardo, 13579=Sofia}
+name = Navya
+count = 3
+all = {67890=Navya, 12345=Ricardo, 13579=Sofia}
+```
+
+Student: So when we define a HashMap, we give two different types inside the angle brackets. And then instead of using `add()`, we use `put()` and are passing in two values for each element?
+
+Prof: Yes, in this example the `Integer` student ID is the key, while the `String` student name is the value.
+
+Student: What would happen if I put the same student ID number twice? Would it be ignored, like adding a duplicate to a `HashSet`?
+
+Prof: Not quite. The keys are unique, just like the elements of a `HashSet`, but a second `put` with the same key replaces the old value instead of being ignored. The values are not unique, though. This is important for our student directory example, as we want to be able to support multiple students with the same name.
+
+```java
+import java.util.HashMap;
+
+HashMap<Integer, String> directory = new HashMap<Integer, String>();
+String before;
+String fresh;
+String current;
+int count;
+void main() {
+  directory.put(12345, "Ricardo");
+  directory.put(67890, "Navya");
+
+  before = directory.put(12345, "Maitrayee");
+  fresh = directory.put(24680, "Maitrayee");
+  current = directory.get(12345);
+  count = directory.size();
+}
+```
+
+Output:
+
+```text
+directory = {67890=Navya, 24680=Maitrayee, 12345=Maitrayee}
+before = Ricardo
+fresh = null
+current = Maitrayee
+count = 3
+```
+
+Prof: Notice what `put()` returns when you already have a value at that key?
+
+Student: It returns the old value, and replaces it in the `HashMap` with the new one. But when there wasn’t a value there yet, it returns `null`. And you also used a method we have seen before, `get()`. You passed in the key and it returned the value.
+
+Prof: Yep, `HashMap` is designed for you to fetch a value using a key.
+
+Student: What if you try to fetch a value from a key that doesn’t exist? Will it give you an error?
+
+```java
+import java.util.HashMap;
+
+HashMap<Integer, String> directory = new HashMap<Integer, String>();
+String missing;
+void main() {
+  directory.put(12345, "Ricardo");
+  directory.put(67890, "Navya");
+
+  missing = directory.get(11111);
+}
+```
+
+Output:
+
+```text
+directory = {67890=Navya, 12345=Ricardo}
+missing = null
+```
+
+Student: Ah so it’s `null`.
+
+Prof: A `null` value can be problematic for your program, so it’s a good idea to check if a key exists before attempting to fetch and use a value. `HashMap` provides a method for this called `containsKey()`. And just like `ArrayList` and `HashSet` you can remove elements. `remove()` takes the key and removes both the key and the value.
+
+```java
+import java.util.HashMap;
+
+HashMap<Integer, String> directory = new HashMap<Integer, String>();
+boolean hasRicardo;
+boolean hasNobody;
+String removed;
+String removedAgain;
+int count;
+void main() {
+  directory.put(12345, "Ricardo");
+  directory.put(67890, "Navya");
+
+  hasRicardo = directory.containsKey(12345);
+  hasNobody = directory.containsKey(11111);
+
+  removed = directory.remove(12345);
+  removedAgain = directory.remove(12345);
+  count = directory.size();
+}
+```
+
+Output:
+
+```text
+directory = {67890=Navya}
+hasRicardo = true
+hasNobody = false
+removed = Ricardo
+removedAgain = null
+count = 1
+```
+
+Student: Hey Professor, I made a `HashMap` of how many points each student has, and asked for a student I haven’t added yet. But, my program crashed! Do I need to use the `containsKey` here? Or is there a better way to deal with this problem?
+
+```java
+import java.util.HashMap;
+
+HashMap<String, Integer> points = new HashMap<String, Integer>();
+int adaPoints;
+int linusPoints;
+void main() {
+  points.put("Ada", 90);
+
+  adaPoints = points.get("Ada");
+  linusPoints = points.get("Linus");
+}
+```
+
+Output (failed):
+
+```text
+Exception in thread "Thread-0" java.lang.NullPointerException
+	at main(Unknown Source)
+```
+
+Prof: For situations like this, there is a special kind of get method. You can use `getOrDefault()` which takes a second argument representing the default value to use if the `HashMap` doesn’t contain that key.
+
+```java
+import java.util.HashMap;
+
+HashMap<String, Integer> points = new HashMap<String, Integer>();
+int adaPoints;
+int linusPoints;
+void main() {
+  points.put("Ada", 90);
+
+  adaPoints = points.getOrDefault("Ada", 0);
+  linusPoints = points.getOrDefault("Linus", 0);
+}
+```
+
+Output:
+
+```text
+points = {Ada=90}
+adaPoints = 90
+linusPoints = 0
+```
+
+Student: What if I want to use a for-each loop? If I try to write it like this there is an error.
+
+```java
+import java.util.HashMap;
+
+HashMap<String, Integer> points = new HashMap<String, Integer>();
+int total;
+void main() {
+  points.put("Ada", 90);
+  points.put("Grace", 75);
+
+  total = 0;
+  for (int p : points) {
+    total += p;
+  }
+}
+```
+
+Output (compile error):
+
+```text
+line 10: error: Can only iterate over an array or an instance of java.lang.Iterable
+```
+
+Prof: Think about this: when you are looping through `points`, and setting `int p` to be each element, how are we supposed to know whether you want `int p` to be the key or the value?
+
+Student: Well obviously I want it to be the value. The value is the one that is an `Integer`.
+
+Prof: We need to specify whether you are trying to loop through the keys or the values. Let’s start with an example of the keys. We can use `points.keySet()` to tell Java that we want to loop through the set of all keys in the `HashMap`.
+
+Student: Ok, but what if I want to loop through all the point values?
+
+Prof: You can use `points.values()`. Remember that just like `HashSet`, there isn’t a set order. This is fine in this case for summation.
+
+```java
+import java.util.HashMap;
+
+HashMap<String, Integer> points = new HashMap<String, Integer>();
+int total;
+int sameTotal;
+void main() {
+  points.put("Ada", 90);
+  points.put("Grace", 75);
+  points.put("Alan", 60);
+
+  total = 0;
+  for (String student : points.keySet()) {
+    total += points.get(student);
+  }
+
+  sameTotal = 0;
+  for (int p : points.values()) {
+    sameTotal += p;
+  }
+}
+```
+
+Output:
+
+```text
+points = {Grace=75, Alan=60, Ada=90}
+total = 225
+sameTotal = 225
+```
+
+Prof: Based on what we have talked about, try writing code that checks how many times each word appears in an array. I’ll give you a `String[]` array to start off with, try to use a `HashMap`.
+
+Student: Ok, to count the number of times a word appears, I would need to loop through the list and add 1 to the total for each appearance. So the keys should be the word, because that is unique, and the values should be the count. At the beginning the `HashMap` is empty, and whenever a word appears, I either add it to the `HashMap` if it is new, or increment the value by 1.
+
+```java
+import java.util.HashMap;
+
+String[] words = {"to", "be", "or", "not", "to", "be"};
+
+HashMap<String, Integer> counts = new HashMap<String, Integer>();
+int toCount;
+int distinct;
+void main() {
+  for (String w : words) {
+    counts.put(w, counts.getOrDefault(w, 0) + 1);
+  }
+
+  toCount = counts.get("to");
+  distinct = counts.size();
+}
+```
+
+Output:
+
+```text
+words = [to, be, or, not, to, be]
+counts = {not=1, be=2, or=1, to=2}
+toCount = 2
+distinct = 4
+```
+
+Prof: There you go. Now that we have seen all three, here is how to choose between them. Use an `ArrayList` when the position of your elements matters, or when you need to allow duplicates. Use a `HashSet` when you only care whether or not an element is present, and you don’t want duplicates. Use a `HashMap` when you want to look up a value using a key, like finding a student’s name from their ID. Keys are unique, but the values can be duplicates. Both `HashSet` and `HashMap` are unordered, and their advantage is fast lookups, so ask yourself what question your program is really asking.
+
+Student: So how would I use one of these in a real program, like with the `Post` class from before?
+
+Prof: Let’s look at that next.
+
+#### Practice
+
+Exercise:
+
+`stock` starts out mapping `"apple"` to 3 and `"pear"` to 5. Fill in the missing pieces so that the apple count is replaced by 4, the pear is removed entirely, and `apples` holds the apple count afterwards.
+
+```java
+import java.util.HashMap;
+
+HashMap<String, Integer> stock = new HashMap<String, Integer>();
+void main() {
+  stock.put("apple", 3);
+  stock.put("pear", 5);
+  ____
+  ____
+  int apples = ____;
+  System.out.println(apples);
+  System.out.println(stock.size());
+}
+```
+
+## [Using ArrayList with Post](arraylist-use-case.html)
+
+Student: Ok Professor, I think I’m ready to use an `ArrayList` in my own programs.
+
+Prof: Sure, let’s go back to an example we have gone over before. We made a `Post` class.
+
+```java
+class Post {
+  String user;
+  String message;
+  int likes;
+
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+  }
+
+  void like() {
+    this.likes = this.likes + 1;
+  }
+}
+
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int likes;
+void main() {
+  original.like();
+  likes = original.likes;
+}
+```
+
+Output:
+
+```text
+original = Post@737
+likes = 1
+```
+
+Prof: Imagine we wanted to support replies on our posts. How would you go about implementing replies to a post using an `ArrayList`?
+
+Student: I should have every `Post` contain an `ArrayList` of replies, and the type should be other posts, so I’ll use an `ArrayList<Post>`.
+
+Prof: Good idea. You should also include a reference to the `Post` it’s replying to, since each reply is also a `Post`.
+
+Student: Ok, I understand.
+
+```java
+import java.util.ArrayList;
+
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList<Post> replies;
+  Post replyTo;
+
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+    this.replies = new ArrayList<Post>();
+    this.replyTo = null;
+  }
+
+  void like() {
+    this.likes = this.likes + 1;
+  }
+}
+
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int count;
+void main() {
+  count = original.replies.size();
+}
+```
+
+Output:
+
+```text
+original = Post@8ca
+count = 0
+```
+
+Student: Ok now I am going to add a `reply()` method. It needs to make a `new Post()` and set `replyTo` to be the original `Post`. And then add this new reply to the `ArrayList`.
+
+Prof: Implement that method. After you run it, let’s take a moment to think through what it actually builds in memory.
+
+```java
+import java.util.ArrayList;
+
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList<Post> replies;
+  Post replyTo;
+
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+    this.replies = new ArrayList<Post>();
+    this.replyTo = null;
+  }
+
+  void like() {
+    this.likes = this.likes + 1;
+  }
+
+  Post reply(String user, String message) {
+    Post r = new Post(user, message);
+    r.replyTo = this;
+    this.replies.add(r);
+    return r;
+  }
+}
+
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int count;
+String backUser;
+void main() {
+  Post r = original.reply("ada", "I'll be there");
+  original.reply("grace", "Is there pizza?");
+  count = original.replies.size();
+  backUser = r.replyTo.user;
+}
+```
+
+Output:
+
+```text
+original = Post@a5d
+count = 2
+backUser = joe
+```
+
+Prof: Here’s the picture just after both `reply` calls, but before we read `count` and `backUser`:
+
+```
+Names (the stack)
+  main()
+    r = @1003
+  top level
+    original = @1001
+    count = 0
+    backUser = null
+Heap
+  @1001: Post[user=joe, message=CSE-PACE next Tuesday!, likes=0, replies=@1002, replyTo=null]
+  @1002: [@1003, @1005]
+  @1003: Post[user=ada, message=I'll be there, likes=0, replies=@1004, replyTo=@1001]
+  @1004: []
+  @1005: Post[user=grace, message=Is there pizza?, likes=0, replies=@1006, replyTo=@1001]
+  @1006: []
+```
+
+Prof: Each `reply` did two things at once: it made a new `Post` and pointed that post’s `replyTo` back at the one it was replying to. That leaves a link from the original to the reply through the list, and from the reply back to the original through `replyTo`.
+
+Student: Now for the likes. Since we are using references, whenever we like a `Post` it shouldn’t matter whether I reach it through the variable `r` or through `original.replies.get(0)`. They both point at the same object, so liking one should show up on the other.
+
+Prof: Exactly, the posts are mutable. They can be changed without making a copy.
+
+```java
+import java.util.ArrayList;
+
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList<Post> replies;
+  Post replyTo;
+
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+    this.replies = new ArrayList<Post>();
+    this.replyTo = null;
+  }
+
+  void like() {
+    this.likes = this.likes + 1;
+  }
+
+  Post reply(String user, String message) {
+    Post r = new Post(user, message);
+    r.replyTo = this;
+    this.replies.add(r);
+    return r;
+  }
+}
+
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int viaVariable;
+int viaList;
+void main() {
+  Post r = original.reply("ada", "I'll be there");
+  original.replies.get(0).like();
+  viaVariable = r.likes;
+  viaList = original.replies.get(0).likes;
+}
+```
+
+Output:
+
+```text
+original = Post@bee
+viaVariable = 1
+viaList = 1
+```
+
+Student: So we’ve been using `ArrayList`, `HashSet`, and `HashMap`. They have a lot of similarities — are they connected in any way?
+
+Prof: They sure are. Each one of these classes **implements** an interface. `ArrayList` is one kind of `List`, and a `List` is a kind of `Collection`. `HashSet` is a `Set`, which is also a `Collection`. `HashMap` is a bit different as a `Map` holds key/value pairs rather than single elements. Here’s the class hierarchy for that.
+
+```
+Collection (interface)
+  add(E e)
+  contains(Object o)
+  remove(Object o)
+  size()
+List (interface) under Collection
+  get(int index)
+  add(int index, E e)
+  set(int index, E e)
+  remove(int index)
+Set (interface) under Collection
+Map (interface)
+  put(K key, V value)
+  get(Object key)
+  containsKey(Object key)
+  getOrDefault(Object key, V d)
+ArrayList under List
+HashSet under Set
+HashMap under Map
+```
+
+Prof: Because `ArrayList` is a `List`, you will sometimes see the field written as `List<Post> replies` instead of `ArrayList<Post>`. We only covered one type of list, but you will learn about others in future classes. The full set of methods each one offers is in the [Java documentation](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html).
+
+#### Practice
+
+Exercise:
+
+After `Post r = p.reply("ada", "hi");` runs, which of these is **true**?
+
+Choose one:
+
+- `p.replies` contains a copy of `r`, and `r.replyTo` is `null`
+- `p.replies` is unchanged until `like()` is called
+- `p.replies` contains `r` and `r.replyTo` is `p`
+- `r.replies` contains `p` and `p.replyTo` is `r`
+
+Exercise:
+
+Fill in `reply` so the new post is linked in both directions: it remembers its parent, and the parent remembers it. `main` should end with `1` printed for the number of replies.
+
+```java
+import java.util.ArrayList;
+
+class Post {
+  String user;
+  ArrayList<Post> replies = new ArrayList<Post>();
+  Post replyTo;
+  Post(String user) { this.user = user; }
+
+  Post reply(String user) {
+    Post r = new Post(user);
+    ____
+    ____
+    return r;
+  }
+}
+
+void main() {
+  Post p = new Post("joe");
+  Post r = p.reply("ada");
+  System.out.println(p.replies.size());
+  System.out.println(r.____.user);
+}
+```
+
+## [Generics Overview](generics-overview.html)
+
+Student: Ok Professor, you said you’d teach me what the angle brackets in `ArrayList<String>` mean.
+
+Prof: Those are generics. `ArrayList` is one class that can hold any kind of object, so it needs to be told which kind you want for this particular list. The thing in the angle brackets is called the type argument. `ArrayList<String>` is a list of `String`s, and `ArrayList<Integer>` is a list of `Integer`s.
+
+```java
+import java.util.ArrayList;
+
+ArrayList<String> words = new ArrayList<String>();
+ArrayList<Integer> nums = new ArrayList<Integer>();
+String w;
+int n;
+void main() {
+  words.add("hello");
+  nums.add(42);
+  w = words.get(0);
+  n = nums.get(0);
+}
+```
+
+Output:
+
+```text
+words = [hello]
+nums = [42]
+w = hello
+n = 42
+```
+
+Prof: Look at the types of what comes out. `words.get(0)` is a `String`, and `nums.get(0)` is an `Integer`. The type argument decides what `get` gives back and what `add` accepts.
+
+```java
+import java.util.ArrayList;
+
+record Point(int x, int y) { }
+
+ArrayList<Point> points = new ArrayList<Point>();
+int x;
+void main() {
+  points.add(new Point(3, 4));
+  x = points.get(0).x();
+}
+```
+
+Output:
+
+```text
+points = [Point[x=3, y=4]]
+x = 3
+```
+
+Student: What stops me from putting the wrong thing in? Like using `add(3)` to an `ArrayList<String>`?
+
+Prof: The compiler would stop you. Before your program runs, Java checks every use of `words` against the type argument. If you try to add something that isn’t a `String`, you get a compile error.
+
+```java
+import java.util.ArrayList;
+
+ArrayList<String> words = new ArrayList<String>();
+void main() {
+  words.add(3);
+}
+```
+
+Output (compile error):
+
+```text
+line 5: error: The method add(int, String) in the type ArrayList<String> is not applicable for the arguments (int)
+```
+
+Prof: This is the same reason `ArrayList<int>` didn’t work earlier. A type argument has to be a reference type, like a class or record, not a primitive, so for whole numbers we use `Integer`. It’s also why you can call `words.get(0).length()`: the compiler already knows the element is a `String`.
+
+Student: `HashMap` had two things in its brackets. Does that work the same way?
+
+Prof: Yes, you just give one type argument for each blank, in order. Remember that for a `HashMap<Integer, String>` the first is the type of the **keys** and the second is the type of the **values**.
+
+```java
+import java.util.HashMap;
+
+HashMap<Integer, String> directory = new HashMap<Integer, String>();
+String name;
+void main() {
+  directory.put(12345, "Ricardo");
+  name = directory.get(12345);
+}
+```
+
+Output:
+
+```text
+directory = {12345=Ricardo}
+name = Ricardo
+```
+
+Prof: When you read the Java documentation, you’ll see these written as `ArrayList<E>` and `HashMap<K, V>`. The letters are placeholders that your type arguments fill in. The `E` stands for the **element** type, and `K` and `V` for the **key** and **value** types. So when the documentation says that `get` returns an `E`, for your `ArrayList<String>` that means a `String`. You’ll learn how to write classes with placeholders like these in later courses.
+
+#### Practice
+
+Exercise:
+
+Which line creates a list that holds `String`s?
+
+Choose one:
+
+- `ArrayList(String) names = new ArrayList(String)();`
+- `ArrayList names = new ArrayList<String>;`
+- `String<ArrayList> names = new String<ArrayList>();`
+- `ArrayList<String> names = new ArrayList<String>();`
+
+Exercise:
+
+Given `ArrayList<Integer> nums = new ArrayList<Integer>();`, which of these will **not** compile?
+
+Choose one:
+
+- `int first = nums.get(0);`
+- `nums.add("seven");`
+- `int count = nums.size();`
+- `nums.add(7);`
+
+Exercise:
+
+In `HashMap<String, Integer> ages`, what is the type of `ages.get("Ada")`?
+
+Choose one:
+
+- `K`
+- `HashMap`
+- `Integer`
+- `String`
+
+## [Collections and Generics in Summary](summary.html)
+
+Exercise:
+
+You are keeping a running tally of how many times each hashtag appears in a feed. Which collection fits best?
+
+Choose one:
+
+- `HashMap<String, Integer>`
+- `HashSet<String>`
+- `ArrayList<String>`
+- `ArrayList<Integer>`
+
+Exercise:
+
+What is `tags.size()` after this runs?
+
+```java
+record Tag(String name) { }
+
+HashSet<Tag> tags = new HashSet<Tag>();
+tags.add(new Tag("java"));
+tags.add(new Tag("java"));
+tags.add(new Tag("cse"));
+```
+
+Choose one:
+
+- `1`
+- `2`
+- `0`
+- `3`
+
+Exercise:
+
+Finish the loop so `counts` maps each color to how many times it appears, then read back the count for `"red"`.
+
+```java
+import java.util.HashMap;
+
+String[] votes = {"red", "blue", "red", "red", "green"};
+HashMap<String, Integer> counts = new HashMap<String, Integer>();
+void main() {
+  for (String v : votes) {
+    counts.put(v, ____);
+  }
+  int red = ____;
+  System.out.println(red);
+  System.out.println(counts.size());
+}
+```
+
+Exercise:
+
+Using this chapter’s `Post` (with an `int likes` field and a `like()` method), what is `p.likes` after this runs?
+
+```java
+ArrayList<Post> feed = new ArrayList<Post>();
+Post p = new Post("ada", "hi");
+feed.add(p);
+feed.get(0).like();
+```
+
+Choose one:
+
+- `0`
+- `1`
+- `2`
+- It doesn’t compile
+
+Exercise:
+
+Given `ArrayList<Point> pts = new ArrayList<Point>();` where `Point` is `record Point(int x, int y) { }`, which line does **not** compile?
+
+Choose one:
+
+- `int px = pts.get(0).x();`
+- `pts.add("origin");`
+- `pts.add(new Point(1, 2));`
+- `int n = pts.size();`

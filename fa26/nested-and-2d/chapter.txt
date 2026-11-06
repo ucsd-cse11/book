@@ -1,0 +1,863 @@
+# Nested and 2D Structures
+
+## [Rows of Seats](2d-arrays.html)
+
+*This example is thanks to Jill Su, contributed in an earlier edition of this book.*
+
+Student: Professor, I have a question. I was getting seats at a movie for me and some friends this weekend. They had assigned seats, and a whole screen that showed the number of empty seats, and also options like “find 3 seats together”. How would I program that?
+
+Prof: Great question. I’m going to lift out a specific, simple version for our discussion – for each seat we will just track a single `boolean` for if it is occupied or not. We can grow it into something more complex later if we want.
+
+Student: I’m OK with that.
+
+Prof: Let’s think about what data we need to store – what types might make sense based on what we’ve seen?
+
+Student: I guess there are a lot of seats, so an array?
+
+Prof: Ah interesting idea; arrays will almost certainly be involved. Let’s look at a picture to help guide our thinking.
+
+[image]
+
+Drawing by Jill Su.
+
+Prof: Let’s first start by making three definitions, one per row. What might that look like?
+
+Student: Hmm there would be three rows. Like `boolean[] topRow = { true, false, true, true, true, true };` and then the second row would be like `{ true, false, false, false, true }`
+
+Prof: Good. So I see you’ve picked `true` for “seat available” and `false` for “not available”. Seems good. So then we need a little new insight if we want to represent the whole theater – we can store all of these array references in another array.
+
+Student: In another array?
+
+Prof: That’s right. We can have types like `boolean[][]` which means “array of array of booleans”. Or, super precisely, “array of references to boolean arrays”. Let’s write the code and look at a memory diagram.
+
+```java
+boolean[] top = { true, false, true, true, true, true };
+boolean[] middle = { true, false, false, false, true };
+boolean[] bottom = { true, true, false, false };
+boolean[][] seats = { top, middle, bottom };
+```
+
+Output:
+
+```text
+top = [true, false, true, true, true, true]
+middle = [true, false, false, false, true]
+bottom = [true, true, false, false]
+seats = [[true, false, true, true, true, true], [true, false, false, false, true], [true, true, false, false]]
+```
+
+Memory at the end:
+
+```
+Names
+  top level
+    top = @1001
+    middle = @1002
+    bottom = @1003
+    seats = @1004
+Heap
+  @1001: [true, false, true, true, true, true]
+  @1002: [true, false, false, false, true]
+  @1003: [true, true, false, false]
+  @1004: [@1001, @1002, @1003]
+```
+
+Prof: So if we wanted to represent this as a record, we might have something like this:
+
+```java
+record Theater(boolean[][] seats) { }
+```
+
+and then we can start to ask questions like “how many empty seats”.
+
+Student: Ah, ok, so you’re thinking like `int emptySeats()` as a method on `Theater`?
+
+Prof: Right, and getting that right will teach us about arrays of arrays. What do you think the loop will look like?
+
+Student: Well, it’s like a counter pattern, right? We learned about those.
+
+Prof: Indeed. If we have a loop that just needs to look at all the elements of a 2d array and count them, we can use a **nested loop** that matches the idea of **nested arrays**:
+
+```java
+record Theater(boolean[][] seats) {
+  int emptySeats() {
+    int howMany = 0;
+    for(boolean[] row: seats) {
+      for(boolean seat: row) {
+        if(seat) { howMany += 1; }
+      }
+    }
+    return howMany;
+  }
+}
+boolean[] top = { true, false, true, true, true, true };
+boolean[] middle = { true, false, false, false, true };
+boolean[] bottom = { true, true, false, false };
+boolean[][] seats = { top, middle, bottom };
+Theater theater = new Theater(seats);
+int emptySeats = theater.emptySeats();
+```
+
+Output:
+
+```text
+top = [true, false, true, true, true, true]
+middle = [true, false, false, false, true]
+bottom = [true, true, false, false]
+seats = [[true, false, true, true, true, true], [true, false, false, false, true], [true, true, false, false]]
+theater = Theater[seats=[[Z@92b]
+emptySeats = 9
+```
+
+Memory at the end:
+
+```
+Names
+  top level
+    top = @1001
+    middle = @1002
+    bottom = @1003
+    seats = @1004
+    theater = @1005
+    emptySeats = 9
+Heap
+  @1001: [true, false, true, true, true, true]
+  @1002: [true, false, false, false, true]
+  @1003: [true, true, false, false]
+  @1004: [@1001, @1002, @1003]
+  @1005: Theater[seats=@1004]
+```
+
+Student: OK, I think I get it. So each time through the outer loop, `row` stores one of the array references. Then the inner loop works with that.
+
+Prof: Right!
+
+#### Practice
+
+Exercise:
+
+Trace `theater.emptySeats()`. For each run of the outer loop, how many times does the inner loop’s body run, and what is `howMany` when the inner loop finishes?
+
+`row` is `top`: the inner body runs ____ times, and then `howMany` is ____
+`row` is `middle`: the inner body runs ____ times, and then `howMany` is ____
+`row` is `bottom`: the inner body runs ____ times, and then `howMany` is ____
+
+## [Sitting with Friends](2d-arrays-more.html)
+
+Student: OK, now that we’ve done that, what does the program look like to check if there are enough seats next to each other?
+
+Prof: Ah great question. I think this is a good one to break down into a helper and then answer the overall question. Let’s build it up. Back to the image – say we want 3 seats together. The top row has enough, right?
+
+[image]
+
+Student: Right.
+
+Prof: Did you need to look at any of the other rows to determine that?
+
+Student: I guess not?
+
+Prof: That’s interesting, because **whether or not a row has enough seats** is just a property of one `boolean[]` array, not of the whole theater.
+
+Student: I can see that.
+
+Prof: And then if **any** row has enough seats next to each other, then the theater itself has such a row.
+
+Student: Yeah, I buy that.
+
+Prof: OK, so let’s write the helper first. What do you think it takes as arguments?
+
+Student: I guess just `boolean[] row`?
+
+Prof: Anything else? Will it always check for 3 seats in a row?
+
+Student: Oh right, so I guess also an `int` for how many seats we want.
+
+Prof: And in our simple example for now, what does it return?
+
+Student: A single `boolean` – whether or not the row had enough seats
+
+```java
+record Theater(boolean[][] seats) {
+  boolean rowHasSeats(boolean[] row, int target) {
+    int consecutiveAvailable = 0;
+    for(boolean b: row) {
+      if(b) { consecutiveAvailable += 1; }
+      else { consecutiveAvailable = 0; }
+      if(consecutiveAvailable >= target) { return true; }
+    }
+    return false;
+  }
+}
+boolean[] top = { true, false, true, true, true, true };
+boolean[] middle = { true, false, false, false, true };
+boolean[] bottom = { true, true, false, false };
+boolean[][] seats = { top, middle, bottom };
+Theater theater = new Theater(seats);
+boolean rowHasSeats = theater.rowHasSeats(top, 3);
+```
+
+Output:
+
+```text
+top = [true, false, true, true, true, true]
+middle = [true, false, false, false, true]
+bottom = [true, true, false, false]
+seats = [[true, false, true, true, true, true], [true, false, false, false, true], [true, true, false, false]]
+theater = Theater[seats=[[Z@75e]
+rowHasSeats = true
+```
+
+Memory at the end:
+
+```
+Names
+  top level
+    top = @1001
+    middle = @1002
+    bottom = @1003
+    seats = @1004
+    theater = @1005
+    rowHasSeats = true
+Heap
+  @1001: [true, false, true, true, true, true]
+  @1002: [true, false, false, false, true]
+  @1003: [true, true, false, false]
+  @1004: [@1001, @1002, @1003]
+  @1005: Theater[seats=@1004]
+```
+
+Prof: This one is worth tracing from the beginning! It has some interesting ideas. It’s kind of a counter loop, but it also has another pattern – a search that returns as soon as it finds the answer. The `return` in the loop returns from **the whole method**. So if we ever find `target` adjacent seats, we return `true` immediately. We only return `false` if we get through the whole array without finding a sequence like that.
+
+Student: It’s also weird because we don’t use `seats` at all in the method. So we say `theater.rowHasSeats(top, 3)` but we never use any of the fields from `theater`.
+
+Prof: That’s a good observation! Helper methods are often like that; they just work with the data they are given. The methods that call them will look up the right data for them to use.
+
+Student: OK so let’s build the method that uses `seats`?
+
+Prof: Right. I would say this is a search method on the seats array. It returns true as soon as it finds a row with enough seats, using the helper.
+
+```java
+record Theater(boolean[][] seats) {
+  boolean rowHasSeats(boolean[] row, int target) {
+    int consecutiveAvailable = 0;
+    for(boolean b: row) {
+      if(b) { consecutiveAvailable += 1; }
+      else { consecutiveAvailable = 0; }
+      if(consecutiveAvailable >= target) { return true; }
+    }
+    return false;
+  }
+  boolean hasSeats(int target) {
+    for(boolean[] row: seats) {
+      if(rowHasSeats(row, target)) { return true; }
+    }
+    return false;
+  }
+}
+boolean[] top = { true, false, true, true, true, true };
+boolean[] middle = { true, false, false, false, true };
+boolean[] bottom = { true, true, false, false };
+boolean[][] seats = { top, middle, bottom };
+Theater theater = new Theater(seats);
+boolean rowHasSeats = theater.rowHasSeats(top, 3);
+boolean theaterHasSeats = theater.hasSeats(3);
+```
+
+Output:
+
+```text
+top = [true, false, true, true, true, true]
+middle = [true, false, false, false, true]
+bottom = [true, true, false, false]
+seats = [[true, false, true, true, true, true], [true, false, false, false, true], [true, true, false, false]]
+theater = Theater[seats=[[Z@8ca]
+rowHasSeats = true
+theaterHasSeats = true
+```
+
+Memory at the end:
+
+```
+Names
+  top level
+    top = @1001
+    middle = @1002
+    bottom = @1003
+    seats = @1004
+    theater = @1005
+    rowHasSeats = true
+    theaterHasSeats = true
+Heap
+  @1001: [true, false, true, true, true, true]
+  @1002: [true, false, false, false, true]
+  @1003: [true, true, false, false]
+  @1004: [@1001, @1002, @1003]
+  @1005: Theater[seats=@1004]
+```
+
+Student: Huh, so it’s kind of like a nested loop, but the inner loop is inside another method.
+
+Prof: That’s right! I think the tricky logic is mostly in the helper – the incremental counter. So I find that I can read this a little easier because each method has its own job.
+
+Student: Could you write it as one bigger nested loop and get the same answers?
+
+Prof: Absolutely. This breakdown is more about how I chose to think about the problem. There are many ways to make it work!
+
+#### Practice
+
+Exercise:
+
+Here is a later showing, where the only three free seats together are in the bottom row:
+
+```java
+boolean[] lateTop = { false, true, true, false, true, false };
+boolean[] lateMiddle = { true, true, false, true, true };
+boolean[] lateBottom = { false, true, true, true };
+boolean[][] lateSeats = { lateTop, lateMiddle, lateBottom };
+Theater late = new Theater(lateSeats);
+```
+
+How many times does each call below call `rowHasSeats`, and what does it produce?
+
+`theater.hasSeats(3)` calls `rowHasSeats` ____ time(s) and produces [true / false]
+`late.hasSeats(3)` calls `rowHasSeats` ____ time(s) and produces [true / false]
+`late.hasSeats(4)` calls `rowHasSeats` ____ time(s) and produces [true / false]
+
+## [Rasters](raster.html)
+
+Student: Prof, my friend took a different CS course and they said we’re representing images all wrong.
+
+Prof: Oh? How so?
+
+Student: The pictures in their class are all represented as arrays of arrays of colors. They call them pixels.
+
+Prof: Ah, they are working with rasterized images!
+
+Student: Huh?
+
+Prof: We can have them, too! It’s a different way of thinking about a picture. Rather than having logical shapes placed on or next to each other, we think about the grid of pixels. Both are valid ways of thinking about an image. And our `Pict` objects can go back and forth to the array representation. Every `Pict` has a `render()` method. Let’s check it out:
+
+```java
+Pict rect = new Rect(3, 4, "red");
+Raster rastered = rect.render();
+```
+
+Output:
+
+```text
+rect = Rect[width=3, height=4, color=red]
+[image]
+rastered = Raster[3x4]
+[image]
+```
+
+Prof: They show up as the same image, but they have different internal representations. Note the `3x4` in the printed version of the Raster, which matches the size of the `Rect` it came from. We could create the same `Raster` by using its constructor:
+
+```java
+import java.awt.Color;
+Pict rect = new Rect(3, 4, "red");
+Raster rastered = rect.render();
+Color[][] colors = {
+  { Color.RED, Color.RED, Color.RED },
+  { Color.RED, Color.RED, Color.RED },
+  { Color.RED, Color.RED, Color.RED },
+  { Color.RED, Color.RED, Color.RED }
+};
+Raster rastered2 = new Raster(colors);
+```
+
+Output:
+
+```text
+rect = Rect[width=3, height=4, color=red]
+[image]
+rastered = Raster[3x4]
+[image]
+colors = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0]]]
+rastered2 = Raster[3x4]
+[image]
+```
+
+Student: Huh, interesting. What’s that `import` line for, and why are we using `Color.RED` instead of `"red"`?
+
+Prof: The way `Raster` is represented uses some of the built-in Java types for doing drawings. The `Pict` constructors like `Rect` and `Circle` have some conveniences for using string names, but once we get to `Raster` we will be talking more about colors as Java sees them. This is part of the [java.awt](https://docs.oracle.com/javase/8/docs/api/java/awt/package-summary.html) library.
+
+Student: OK, I see. When it prints it’s saying `r`, `g`, and `b`. What’s that about?
+
+Prof: Great question, it is called the [RGB](https://www.figma.com/resource-library/what-is-rgb/) model of colors. `R` for red, `G` for green, and `B` for blue. Combining different amounts of red, green, and blue can express a wide array of colors, and its one of the standard ways computers represent them. So a raster is an array of arrays of colors, where each color has these three components. Since we used `Color.RED`, that’s all red. You could create your own colors with different amounts! Here’s the same example with a nice mix of blue and green:
+
+```java
+import java.awt.Color;
+Pict rect = new Rect(3, 4, "red");
+Raster rastered = rect.render();
+Color teal = new Color(0, 100, 150);
+Color[][] colors = {
+  { teal, teal, teal },
+  { teal, teal, teal },
+  { teal, teal, teal },
+  { teal, teal, teal }
+};
+Raster rastered2 = new Raster(colors);
+```
+
+Output:
+
+```text
+rect = Rect[width=3, height=4, color=red]
+[image]
+rastered = Raster[3x4]
+[image]
+teal = java.awt.Color[r=0,g=100,b=150]
+colors = [[java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150]], [java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150]], [java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150]], [java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150], java.awt.Color[r=0,g=100,b=150]]]
+rastered2 = Raster[3x4]
+[image]
+```
+
+Student: OK, I think I see. That’s a lot of typing to build a really small image, though, right?
+
+Prof: Indeed! We will need a lot more infrastructure to build up interesting images from this. But there are also things we can do with `Raster` that would be hard to do any other way.
+
+#### Practice
+
+Exercise:
+
+A `Raster` has methods `width()`, `height()`, and `colorAt(x, y)`, where `x` counts across from the left and `y` counts down from the top, both starting at `0`. Here is a small striped flag:
+
+```java
+Color[][] stripes = {
+  { Color.RED, Color.WHITE, Color.RED, Color.WHITE, Color.RED },
+  { Color.RED, Color.WHITE, Color.RED, Color.WHITE, Color.RED }
+};
+Raster flag = new Raster(stripes);
+```
+
+What does each expression produce?
+
+```java
+flag.width()        ____
+flag.height()       ____
+flag.width() is the same as [stripes[0].length / stripes.length]
+flag.colorAt(3, 1)  [Color.WHITE / Color.RED]
+```
+
+Exercise:
+
+Now go the other way, from a `Pict` to a `Raster`:
+
+```java
+Raster dot = new Circle(5, "green").render();
+```
+
+A circle is round, but a raster is always a rectangle of pixels, so some pixels are inside the circle and some are not. Pixels outside the circle are transparent.
+
+```java
+dot.width()        ____
+dot.height()       ____
+dot.colorAt(5, 5)  [green / transparent]
+dot.colorAt(0, 0)  [green / transparent]
+dot.colorAt(2, 7)  [green / transparent]
+dot.colorAt(9, 9)  [green / transparent]
+```
+
+## [Index Loops with Rasters](image-filters.html)
+
+Student: So what’s something we need `Raster` for?
+
+Prof: One of the main things is manipulating images. For example, programs on my computer can crop images, or shrink or grow them, or change their colors.
+
+Student: And it does that with `Raster`?
+
+Prof: More or less. Enough so that we’ll learn something about both arrays and images. First I want to show you that we can load interesting images from files, so that we are transforming something more interesting than rectangles and squares.
+
+```java
+Raster r = ImageIO_.load("images/salk.png");
+```
+
+Output:
+
+```text
+r = Raster[240x189]
+[image]
+```
+
+Student: Oh that’s useful. So we can load real pictures, not just make shapes.
+
+Prof: Exactly. So, there are a lot of things we can do with this image! For instance, we could ask what the color is at various spots. There is a method on `Raster` called `colorAt` that can tell us the color at a particular place. In a `Raster`, the top row is at index 0 (much like our theater picture). In this picture of the Salk Institute, what color do you think is at 0, 0?
+
+Student: Well, there’s blue sky, so something with a large `b` field?
+
+Prof: Let’s see! The top left is a little dark, so let’s also try something a little more inset into the picture where it gets lighter.
+
+```java
+import java.awt.Color;
+Raster r = ImageIO_.load("images/salk.png");
+Color topLeft = r.colorAt(0, 0);
+Color sky = r.colorAt(50, 50);
+```
+
+Output:
+
+```text
+r = Raster[240x189]
+[image]
+topLeft = java.awt.Color[r=6,g=9,b=42]
+sky = java.awt.Color[r=11,g=41,b=103]
+```
+
+Prof: One thing we can do with rasters is calculate interesting image properties. For example, we can get the **average color** of an image.
+
+Student: The average color?
+
+Prof: Right, we can add up all the red, blue, and green channels independently, then divide by the number of pixels. A very blue picture should have a mostly-blue result, a very purple picture would show blue and red, and so on.
+
+Student: OK, I guess that’s interesting.
+
+Prof: It will be a good start for other raster methods. We are going to need something new and useful: an indexing for loop. We’ve seen for-each loops (what we just called a `for` loop before) that work over the elements of an array, but it turns out `Raster` only has `colorAt`, no way to use a for-each loop that goes element by element.
+
+Student: So what does an indexing for loop look like?
+
+Prof: The idea is that the loop variable tracks an index into an array or other structure (like a `Raster`).
+
+```java
+for(int index = init; index < maxIndex; index += increment) { ... }
+```
+
+The name `index` is your choice, people use `i` and `j` or `counter`, things like that, as well. The value `init` is some starting point; `0` is common for starting at the beginning of an iteration. `maxIndex` is often the length of an array or structure, but some iterations might stop early. Then `increment` is how many indexes to “move ahead” by, which is often `1` but could be different values as well.
+
+Enough talking, let’s see it in action. This will be an **indexed, nested, running-sum loop** that tracks a sum for each of red, blue, and green:
+
+```java
+import java.awt.Color;
+Color averageColor(Raster raster) {
+  int r = 0, g = 0, b = 0;
+  int height = raster.height();
+  int width = raster.width();
+  for(int rowIndex = 0; rowIndex < height; rowIndex += 1) {
+    for(int colIndex = 0; colIndex < width; colIndex += 1) {
+      r += raster.colorAt(colIndex, rowIndex).getRed();
+      g += raster.colorAt(colIndex, rowIndex).getGreen();
+      b += raster.colorAt(colIndex, rowIndex).getBlue();
+    }
+  }
+  int totalPix = width * height;
+  int rAvg = r / totalPix, gAvg = g / totalPix, bAvg = b / totalPix;
+  return new Color(rAvg, gAvg, bAvg);
+}
+Raster salk = ImageIO_.load("images/salk.png");
+Color salkAvg = averageColor(salk);
+Color[][] redblue = { { Color.RED, Color.BLUE, Color.BLUE }, { Color.RED, Color.RED, Color.BLUE } };
+Color redblueAvgs = averageColor(new Raster(redblue)); // should be 127, 0, 127
+```
+
+Output:
+
+```text
+salk = Raster[240x189]
+[image]
+salkAvg = java.awt.Color[r=81,g=91,b=109]
+redblue = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=0,g=0,b=255], java.awt.Color[r=0,g=0,b=255]], [java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=0,g=0,b=255]]]
+redblueAvgs = java.awt.Color[r=127,g=0,b=127]
+```
+
+Prof: Whew, that was a lot. What questions do you have?
+
+Student: Have we seen `getRed` and `getBlue` before?
+
+Prof: No, I just know those are methods on `Color` that get back those components.
+
+Student: Why is it `colIndex, rowIndex` and not the other way around?
+
+Prof: That’s just the way `Raster.colorAt` is defined; it takes an “x” and then a “y” coordinate.
+
+Student: And unlike picts, the 0 value for y is at the top?
+
+Prof: That’s right, to match Java’s underlying image library more closely.
+
+Student: So the Salk picture is very slightly more blue than anything else?
+
+Prof: Yup.
+
+Student: Could I have nested the loops the other way?
+
+Prof: For this loop, yes. We’re only adding things up, so it doesn’t matter whether we go across each row, one row at a time, or down each column, one column at a time. Either way every pixel gets added in exactly once.
+
+Student: OK! Indexing for loops and rasters. Cool stuff.
+
+#### Practice
+
+Exercise:
+
+Here is a past builder, rewritten with an indexing for loop. The loop variable `i` does the job the separate `index` counter used to do. Pick each part of the loop header so that `halfOff` builds every sale price.
+
+```java
+int[] halfOff(int[] pricesCents) {
+  int[] result = new int[pricesCents.length];
+  for([int i = 1 / int i = 0 / int i = pricesCents.length]; [i <= pricesCents.length / i < pricesCents[i] / i < pricesCents.length]; [i += 1 / i += 2 / i -= 1]) {
+    result[i] = pricesCents[i] / 2;
+  }
+  return result;
+}
+int[] prices = { 500, 1250, 99 };
+int[] half = halfOff(prices);
+```
+
+Exercise:
+
+Write the body of the inner loop so that `hasPureBlue` returns `true` as soon as it finds a pixel that is exactly blue (red `0`, green `0`, blue `255`), and `false` if there isn’t one anywhere. It’s a search, like `rowHasSeats`.
+
+```java
+import java.awt.Color;
+boolean hasPureBlue(Raster raster) {
+  for(int rowIndex = 0; rowIndex < raster.height(); rowIndex += 1) {
+    for(int colIndex = 0; colIndex < raster.width(); colIndex += 1) {
+____
+    }
+  }
+  return false;
+}
+Color[][] lastBlue = { { Color.RED, Color.RED }, { Color.RED, new Color(0, 0, 255) } };
+Color[][] noBlue = { { Color.RED, Color.WHITE }, { new Color(0, 0, 254), Color.RED } };
+boolean salkHasBlue = hasPureBlue(ImageIO_.load("images/salk.png"));
+boolean lastHasBlue = hasPureBlue(new Raster(lastBlue));
+boolean noneHasBlue = hasPureBlue(new Raster(noBlue));
+```
+
+## [Negatives](more-filters.html)
+
+Prof: Now that we have this loop idea, we can do interesting things like mess with the colors. Have you ever heard of a **negative** of an image?
+
+Student: Maybe? Like where the colors are all weird?
+
+Prof: Right. The negative is the result of “inverting” all the colors. So if `r` was 50 in the original, make it 205 in the negative. The arithmetic is `255 - c` for each color channel `c`. This turns, say, purple (red and blue, no green) into green, just like on a color wheel.
+
+Student: Let’s see what it looks like?
+
+Prof: For now, I’m going to set this up to return a **new** `Raster` to show a builder style for these (we could also use a updater style).
+
+```java
+import java.awt.Color;
+Color negate(Color c) {
+  int negR = 255 - c.getRed();
+  int negG = 255 - c.getGreen();
+  int negB = 255 - c.getBlue();
+  return new Color(negR, negG, negB);
+}
+Raster negative(Raster raster) {
+  Color[][] negativePix = new Color[raster.height()][raster.width()];
+  for(int row = 0; row < raster.height(); row += 1) {
+    for(int col = 0; col < raster.width(); col += 1) {
+      negativePix[row][col] = negate(raster.colorAt(col, row));
+    }
+  }
+  return new Raster(negativePix);
+}
+Color purple = new Color(255, 0, 255);
+Color negPurple = negate(purple);
+Color[][] tiny = {
+  { Color.RED, Color.WHITE },
+  { Color.BLACK, new Color(50, 100, 200) }
+};
+Raster tinyNeg = negative(new Raster(tiny));
+```
+
+Output:
+
+```text
+purple = java.awt.Color[r=255,g=0,b=255]
+negPurple = java.awt.Color[r=0,g=255,b=0]
+tiny = [[java.awt.Color[r=255,g=0,b=0], java.awt.Color[r=255,g=255,b=255]], [java.awt.Color[r=0,g=0,b=0], java.awt.Color[r=50,g=100,b=200]]]
+tinyNeg = Raster[2x2]
+[image]
+```
+
+Memory at the end:
+
+```
+Names
+  top level
+    purple = magenta
+    negPurple = green
+    tiny = @1001
+    tinyNeg = @1011
+Heap
+  @1001: [@1002, @1003]
+  @1002: [red, white]
+  @1003: [black, #3264c8]
+  @1004: Raster[pixels=@1005]
+  @1005: [@1006, @1007]
+  @1006: [red, white]
+  @1007: [black, #3264c8]
+  @1008: [@1009, @1010]
+  @1009: [cyan, black]
+  @1010: [white, #cd9b37]
+  @1011: Raster[pixels=@1012]
+  @1012: [@1013, @1014]
+  @1013: [cyan, black]
+  @1014: [white, #cd9b37]
+```
+
+Student: I see, so it has its own definition of “inverting” and it applies that to every color. And it returns a **new** Raster?
+
+Prof: Right, the original is unchanged. And I just wrote small tests; we can scale it up to larger images:
+
+```java
+import java.awt.Color;
+Color negate(Color c) {
+  int negR = 255 - c.getRed();
+  int negG = 255 - c.getGreen();
+  int negB = 255 - c.getBlue();
+  return new Color(negR, negG, negB);
+}
+Raster negative(Raster raster) {
+  Color[][] negativePix = new Color[raster.height()][raster.width()];
+  for(int row = 0; row < raster.height(); row += 1) {
+    for(int col = 0; col < raster.width(); col += 1) {
+      negativePix[row][col] = negate(raster.colorAt(col, row));
+    }
+  }
+  return new Raster(negativePix);
+}
+Raster salk = ImageIO_.load("images/salk.png");
+Raster salkNeg = negative(salk);
+Raster pier = ImageIO_.load("images/pier-under.png");
+Raster pierNeg = negative(pier);
+```
+
+Output:
+
+```text
+salk = Raster[240x189]
+[image]
+salkNeg = Raster[240x189]
+[image]
+pier = Raster[180x240]
+[image]
+pierNeg = Raster[180x240]
+[image]
+```
+
+Student: Neat!
+
+Prof: In general we call these “image filters” – can you think of any others?
+
+Student: Maybe like making it black and white, or just having one color?
+
+Prof: Yup. And there are lots of others we could try if we wanted to get deep into graphics, like blurring or removing parts of an image. For now we’ll keep it with the kinds of examples you’ve suggested. We could also rotate, crop, flip, and so on.
+
+Student: Cool!
+
+#### Practice
+
+Exercise:
+
+Using `negate` and `negative` from above, what does each expression produce?
+
+```java
+negate(new Color(50, 100, 200))    [java.awt.Color[r=55,g=155,b=205] / java.awt.Color[r=50,g=100,b=200] / java.awt.Color[r=205,g=155,b=55]]
+negate(Color.WHITE)                [java.awt.Color[r=255,g=255,b=255] / java.awt.Color[r=0,g=0,b=0]]
+negative(negative(salk)).equals(salk)  [true / false]
+```
+
+Exercise:
+
+`negative` is a builder: it makes a new `Raster` and leaves the old one alone. `Raster` also has an updater method, `setColorAt(x, y, color)`, which changes one pixel in place. Fill in the body of the inner loop so that `negateInPlace` turns `r` itself into its negative.
+
+```java
+import java.awt.Color;
+Color negate(Color c) {
+  return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue());
+}
+void negateInPlace(Raster raster) {
+  for(int row = 0; row < raster.height(); row += 1) {
+    for(int col = 0; col < raster.width(); col += 1) {
+____
+    }
+  }
+}
+Color[][] colors = {
+  { Color.RED, Color.WHITE },
+  { Color.BLACK, new Color(50, 100, 200) }
+};
+Raster r = new Raster(colors);
+```
+
+Exercise:
+
+After `negateInPlace(r)` runs on the `r` above, what is `colors[0][0]`?
+
+Choose one:
+
+- The negative of red, `java.awt.Color[r=0,g=255,b=255]`.
+- `null`
+- `Color.RED`, still: `new Raster(colors)` copied the colors into the raster’s own grid, so `setColorAt` changes that copy, not `colors`.
+
+## [Nested and 2D Structures in Summary](summary.html)
+
+Exercise:
+
+A `Theater` method `int[] freeSeatsPerRow()` returns one number per row: how many seats in that row are free. Which loop pattern fits each loop?
+
+The outer loop, over `seats`: [best-so-far / running-sum / builder / counter]
+The inner loop, over one `row`: [best-so-far / running-sum / builder / counter]
+
+Exercise:
+
+Fill in `freeSeatsPerRow`.
+
+```java
+record Theater(boolean[][] seats) {
+  int[] freeSeatsPerRow() {
+    int[] result = [new int[3] / new int[seats[0].length] / new int[seats.length]];
+    int index = 0;
+    for(boolean[] row: seats) {
+      int free = 0;
+      for(boolean seat: row) {
+        if(seat) { free += 1; }
+      }
+      [result[index] = 1; / result[free] = index; / result[index] = free;]
+      ____
+    }
+    return result;
+  }
+}
+boolean[] top = { true, false, true, true, true, true };
+boolean[] middle = { true, false, false, false, true };
+boolean[] bottom = { true, true, false, false };
+boolean[][] seats = { top, middle, bottom };
+Theater theater = new Theater(seats);
+int[] perRow = theater.freeSeatsPerRow();
+```
+
+Exercise:
+
+Someone moves `int free = 0;` up, above the outer loop, so it runs once before either loop starts. With the same `theater`, what does `theater.freeSeatsPerRow()` return now?
+
+Choose one:
+
+- `[9, 9, 9]`
+- It doesn’t compile
+- `[5, 7, 9]`
+- `[5, 2, 2]`
+
+Exercise:
+
+`countWhite` counts the pure white pixels in a raster. Which arguments go to `colorAt`?
+
+```java
+import java.awt.Color;
+int countWhite(Raster raster) {
+  int count = 0;
+  for(int row = 0; row < raster.height(); row += 1) {
+    for(int col = 0; col < raster.width(); col += 1) {
+      if(raster.colorAt([row, col / col, row]).equals(Color.WHITE)) { count += 1; }
+    }
+  }
+  return count;
+}
+Color[][] stripes = {
+  { Color.WHITE, Color.RED, Color.WHITE },
+  { Color.RED, Color.RED, Color.BLUE }
+};
+Raster flag = new Raster(stripes);
+int whites = countWhite(flag);
+```

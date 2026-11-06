@@ -1,0 +1,11 @@
+# Credits
+
+## [Credits](credits.html)
+
+There are few, if any, ideas of my own in this book.
+
+[Gerald Soosairaj](https://geraldsoosairaj.github.io) gave me the idea to lean hard into an explicitly Socratic writing style, and showed me how effective it could be. I don’t think I would have persisted in writing as much if the format wasn’t such a delight to **write** (regardless of what the reader thinks).
+
+The arc through recursion and interfaces all takes inspiration and patterns from [How to Design Classes](https://felleisen.org/matthias/HtDC/htdc.pdf) and Ben Lerner’s [2510](https://course.ccs.neu.edu/cs2510asp25/Lectures.html) (and, at a very high level, a bit of [Sam Tobin-Hochstadt and David Van Horn](https://arxiv.org/pdf/1306.4713)). The general idea of the recipe and a build through structurally recursive data is of course from [How to Design Programs](https://htdp.org).
+
+The Pict library is based on [2htdp/image](https://docs.racket-lang.org/teachpack/2htdpimage.html) in Racket. The testing flow and some Pict ideas for Java draw from [tester.jar/javalib.jar](https://course.ccs.neu.edu/cs2510asp25/lab1.html) by Ben Lerner at Northeastern University. The specific image constructor choices are somewhat motivated by the design of [PyTamaro](https://pytamaro.si.usi.ch) (though I hope [Luca Chiodini](https://www.chiodini.org) will forgive me for providing `OverlayAt` while crediting PyTamaro). It is re-implemented here to make it run well in the book and suit the needs of this course.

@@ -1,0 +1,1118 @@
+# Classes that Share Behavior
+
+## [Searching for Images](searching-for-images.html)
+
+*Chapter contributed by Brendan Barber*
+
+Student: I really want to work at Google one day, and I was thinking that the best way for me to get a job there would be to make my own version of Google. Have we covered enough to do that?
+
+Prof: Well, Google, the search engine, is a very large and complex piece of software. Let’s start small and implement a small piece of it. Have you ever used Advanced Image Search on Google? It looks like this:
+
+[image]
+
+Figure 1: Google’s Advanced Image Search ([https://www.google.com/advanced_search?udm=2](https://www.google.com/advanced_search?udm=2))
+
+Student: Hmm, I didn’t know about this. So where would I start with making my own version?
+
+Prof: Here, let’s use what we know about records and methods to start by making a query. We have to describe every image so that we can search specifically for the ones we want. So how about you start out with creating an `ImageData` record that has a `String` with keywords and a `String` for the image file type. Then, create a `boolean` method for checking if a given file extension matches the record’s file type.
+
+```java
+record ImageData(String keywords, String fileType) {
+  boolean matchesExtension(String ext) {
+    return this.fileType.equals(ext);
+  }
+}
+ImageData i1 = new ImageData("cat sleeping", "png");
+boolean pngLiteral = i1.matchesExtension("png");
+boolean pngTyped = i1.matchesExtension("PNG".toLowerCase());
+boolean jpg = i1.matchesExtension("jpg");
+```
+
+Output:
+
+```text
+i1 = ImageData[keywords=cat sleeping, fileType=png]
+pngLiteral = true
+pngTyped = true
+jpg = false
+```
+
+Student: Ok, so by defining the keywords and file types of an image, I could now only search for PNG images.
+
+Prof: Exactly. And you can also do the reverse: search for all image types except for PNG images. Now, based on the image from Google, and your own experience searching for images online, what do you think we should add to `ImageData`?
+
+Student: Well, I don’t like when I find low-resolution images. So maybe I should add a width and height?
+
+Prof: Great idea! Add it to the record and also try to make a new method similar to `matchesExtension` but for width instead.
+
+Student: Wait a second, what does `this` mean?
+
+Prof: When we use the `this` keyword, we are referring to “the record that this method was called on.” So if you were to write `i1.matchesExtension("png")`, Java runs the method body with `this` standing for `i1`. So `this.fileType` refers to the `fileType` of `i1`.
+
+Student: Ok, I see. So I need to make sure to use `this` in my `hasWidth` method.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {
+  boolean matchesExtension(String ext) {
+    return this.fileType.equals(ext);
+  }
+  boolean hasWidth(int w) {
+    return this.width.equals(w);
+  }
+}
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+boolean width640 = i1.hasWidth(640);
+```
+
+Output (compile error):
+
+```text
+line 6: error: Cannot invoke equals(int) on the primitive type int
+```
+
+Student: Uhm, what did I do wrong. You taught me that I should be using `.equals()`, like I did when writing the `matchesExtension` method.
+
+Prof: Not quite. Here’s what’s going on: `.equals(...)` is a **method call**, and methods must be called on objects. A primitive value like an `int` **does not have methods**, which is what the compiler means by “primitive type” in that error message. For primitives, `==` already compares the numbers themselves.
+
+Student: So `.equals()` cannot be used in this case, so I should go back to using `==`.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {
+  boolean matchesExtension(String ext) {
+    return this.fileType.equals(ext);
+  }
+  boolean hasWidth(int w) {
+    return this.width == w;
+  }
+}
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+boolean width640 = i1.hasWidth(640);
+boolean width800 = i1.hasWidth(800);
+```
+
+Output:
+
+```text
+i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]
+width640 = true
+width800 = false
+```
+
+Student: Ok great, but I usually care about the width and the height of the image, and I am not looking for an image that is exactly a certain size.
+
+Prof: Right, so how about you try writing a method that returns `true` if the image is larger than a minimum width AND a minimum height.
+
+Student: Hmm, I only know how to check one thing at a time. I can use `if` statements, one for the width and then inside another one for the height. Can I do that here?
+
+Prof: Try it and see.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {
+  boolean matchesExtension(String ext) {
+    return this.fileType.equals(ext);
+  }
+  boolean hasWidth(int w) {
+    return this.width == w;
+  }
+  boolean largerThan(int minWidth, int minHeight) {
+    if (this.width >= minWidth) {
+      if (this.height >= minHeight) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+boolean bigEnough = i1.largerThan(600, 400);
+boolean tooWide = i1.largerThan(700, 400);
+boolean tooTall = i1.largerThan(600, 500);
+```
+
+Output:
+
+```text
+i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]
+bigEnough = true
+tooWide = false
+tooTall = false
+```
+
+Student: Nice, it works. `bigEnough` is `true`, and the other two are `false`.
+
+Prof: It does work, and that’s a perfectly good way to write it out.
+
+Student: Hmm, but the answer is `true` when both checks pass, and the order of the width and the height check doesn’t really matter. That feels like it should be shorter.
+
+Prof: It can be. Try taking both of those checks and using `&&` between them. Remember that the return just needs to be an expression that is `true` or `false`, it doesn’t necessarily have to be written out as `return true`.
+
+Student: So I can combine my two checks with `&&` and return the result directly?
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {
+  boolean matchesExtension(String ext) {
+    return this.fileType.equals(ext);
+  }
+  boolean hasWidth(int w) {
+    return this.width == w;
+  }
+  boolean largerThan(int minWidth, int minHeight) {
+    return this.width >= minWidth && this.height >= minHeight;
+  }
+}
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+boolean bigEnough = i1.largerThan(600, 400);
+boolean tooWide = i1.largerThan(700, 400);
+boolean tooTall = i1.largerThan(600, 500);
+```
+
+Output:
+
+```text
+i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]
+bigEnough = true
+tooWide = false
+tooTall = false
+```
+
+Prof: It’s a good habit to notice when a few nested `if` statements could instead be a single line with `&&`, imagine we had a 3D object and we had width, height, and depth. Then the nesting would be even worse!
+
+Prof: Ok, so let’s review what we have done so far. We wanted a way to search through images, so we defined `ImageData` to have the fields we wanted to sort by and then we added true-or-false questions about the data with `matchesExtension`, `hasWidth`, and `largerThan`.
+
+Student: I don’t think Google is hiring me if this is all I show them, I mean right now all I can do is search by either size or by the file type. I guess I could combine them into one check, but I am gonna get bored if I have to write hundreds of methods in ImageData…
+
+Prof: Hold that thought.
+
+#### Practice
+
+Fill in the blanks so `largerThan` is `true` only when both the width and the height are big enough, and so `matchesExtension("jpg")` is `false` for a PNG.
+
+Exercise:
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {
+  boolean matchesExtension(String ext) {
+    return this.fileType.equals(ext);
+  }
+
+  ____ largerThan(int ____, int minHeight) {
+    ____ this.width >= minWidth [&& / ||] this.height >= ____;
+  }
+}
+
+void main() {
+  ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+  assertEquals(true, i1.matchesExtension("png"));
+  assertEquals(____, ____);
+  System.out.println("All tests succeeded!");
+}
+```
+
+## [Combining Queries](combining-queries.html)
+
+Student: Ok, so now I want to find images that are both larger than a minimum size and a PNG. So I should write a new method.
+
+Prof: Sure, how would this method work? What arguments would it take, and what would it return?
+
+Student: Well, it should combine `largerThan` and `matchesExtension`, so it needs the arguments of both methods, and it returns a `boolean`. But I’m clever! I’ll just call `largerThan` and `matchesExtension` from inside my new method and join them with `&&`. That way it’s only one line.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {
+  boolean matchesExtension(String ext) {
+    return this.fileType.equals(ext);
+  }
+  boolean largerThan(int minWidth, int minHeight) {
+    return this.width >= minWidth && this.height >= minHeight;
+  }
+  boolean largerThanAndMatchesExtension(int minWidth, int minHeight, String ext) {
+    return this.largerThan(minWidth, minHeight) && this.matchesExtension(ext);
+  }
+}
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+boolean bigPng = i1.largerThanAndMatchesExtension(600, 400, "png");
+boolean bigJpg = i1.largerThanAndMatchesExtension(600, 400, "jpg");
+```
+
+Output:
+
+```text
+i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]
+bigPng = true
+bigJpg = false
+```
+
+Student: There we go, `bigPng` is `true` and `bigJpg` is `false`. Clever, right?
+
+Prof: Nice work. Now, what if you want images that are a PNG *or* a JPG?
+
+Student: Hmm, I’d need another method, `largerThanAndMatchesPngOrJpg`. And then if I wanted images that are larger than a minimum size *or* a WEBP…
+
+Prof: Keep going. Every new way of combining queries needs a new method. And what happens as we add more fields to `ImageData`?
+
+Student: Oh no. Every possible combination of queries needs its own method. I would never finish. I mean, also, there’s no way this is how someone at Google would do this, right? So what am I supposed to do instead?
+
+Prof: What if a query was something you could pass around, like a value?
+
+#### Practice
+
+Fill in the blanks so that `largerThanAndMatchesExtension` is `true` only when the image is big enough *and* has the right extension, by calling the two queries that already exist.
+
+Exercise:
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {
+  boolean matchesExtension(String ext) {
+    return this.fileType.equals(ext);
+  }
+  boolean largerThan(int minWidth, int minHeight) {
+    return this.width >= minWidth && this.height >= minHeight;
+  }
+
+  boolean largerThanAndMatchesExtension(int minWidth, int minHeight, String ext) {
+    return ____ && ____;
+  }
+}
+
+void main() {
+  System.out.println("All tests succeeded!");
+}
+```
+
+## [Queries as Data](queries-as-data.html)
+
+Student: Ok, so how do I “pass around queries like values”? I don’t get that.
+
+Prof: First we have to talk about a new concept called an interface. An interface is a way to describe shared functionality across records. So in our `ImageData` example, what do all of the methods we have been writing share?
+
+Student: Hmm, I guess we are asking a true/false question.
+
+Prof: Correct, but go into more detail. What are we saying is true or false?
+
+Student: Well, in `matchesExtension` we were checking whether the extension matches a certain file type, and in `largerThan` we are checking whether the size is larger than some value… which is a kind of matching as well. So really, it’s all checking for matches.
+
+Prof: Exactly. Here, I will show you an example and we can work through it together. What new keywords do you notice in this code snippet?
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth && img.height() >= this.minHeight;
+  }
+}
+
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+ImageQuery isPng = new HasExtension("png");
+ImageQuery isBig = new LargerThan(600, 400);
+boolean pngResult = isPng.matches(i1);
+boolean bigResult = isBig.matches(i1);
+```
+
+Output:
+
+```text
+i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]
+isPng = HasExtension[ext=png]
+isBig = LargerThan[minWidth=600, minHeight=400]
+pngResult = true
+bigResult = true
+```
+
+Student: Well, there is that `interface` word you mentioned: you created an `ImageQuery`. It looks like a record, but it doesn’t seem to be storing anything. And I think you forgot to write the code for the `matches` method!
+
+Prof: Hmm, you’re right. `ImageQuery` isn’t storing any data, is it? And the `matches` method doesn’t have a return statement… let’s keep going. What is the other detail you notice?
+
+Student: You used a new keyword, `implements`, and you put it outside the record? When I read it out it says “record `LargerThan` implements `ImageQuery`.” And then each of the new records you created has a `matches` method with the same signature as in the interface.
+
+Prof: Good noticing!
+
+Student: But I don’t understand *why*. Why do you have to make `ImageQuery` if you are going to have to write out the method for `matches` every time anyway? In that case we could just make sure each record has the `matches` method and we could call `matches` on whatever we wanted?
+
+Prof: Well, there is one other detail at the end. Notice how we are able to declare both of these records as an `ImageQuery`. How about you try writing out your idea and seeing what happens.
+
+Student: Ok, I bet my way will work.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {}
+
+record HasExtension(String ext) {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth && img.height() >= this.minHeight;
+  }
+}
+
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+HasExtension isPng = new HasExtension("png");
+LargerThan isBig = new LargerThan(600, 400);
+boolean pngResult = isPng.matches(i1);
+boolean bigResult = isBig.matches(i1);
+```
+
+Output:
+
+```text
+i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]
+isPng = HasExtension[ext=png]
+isBig = LargerThan[minWidth=600, minHeight=400]
+pngResult = true
+bigResult = true
+```
+
+Student: See, it works perfectly! And no interface needed.
+
+Prof: You’re right, for now. But, let’s see what happens when we get back to the idea of combining queries: check out what happens when I try to add this new record in. We said we wanted to check for relationships between queries, such as an `Or`.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {}
+
+record HasExtension(String ext) {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth && img.height() >= this.minHeight;
+  }
+}
+
+record Or(HasExtension left, HasExtension right) {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) || this.right.matches(img);
+  }
+}
+
+ImageData i2 = new ImageData("little cat", "jpg", 200, 200);
+ImageData i3 = new ImageData("cat waving", "gif", 200, 200);
+Or pngOrJpg = new Or(new HasExtension("jpg"), new HasExtension("png"));
+boolean jpgResult = pngOrJpg.matches(i2);
+boolean gifResult = pngOrJpg.matches(i3);
+// Below expected to fail
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+Or bigOrPng = new Or(new LargerThan(600, 400), new HasExtension("png"));
+boolean bigPngResult = bigOrPng.matches(i1);
+```
+
+Output (compile error):
+
+```text
+line 28: error: The constructor Or(LargerThan, HasExtension) is undefined
+```
+
+Student: OK, but it has an error.
+
+Prof: Right. What would you do to fix it? How can you change `Or` so that you can construct both `bigOrPng` and `pngOrJpg`?
+
+Student: I guess I can’t. I have to pick either `HasExtension` or `LargerThan` for the fields of `Or`, and neither works for both combinat– OHHH! Wait so the interface helps with this?
+
+Prof: Right! When we have `interface ImageQuery` and records that `implement ImageQuery`, we are allowed to use `ImageQuery` as **the type of any value that implements ImageQuery**. So the implements lines let us replace the field types of `Or` with `ImageQuery`. And **then** we can construct both versions.
+
+Student: That’s so cool! And I bet with that we can do `And` and stuff too.
+
+Prof: Indeed. Give it a try with `And` and `Not` included as well.
+
+Student: Sure, I think I understand the format now.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth && img.height() >= this.minHeight;
+  }
+}
+
+record And(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) && this.right.matches(img);
+  }
+}
+
+record Or(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) || this.right.matches(img);
+  }
+}
+
+record Not(ImageQuery query) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return !this.query.matches(img);
+  }
+}
+
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480);
+ImageQuery pngOrJpg = new Or(new HasExtension("png"), new HasExtension("jpg"));
+ImageQuery bigPngOrJpg = new And(new LargerThan(600, 400), pngOrJpg);
+ImageQuery notPng = new Not(new HasExtension("png"));
+boolean r1 = bigPngOrJpg.matches(i1);
+boolean r2 = notPng.matches(i1);
+```
+
+Output:
+
+```text
+i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480]
+pngOrJpg = Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]
+bigPngOrJpg = And[left=LargerThan[minWidth=600, minHeight=400], right=Or[left=HasExtension[ext=png], right=HasExtension[ext=jpg]]]
+notPng = Not[query=HasExtension[ext=png]]
+r1 = true
+r2 = false
+```
+
+Student: You know, these interfaces are actually kinda nice. But wait a second, you never explained what `public` means? I guess I just started copying your record examples without thinking about it.
+
+Prof: Good catch. `public` is an access modifier. It says who is allowed to use a method. A `public` method can be called by code anywhere.
+
+Student: So why did I have to write it here? We have been calling methods all the time.
+
+Prof: Methods in an interface must be `public`, since the whole point of an interface is that anyone holding an `ImageQuery` can call `matches` on it. A record that implements the interface isn’t allowed to make that method *less* available than the interface promised. Try leaving it off:
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {}
+  
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasExtension(String ext) implements ImageQuery {
+  boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+```
+
+Output (compile error):
+
+```text
+line 8: error: Cannot reduce the visibility of the inherited method from ImageQuery
+```
+
+Student: I see, the compiler complains that it “cannot reduce the visibility of the inherited method”.
+
+Prof: Exactly.
+
+Student: Ok, these interfaces are cool and all. But, I wish I didn’t have to type out `new And(new LargerThan(600, 400), new Or(new HasExtension("png"), new HasExtension("jpg")))`. That’s a lot of `new`s to keep track of.
+
+Prof: You’re right. Perhaps you want something in the chaining style we talked about earlier? Something like `isBig.and(isPng)`? We will go over that next.
+
+Student: Yeah, that’d be nice.
+
+#### Practice
+
+Fill in the blanks to write a new query, `Xor`, that matches an image when *exactly one* of its two queries matches (one is true and the other is false).
+
+Exercise:
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth && img.height() >= this.minHeight;
+  }
+}
+
+record Xor(ImageQuery left, ImageQuery right) ____ {
+  public boolean matches(ImageData img) {
+    return ____;
+  }
+}
+
+void main() {
+  System.out.println("All tests succeeded!");
+}
+```
+
+## [Growing ImageData](growing-imagedata.html)
+
+Student: Now I want to expand my implementation of `ImageData`. With this new `ImageQuery` interface, that is much easier to do. How about I give each image a file size? I’ll call it `sizeKb` for size in kilobytes. I don’t really know how big a kilobyte is, but I checked my File Explorer on my laptop and it shows a size in KB next to a bunch of images I downloaded from Google.
+
+Prof: Good idea, and nice job looking at real-world examples to base your new fields off of. But, before we add new fields, maybe we should look to see if there is anything we already have that we haven’t added a record for?
+
+Student: Oh, there is that `String keywords` field that we haven’t been using. I’ll add a record for checking keywords as well.
+
+Prof: Good idea. So what two new records are you going to create?
+
+Student: For the file size, I’ll make a `SmallerThanKb` record that takes a kilobyte limit and checks if the file size is smaller than it. For the keywords I’ll make a `HasKeyword` record that takes a `String` word input and checks if it matches the keywords. Strings are compared with `.equals()`, so I’ll use that.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height, int sizeKb) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasKeyword(String word) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.keywords().equals(this.word);
+  }
+}
+
+record SmallerThanKb(int limitKb) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.sizeKb() < this.limitKb;
+  }
+}
+
+void main() {
+  ImageData i1 = new ImageData("cat sleeping", "png", 640, 480, 300);
+  ImageQuery catQuery = new HasKeyword("cat");
+  assertEquals(true, catQuery.matches(i1));
+}
+```
+
+Output (failed):
+
+```text
+Exception in thread "Thread-0" org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)
+	at main(Unknown Source)
+```
+
+Student: That’s strange. The image’s keywords are `"cat sleeping"`, and I asked for `"cat"`, but the assertion failed. Is `.equals()` broken?
+
+Prof: Nope! `.equals()` did exactly what you told it. It checks whether two Strings are *exactly* the same, and `"cat sleeping"` is not exactly `"cat"`.
+
+Student: Oh, so should I change `String keywords` to be `String[] keywords` instead? Then I could use a loop to check if any of the String values are equivalent.
+
+Prof: You could do that, but there is another option without changing the `ImageData` record. You want to know whether the keywords *contain* the word. Strings have a method for that: `keywords.contains(word)` returns `true` if the word appears anywhere inside the String.
+
+Student: So I swap `.equals()` for `.contains()`. I still think `String[]` would be better… did you purposely make it a `String` so that you could teach me `contains()`?
+
+Prof: Perhaps. Now let’s put the two new records to work. Remember how you didn’t like typing all those `new`s, and wished you could write `isBig.and(isPng)`? Look at the `ImageQuery` interface in the program below. It has three new methods, and each starts with a word you haven’t seen: `default`.
+
+Student: What does `default` mean? The `matches` method had no body in the interface. Every record that implements `ImageQuery` had to have their own method body.
+
+Prof: That’s the difference. A default method (a method with `default`) *does* have a body inside the interface, and every record that implements `ImageQuery` gets it without having to write it themselves. So we write it once, in the interface, instead of in `HasKeyword`, `SmallerThanKb`, `Not` and every other record.
+
+Student: So `this` is whichever query I call `.and()` on? In `cat.and(light)`, `this` is `cat` and `other` is `light`?
+
+Prof: Exactly. Here, try it out yourself.
+
+```java
+record ImageData(String keywords, String fileType, int width, int height, int sizeKb) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+
+  default ImageQuery and(ImageQuery other) {
+    return new And(this, other);
+  }
+  default ImageQuery or(ImageQuery other) {
+    return new Or(this, other);
+  }
+  default ImageQuery not() {
+    return new Not(this);
+  }
+}
+
+record HasKeyword(String word) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.keywords().contains(this.word);
+  }
+}
+
+record SmallerThanKb(int limitKb) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.sizeKb() < this.limitKb;
+  }
+}
+
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+
+record LargerThan(int minWidth, int minHeight) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth && img.height() >= this.minHeight;
+  }
+}
+
+record And(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) && this.right.matches(img);
+  }
+}
+
+record Or(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) || this.right.matches(img);
+  }
+}
+
+record Not(ImageQuery query) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return !this.query.matches(img);
+  }
+}
+
+ImageData i1 = new ImageData("cat sleeping", "png", 640, 480, 300);
+ImageQuery cat = new HasKeyword("cat");
+ImageQuery light = new SmallerThanKb(500);
+
+boolean r1 = cat.matches(i1);
+boolean r2 = cat.and(light).matches(i1);
+boolean r3 = cat.and(new LargerThan(1920, 1080)).matches(i1);
+boolean r4 = cat.not().or(new HasExtension("png")).matches(i1);
+```
+
+Output:
+
+```text
+i1 = ImageData[keywords=cat sleeping, fileType=png, width=640, height=480, sizeKb=300]
+cat = HasKeyword[word=cat]
+light = SmallerThanKb[limitKb=500]
+r1 = true
+r2 = true
+r3 = false
+r4 = true
+```
+
+Prof: Great job! Now there is still technically a bug with our implementation, but it mostly has to do with the limits of using `contains`. We don’t have to worry about fixing it here, but it’s always important to think about edge cases. Can you think of what some issues with using contains might be?
+
+Student: No not really… It looks like it’s working perfectly fine.
+
+Prof: Imagine that we want to check if the `ImageData` keywords contain `"cat"`, and the image is of a bunch of lecture halls at UC San Diego. Maybe it has `String keywords` set as building names like `"peterson mosaic catalyst"`.
+
+Student: Oh! I see the problem. `contains` would count the `cat` in `catalyst` as a match, so a user looking for cats would get images of buildings instead.
+
+Prof: Yep, these are the kinds of edge cases you have to keep an eye out for. Another one to keep an eye out for is that `contains` is case-sensitive. So `Cat` doesn’t contain `cat`. Think a bit about how you might fix these edge cases, but now we are going to move on to using interfaces in another context.
+
+#### Practice
+
+Exercise:
+
+An image’s keywords are the String `"cat sleeping"`. Which of these is `true`?
+
+Choose one:
+
+- `keywords.contains("cat")`
+- `keywords.contains("dog")`
+- `keywords.contains("sleeping cat")`
+- `keywords.equals("cat")`
+
+The student’s `String[]` idea works too. Let’s build it step by step. Each keyword is now its own String, so `.equals()` asks the right question: is *this one keyword* exactly the word we want?
+
+1. Change `keywords` to hold many Strings instead of one.
+2. Loop over every keyword in the image.
+3. If a keyword equals the word, we found a match, so we can answer `true` right away.
+4. If the loop finishes and nothing matched, the answer is `false`.
+
+Exercise:
+
+```java
+record ImageData(____ keywords, String fileType, int width, int height, int sizeKb) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+
+record HasKeyword(String word) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    for (____ keyword : img.keywords()) {
+      if (keyword.____(this.word)) {
+        return ____;
+      }
+    }
+    return ____;
+  }
+}
+
+void main() {
+  System.out.println("All tests succeeded!");
+}
+```
+
+## [The Pict Library, Revisited](the-pict-library.html)
+
+Prof: Are you finding some of this interface stuff a bit familiar? Does it remind you of something we were working with all the way back at the beginning?
+
+Student: Yeah… when I was writing something like `isPng.and(isBig)` it felt very similar to writing `tree.beside(sun)`. The `Pict` library we have been using, that uses interfaces?
+
+Prof: It sure does! You’re right that it is similar, here is an example of using `Pict` like you just mentioned.
+
+```java
+Pict dot = new Circle(20, "red");
+Pict square = new Rect(40, 40, "blue");
+
+Pict viaRecord = new Beside(dot, square);
+Pict viaMethod = dot.beside(square);
+Pict stacked = viaMethod.above(new Rect(60, 10, "green"));
+
+void main() {
+  assertEquals(viaRecord, viaMethod);
+}
+```
+
+Output:
+
+```text
+dot = Circle[radius=20, color=red]
+[image]
+square = Rect[width=40, height=40, color=blue]
+[image]
+viaRecord = Beside[left=Circle[radius=20, color=red], right=Rect[width=40, height=40, color=blue]]
+[image]
+viaMethod = Beside[left=Circle[radius=20, color=red], right=Rect[width=40, height=40, color=blue]]
+[image]
+stacked = Above[top=Beside[left=Circle[radius=20, color=red], right=Rect[width=40, height=40, color=blue]], bottom=Rect[width=60, height=10, color=green]]
+[image]
+```
+
+Student: I see, so when I use `dot.beside(square)`, that is using a `default` method inside of the `Pict` interface?
+
+Prof: Yep.
+
+Student: Ohhh, and there must be a record called `Beside` that implements `Pict`. It’s all coming together now.
+
+Prof: Here, I’ll write out a section of the Pict library so we can talk through it. I trimmed it down a little; the whole thing is in [`Pict.java`](../kit/Pict.java).
+
+```java
+interface Pict {
+    int width();
+    int height();
+
+    default Pict beside(Pict other) { return new Beside(this, other); }
+    default Pict above(Pict other) { return new Above(this, other); }
+    // ... more default methods ...
+
+    void draw(Graphics2D g, int x, int y);
+}
+
+record Circle(int radius, Color color) implements Pict {
+    // ... plus constructors that accept a color name like "red" ...
+    public int width() { return 2 * this.radius; }
+    public int height() { return 2 * this.radius; }
+    public void draw(Graphics2D g, int x, int y) {
+        g.setColor(this.color);
+        g.fillOval(x, y, 2 * this.radius, 2 * this.radius);
+    }
+}
+
+record Beside(Pict left, Pict right) implements Pict {
+    public int width() { return this.left.width() + this.right.width(); }
+    public int height() { return Math.max(this.left.height(), this.right.height()); }
+    public void draw(Graphics2D g, int x, int y) {
+        int centerY = this.height() / 2;
+        this.left.draw(g, x, y + centerY - this.left.height() / 2);
+        this.right.draw(g, x + this.left.width(), y + centerY - this.right.height() / 2);
+    }
+}
+```
+
+Student: Ok, so `Pict` is an interface. And you gave it a `width` and `height` method. So all cases where we implement `Pict` will have a `width` and `height` as well.
+
+Prof: Correct, what else do you notice?
+
+Student: You used `default` just like we did with `ImageQuery`, but instead of using it for `And`, `Not`, `Or`, it’s being used for `beside` and `above`. Although I am a bit confused about the `Graphics2D` part? What is a `Graphics2D`? What are all these lines that say `g` mean?
+
+Prof: For now let’s just treat `Graphics2D` as our way of actually drawing pixels on the screen. `Pict` describes what we want to draw, and `Graphics2D` is part of a library that handles the details of actually drawing it.
+
+Student: So you are hiding things from me again?
+
+Prof: Funnily enough, the creators of `Graphics2D` actually hid all this from me! When I wrote `Pict`, I didn’t have to think too much about how `Graphics2D` works. It abstracted away those details so I could focus on implementing all the shapes and relationships that I wanted `Pict` to have. Programmers rely on the work of others, especially when working on very complicated projects. We have also been using `assertEquals()` the same way, as code someone else wrote that we trust to do its job.
+
+Student: This is a lot to keep track of.
+
+Prof: Let’s just focus on `Pict` a bit more, and just treat the `Graphics2D g` section of the `draw` method as a canvas with a paint brush: when you hand it something, it draws it for you. We only use it inside `draw`, and only the simple records like `Circle` call `Graphics2D` methods directly. The records are what we are focusing on. They hold the data saying “a circle with a given radius and color” or “a circle, then a square beside it”. `Pict` is the type that lets all of them be used interchangeably. Notice that `Beside` holds two `Pict`s, in the same way `And` held two `ImageQuery`s. The drawing part is just what allows us to see and verify the result visually, but all the data is defined by us.
+
+#### Practice
+
+Exercise:
+
+Look at the `draw` method of `Circle` and the `draw` method of `Beside` above. Which statement is true?
+
+Choose one:
+
+- `Beside.draw` paints pixels by calling `g.fillOval` and `g.fillRect` directly.
+- A `Circle` stores its own pixels, so `draw` just copies them onto `g`.
+- `Circle.draw` calls `Graphics2D` methods to paint itself, while `Beside.draw` hands the same `g` to the `draw` of its two parts, at different positions.
+- `Beside` does not need a `draw` method, because the `Pict` interface supplies one.
+
+Exercise:
+
+`Above` is the vertical version of `Beside`. This is the `draw` method of `Above` from the `Pict` library, with one piece missing. The top picture is drawn at the top, so the bottom picture must start just below it. Which expression belongs in place of `/* ??? */`, the `y` argument of the second `draw` call?
+
+```java
+record Above(Pict top, Pict bottom) implements Pict {
+    public int width() { return Math.max(this.top.width(), this.bottom.width()); }
+    public int height() { return this.top.height() + this.bottom.height(); }
+    public void draw(Graphics2D g, int x, int y) {
+        int centerX = this.width() / 2;
+        this.top.draw(g, x + centerX - this.top.width() / 2, y);
+        this.bottom.draw(g, x + centerX - this.bottom.width() / 2, /* ??? */);
+    }
+}
+```
+
+Choose one:
+
+- `y + this.top.height()`
+- `y + this.bottom.height()`
+- `y`
+- `this.top.height()`
+
+## [Building Your Own Pict](building-your-own-pict.html)
+
+Student: Ok, time to make my own `Pict`! Mine will be called `Art`, so it doesn’t collide with the real one that we have been using so far.
+
+Prof: Good plan. Drawing is the hard part of `Pict`, so let’s skip it. Let’s just focus on the size of your `Art`. Write that as an interface, plus one simple record like the `Rect` from `Pict.java`.
+
+```java
+interface Art {
+  int width();
+  int height();
+}
+
+record Block(int width, int height) implements Art {}
+
+void main() {
+  Art wall = new Block(3, 2);
+  assertEquals(3, wall.width());
+  assertEquals(2, wall.height());
+}
+```
+
+Student: Wait, `Block` doesn’t have a `width` method. Did I need to write it?
+
+Prof: Nope. Every record gets a method for each of its fields, with the same name. `wall.width()` is one of those, and it is what the interface asked for.
+
+Student: Ok. So now I should add something like `Beside`. How about `SideBySide`?
+
+Prof: Go ahead. What is the width of two pictures next to each other? What is the height?
+
+Student: The widths add up, and the height is whichever is taller. And I want a `nextTo` method, like `beside`, so I don’t have to type `new SideBySide(...)`.
+
+```java
+interface Art {
+  int width();
+  int height();
+
+  default Art nextTo(Art other) {
+    return new SideBySide(this, other);
+  }
+}
+
+record Block(int width, int height) implements Art {}
+
+record SideBySide(Art left, Art right) implements Art {
+  public int width() {
+    return this.left.width() + this.right.width();
+  }
+  public int height() {
+    return Math.max(this.left.height(), this.right.height());
+  }
+}
+
+void main() {
+  Art wall = new Block(3, 2);
+  Art tower = new Block(2, 4);
+  Art both = wall.nextTo(tower);
+  assertEquals(5, both.width());
+  assertEquals(4, both.height());
+  assertEquals(7, both.nextTo(new Block(2, 1)).width());
+}
+```
+
+Student: The last line is a `SideBySide` inside another `SideBySide`, and it still works.
+
+Prof: Because `left` and `right` are `Art`s, not `Block`s. It’s the same trick as `And` holding two `ImageQuery`s. Now one that holds a single picture: a `Frame` that adds a border, one unit thick on every side, around another `Art`.
+
+```java
+interface Art {
+  int width();
+  int height();
+
+  default Art nextTo(Art other) {
+    return new SideBySide(this, other);
+  }
+  default Art framed() {
+    return new Frame(this);
+  }
+}
+
+record Block(int width, int height) implements Art {}
+
+record SideBySide(Art left, Art right) implements Art {
+  public int width() {
+    return this.left.width() + this.right.width();
+  }
+  public int height() {
+    return Math.max(this.left.height(), this.right.height());
+  }
+}
+
+record Frame(Art inner) implements Art {
+  public int width() {
+    return this.inner.width() + 2;
+  }
+  public int height() {
+    return this.inner.height() + 2;
+  }
+}
+
+void main() {
+  Art wall = new Block(3, 2);
+  assertEquals(5, wall.framed().width());
+  assertEquals(7, wall.framed().framed().width());
+  assertEquals(7, wall.nextTo(new Block(2, 4)).framed().width());
+}
+```
+
+Student: A frame of a frame is 4 wider, since each `Frame` asks the picture inside it for its width and adds 2.
+
+Prof: Exactly, and the picture inside might itself be a `Frame` or a `SideBySide`. Each one only has to know about its own parts. That is the same design as `ImageQuery` and as the `Pict` library. It’s an interface that describes what every value can do, simple records, combinator records that hold other values of the interface, and `default` methods that build them.
+
+Prof: Step through this one to watch each part get asked in turn:
+
+```java
+interface Art {
+  int width();
+  int height();
+
+  default Art nextTo(Art other) {
+    return new SideBySide(this, other);
+  }
+  default Art framed() {
+    return new Frame(this);
+  }
+}
+
+record Block(int width, int height) implements Art {}
+
+record SideBySide(Art left, Art right) implements Art {
+  public int width() {
+    return this.left.width() + this.right.width();
+  }
+  public int height() {
+    return Math.max(this.left.height(), this.right.height());
+  }
+}
+
+record Frame(Art inner) implements Art {
+  public int width() {
+    return this.inner.width() + 2;
+  }
+  public int height() {
+    return this.inner.height() + 2;
+  }
+}
+
+void main() {
+  Art wall = new Block(3, 2);
+  Art tower = new Block(2, 4);
+  Art framed = wall.nextTo(tower).framed();
+  int w = framed.width();
+}
+```
+
+Memory at the end:
+
+```
+Names
+  top level
+Heap
+  @1001: Block[width=3, height=2]
+  @1002: Block[width=2, height=4]
+  @1003: SideBySide[left=@1001, right=@1002]
+  @1004: Frame[inner=@1003]
+```
+
+#### Practice
+
+**Exercise 1.** `Stacked` puts one picture on top of another, like `Above` in the Pict library. Fill in its width and its height.
+
+Exercise:
+
+```java
+interface Art {
+  int width();
+  int height();
+}
+
+record Block(int width, int height) implements Art {}
+
+record Stacked(Art top, Art bottom) implements Art {
+  public int width() {
+    return ____;
+  }
+  public int height() {
+    return ____;
+  }
+}
+
+void main() {
+  System.out.println("All tests succeeded!");
+}
+```
+
+**Exercise 2.** Finish `Frame`, which puts a border one unit thick around another picture, and the `framed` default method that builds it.
+
+Exercise:
+
+```java
+interface Art {
+  int width();
+  int height();
+
+  default Art framed() {
+    return ____;
+  }
+}
+
+record Block(int width, int height) implements Art {}
+
+record Frame(Art inner) implements Art {
+  public int width() {
+    return ____;
+  }
+  public int height() {
+    return ____;
+  }
+}
+
+void main() {
+  System.out.println("All tests succeeded!");
+}
+```

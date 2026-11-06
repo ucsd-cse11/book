@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Pict Library, Revisited — Classes that Share Behavior</title>
 <link rel="stylesheet" href="../assets/book.css?v=fa4d2e038929">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
 <meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
 </head>
 <body>
@@ -64,7 +65,7 @@ record <span style="color: #4b69c6">Beside</span>(<span style="color: #4b69c6">P
 }</code></pre></div><ol class="choices"><li><code>y</code><div class="why">That is the same <code>y</code> as the top picture, so the bottom picture would be drawn on top of it.</div></li><li><code>this.top.height()</code><div class="why">That ignores <code>y</code>, so the pictures would only line up when the <code>Above</code> is drawn at the very top of the canvas.</div></li><li data-correct><code>y + this.top.height()</code><div class="why">The bottom picture starts where the top one ends: the starting <code>y</code>, plus the height of the top picture.</div></li><li><code>y + this.bottom.height()</code><div class="why">That moves down by the height of the bottom picture itself, which leaves a gap the size of the bottom picture, and the top picture’s height never counts.</div></li></ol></div></div></article>
 <nav class="pagenav"><a class="prev" href="growing-imagedata.html">← Growing ImageData</a> <a class="next" href="building-your-own-pict.html">Building Your Own Pict →</a></nav>
 </main>
-<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
 <a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
 <script type="application/x-steps">{"section": "sharing-behavior", "title": "Classes that Share Behavior", "current": 4, "steps": [{"title": "Searching for Images", "slug": "searching-for-images", "url": "searching-for-images.html", "path": "/sharing-behavior/searching-for-images.html"}, {"title": "Combining Queries", "slug": "combining-queries", "url": "combining-queries.html", "path": "/sharing-behavior/combining-queries.html"}, {"title": "Queries as Data", "slug": "queries-as-data", "url": "queries-as-data.html", "path": "/sharing-behavior/queries-as-data.html"}, {"title": "Growing ImageData", "slug": "growing-imagedata", "url": "growing-imagedata.html", "path": "/sharing-behavior/growing-imagedata.html"}, {"title": "The Pict Library, Revisited", "slug": "the-pict-library", "url": "the-pict-library.html", "path": "/sharing-behavior/the-pict-library.html"}, {"title": "Building Your Own Pict", "slug": "building-your-own-pict", "url": "building-your-own-pict.html", "path": "/sharing-behavior/building-your-own-pict.html"}]}</script>
 <script src="../assets/runner.js?v=8d3dd75b8dcf"></script>

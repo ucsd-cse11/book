@@ -1,0 +1,653 @@
+# Recipe for Success
+
+## [Breaking It Down](breaking-it-down.html)
+
+Student: I have to say I’m getting a little lost.
+
+Prof: Oh?
+
+Student: We’ve learned a lot of things very quickly – `record`, methods, built-in methods, writing our own methods, types, definitions, `main`, `assertEquals`. That’s a lot! It’s hard to know which parts to use when I sit down to write a program.
+
+Prof: I see what you mean. OK let’s break down some programs from the beginning.
+
+Prof: Here’s one: write a program that would help track subscription pricing, like to Netflix or other online services. It should help calculate how much you’d spend after a certain number of months, taking into account a free trial period given a monthly rate after the trial.
+
+Student: See that’s where I get stuck. I know I probably need like… size and cost? And some methods. But I’m used to getting code that I fill in. I’m not sure what to type first.
+
+Prof: Got it. So lots of problems can be broken down into specific steps. A good first step for a lot of the problems in this book, and for object-oriented programs in general, is to start with a `record` or `class` definition, in terms of what **fields** we need for the **data** in the problem. Here we’ve got at least the number of trial months, the monthly price, and the name of the service.
+
+Student: OK, so we’re supposed to turn that into a record?
+
+Prof: Right. What name would you use, and what names and types for the fields?
+
+Student: I guess we can call it `Subscription`, and then have the `name` and then the monthly cost… you were really adamant that prices should be `int`, not `double`, when we talked about that before. And I guess the free trial months is a count?
+
+Prof: Sounds good. Try writing it all down.
+
+```java
+record Subscription(String name, int price, int months) {}
+```
+
+Student: So next do I write the methods?
+
+Prof: I have some questions first! One way to make sure we understand our definition is to write a few examples. Let’s do that
+
+Student: Great, easy, I just use `new`:
+
+```java
+record Subscription(String name, int price, int months) {}
+Subscription netflix = new Subscription("Netflix", 19, 3);
+Subscription disney = new Subscription("Disney+", 21, 1);
+```
+
+Output:
+
+```text
+netflix = Subscription[name=Netflix, price=19, months=3]
+disney = Subscription[name=Disney+, price=21, months=1]
+```
+
+Prof: Great. So what does the first one mean in English?
+
+Student: A Netflix subscription that costs 19 dollars a month, with 3 trial months
+
+Prof: I see. Can you represent a subscription that costs $9.99?
+
+Student: I guess not, not without changing it to a `double`.
+
+Prof: So one idea is to represent it not as dollars but as cents. So a $10 subscription would have 1000 as its price. That keeps it as `int`.
+
+Student: Oh, that’s a nice trick.
+
+Prof: That’s a trick I know from experience. There are lots of those to learn along the way while you build up programming experience. So we should make sure that the program has these modeling decisions clearly written down. That way anyone (human or AI agent) that reads the code will know what we intended. One way is to choose really descriptive field names; can you think of any here?
+
+Student: Well `priceCents` would make the price clear.
+
+Prof: And for the trial?
+
+Student: Oh I guess `trialMonths` would also be pretty good.
+
+Prof: Great. Let’s go forward with that.
+
+```java
+record Subscription(String name, int priceCents, int trialMonths) {}
+Subscription netflix = new Subscription("Netflix", 1900, 3);
+Subscription disney = new Subscription("Disney+", 2100, 1);
+```
+
+Output:
+
+```text
+netflix = Subscription[name=Netflix, priceCents=1900, trialMonths=3]
+disney = Subscription[name=Disney+, priceCents=2100, trialMonths=1]
+```
+
+Prof: Great. Now let’s write a method that tells us how much we’ll have spent after a given number of months, taking the free trial into account.
+
+Student: OK, so what do I type first?
+
+Prof: So I usually start with either the method header or examples of calling the method. They kind of go together. What should the method be called and how many arguments should it get? What should it return?
+
+Student: Well it takes a number of months… so an `int`. And it returns… I guess a number of cents?
+
+Prof: Great, how would you write that as a method header?
+
+Student: `int costAfter(months)`?
+
+Prof: Almost – the parameter needs a type, too.
+
+Student: Ah so `int costAfter(int months)`
+
+Prof: Looks good. And what does it look like to call it with some of our example data?
+
+Student: Maybe like `int price = costAfter(8);`
+
+Prof: Close again. That method call needs a receiver. Do you remember what that is?
+
+Student: The object that goes before the method name? So I could use like `netflix` or `disney`?
+
+Prof: That’s right. Now try putting it all together.
+
+```java
+record Subscription(String name, int priceCents, int trialMonths) {
+  int costAfter(int months)
+}
+Subscription netflix = new Subscription("Netflix", 1900, 3);
+Subscription disney = new Subscription("Disney+", 2100, 1);
+int price = netflix.costAfter(8);
+```
+
+Output (compile error):
+
+```text
+line 2: error: Syntax error on token ")", { expected after this token
+error: Syntax error, insert "}" to complete ClassBody
+```
+
+Student: But that has an error!
+
+Prof: Right. We can’t write a method without a method body. But this is a great start! One thing I sometimes do is write a wrong value with the right type down as the return so I can see the program run. Like a `0` would work here.
+
+Student: Like this?
+
+```java
+record Subscription(String name, int priceCents, int trialMonths) {
+  int costAfter(int months) { return 0; }
+}
+Subscription netflix = new Subscription("Netflix", 1900, 3);
+Subscription disney = new Subscription("Disney+", 2100, 1);
+int price = netflix.costAfter(8);
+```
+
+Output:
+
+```text
+netflix = Subscription[name=Netflix, priceCents=1900, trialMonths=3]
+disney = Subscription[name=Disney+, priceCents=2100, trialMonths=1]
+price = 0
+```
+
+Prof: Exactly. So the result is `0`, but at least it runs! This is called using a placeholder value (some people call it a “dummy” value). I even do this when I’m programming with AI systems – I will tell them “put a placeholder in for now so we can get it running; then we’ll update and write more detailed tests” or similar.
+
+Student: I see. OK so now we fill in the body. This is just the number of months minus the free trial months, times the monthly rate. Straightforward.
+
+Prof: Go ahead!
+
+```java
+record Subscription(String name, int priceCents, int trialMonths) {
+  int costAfter(int months) { return (months - trialMonths) * priceCents; }
+}
+Subscription netflix = new Subscription("Netflix", 1900, 3);
+Subscription disney = new Subscription("Disney+", 2100, 1);
+int price = netflix.costAfter(8);
+```
+
+Output:
+
+```text
+netflix = Subscription[name=Netflix, priceCents=1900, trialMonths=3]
+disney = Subscription[name=Disney+, priceCents=2100, trialMonths=1]
+price = 9500
+```
+
+Prof: There you go! It runs. Think it’s all good?
+
+Student: Yup, I’m satisfied.
+
+Prof: Let me nudge you a little bit… what happens if I want to know how much that Netflix subscription will cost after 2 months? Can you turn that into a runnable example?
+
+Student: Sure!
+
+```java
+record Subscription(String name, int priceCents, int trialMonths) {
+  int costAfter(int months) { return (months - trialMonths) * priceCents; }
+}
+Subscription netflix = new Subscription("Netflix", 1900, 3);
+Subscription disney = new Subscription("Disney+", 2100, 1);
+int price = netflix.costAfter(8);
+int priceAfter2 = netflix.costAfter(2);
+```
+
+Output:
+
+```text
+netflix = Subscription[name=Netflix, priceCents=1900, trialMonths=3]
+disney = Subscription[name=Disney+, priceCents=2100, trialMonths=1]
+price = 9500
+priceAfter2 = -1900
+```
+
+Student: Wait, it’s negative. Ohhhh I see. Because months is less than trialMonths.
+
+Prof: Right, can you think of a way to fix it? The examples are fine, your method definition just has a bug!
+
+Student: Oh so if the number of months would be negative, the result is just 0.
+
+Prof: Another way to say it is that the number of months you pay for is the `max` of either `0` or the difference (it should never go negative).
+
+Student: Right. I see how to fix it now, there are a few ways.
+
+Prof: Great! So one last step could be turning the examples at the end into `assertEquals` tests in a `main` method. We can leave that off for now, in future examples we will see how to do it. With just a handful we can read the outputs ourselves.
+
+Student: I see a little better now. What were all the steps?
+
+Prof: There were a few:
+
+1. Define the data and write examples to make the representation clear
+2. Identify the method you want to write
+3. Write the method header and examples together to figure out what it’s **supposed** to do; placeholder values to make it run
+4. Implement the method body and check it against the examples.
+
+The book [How to Design Programs](https://htdp.org) calls this kind of step-by-step process the Design Recipe. It’s just one way to break down programs, but it works well for a lot of cases you’ll encounter.
+
+#### Practice
+
+Exercise:
+
+Pick the body that fixes `costAfter`, so that months inside the free trial cost nothing.
+
+```java
+record Subscription(String name, int priceCents, int trialMonths) {
+  int costAfter(int months) { return [Math.max(0, months - trialMonths * priceCents) / Math.max(0, months - trialMonths) * priceCents / Math.max(months, trialMonths) * priceCents / Math.min(0, months - trialMonths) * priceCents]; }
+}
+Subscription netflix = new Subscription("Netflix", 1900, 3);
+Subscription disney = new Subscription("Disney+", 2100, 1);
+int price = netflix.costAfter(8);
+int priceAfter2 = netflix.costAfter(2);
+```
+
+## [Pizza](pizza.html)
+
+Student: OK that was a good example, but I need more practice. Give me another one.
+
+Prof: I’m glad you’re game to try more! Here’s another one: write a program for representing pizzas (like that you might order from a restaurant), with operations that help compare and understand pizzas of different sizes for ordering for big groups – what is the price per square inch, is a 16″ pizza more pizza than two 10″ pizzas, and so on. What’s the first step?
+
+Student: Define the data with a `record` and write examples?
+
+Prof: Right! This problem talks about pizzas, which **have** a size and cost, so that’s a likely starting point. What might we call the record, and what might its fields and their types be?
+
+Student: I guess that’s something like `Pizza` and then numbers for size and cost?
+
+Prof: Great. Number on its own isn’t a type in Java, so we should pick one for ourselves – what do you think `double` or `int` for these fields?
+
+Student: Well you were pretty clear earlier that we should use `int` for money, and I’ll guess right away that I should use cents. And I guess pizzas don’t have to be an exact number of inches, so that could be a double.
+
+Prof: Great, so you can write the `record` and examples now!
+
+Student: I guess I can…
+
+```java
+record Pizza(double size, int cost)  {}
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+```
+
+Output:
+
+```text
+big = Pizza[size=16.0, cost=1000]
+small = Pizza[size=10.0, cost=500]
+```
+
+Prof: Great, now tell me in English what those represent?
+
+Student: A 16 inch pizza that costs 10 dollars, and a 10 inch pizza that costs 5 dollars.
+
+Prof: Ah OK! And is that 16 inches across?
+
+Student: Yeah, isn’t that usually what it means?
+
+Prof: I think so. We could look it up! That often happens in modeling a problem: we need to do a small amount of research to make sure the way the world works agrees with how we set up our data. So 16 is the **diameter** of the pizza. That will matter for thinking about area.
+
+Student: Sure, I guess.
+
+Prof: OK so you have in mind that 16 was in inches, and the diameter. Can you think of field names that would make that clear?
+
+Student: Well `costCents`, like before. And maybe `diameterInches`? That seems long.
+
+Prof: Yeah you could also use a comment. So you could call the field `inches` or `diameter`, and write a comment above the record saying the other part. That’s all a matter of style; there’s no 100% right answer, it’s just about communicating clearly.
+
+Student: OK, I’ll try this:
+
+```java
+// inches is the *diameter* of the Pizza
+record Pizza(double inches, int costCents) { }
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+```
+
+Output:
+
+```text
+big = Pizza[inches=16.0, costCents=1000]
+small = Pizza[inches=10.0, costCents=500]
+```
+
+Prof: Great. Some coders might also put a longer comment and keep the names as just `size` and `cost`, and put a long explanation. There are lots of ways to approach it. What you wrote is great. Let’s tackle a method next. Imagine we want a method `betterDeal` that takes another `Pizza` and returns `true` if the current pizza is cheaper per square inch, and `false` if the pizza given as an argument is cheaper.
+
+Student: Huh?
+
+Prof: So imagine you are looking to feed a lot of people. You might want the pizzas that are the best price per amount of pizza. So a pizza is a “better deal” than another if it has, say, a better price per square inch.
+
+Student: Hmm OK. I think I get it. So it’s like
+
+```java
+// inches is the *diameter* of the Pizza
+record Pizza(double inches, int costCents) {
+  boolean betterDeal(Pizza other) {
+    return false; // placeholder
+  }
+}
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+boolean bigBetter = big.betterDeal(small);
+```
+
+Output:
+
+```text
+big = Pizza[inches=16.0, costCents=1000]
+small = Pizza[inches=10.0, costCents=500]
+bigBetter = false
+```
+
+Prof: Makes sense to me!
+
+Student: Hmm, now I need to actually fill this in. So we need to compare the costs. But also the square inches of each. We kind of need the area of a pizza? And I guess we need the area of *both* of them.
+
+Prof: Good observation. So, assuming circular pizzas (and given that we said diameter, I think that’s a solid assumption), you’ll need the formula for the area of a circle.
+
+Student: How do I write π in Java?
+
+Prof: There’s `Math.PI` built-in! What do you think its type is?
+
+Student: Probably a `double`, since it could never be exact. OK, cool:
+
+```java
+// inches is the *diameter* of the Pizza
+record Pizza(double inches, int costCents) {
+  boolean betterDeal(Pizza other) {
+    double thisRadius = inches / 2;
+    double thisArea = thisRadius * thisRadius * Math.PI;
+    double otherRadius = other.inches / 2;
+    double otherArea = otherRadius * otherRadius * Math.PI;
+    double thisPriceSqInch = costCents / thisArea;
+    double otherPriceSqInch = other.costCents / otherArea;
+    return thisPriceSqInch < otherPriceSqInch;
+  }
+}
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+boolean bigBetter = big.betterDeal(small);
+boolean smallBetter = small.betterDeal(big);
+```
+
+Output:
+
+```text
+big = Pizza[inches=16.0, costCents=1000]
+small = Pizza[inches=10.0, costCents=500]
+bigBetter = true
+smallBetter = false
+```
+
+Prof: Wow, that was a lot of code to type at once. Nice work.
+
+Student: Thanks! I really like the style of adding intermediate names to my code.
+
+Prof: Indeed. This is a really rich program with a lot of detail! We might have more we can learn from it…
+
+#### Practice
+
+Exercise:
+
+The method body and the calls are given. Fill in the type and name of each remaining field and of the parameter, one per box, and example data where the milk costs less in total than the eggs.
+
+```java
+record ShoppingCartItem(String name, ____ ____, ____ ____) {
+  boolean totalCheaper(____ ____) {
+    int thisTotal = quantity * priceCents;
+    int otherTotal = other.quantity * other.priceCents;
+    return thisTotal < otherTotal;
+  }
+}
+ShoppingCartItem milk = new ShoppingCartItem(____);
+ShoppingCartItem eggs = new ShoppingCartItem(____);
+boolean milkCheaper = milk.totalCheaper(eggs);
+boolean eggsCheaper = eggs.totalCheaper(milk);
+```
+
+## [A Helping Hand](pizza-area.html)
+
+Student: You were suggesting that my pizza example had more we could learn from it.
+
+Prof: Indeed! Let’s have a look at your code again
+
+Student: Here it is:
+
+```java
+// inches is the *diameter* of the Pizza
+record Pizza(double inches, int costCents) {
+  boolean betterDeal(Pizza other) {
+    double thisRadius = inches / 2;
+    double thisArea = thisRadius * thisRadius * Math.PI;
+    double otherRadius = other.inches / 2;
+    double otherArea = otherRadius * otherRadius * Math.PI;
+    double thisPriceSqInch = costCents / thisArea;
+    double otherPriceSqInch = other.costCents / otherArea;
+    return thisPriceSqInch < otherPriceSqInch;
+  }
+}
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+boolean bigBetter = big.betterDeal(small);
+boolean smallBetter = small.betterDeal(big);
+```
+
+Output:
+
+```text
+big = Pizza[inches=16.0, costCents=1000]
+small = Pizza[inches=10.0, costCents=500]
+bigBetter = true
+smallBetter = false
+```
+
+Prof: Here’s a version I think would read much better:
+
+```java
+// inches is the *diameter* of the Pizza
+record Pizza(double inches, int costCents) {
+  boolean betterDeal(Pizza other) {
+    double thisPriceSqInch = costCents / area();
+    double otherPriceSqInch = other.costCents / other.area();
+    return thisPriceSqInch < otherPriceSqInch;
+  }
+}
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+boolean bigBetter = big.betterDeal(small);
+boolean smallBetter = small.betterDeal(big);
+```
+
+Output (compile error):
+
+```text
+line 4: error: The method area() is undefined for the type Pizza
+line 5: error: The method area() is undefined for the type Pizza
+```
+
+Student: I mean, sure, but your code clearly doesn’t run. How is that better?
+
+Prof: Well, let’s say it ran and gave all the same answers as yours. Would you like it better?
+
+Student: I mean, sure. It’s nice to not write all the multiplication and division over and over.
+
+Prof: Great! OK, so make it run – define the `area` method.
+
+Student: Hmmm… I guess it uses a lot of the same code we just deleted.
+
+Prof: Indeed! Let’s think it through. Based on how we used it, what’s its name, its return type, and its parameters?
+
+Student: Well the name is obviously `area`. And it must return a `double` because that’s what we were calculating before.
+
+Prof: Great so far! What about the arguments?
+
+Student: Does it take a `Pizza`?
+
+Prof: Oh that’s a good instinct, but no. The receiver of `area` will always be a `Pizza`, and we don’t need any more information. Unlike `betterDeal`, area only works with the receiver, so it doesn’t take any arguments! And when `betterDeal` calls `area()` with nothing in front of it, the receiver is the same pizza `betterDeal` was called on.
+
+Student: Hmm OK. So that’s like…
+
+```java
+// inches is the *diameter* of the Pizza
+record Pizza(double inches, int costCents) {
+  double area() {
+    double radius = inches / 2;
+    return radius * radius * Math.PI;
+  }
+  boolean betterDeal(Pizza other) {
+    double thisPriceSqInch = costCents / area();
+    double otherPriceSqInch = other.costCents / other.area();
+    return thisPriceSqInch < otherPriceSqInch;
+  }
+}
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+boolean bigBetter = big.betterDeal(small);
+boolean smallBetter = small.betterDeal(big);
+```
+
+Output:
+
+```text
+big = Pizza[inches=16.0, costCents=1000]
+small = Pizza[inches=10.0, costCents=500]
+bigBetter = true
+smallBetter = false
+```
+
+Prof: Ah, very nice. Isn’t that pleasant? What are some benefits of having done this?
+
+Student: Well, I do think it’s nice to just use `.area()` in the `betterDeal` method. I can see more quickly what it does.
+
+Prof: Can you think of any other benefits?
+
+Student: Hmm… wait, can we use `area` for **any** `Pizza` now?
+
+Prof: That’s right! This `area` method started as what we call a “helper” method, whose job is just to make another method simpler. But a lot of times a helper method can be useful on its own, too.
+
+#### Practice
+
+Exercise:
+
+This method computes a distance from `0` twice:
+
+```java
+boolean furtherFrom0Than(Point other) {
+  double thisDistance = Math.sqrt(x * x + y * y);
+  double otherDistance = Math.sqrt(other.x * other.x + other.y * other.y);
+  return thisDistance > otherDistance;
+}
+```
+
+Finish the version below that uses the `dist0` helper instead.
+
+```java
+record Point(double x, double y) {
+  double dist0() {
+    return Math.sqrt(x * x + y * y);
+  }
+  boolean furtherFrom0Than(Point other) {
+    return ____ > ____;
+  }
+}
+Point far = new Point(3, 4);
+Point near = new Point(1, 1);
+boolean farFurther = far.furtherFrom0Than(near);
+boolean nearFurther = near.furtherFrom0Than(far);
+```
+
+## [Practice](exercises.html)
+
+Exercise:
+
+Fill in each method header to match the example method calls at the bottom.
+
+```java
+record ParkingSession(int minutesParked, int centsPerHour) {
+  ____ {
+    return minutesParked * centsPerHour / 60;
+  }
+  ____ {
+    return minutesParked > limitMinutes;
+  }
+  ____ {
+    return Math.max(0, limitMinutes - minutesParked);
+  }
+}
+ParkingSession lunch = new ParkingSession(45, 300);
+int lunchCost = lunch.costCents();
+boolean lunchTooLong = lunch.isOverLimit(60);
+int lunchLeft = lunch.minutesLeft(60);
+```
+
+Exercise:
+
+We mentioned how sometimes it’s useful to pick a placeholder value before getting into a complex method body implementation. Pick a placeholder for each method so the program runs. It only has to be the right type, not the right answer.
+
+```java
+record ParkingSession(int minutesParked, int centsPerHour) {
+  int costCents() { return [0 / false / "" / new Circle(1, "white") / 0.0]; }
+  boolean isOverLimit(int limitMinutes) { return [0 / false / "" / new Circle(1, "white") / 0.0]; }
+  double hoursParked() { return [0 / false / "" / new Circle(1, "white") / 0.0]; }
+  String receipt() { return [0 / false / "" / new Circle(1, "white") / 0.0]; }
+  Pict meterSign() { return [0 / false / "" / new Circle(1, "white") / 0.0]; }
+}
+```
+
+Exercise:
+
+Make `streamflix` a subscription that costs less than `disney` after 3 months, but more than `disney` after 12 months.
+
+```java
+record Subscription(String name, int priceCents, int trialMonths) {
+  int costAfter(int months) {
+    return Math.max(0, months - trialMonths) * priceCents;
+  }
+}
+Subscription disney = new Subscription("Disney+", 2100, 1);
+Subscription streamflix = ____;
+int disney3 = disney.costAfter(3);
+int streamflix3 = streamflix.costAfter(3);
+int disney12 = disney.costAfter(12);
+int streamflix12 = streamflix.costAfter(12);
+```
+
+Exercise:
+
+A student followed most of the recipe for a parking meter:
+
+1. Wrote the record: `record ParkingSession(int minutes, int rate) {}`
+2. Wrote the header with a placeholder, `int costCents() { return 0; }`, and checked that it runs.
+3. Filled in the body: `return minutes * rate;`
+4. Started a test, `assertEquals(___, new ParkingSession(90, 300).costCents())`, and got stuck: is `300` cents per minute or per hour? Is the answer `27000` or `450`?
+
+Which step did they skip that would have raised that question first?
+
+Choose one:
+
+- Using a placeholder so the program runs
+- Writing example data and saying what it means in English
+- Writing the method header
+- Writing a helper method
+
+Exercise:
+
+This discount method looks right, but some `percentOff` makes the “discounted” price **higher** than the original. Find one.
+
+```java
+record CartItem(String name, int priceCents) {
+  int priceWithDiscount(int percentOff) {
+    return priceCents * (100 - percentOff) / 100;
+  }
+}
+CartItem mug = new CartItem("mug", 1000);
+int percentOff = ____;
+int discounted = mug.priceWithDiscount(percentOff);
+```
+
+Exercise:
+
+Change it so a negative `percentOff` counts as no discount.
+
+```java
+record CartItem(String name, int priceCents) {
+  int priceWithDiscount(int percentOff) {
+    return priceCents * (100 - [Math.min(0, percentOff) / Math.abs(percentOff) / Math.max(100, percentOff) / Math.max(0, percentOff)]) / 100;
+  }
+}
+CartItem mug = new CartItem("mug", 1000);
+int noDiscount = mug.priceWithDiscount(-10);
+int quarterOff = mug.priceWithDiscount(25);
+```

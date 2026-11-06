@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>A Static Shock — Java Details</title>
 <link rel="stylesheet" href="../assets/book.css?v=fa4d2e038929">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
 <meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
 </head>
 <body>
@@ -46,7 +47,7 @@ void main() {
 }</code></pre></div><ol class="choices"><li data-correct><code>origin</code><div class="why"><code>origin</code> makes a new <code>Point</code> out of nothing but numbers, so it doesn’t need a point to be called on: <code>Point.origin()</code>.</div></li><li data-correct><code>average</code><div class="why"><code>average</code> only uses its parameters <code>a</code> and <code>b</code>, so it could be <code>static</code>. (It hardly belongs in <code>Point</code> at all.)</div></li><li><code>distanceTo</code><div class="why"><code>distanceTo</code> uses <code>x</code> and <code>y</code>, the fields of the point it was called on.</div></li><li><code>flipped</code><div class="why"><code>flipped</code> uses <code>x</code> and <code>y</code> to build the new point.</div></li><li><code>isOrigin</code><div class="why"><code>isOrigin</code> asks about the fields of the point it was called on.</div></li></ol></div></div></article>
 <nav class="pagenav"><a class="prev" href="class-equality.html">← Classes and Equality</a> <a class="next" href="casting.html">Primitives: The Full `cast` →</a></nav>
 </main>
-<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
 <a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
 <script type="application/x-steps">{"section": "java-details", "title": "Java Details", "current": 4, "steps": [{"title": "Sweet Little Lies", "slug": "things-you-havent-told-me", "url": "things-you-havent-told-me.html", "path": "/java-details/things-you-havent-told-me.html"}, {"title": "Records Under (or Over) Construction", "slug": "under-construction", "url": "under-construction.html", "path": "/java-details/under-construction.html"}, {"title": "Programming, with Class", "slug": "programming-with-class", "url": "programming-with-class.html", "path": "/java-details/programming-with-class.html"}, {"title": "Classes and Equality", "slug": "class-equality", "url": "class-equality.html", "path": "/java-details/class-equality.html"}, {"title": "A Static Shock", "slug": "static", "url": "static.html", "path": "/java-details/static.html"}, {"title": "Primitives: The Full `cast`", "slug": "casting", "url": "casting.html", "path": "/java-details/casting.html"}, {"title": "Visibility Modifiers", "slug": "access", "url": "access.html", "path": "/java-details/access.html"}, {"title": "Java Details in Summary", "slug": "summary", "url": "summary.html", "path": "/java-details/summary.html"}]}</script>
 <script src="../assets/runner.js?v=8d3dd75b8dcf"></script>

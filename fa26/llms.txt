@@ -1,0 +1,29 @@
+# Introduction to Programming and Computational Problem-Solving
+
+> Plain text of each chapter. Exercise answers are left out.
+
+By Joe Politz, Rachel Lim, Sunwoo Kim, Gerald Soosairaj, and Niema Moshiri
+
+## Chapters
+
+- [Programs and Values](programs-and-values/chapter.txt): Run your first programs right on the page
+- [Data That Travels Together](data-that-travel-together/chapter.txt): Records: declare the shape of your data
+- [The Main Thing](the-main-thing/chapter.txt): What java does with a file, why main matters, and more ways to run and check programs
+- [Recipe for Success](recipe-for-success/chapter.txt): Going from word problem to code.
+- [Collecting Values](arrays/chapter.txt): Working with arrays (our first example of a collection)
+- [How Java Runs](memory/chapter.txt): Looking at the details of how Java runs our programs
+- [Nested and 2D Structures](nested-and-2d/chapter.txt): Arrays of arrays and objects containing arrays of...
+- [Classes that Share Behavior](sharing-behavior/chapter.txt): Asking questions about data with methods, and what happens when there are too many questions
+- [Recursive Data](recursive-data/chapter.txt): Datatypes that refer to themselves
+- [Java Details](java-details/chapter.txt): Telling (slightly) fewer lies
+- [Extending Classes](extending-classes/chapter.txt)
+- [Abstract Classes and Mutation](abstract-classes-and-mutation/chapter.txt)
+- [Collections and Generics](collections-and-generics/chapter.txt): Building collections of objects
+- [Appendix: The Pict Library](pict-library/chapter.txt): Pict constructors and methods
+- [Appendix: Working on Your Own Computer](your-own-computer/chapter.txt): The kit: the Pict library, JUnit, and a Codespace
+- [Credits](credits/chapter.txt): Citations, references, and inspiration for the book
+
+## Optional
+
+- [Glossary](glossary.txt)
+- [The whole book in one file](llms-full.txt)

@@ -1,0 +1,484 @@
+# Programs and Values
+
+## [Hello, Pict!](programs-and-values.html)
+
+### Hello, Pict!
+
+Student: Professor, I’m eager to get started, but I don’t want just another introduction to variables and strings. I already have some programming experience, I am an expert in so many things, I don’t think you are ready for how much I know.
+
+Prof: That sounds very impressive. I think it’s cool when we can program with pictures. How about we start with something like this?
+
+```java
+Pict dot = new Circle(25, "red");
+Pict box = new Rect(20, 30, "blue");
+```
+
+Output:
+
+```text
+dot = Circle[radius=25, color=red]
+[image]
+box = Rect[width=20, height=30, color=blue]
+[image]
+```
+
+Student: Interesting, so `Circle` and `Rect` make shapes? What’s a `Pict`?
+
+Prof: Great question. This deserves a little explanation. These are both definitions, one for the name `dot` and one for the name `box`. Definitions in Java have a type, a name, and a value. The Java in this book has ways to make images, and the type of the images in this book is `Pict`. Then, `Circle` and `Rect` are constructors that create `Pict`s. The book shows you the image values and what they look like when you run the program.
+
+Student: OK that’s a lot at once. Can you break down some of those terms for me?
+
+Prof: Sure!
+
+- definition: A statement that looks like
+
+  ```java
+  SomeType name = value;
+  ```
+
+  We will see a lot of types; `Pict` is just the first one we’ve seen written down. You may have seen types like `int` or `double` or `String` in other programming languages.
+- constructor use: `Circle` and `Rect` are the names of constructors. We use constructors in Java with the code
+
+  ```java
+  new ConstructorName(argument1, argument2, ...)
+  ```
+
+  That creates a new object. in this case those objects represent images, and have the type `Pict`.
+- arguments: I said `argument` as part of using a constructor. These are the values we give to a constructor. For the circle here we’re giving `25` and `"red"`, for the rectangle `20`, `30`, and `"blue"`.
+
+Student: OK, I recognize some of these ideas. Are `"red"` and `"blue"` strings?
+
+Prof: That’s right, those are string values. And they give the `Circle` and `Rect` constructors information about the **color** of the resulting shape. What do you think the other numbers mean to the `Circle` and `Rect` constructors?
+
+Student: Well, they probably have to do with sizes. Like the `25` is maybe the width of the circle, and the `20` and `30` are the sides of the rectangle?
+
+Prof: Right. Specifically `25` is the **radius** of the circle, and `20` and `30` are the **width** and **height** of the rectangle. This helps us describe what these constructors do. I’ll write them down now with their specific types:
+
+- `Circle(int radius, String color)`
+- `Rect(int width, int height, String color)`
+
+Student: OK, that’s the Java notation, how do we talk about it?
+
+Prof: Oh, that’s a helpful thing to ask. I would read them this way:
+
+- The `Circle` constructor **takes** an int radius and a string color
+- The `Rect` constructor **takes** an int width, an int height, and a string color
+
+So we think of “giving” the values to the constructor, and it produces the image (or the `Pict`, to use the Java type).
+
+Student: OK, so we have constructors, `int` and `String` values, images which are called `Pict`s.
+
+Prof: Yup, you’ve got it
+
+Student: OK, this is cool. I’m curious to see what else we can do with these images, and what other values we can construct.
+
+#### Practice
+
+There is another constructor `Triangle(int width, int height, String color)`. Use it to create any triangle you like below, in a variable called `t` with type `Pict`.
+
+Exercise:
+
+```java
+____
+```
+
+## [Number Definitions](number-definitions.html)
+
+### Controlling Programs with Definitions
+
+Student: Java can make more than just `Pict` definitions, right?
+
+Prof: Absolutely, for example, we can make a definition of an `int`
+
+```java
+int size = 20;
+```
+
+Output:
+
+```text
+size = 20
+```
+
+Student: OK, what is that good for?
+
+Prof: Glad you asked! Let’s write a little program with some images again:
+
+```java
+Pict dot = new Circle(20, "red");
+Pict square = new Rect(40, 40, "blue");
+Pict tri = new Triangle(40, 20, "purple");
+```
+
+Output:
+
+```text
+dot = Circle[radius=20, color=red]
+[image]
+square = Rect[width=40, height=40, color=blue]
+[image]
+tri = Triangle[width=40, height=20, color=purple]
+[image]
+```
+
+Prof: Now I want you to imagine that these are part of a logo or other design, OK?
+
+Student: OK…
+
+Prof: Say we wanted to make all the pieces three times as big. How would we do that?
+
+Student: We’d change the 20 to 60, the 40s to 120s, and so on
+
+Prof: Right, we’d edit 5 different numbers. But these numbers are related! The square sides are twice the circle radius, and so is the triangle width. We can use a definition to capture that:
+
+```java
+int size = 20;
+Pict dot = new Circle(size, "red");
+Pict square = new Rect(size * 2, size * 2, "blue");
+Pict tri = new Triangle(size * 2, size, "purple");
+```
+
+Output:
+
+```text
+size = 20
+dot = Circle[radius=20, color=red]
+[image]
+square = Rect[width=40, height=40, color=blue]
+[image]
+tri = Triangle[width=40, height=20, color=purple]
+[image]
+```
+
+Prof: Now we’ve defined that one `size`. How would we make the images all three times as big now?
+
+Student: Oh! I get it. We could change `size` to 60, or 100, or whatever we want and all the images would change when we re-run. 60 for the case you said, of making it three times as big.
+
+Prof: That’s just it. Defining a name in one place and using it in several makes it easier for us to update our program to do something new. There are other uses for definitions, too, but this is a good one (and it helps us make cool pictures).
+
+Prof: Here’s one to try. Weight is mass times gravity. Below, `massKg` is defined once and every planet’s weight is computed from it.
+
+#### Practice
+
+Fill in a `massKg` so that `weightOnEarth` comes out to exactly `150`. Then run it and see what the same mass weighs elsewhere.
+
+Exercise:
+
+```java
+____;
+int weightOnEarth = 10 * massKg;
+int weightOnMoon = 2 * massKg;
+int weightOnMars = 4 * massKg;
+int weightOnJupiter = 25 * massKg;
+```
+
+## [String Definitions](string-definitions.html)
+
+### Defining Strings
+
+Student: So I guess we could also make a definition of a `String` and use it to swap out colors, right?
+
+Prof: Absolutely, you try!
+
+Student: OK, so I’d want an example where we make a few shapes, and they all have the same variable where we would pass in a color. Like new Circle and then it takes 10 or whatever size and then the name.
+
+Prof: Good so far.
+
+Student: And then another one, like a Rect maybe, that takes the width and height and then the **same** variable for its color… Something like this:
+
+```java
+string myColor = "red";
+Pict c = new Circle(10, myColor);
+Pict r = new Rect(30, 40, myColor);
+```
+
+Output (compile error):
+
+```text
+line 1: error: string cannot be resolved to a type
+line 2: error: string cannot be resolved to a type
+line 3: error: string cannot be resolved to a type
+```
+
+Student: Huh. That was an error?
+
+Prof: Yeah, you ran into an interesting detail here. The type `int` is spelled lowercase, but the type `String` is uppercase.
+
+Student: Why?
+
+Prof: Why questions are great. The Java-specific reason is unfortunately jargon-y in this case: because `int` is a primitive type and `String` is a reference type, and primitive types have lowercase keywords and reference types are usually written uppercase. See? Lots of jargon.
+
+Student: I like jargon! I told you, I’m an expert in many things. Ready for anything. But honestly I don’t know what you just said.
+
+Prof: On this point, that’s fine. Stay tuned. For now it’s enough to remember that `String ` and `int` are spelled that way. You can use `String` and `int` as types along with `Pict`.
+
+Prof: Oh and I want to leave you with a reminder about a tricky case here. Say my program prints out `age = 17` after I run it. What do I know about that definition?
+
+Student: Well, it isn’t necessarily `int age = 17;`, you could have done, like `int age = 9 + 8`. But it’s a number, so it’s got to be that it’s type is `int`, right?
+
+Prof: Run this and see for yourself:
+
+```java
+int age = 17;
+String label = "17";
+```
+
+Output:
+
+```text
+age = 17
+label = 17
+```
+
+Student: They look exactly the same. So `age` is a number and `label` is text, but I can’t see that from the output.
+
+Prof: Right. The quotes in `"17"` are how you make a string literal in the program. But that’s just part of the program. A lot of places in Java (and many programming languages) will print out the string value without the quotes. When you want to know whether a name holds a number or a string, look at the type in its definition, not at what gets printed.
+
+Student: Does it matter? They print the same, so maybe Java treats them the same.
+
+Prof: It matters as soon as you do something with them. For instance, what would `age + 1` be? And what about `label + 1`? Hold onto that question for the next step.
+
+#### Practice
+
+Exercise:
+
+Here is the program from the top of this step with `String` spelled correctly, plus a definition for the radius. What happens when it runs? (You can use the editor above to experiment!))
+
+```java
+String myColor = "red";
+String size = "10";
+Pict c = new Circle(size, myColor);
+Pict r = new Rect(30, 40, myColor);
+```
+
+Choose one:
+
+- An error: `myColor` is used twice, and a definition can only be used once.
+- An error, fixed by changing the definition to `int size = "10";`.
+- A red circle with radius 10 and a red rectangle.
+- An error: `Circle` takes an `int` radius, and `size` is a `String`.
+
+## [Operators](operators.html)
+
+### Using Arithmetic and Operators
+
+Student: I noticed you used `*` a few times in the last lesson. Was that multiplication?
+
+Prof: That’s right.
+
+Student: What other arithmetic operators are defined?
+
+Prof: The standard ones are `*` for multiplication, `/` for division, `-` for subtraction, and `+` for addition. Here’s an example that uses a few of them.
+
+```java
+int x = 6;
+int y = 5;
+int xsq = x * x;
+int ysq = y * y;
+int result = (xsq - ysq) / 2;
+```
+
+Output:
+
+```text
+x = 6
+y = 5
+xsq = 36
+ysq = 25
+result = 5
+```
+
+Student: OK, 36 minus 25 is 11, divided by 2 is 5.5 not 5.
+
+Prof: Good catch – `/` in Java does integer division on `int` values, so it always rounds towards 0 if it is working with `int`s.
+
+Student: Hm. Different than Python but I think I remember seeing that in some other language…
+
+Prof: Many languages do this – the idea is that all of these operators take and return integer values, so some decision about rounding has to be made on `/`.
+
+Student: Alright. I can buy that.
+
+Prof: One other detail to be aware of – `+` also works on strings (but the other operators don’t). On strings it does **concatenation**:
+
+```java
+String name = "Joe";
+String greeting = "Hello, " + name;
+String goodbye = "Goodbye, " + name;
+```
+
+Output:
+
+```text
+name = Joe
+greeting = Hello, Joe
+goodbye = Goodbye, Joe
+```
+
+Student: Oh so now you’ll tell me about that difference in `+` from the last conversation?
+
+Prof: Right! Thank you for remembering. We said `age + 1` vs. `label + 1` would have different behavior in that example because `age` was `int` and `label` was `String`. Let’s run it now:
+
+```java
+int age = 17;
+String label = "17";
+int agePlusOne = age + 1;
+String labelPlusOne = label + 1;
+```
+
+Output:
+
+```text
+age = 17
+label = 17
+agePlusOne = 18
+labelPlusOne = 171
+```
+
+Student: Interesting. So Java always concatenates if one side is a `String`.
+
+Prof: You’ve got it! That’s the basics of integers and `String`s in Java. Of course, there’s a lot more you can do with them, but it’s enough to get started.
+
+#### Practice
+
+Exercise:
+
+After this program runs, the book prints the value of each name. Fill in what it prints.
+
+```java
+int total = 7 * 3;
+int half = total / 2;
+String label = "Total: " + total;
+```
+
+```java
+total = ____
+half = ____
+label = ____
+```
+
+## [Non-integer Numbers](double-definitions.html)
+
+Student: I was thinking about how `11 / 2` produces `5`, and that seems bad. Isn’t there a way to work with fractions? Python just answers 5.5 on that program. Python’s clearly a better language.
+
+Prof: I’ll withhold judgment on languages. But we **can** get decimal numbers in Java.
+
+Student: Oh really?
+
+Prof: Indeed. There is another type we haven’t talked about called `double`, which can hold non-integer numbers.
+
+```java
+double earthGravity = 9.8;
+double massKg = 50.3;
+double earthWeight = earthGravity * massKg;
+```
+
+Output:
+
+```text
+earthGravity = 9.8
+massKg = 50.3
+earthWeight = 492.94
+```
+
+Student: I see. Why don’t we just use `double` all the time? They can represent whole numbers **and** decimal numbers, so they seem just better.
+
+Prof: Glad you asked. Because of how `double`s are stored in a computer, they have error. It’s kind of like they get rounded off (though the actual way it happens is more complicated than rounding), and the results can be surprising. Imagine you’re charging small fees in a program that handles money. This *should* produce `0.6` (60 cents if we’re talking dollars):
+
+```java
+double microTransaction1 = 0.1;
+double microTransaction2 = 0.2;
+double microTransaction3 = 0.3;
+double total = microTransaction1 + microTransaction2 + microTransaction3;
+```
+
+Output:
+
+```text
+microTransaction1 = 0.1
+microTransaction2 = 0.2
+microTransaction3 = 0.3
+total = 0.6000000000000001
+```
+
+Student: That’s so weird! Why is it doing that?
+
+Prof: It is weird! And this is just a simple, not-so-far-off error. The errors for more complex calculations with multiplication and division can be much worse. So can you tell me why this would be bad for a bank, or for a defense system?
+
+Student: I guess one error isn’t so bad, but if you made a lot of errors they could add up?
+
+Prof: That’s right – a bank that does billions or trillions of microtransactions could start to see real accounting errors. A defense system could [miss an incoming missile](https://en.wikipedia.org/wiki/MIM-104_Patriot#Failure_at_Dhahran) due to accumulated error. So lots of programs that work with money work with exact `int` amounts of cents or other small units, and long-running simulations need to account for error or periodically reset to exact observed values.
+
+Student: Hm, so when should I use doubles?
+
+Prof: Well, I think our mass and gravity example is pretty reasonable. Physical simulations, animations, or other cases where the answers are meant to be continuous or approximate anyway are a pretty good fit!
+
+Student: OK, so `double` for approximate, decimal calculations. Keep using `int` for exactness.
+
+Prof: That’s a pretty good rule to remember. Both are useful!
+
+#### Practice
+
+Exercise:
+
+For each of these, pick the type you would use.
+
+The number of students enrolled in a course: [int / double]
+The measured temperature of a room in degrees: [int / double]
+The setting on a thermostat in whole degrees: [int / double]
+A bank balance, kept in cents: [int / double]
+The height of a falling ball in a physics simulation: [int / double]
+The volume of a swimming pool in cubic feet based on its dimensions: [int / double]
+The width of a `Pict` in pixels: [int / double]
+The average of several test scores: [int / double]
+
+## [Programs and Values in Summary](summary.html)
+
+Prof: OK, so what kinds of values have we seen so far?
+
+Student: Well there’s `int` for exact numbers, `String` for text, and `double` for approximate decimal numbers.
+
+Prof: Any others?
+
+Student: Oh right! `Pict` for images! That was cool. Hey! You got me hooked with the whole “images are a cool thing you haven’t seen before” and then you went into the standard introduction to Java.
+
+Prof: Oops, I guess I did. Did you at least feel like you learned something?
+
+Student: Yeah, but I’m eager to do more!
+
+Prof: Great!
+
+#### Practice
+
+Exercise:
+
+Fill in the type of each definition so the program runs.
+
+```java
+____ radius = 25;
+____ label = "Radius: " + radius;
+____ half = 12.5;
+____ dot = new Circle(radius, "red");
+```
+
+Exercise:
+
+Exactly one of these definitions runs without an error. Which one?
+
+Choose one:
+
+- `Pict p = new Circle("10", "red");`
+- `string name = "Val";`
+- `int total = 7 / 2;`
+- `int count = "5";`
+
+Exercise:
+
+After this program runs, what does the book print for `c`?
+
+```java
+int a = 17;
+int b = a / 5;
+int c = a - b * 5;
+```
+
+Answer: ____

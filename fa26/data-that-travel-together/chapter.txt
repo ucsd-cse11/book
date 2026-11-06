@@ -1,0 +1,1076 @@
+# Data That Travels Together
+
+## [Values that belong to each other](data-that-travels-together.html)
+
+### Values that belong to each other
+
+Student: OK enough with defining variables. I already have some programming experience. This class is supposed to be about “an object-oriented approach”; I’m quoting right from the CSE catalog. What does that mean?
+
+Prof: I’m glad you asked! Sometimes that gets put off until later. We should address it right away.
+
+Student: Good, now we’re getting somewhere!
+
+Prof: OK, I’m guessing you’ve used the Triton Student System a little bit?
+
+Student: Yeah…
+
+Prof: What are some kinds of data stored in the TSS?
+
+Student: Um… well our TSN, courses, what we enrolled in, stuff like that.
+
+Prof: Great. What do you think is stored about courses? Let’s focus on this course. What’s stored about CSE11?
+
+Student: Uh, the name, the times, the waitlist, the room it’s in, the list of students…
+
+Prof: OK. So if you had to write down, using **just what we’ve seen**, the course name, max size and current enrollment count what might you write?
+
+Student: Hm… so I have to make up some numbers. With variables that’d be like…
+
+```java
+String course = "CSE-011";
+int maxSize = 600;
+int currentEnrollment = 550;
+```
+
+Output:
+
+```text
+course = CSE-011
+maxSize = 600
+currentEnrollment = 550
+```
+
+Prof: Sure, seems plausible. Now do it for CSE12.
+
+Student: OK, more made-up numbers
+
+```java
+String course = "CSE-012";
+int maxSize = 400;
+int currentEnrollment = 380;
+```
+
+Output:
+
+```text
+course = CSE-012
+maxSize = 400
+currentEnrollment = 380
+```
+
+Prof: Sure, but what if you wanted both in the same program?
+
+Student: Oh, you mean like all together? Just put them all in the same file.
+
+Prof: Let’s try it.
+
+```java
+String course = "CSE-011";
+int maxSize = 600;
+int currentEnrollment = 550;
+String course = "CSE-012";
+int maxSize = 400;
+int currentEnrollment = 380;
+```
+
+Output (compile error):
+
+```text
+line 1: error: Duplicate field course
+line 2: error: Duplicate field maxSize
+line 3: error: Duplicate field currentEnrollment
+line 4: error: Duplicate field course
+line 5: error: Duplicate field maxSize
+line 6: error: Duplicate field currentEnrollment
+```
+
+Student: Oh, I can’t have the same definition twice. Well I could just add stuff to the names, like `maxSize2` or something.
+
+Prof: Sure, that would run. Would you be satisfied?
+
+Student: Well, not really. It seems like a course should be… like a thing that we store all together.
+
+Prof: Great insight. In Java there is a feature called `record`s that lets us describe data that “goes together”. That idea—multiple pieces of data that “go together” in a `record`—is going to be key to thinking about objects.
+
+```java
+record Course(String name, int maxSize, int currentSize) {}
+
+Course cse11 = new Course("CSE-011", 600, 550);
+Course cse12 = new Course("CSE-012", 400, 380);
+```
+
+Output:
+
+```text
+cse11 = Course[name=CSE-011, maxSize=600, currentSize=550]
+cse12 = Course[name=CSE-012, maxSize=400, currentSize=380]
+```
+
+Student: Oh, I see, so each one prints as like `Course`, and then the square brackets with the stuff inside.
+
+Prof: Exactly, and that “stuff” is called the fields of the record. We say that `Course` is a record with three fields: `name`, `maxSize`, and `currentSize`. Each field has a name and a type.
+
+Student: So each field is like a definition!
+
+Prof: Almost: there’s one part of a definition they are missing, what is it?
+
+Student: The value! But they all have values, that’s what printed out.
+
+Prof: You’ve hit on an important distinction. The `record` defines the shape of a `Course` – it has three fields, one is a `String` and the others are `int`s. When we construct a course with `new Course`, we give the values for its fields.
+
+Student: Hmm… that was a complicated sentence.
+
+Prof: It’s a little bit like when we do `new Course(...)`, we fill in the values for 3 definitions at once. We can even see them by using the `.` operator:
+
+```java
+record Course(String name, int maxSize, int currentSize) {}
+
+Course cse11 = new Course("CSE-011", 600, 550);
+Course cse12 = new Course("CSE-012", 400, 380);
+String name11 = cse11.name;
+int maxSize11 = cse11.maxSize;
+int currentSize11 = cse11.currentSize;
+String name12 = cse12.name;
+int maxSize12 = cse12.maxSize;
+int currentSize12 = cse12.currentSize;
+```
+
+Output:
+
+```text
+cse11 = Course[name=CSE-011, maxSize=600, currentSize=550]
+cse12 = Course[name=CSE-012, maxSize=400, currentSize=380]
+name11 = CSE-011
+maxSize11 = 600
+currentSize11 = 550
+name12 = CSE-012
+maxSize12 = 400
+currentSize12 = 380
+```
+
+Prof: So we have 6 values, like in the long example with all the variables. They are just stored inside the two different `Course` instances that we made by using `new`. The `record` line on its own didn’t do anything with specific values like `600` or `"CSE11"`. It just set up the shape so we could use `new` and bundle the values together.
+
+Student: Ok. I see. So every time we make some things with new we access the fields with `.`?
+
+Prof: Not always. It’s just that you can; I just wrote those all out for the example.
+
+Student: So what do we **do** with these?
+
+Prof: I love how eager you are! We will see soon. For now I’ll ask that you trust me that `record` and `new` will be critical going forward. Oh and also I called the things stored in `cse11` and `cse12` instances. Another word for them is objects. So that directly answers one of your questions: a lot of our course will be concerned with programming with objects, which we create with `new` and can shape with things like `record`.
+
+Student: Alright, I’ll stick with you a little longer!
+
+#### Practice
+
+Exercise:
+
+A program says:
+
+```java
+record User(String username, int followerCount) {}
+
+User fan = new User("tritonfan", 1200);
+```
+
+What prints for the `fan` definition?
+
+Choose one:
+
+- `fan = User[username=tritonfan, followerCount=1200]`
+- `fan = User[tritonfan, 1200]`
+- `fan = new User("tritonfan", 1200)`
+
+Here the values for `new User` are in a different order than the fields. Decide what will happen *before* you run it.
+
+```java
+record User(String username, int followerCount) {}
+
+User fan = new User(1200, "tritonfan");
+```
+
+Output (compile error):
+
+```text
+line 3: error: The constructor User(int, String) is undefined
+```
+
+Exercise:
+
+What happens?
+
+Choose one:
+
+- It works, and prints `User[username=1200, followerCount=tritonfan]`.
+- It works: Java matches `"tritonfan"` to `username` because it’s the only `String`.
+- It doesn’t compile: the values for `new User` must match the fields in order — a `String`, then an `int`.
+
+Exercise:
+
+Users write posts. Complete the program so that `Post` is a record with `String` fields `content` and `author` and an `int` field `likes`, and `first` is a post by `"tritonfan"` with no likes yet.
+
+```java
+____ Post(____ content, String author, ____ likes) {}
+
+____ first = ____ Post("first day of class!", "tritonfan", 0);
+```
+
+Exercise:
+
+A program contains only this one line:
+
+```java
+record Post(String content, String author, int likes) {}
+```
+
+What has it done?
+
+Choose one:
+
+- Made three definitions: `content`, `author`, and `likes`.
+- Set up the *shape* of a `Post` — three fields, each with a name and a type — but no `Post` exists yet.
+- Nothing: it’s an error, because the fields have no values.
+- Made one `Post`, with empty `content` and `author` and `0` likes.
+
+Exercise:
+
+Fill in a `record` definition for `Student` so that the last line compiles and runs: a student has a name and a birth year.
+
+```java
+____
+
+Student s = new Student("Val", 2004);
+```
+
+## [Records and Images](records-and-images.html)
+
+### What is `Pict`?
+
+Student: OK so we saw that we can create `Pict`s using stuff like `new Circle` and `new Rect`, right? And we saw that `new` could be used with the `record`s we designed. Does that mean those things are `record`s?
+
+Prof: Yes, more or less, that’s a good observation! That’s why you see the fields in the record printing. The book just has a little extra special step where it shows the image, too. I wrote `record Circle(...) { ... }` in a place that gets loaded for all the book programs.
+
+Prof: Actually, this is a good time to do a little more with images. There are a few more constructors for images I’d like to show you.
+
+Student: OK!
+
+Prof: First let’s show the `Above` constructor, which puts two images on top of one another:
+
+```java
+Pict trunk = new Rect(10, 20, "brown");
+Pict top = new Triangle(30, 40, "green");
+Pict tree = new Above(top, trunk);
+```
+
+Output:
+
+```text
+trunk = Rect[width=10, height=20, color=brown]
+[image]
+top = Triangle[width=30, height=40, color=green]
+[image]
+tree = Above[top=Triangle[width=30, height=40, color=green], bottom=Rect[width=10, height=20, color=brown]]
+[image]
+```
+
+Student: Oh, that’s cool. So images can be combined!
+
+Prof: Right! And notice that the record for the `Above` also prints out, which shows that it is made of those two other images. This shows a general idea called composition: we take two images and combine, or compose, them together into a new image. There are lots of ways to compose two images together beyond `Above`, what might some be?
+
+Student: Well, I bet there’s `Below` if there’s `Above`. Maybe they can be beside each other, too?
+
+Prof: Anything else?
+
+Student: Hmm… Maybe something to, like, put one image in front of the other?
+
+Prof: Nice ideas. Here are a few constructor signatures:
+
+- `Below(Pict bottom, Pict top)`
+- `Beside(Pict left, Pict right)`
+- `Overlay(Pict front, Pict back)`
+
+Student: OK! How do they work?
+
+Prof: Try working with the `trunk` and `top` definitions I gave you to learn what each does.
+
+Student: OK…
+
+```java
+Pict trunk = new Rect(10, 20, "brown");
+Pict top = new Triangle(30, 40, "green");
+Pict below = new Below(top, trunk);
+Pict beside = new Beside(top, trunk);
+Pict overlay = new Overlay(top, trunk);
+```
+
+Output:
+
+```text
+trunk = Rect[width=10, height=20, color=brown]
+[image]
+top = Triangle[width=30, height=40, color=green]
+[image]
+below = Below[bottom=Triangle[width=30, height=40, color=green], top=Rect[width=10, height=20, color=brown]]
+[image]
+beside = Beside[left=Triangle[width=30, height=40, color=green], right=Rect[width=10, height=20, color=brown]]
+[image]
+overlay = Overlay[front=Triangle[width=30, height=40, color=green], back=Rect[width=10, height=20, color=brown]]
+[image]
+```
+
+Student: OK, I get it. `Below` is just like above flipped around. `Beside` puts them next to each other. And `Overlay` puts one on in front of the other.
+
+Prof: That’s right. We can make some pretty cool pictures just by composing these operations together. It will teach us a lot about constructing interesting compound values.
+
+#### Practice
+
+Make the flag of Bangladesh: a red circle in front of a green rectangle. Name the finished picture `flag`, and make the circle small enough to fit inside the rectangle.
+
+Exercise:
+
+```java
+____
+```
+
+## [More Composition](more-composition.html)
+
+### More Composition
+
+Student: These images are kind of cool. What’s next?
+
+Prof: Can you think of a way to use the image constructors we’ve learned so far to draw a picture?
+
+Student: Not sure, ideas?
+
+Prof: There are a lot of countries’ flags that are made out of simple shapes combined!
+
+Student: Oh right! Like the US flag?
+
+Prof: Let’s try the 50 stars after we’ve learned a **little** more! How about, say, the French flag?
+
+Student: Oh, OK. So that’s just three rectangles next to each other. Blue, white, red. I need to pick some sizes, they all have the same width and height…
+
+```java
+int w = 40;
+int h = 80;
+Pict blue = new Rect(w, h, "blue");
+Pict white = new Rect(w, h, "white");
+Pict red = new Rect(w, h, "red");
+Pict flag = new Beside(blue, white, red);
+```
+
+Output (compile error):
+
+```text
+line 6: error: The constructor Beside(Pict, Pict, Pict) is undefined
+```
+
+Student: Huh, an error?
+
+Prof: That’s great!
+
+Student: Seeing an error is great?
+
+Prof: Errors are a signal that we’re about to learn something! We should embrace the feedback. Look back at the `Beside` constructor. How many arguments does it take and what are their names?
+
+Student: It says “Pict left” and “Pict right”. So I guess two, called left and right?
+
+Prof: And how many arguments are given to `Beside` in your code?
+
+Student: Three: blue, white, red.
+
+Prof: That’s what the error is saying: there’s no constructor called `Beside` that takes in **three** `Pict`s.
+
+Student: Oh, so I guess we can’t do the flag?
+
+Prof: We can use more composition! What if you made one image that was the white and blue stripe together, then another image that put **that** one next to the red stripe?
+
+Student: Oh… something like this?
+
+```java
+int w = 40;
+int h = 80;
+Pict blue = new Rect(w, h, "blue");
+Pict white = new Rect(w, h, "white");
+Pict red = new Rect(w, h, "red");
+Pict bluewhite = new Beside(blue, white);
+Pict flag = new Beside(bluewhite, red);
+```
+
+Output:
+
+```text
+w = 40
+h = 80
+blue = Rect[width=40, height=80, color=blue]
+[image]
+white = Rect[width=40, height=80, color=white]
+[image]
+red = Rect[width=40, height=80, color=red]
+[image]
+bluewhite = Beside[left=Rect[width=40, height=80, color=blue], right=Rect[width=40, height=80, color=white]]
+[image]
+flag = Beside[left=Beside[left=Rect[width=40, height=80, color=blue], right=Rect[width=40, height=80, color=white]], right=Rect[width=40, height=80, color=red]]
+[image]
+```
+
+Prof: That’s cool! Nice work.
+
+Student: That’s super interesting. Could I keep building on this?
+
+Prof: Sure – you can compose as much as you like. You could have a German flag (more stripes) on top of a French flag, beside the Bangladesh flag we saw before, above a tree, and so on. A few vocabulary terms:
+
+- composition is the idea of putting values together into a new fused or combined behavior or value.
+- We can also call these image objects nested, in the sense that one image is a field of a different image object.
+
+Student: I see, so composition lets us build up nested structures. Some nested structures can be quite large!
+
+Prof: You’ve got it.
+
+#### Practice
+
+Composition is not only for images. Here are three records. A `LectureSession` has a `Time` and a `Room` as fields, so building one means building those first. Use composition to define `cse11` as the lecture session for CSE 11: 9:30 in the morning, in Galbraith 242.
+
+Exercise:
+
+```java
+record Time(int hour, int minute) {}
+record Room(String building, String room) {}
+record LectureSession(Time startTime, Room room) {}
+
+____
+```
+
+Now the other way around. This code builds a `LineSegment` out of two `Point`s, and each `Point` is made from two `double`s. Write the two `record` definitions that make it compile.
+
+Exercise:
+
+```java
+____
+
+Point origin = new Point(0.0, 0.0);
+Point corner = new Point(3.5, 4.25);
+LineSegment diagonal = new LineSegment(origin, corner);
+```
+
+## [Methods for Repeated Computation](methods.html)
+
+### Methods for Repeated Computation
+
+Student: Professor, I am having fun with images, but so far it seems like we’ve just **defined data**, not actually written any programs that do work.
+
+Prof: You’re right. It’s not an accident – a lot of object-oriented programming is about representing data, so we’ve gotten a bunch of practice with that! But now we’re ready to start defining **behavior**, not just specific data shapes and values.
+
+Student: Yeah! The good stuff.
+
+Prof: Let’s grab one of our earlier examples – a `record` representing a social media `Post`:
+
+```java
+record Post(String content, String author, int likes) {}
+Post p1 = new Post("My AI agent hacked my fridge today", "naught-cool", 3461);
+Post p2 = new Post("Happy Birthday Ava!!!", "birthdaybot", 7);
+Post p3 = new Post("Anyone else smell microwaved fish in CSE again today?!", "pesca127", 33);
+```
+
+Output:
+
+```text
+p1 = Post[content=My AI agent hacked my fridge today, author=naught-cool, likes=3461]
+p2 = Post[content=Happy Birthday Ava!!!, author=birthdaybot, likes=7]
+p3 = Post[content=Anyone else smell microwaved fish in CSE again today?!, author=pesca127, likes=33]
+```
+
+Prof: Say we’re setting up a custom timeline where only **unpopular** posts are shown. We might want a way to check for posts that have very few likes. We could try to check that for **each one** of the examples by using operators like `<` and using field lookup with `.`. But I’m going to show a different way. We are going to **add to the `record`**, finally using the space in between those `{}`. In there, I’m going to put a method definition, which in this case is going to take a number of likes and return `true` if this post has fewer likes, `false` if it has more.
+
+```java
+record Post(String content, String author, int likes) {
+  boolean hasFewerLikesThan(int compareLikes) {
+    return likes < compareLikes;
+  }
+}
+Post p1 = new Post("My AI agent hacked my fridge today", "naught-cool", 3461);
+Post p2 = new Post("Happy Birthday Ava!!!", "birthdaybot", 7);
+Post p3 = new Post("Anyone else smell microwaved fish in CSE again today?!", "pesca127", 33);
+boolean p1Fewer10Likes = p1.hasFewerLikesThan(10);
+boolean p1Fewer10000Likes = p1.hasFewerLikesThan(10000);
+boolean p2Fewer10Likes = p2.hasFewerLikesThan(10);
+boolean p3Fewer10Likes = p3.hasFewerLikesThan(10);
+```
+
+Output:
+
+```text
+p1 = Post[content=My AI agent hacked my fridge today, author=naught-cool, likes=3461]
+p2 = Post[content=Happy Birthday Ava!!!, author=birthdaybot, likes=7]
+p3 = Post[content=Anyone else smell microwaved fish in CSE again today?!, author=pesca127, likes=33]
+p1Fewer10Likes = false
+p1Fewer10000Likes = true
+p2Fewer10Likes = true
+p3Fewer10Likes = false
+```
+
+Prof: The new stuff going on here:
+
+- A method definition has a few parts
+
+  - The return type, in this case `boolean`, declares what type the method must return
+  - The parameters are similar to the fields of a record: they each have a name and a type. We can use those names in the method body
+  - The method body is between the `{}` after the parameters. It is one or more statements that compute and return something
+  - We can refer both to the parameters (like `compareLikes`) and the fields (like `likes`) within a `record`’s methods.
+- Then, in the examples, we have method calls. These have an object value (in this case all `Post` values) which we call the receiver, then a `.`, then the name of a method (in this case `hasFewerLikesThan`), followed by the arguments in parentheses: the values the parameters take on for this call. It’s a lot like using a constructor, but instead of `new ConstructorName`, it starts with `object.methodName`.
+
+Student: OK, so each time we call `hasFewerLikesThan`, it’s plugging in the argument for the value of `compareLikes`?
+
+Prof: That’s right. In the first example we’re getting the result of `p1.likes < 10` (`p1.likes` is `3461`, not less than `10`, so we get `false`). The next example compares it to `10000` instead, so it’s `true`. That continues for each example – each method call refers to the **fields** from the receiver, and the **arguments** that come in from the call. Similarly, inside a method body, calling a method using just its name (no receiver) calls it with the same receiver.
+
+Student: OK, I think I sort of get it…
+
+#### Practice
+
+Here is another record with a method, and two examples of calling it.
+
+```java
+record Point(double x, double y) {
+  boolean isXGreaterThan(double compareX) {
+    return x > compareX;
+  }
+}
+Point p = new Point(3.5, 4.0);
+boolean b1 = p.isXGreaterThan(2.0);
+boolean b2 = p.isXGreaterThan(5.0);
+```
+
+Output:
+
+```text
+p = Point[x=3.5, y=4.0]
+b1 = true
+b2 = false
+```
+
+Exercise:
+
+Each chunk below is copied from the program. Say which part it is.
+
+`boolean`, the first word of the method: [receiver / method body / return type / method call / parameter / method name / argument]
+`isXGreaterThan`, on the same line: [receiver / method body / return type / method call / parameter / method name / argument]
+`double compareX`: [receiver / method body / return type / method call / parameter / method name / argument]
+`return x > compareX;`: [receiver / method body / return type / method call / parameter / method name / argument]
+`p.isXGreaterThan(2.0)`: [receiver / method body / return type / method call / parameter / method name / argument]
+`p`, at the start of that call: [receiver / method body / return type / method call / parameter / method name / argument]
+`5.0`, in the last line: [receiver / method body / return type / method call / parameter / method name / argument]
+
+## [More Methods](more-methods.html)
+
+Student: I’m still feeling a little shaky on methods and method definitions.
+
+Prof: Let’s do another example, this time from our examples from images. We saw a French flag 🇫🇷, and we can easily imagine other tri-color flags like Italy 🇮🇹, Ireland 🇮🇪, and so on. Defining all of them involves a **lot** of code, we keep having to define new stripes and using the `Beside` composition to put them together. Let’s look at that first because the pattern will tell us something useful.
+
+```java
+Pict fr = new Beside(new Rect(10, 20, "blue"),
+                     new Beside(new Rect(10, 20, "white"), new Rect(10, 20, "red")));
+Pict bigfr = new Beside(new Rect(30, 60, "blue"),
+                    new Beside(new Rect(30, 60, "white"), new Rect(30, 60, "red")));
+Pict it = new Beside(new Rect(10, 20, "green"),
+                    new Beside(new Rect(10, 20, "white"), new Rect(10, 20, "red")));
+Pict ir = new Beside(new Rect(10, 20, "green"),
+                  new Beside(new Rect(10, 20, "white"), new Rect(10, 20, "orange")));
+```
+
+Output:
+
+```text
+fr = Beside[left=Rect[width=10, height=20, color=blue], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=red]]]
+[image]
+bigfr = Beside[left=Rect[width=30, height=60, color=blue], right=Beside[left=Rect[width=30, height=60, color=white], right=Rect[width=30, height=60, color=red]]]
+[image]
+it = Beside[left=Rect[width=10, height=20, color=green], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=red]]]
+[image]
+ir = Beside[left=Rect[width=10, height=20, color=green], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=orange]]]
+[image]
+```
+
+Prof: What patterns do you notice?
+
+Student: Well, the composition is exactly the same in all of them, it’s just the colors that change.
+
+Prof: Just the colors?
+
+Student: Oh right, and big france has numbers different, too.
+
+Prof: Right! Let’s turn these examples into a `record` and a repeatable way to draw them. I’m going to suggest a breakdown – let’s first make a `record` that stores just the three colors.
+
+```java
+record Tricolor(String left, String middle, String right) { }
+Tricolor fr = new Tricolor("blue", "white", "red");
+Tricolor it = new Tricolor("green", "white", "red");
+Tricolor ir = new Tricolor("green", "white", "orange");
+```
+
+Output:
+
+```text
+fr = Tricolor[left=blue, middle=white, right=red]
+it = Tricolor[left=green, middle=white, right=red]
+ir = Tricolor[left=green, middle=white, right=orange]
+```
+
+Student: OK, that is nice, but where are the pictures?
+
+Prof: That’s what we’ll use a method for. Instead of writing all those `Beside` and `Rect` constructor uses over and over, we’ll write it **once** in the method body. In the method we’ll have all the colors (`left`, `middle`, `right`) available. What other information do we need?
+
+Student: The sizes? Like the 10s and 20s and 30s and 60s and stuff.
+
+Prof: Right. OK so let’s think through what that means for the **method header**. It is going to need to take in the width and the height. And we want to produce the `Pict`. What are the pieces of a method header?
+
+Student: Um… the return type, the name, the parameters
+
+Prof: Great. What should the return type be?
+
+Student: An image?
+
+Prof: Great, a `Pict`. What do you want to call the method?
+
+Student: drawflag?
+
+Prof: Sure. I’ll write it as `drawFlag`. Then the parameters?
+
+Student: width, height
+
+Prof: What types?
+
+Student: Ummm I guess `int`?
+
+Prof: OK great, put that all together
+
+Student: `Pict drawFlag(int width, int height)`
+
+Prof: Looks great. So our code so far would look like this, but I won’t put a run button in because it won’t run yet:
+
+```java
+record Tricolor(String left, String middle, String right) {
+  Pict drawFlag(int width, int height)
+}
+Tricolor fr = new Tricolor("blue", "white", "red");
+Tricolor it = new Tricolor("green", "white", "red");
+Tricolor ir = new Tricolor("green", "white", "orange");
+```
+
+Student: Why won’t it run?
+
+Prof: It doesn’t have a **method body** yet. It needs us to fill in the way to compute the return value from the fields and parameters.
+
+Student: How do we do that?
+
+Prof: Well, one thing I like to do is look at our earlier examples, and see which pieces correspond to which fields and which parameters. Here’s one way I look at it – **all** of the examples had this shape:
+
+```java
+new Beside(new Rect(__, __, __),
+           new Beside(new Rect(__, __, __), new Rect(__, __, __)));
+```
+
+All the positions I replaced with `__` could change. Then I need to fill them back in with the names of a field or parameter.
+
+Student: So like, the fields will go where the colors were? And the width and height for the sizes?
+
+Prof: That’s right.
+
+Student: Alright, let me see… the first part would be like `new Rect(width, height, left)`, right?
+
+Prof: Yup, you’re getting it. The `left` is one of the fields and the `width` and `height` are the parameters.
+
+Student: OK, here goes
+
+```java
+record Tricolor(String left, String middle, String right) {
+  Pict drawFlag(int width, int height) {
+    new Beside(new Rect(width, height, left),
+                         new Beside(new Rect(width, height, middle),
+                                    new Rect(width, height, right)));
+  }
+}
+Tricolor fr = new Tricolor("blue", "white", "red");
+Tricolor it = new Tricolor("green", "white", "red");
+Tricolor ir = new Tricolor("green", "white", "orange");
+```
+
+Output (compile error):
+
+```text
+line 2: error: This method must return a result of type Pict
+```
+
+Student: Huh? I thought I had it
+
+Prof: You followed my instructions too exactly! Good work but a little off. This method body is for `return`ing a new image every time it’s called so we need to make sure it’s returned with that keyword.
+
+Student: OK, I see, so the error was saying that there wasn’t a `return` statement. We always have to have one?
+
+Prof: Yes, for the most part – a method needs to `return` something of the right type. Go ahead and make the change, and also try **calling** the method on some of your example data to see what we get!
+
+Student: OK let’s see…
+
+```java
+record Tricolor(String left, String middle, String right) {
+  Pict drawFlag(int width, int height) {
+    return new Beside(new Rect(width, height, left),
+                      new Beside(new Rect(width, height, middle),
+                                 new Rect(width, height, right)));
+  }
+}
+Tricolor fr = new Tricolor("blue", "white", "red");
+Tricolor it = new Tricolor("green", "white", "red");
+Tricolor ir = new Tricolor("green", "white", "orange");
+Pict frPic = fr.drawFlag(10, 20);
+Pict bigFr = fr.drawFlag(30, 60);
+Pict itPic = it.drawFlag(10, 20);
+```
+
+Output:
+
+```text
+fr = Tricolor[left=blue, middle=white, right=red]
+it = Tricolor[left=green, middle=white, right=red]
+ir = Tricolor[left=green, middle=white, right=orange]
+frPic = Beside[left=Rect[width=10, height=20, color=blue], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=red]]]
+[image]
+bigFr = Beside[left=Rect[width=30, height=60, color=blue], right=Beside[left=Rect[width=30, height=60, color=white], right=Rect[width=30, height=60, color=red]]]
+[image]
+itPic = Beside[left=Rect[width=10, height=20, color=green], right=Beside[left=Rect[width=10, height=20, color=white], right=Rect[width=10, height=20, color=red]]]
+[image]
+```
+
+#### Practice
+
+Many flags are striped the other way. Here is a record for them, with the method body already written using `Above`. Write the method header (the body uses parameters named `width` and `height`), then define `nlPic` as the Netherlands flag 30 wide and 20 tall, and `dePic` as the German flag at any size you like.
+
+Exercise:
+
+```java
+record HorizontalTricolor(String top, String middle, String bottom) {
+  ____ {
+    return new Above(new Rect(width, height, top),
+                     new Above(new Rect(width, height, middle),
+                               new Rect(width, height, bottom)));
+  }
+}
+HorizontalTricolor nl = new HorizontalTricolor("red", "white", "blue");
+HorizontalTricolor de = new HorizontalTricolor("black", "red", "yellow");
+
+____
+```
+
+## [Convenience Methods](convenience-methods.html)
+
+Student: OK I think I’m starting to get it a little bit now. Here’s a question – do all `record`s have methods?
+
+Prof: Great question. Not all of them have them, but all of them *can* have them, and they’re often useful. Our images have them, for example. Some of them are called convenience methods because they do something you could do anyway, they’re just easier to type and read.
+
+Student: Interesting, what does that look like?
+
+Prof: So far we’ve put two images beside each other with `new Beside(pict1, pict2)`, right?
+
+Student: Sure, I remember that.
+
+Prof: Well there’s also a **method** called `beside`. Here’s its signature:
+
+```java
+Pict beside(Pict other)
+```
+
+You can think of it as being defined in every one of the records like `Circle` and `Rect` and so on. Here are two examples of using beside, one with the constructor and one with the method:
+
+```java
+Pict blue = new Rect(10, 20, "blue");
+Pict white = new Rect(10, 20, "white");
+Pict red = new Rect(10, 20, "red");
+Pict frConstr = new Beside(new Beside(blue, white), red);
+Pict frMethod = blue.beside(white).beside(red);
+```
+
+Output:
+
+```text
+blue = Rect[width=10, height=20, color=blue]
+[image]
+white = Rect[width=10, height=20, color=white]
+[image]
+red = Rect[width=10, height=20, color=red]
+[image]
+frConstr = Beside[left=Beside[left=Rect[width=10, height=20, color=blue], right=Rect[width=10, height=20, color=white]], right=Rect[width=10, height=20, color=red]]
+[image]
+frMethod = Beside[left=Beside[left=Rect[width=10, height=20, color=blue], right=Rect[width=10, height=20, color=white]], right=Rect[width=10, height=20, color=red]]
+[image]
+```
+
+Student: Interesting! I like how the method version reads. But wait, there’s something really weird there. I thought the thing before the `.` in a method call had to be the name of a definition, like `blue`.
+
+Prof: That’s a great observation. The whole expression `blue.beside(white)` evaluates to one `Pict` (a `Beside` object), and then **that** object is used to call `.beside(red)` – it is the receiver for that method call. It never got named by the program, but it does exist briefly. Just like how the first argument to `new Beside(____, red)` is a use of the `Beside` constructor that makes a blue-and-white-stripe image.
+
+Student: Hmmm OK.
+
+Prof: This specific style is called method chaining, where you use the result of a previous method call as the receiver of the next. You can always name the intermediate value if you want! It doesn’t have any special behavior. It’s just a nice way to write and read that line of code.
+
+Student: I think I get it! So do those methods exist for all the constructors for images?
+
+Prof: For all the ones that combine two images, yes! There’s `Pict above(Pict other)`, `Pict overlay(Pict other)`, and so on.
+
+#### Practice
+
+Exercise:
+
+Each program below builds a picture in named steps, from three `Pict` definitions `dot`, `left`, and `right`. Pick the method chain that builds the same picture in one line.
+
+```java
+Pict pair = left.beside(right);
+Pict pic = dot.overlay(pair);
+```
+
+chained: [left.beside(right).overlay(dot) / dot.beside(left).overlay(right) / dot.overlay(left).beside(right) / dot.overlay(left.beside(right))]
+
+```java
+Pict marked = dot.overlay(left);
+Pict pic = marked.beside(right);
+```
+
+chained: [left.beside(right).overlay(dot) / dot.beside(left).overlay(right) / dot.overlay(left).beside(right) / dot.overlay(left.beside(right))]
+
+## [Methods Provided by Java](library-methods.html)
+
+Student: I was thinking through writing a method for a distance between points. I realized I needed to take a square root. There’s no operator that we’ve seen for that, right?
+
+Prof: Right. Only the basic arithmetic operators, plus the comparisons like `<`, are operators. Java provides a number of built-in methods for things like this. For square root specifically, we can use a method defined on the built-in `Math`:
+
+```java
+double sqrt(double n)
+```
+
+So you use it like:
+
+```java
+double two = Math.sqrt(4.0);
+```
+
+Output:
+
+```text
+two = 2.0
+```
+
+Student: Oh, good. Now I can write my distance method.
+
+Prof: What do you have so far?
+
+Student: Here’s where I got to:
+
+```java
+record Point(double x, double y) {
+    double distanceTo(Point other) {
+        double xdiff = other.x - x;
+        double ydiff = other.y - y;
+        return xdiff * xdiff + ydiff * ydiff;
+    }
+}
+Point p = new Point(3.0, 4.0);
+Point o = new Point(0.0, 0.0);
+double dist = p.distanceTo(o); // should be 5.0, currently 25.0
+```
+
+Output:
+
+```text
+p = Point[x=3.0, y=4.0]
+o = Point[x=0.0, y=0.0]
+dist = 25.0
+```
+
+Student: So I guess now I can add the square root:
+
+```java
+record Point(double x, double y) {
+    double distanceTo(Point other) {
+        double xdiff = other.x - x;
+        double ydiff = other.y - y;
+        return Math.sqrt(xdiff * xdiff + ydiff * ydiff);
+    }
+}
+Point p = new Point(3.0, 4.0);
+Point o = new Point(0.0, 0.0);
+double dist = p.distanceTo(o); // now correctly 5.0
+```
+
+Output:
+
+```text
+p = Point[x=3.0, y=4.0]
+o = Point[x=0.0, y=0.0]
+dist = 5.0
+```
+
+Prof: Cool! There are a lot of other useful methods in the [Math library](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Math.html). For example, you could use `Math.pow(xdiff, 2)` instead of `xdiff * xdiff`, though either one is fine. There are also all the usual trig functions like `sin` and `cos`. Have a look there (or ask an AI agent about the `Math` library in Java) if you need to know about a specific one.
+
+#### Practice
+
+`Math` measures angles in radians. Finish `Point` so that `angle()` is the angle from the positive x axis, turning counterclockwise, up to the point, and `degrees()` is the same angle in degrees. For the point (1, 1) that is π/4 radians, or 45 degrees.
+
+Exercise:
+
+```java
+record Point(double x, double y) {
+    double angle() {
+        return Math.[sqrt / cos / atan2 / sin](y, x);
+    }
+    double degrees() {
+        return Math.[toDegrees / toRadians / round](angle());
+    }
+}
+Point p = new Point(1.0, 1.0);
+double angle = p.angle();
+double degrees = p.degrees();
+```
+
+## [String Methods](string-methods.html)
+
+Student: Hey prof, I had a program where someone typed in email addresses, and I wanted to get the part before the `@`. Are there a bunch of `String.` methods like there are `Math.` methods?
+
+Prof: Clever to ask it that way. There **are** a bunch of methods that do work on strings. Using `String` methods look a little more like what we’ve done for `Pict`.
+
+```java
+String email = "bochoa@ucsd.edu";
+int atIndex = email.indexOf("@");
+String beforeAt = email.substring(0, atIndex);
+```
+
+Output:
+
+```text
+email = bochoa@ucsd.edu
+atIndex = 6
+beforeAt = bochoa
+```
+
+Prof: There are a lot of [string methods](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html) defined by Java, and they are used quite frequently.
+
+Student: OK, that’s helpful. What does the `6` for `atIndex` mean?
+
+Prof: The `indexOf` method returns the index where it finds the string. We say each character in the string is at an index, which starts at 0 and counts from the beginning of the string. In the example `b` is at index 0, `o` at index 1, `c` at index 2, and so on until the `@` at index 6.
+
+Student: Got it. What are some common things people do with strings?
+
+Prof: There are a few that jump to mind. One category is searching: checking if a string appears in another, in different ways. Like is it **anywhere** in the string, at the **start**, at the **end**, and so on:
+
+```java
+String email = "bochoa@ucsd.edu";
+boolean isUCSD = email.endsWith("ucsd.edu");
+boolean isGmail = email.endsWith("gmail.com");
+boolean startsWithBo = email.startsWith("bo");
+boolean startsWithUCSD = email.startsWith("ucsd");
+boolean hasAt = email.contains("@");
+boolean hasSpace = email.contains(" ");
+```
+
+Output:
+
+```text
+email = bochoa@ucsd.edu
+isUCSD = true
+isGmail = false
+startsWithBo = true
+startsWithUCSD = false
+hasAt = true
+hasSpace = false
+```
+
+Student: I see. These return `false` when it’s not found – you used `indexOf` above to find the `@` – what happens if you search for something that isn’t there with `indexOf`?
+
+Prof: Great question, you can try yourself!
+
+Student: Oh, right! Well I can use your example and search for something that isn’t there, like an exclamation mark.
+
+```java
+String email = "bochoa@ucsd.edu";
+int exclaimIndex = email.indexOf("!");
+```
+
+Output:
+
+```text
+email = bochoa@ucsd.edu
+exclaimIndex = -1
+```
+
+Student: Huh, it returned `-1`. I guess otherwise it returns where in the string it found it?
+
+Prof: Nice work. Another category of string operations are for transforming the string and giving a new one back:
+
+```java
+String typed = "  bochoa@ucsd.edu  ";
+String cleaned = typed.trim();
+int typedLength = typed.length();
+int cleanedLength = cleaned.length();
+String shouted = cleaned.toUpperCase();
+String quieted = "BoChoa@UCSD.EDU".toLowerCase();
+```
+
+Output:
+
+```text
+typed =   bochoa@ucsd.edu  
+cleaned = bochoa@ucsd.edu
+typedLength = 19
+cleanedLength = 15
+shouted = BOCHOA@UCSD.EDU
+quieted = bochoa@ucsd.edu
+```
+
+Student: OK, so there’s a lot we can do
+
+Prof: Yup. Let’s try to put it into practice a bit. One thing we often want to do with strings is **case-insensitive search**. That is, you might search a course catalog for all the courses whose titles contain `"intro"`, but really you want it to match `"Intro"` or `"intro"`. A trick that’s often used there is to lowercase both the search term and the target string, and then use something like `contains` or `indexOf`:
+
+```java
+record Course(String title, int number) {
+    boolean titleContains(String search) {
+        String lowerTitle = title.toLowerCase();
+        String lowerSearch = search.toLowerCase();
+        return lowerTitle.contains(lowerSearch);
+    }
+}
+Course cse11 = new Course("Introduction to Programming", 11);
+Course cse110 = new Course("Software Engineering", 110);
+boolean introInCse11 = cse11.titleContains("intro");
+boolean introInCse110 = cse110.titleContains("intro");
+boolean engInCse110 = cse110.titleContains("ENGINEERING");
+boolean engInCse11 = cse11.titleContains("ENGINEERING");
+```
+
+Output:
+
+```text
+cse11 = Course[title=Introduction to Programming, number=11]
+cse110 = Course[title=Software Engineering, number=110]
+introInCse11 = true
+introInCse110 = false
+engInCse110 = true
+engInCse11 = false
+```
+
+Student: OK, I see!
+
+#### Practice
+
+A bookstore’s search box matches the **beginning** of a title, and it should not care what case the shopper types. Fill in the body of `titleStartsWith` so the four calls below come out as their names say.
+
+Exercise:
+
+```java
+record Book(String title, double price) {
+    boolean titleStartsWith(String search) {
+        ____
+    }
+}
+Book hobbit = new Book("The Hobbit", 12.99);
+Book howTo = new Book("How to Code in Java", 40.0);
+boolean hobbitFound = hobbit.titleStartsWith("the h");
+boolean howToFound = howTo.titleStartsWith("HOW TO");
+boolean hobbitMissed = hobbit.titleStartsWith("hobbit");
+boolean howToMissed = howTo.titleStartsWith("java");
+```

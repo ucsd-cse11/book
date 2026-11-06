@@ -1,0 +1,1105 @@
+# Extending Classes
+
+## [Overriding Methods](tostring-override.html)
+
+Student: Professor, I’m seeing something I don’t quite understand with classes.
+
+Prof: What is it?
+
+Student: Well, when the book or my programs print out records, they print the field names and values. But that doesn’t happen for my `Point` class.
+
+Prof: Oh, interesting! Let’s have a look at your code.
+
+```java
+record PointR(double x, double y) { }
+class PointC {
+  double x;
+  double y;
+  PointC(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+void main() {
+  PointR p1 = new PointR(4.0, 5.0);
+  PointC p2 = new PointC(4.0, 5.0);
+  System.out.println("p1: " + p1);
+  System.out.println("p2: " + p2);
+}
+```
+
+Output:
+
+```text
+p1: PointR[x=4.0, y=5.0]
+p2: PointC@730
+```
+
+Student: See, they print very differently! The second one just prints `PointC@` and then a number that has nothing to do with `x` or `y`.
+
+Prof: Right! That’s a great point. So one thing to make clear up front – when an object is added to a string with `+`, Java calls the `toString()` method on that object to get the `String` to concatenate. So here we are seeing that objects created from `record` constructors have a different `toString()` than those created with classes.
+
+Student: OK, that sounds reasonable. How do I make `PointC` print like `PointR`? Do I write a `toString`?
+
+Prof: That’s right.
+
+Student: So it’s like how we needed to write our own `equals()`? And by default `record` puts in a good `toString`?
+
+Prof: Yup, right again.
+
+Student: So wait a minute. Where are the “bad” default `equals()` and `toString()` coming from?
+
+Prof: Excellent question! And this leads perfectly into our next topic. You’re getting good at asking questions like that.
+
+Student: Thanks, I guess. Sort of feels inevitable.
+
+Prof: Here’s what’s going on. There is a built-in class in Java called `Object` (with a capital `O`). It has the “default” implementations of `toString` and `equals` that all classes use if they don’t define their own. If they **do** define their own, it is called overriding that method.
+
+Student: That sounds kind of like an interface with default methods.
+
+Prof: It is quite like that. Most of what `Object` does **is** effectively default methods. But it’s actually using a slightly different mechanism than `implements` – it is using inheritance, which has some of its own tradeoffs. I’ll give a small example where I make up my own class called `Objekt` with a `stringify()` method. The idea is to show the structure that Java has with its own built-in `Object`, but writing it all out ourselves:
+
+```java
+class Objekt {
+  public String stringify() { return "Objekt"; }
+}
+class SubClass1 extends Objekt {
+  int x;
+  @Override
+  public String stringify() { return "SubClass1[x=" + x + "]"; }
+}
+class SubClass2 extends Objekt {
+  int y;
+}
+Objekt b1 = new Objekt();
+SubClass1 sc1 = new SubClass1();
+SubClass2 sc2 = new SubClass2();
+String b1A = b1.stringify();
+String sc1A = sc1.stringify();
+String sc2A = sc2.stringify();
+```
+
+Output:
+
+```text
+b1 = Objekt@8c1
+sc1 = SubClass1@8c9
+sc2 = SubClass2@8ca
+b1A = Objekt
+sc1A = SubClass1[x=0]
+sc2A = Objekt
+```
+
+Prof: What do you notice?
+
+Student: Hm… I notice that we can call `stringify` on `sc2` without having it defined at all. I guess that means it is using the one on `Objekt`?
+
+Prof: That’s right.
+
+Student: And I notice that the `SubClass1` definition says `@Override`. What’s that? I tried deleting the whole `@Override` line and the program behaved the same.
+
+Prof: Great question. `@Override` says “I mean to override this method!” Java will only give an error if that method **isn’t** defined on a class or interface being extended or implemented.
+
+Student: Oh right, and `extends` is another word here, what does that mean?
+
+Prof: When a class `Child` extends another class `Parent`, it tells Java that `Child` is a subclass of `Parent` (we call `Parent` the superclass). This means a few things happen:
+
+- Method calls and field lookups on `Child` objects will look for methods and fields in `Parent` if they aren’t found on `Child`
+- `Child` objects “count” as having the `Parent` type, so they can be stored in `Parent` variables and parameters, in elements of `Parent` arrays, and so on
+
+This is **a lot** like interfaces, except for the fields piece, which we haven’t explored, but we can get to that soon.
+
+Student: Wait, but how are our classes like `PointC` getting the defaults from `Object`?
+
+Prof: Another great question – if you don’t write `extends` on a class definition in Java, it **implicitly** extends `Object`. It’s like Java adds that in for you. So the default `toString` and `equals` really are coming from there!
+
+Also there’s one more definition worth sharing now: Java says subtyping is what’s happening when one type can be stored in a variable of a different type. So in Java’s terms, `SubClass1` in the example above is a **subtype** of `Objekt` because it can be stored in an `Objekt`-typed variable. Subtyping also applies to interfaces: `Circle` is a **subtype** of `Pict` because of the `implements` relationship.
+
+#### Practice
+
+Exercise:
+
+Using the classes from the `Objekt` example, which of these lines compile? Select all that do.
+
+Choose all that apply:
+
+- `SubClass1 s = new SubClass2();`
+- `SubClass1 s = new Objekt();`
+- `Object o = new SubClass2();`
+- `Objekt o = new SubClass1();`
+
+Exercise:
+
+After `Objekt o = sc1;`, which method body runs for `o.stringify()`?
+
+Choose one:
+
+- The one in `Objekt`, so it returns `"Objekt"`
+- Neither, because the line doesn’t compile
+- The one in `SubClass1`, so it returns `"SubClass1[x=0]"`
+
+Exercise:
+
+Write a `toString` that makes `PointC` print the way `PointR` does.
+
+```java
+class PointC {
+  double x;
+  double y;
+  PointC(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  @Override
+  public String toString() {
+    return ____;
+  }
+}
+
+String s = "" + new PointC(4.0, 5.0);
+```
+
+## [Sharing Fields](abstracting-shared-fields.html)
+
+Student: When do I use inheritance?
+
+Prof: There are a few different cases people talk about. One I think is important is **sharing fields** across classes.
+
+Student: Sharing fields?
+
+Prof: Let’s think about representing locations on a service like Google Maps. They might want to have a bunch of different classes for them, and an interface that ties them together. A heads up, we’re getting into some longer examples:
+
+```java
+interface Place {
+  String pinLabel();
+  boolean onScreen(double south, double north, double west, double east);
+}
+class Restaurant implements Place {
+  String name;
+  double lat;
+  double lng;
+  double stars;
+  Restaurant(String name, double lat, double lng, double stars) {
+    this.name = name;
+    this.lat = lat;
+    this.lng = lng;
+    this.stars = stars;
+  }
+  public String pinLabel() { return name + " (" + stars + " stars)"; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south && lat <= north && lng >= west && lng <= east;
+  }
+}
+class Park implements Place {
+  String name;
+  double lat;
+  double lng;
+  int acres;
+  Park(String name, double lat, double lng, int acres) {
+    this.name = name;
+    this.lat = lat;
+    this.lng = lng;
+    this.acres = acres;
+  }
+  public String pinLabel() { return name + " (" + acres + " acres)"; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south && lat <= north && lng >= west && lng <= east;
+  }
+}
+class BusStop implements Place {
+  int route;
+  double lat;
+  double lng;
+  BusStop(int route, double lat, double lng) {
+    this.route = route;
+    this.lat = lat;
+    this.lng = lng;
+  }
+  public String pinLabel() { return "Bus " + route; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south && lat <= north && lng >= west && lng <= east;
+  }
+}
+void main() {
+  Place[] places = {
+    new Restaurant("Taco Shop", 32.8795, -117.2359, 4.5),
+    new Park("Balboa Park", 32.7341, -117.1446, 1200),
+    new BusStop(30, 32.8790, -117.2368),
+  };
+  double south = 32.86;
+  double north = 32.90;
+  double west = -117.25;
+  double east = -117.22;
+  for (Place p : places) {
+    if (p.onScreen(south, north, west, east)) {
+      System.out.println(p.pinLabel());
+    }
+  }
+}
+```
+
+Output:
+
+```text
+Taco Shop (4.5 stars)
+Bus 30
+```
+
+Student: Wow you weren’t kidding that it’s longer.
+
+Prof: Well, we’re talking about some more substantial design questions, so our programs do need to grow a bit! What do you notice and wonder?
+
+Student: Well, I notice that each of these classes `implements Place` – there is no inheritance yet, because I don’t see `extends`.
+
+Prof: Good, good. Other things?
+
+Student: I wonder what a Pin is.
+
+Prof: Oh good question. That’s a word for a point on a virtual map. So like a little icon or shape that shows up. The example is meant to capture different kinds of places and the information they might show. For example, the restaurant has a star rating but the bus stop just names its bus route.
+
+Student: I see. And I notice that classes are being used instead of records.
+
+Prof: Right, `extends` only works with classes, and we’ll see how it does help us a bit here. There is something shared across all the classes: do you see it?
+
+Student: Hmmm… I guess lat and lng are shared across all of them.
+
+Prof: Right. And with what we have, can we do anything to avoid having all those copies of `lat` and `lng`?
+
+Student: Can we put `lat` and `lng` in one class, and then extend it from all of these?
+
+Prof: That’s right! So the base class might be like this, though we’d have one problem:
+
+```java
+class Location implements Place {
+  double lat;
+  double lng;
+  Location(double lat, double lng) { this.lat = lat; this.lng = lng; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south && lat <= north && lng >= west && lng <= east;
+  }
+}
+// Then BusStop, Restaurant, etc can extend Location
+```
+
+Student: It says it implements `Place`, but has no `pinLabel`?
+
+Prof: Yup. So we have to fill in some `pinLabel` if we want this to compile.
+
+Student: What should it return?
+
+Prof: It’s hard to say. At some point I’ll show you how to avoid having to choose, for now I’ll just fill something in:
+
+```java
+class Location implements Place {
+  // ...
+  public String pinLabel() { return "Unknown Location"; }
+}
+```
+
+Student: OK, so then what do the other classes look like?
+
+Prof: Well, they gain `extends` and lose their `lat`/`lng` fields. But we have to decide what to do in the constructor. There is a special keyword, `super(...)` that we’ll need to use. In a constructor it calls the **parent class constructor** with the given arguments. It lets us re-use the constructor from the class we inherited.
+
+```java
+interface Place {
+  String pinLabel();
+  boolean onScreen(double south, double north, double west, double east);
+}
+class Location implements Place {
+  double lat;
+  double lng;
+  Location(double lat, double lng) {
+    this.lat = lat;
+    this.lng = lng;
+  }
+  public String pinLabel() { return "Unknown Location"; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south && lat <= north && lng >= west && lng <= east;
+  }
+}
+class Restaurant extends Location {
+  String name;
+  double stars;
+  Restaurant(String name, double lat, double lng, double stars) {
+    super(lat, lng);
+    this.name = name;
+    this.stars = stars;
+  }
+  @Override
+  public String pinLabel() { return name + " (" + stars + " stars)"; }
+}
+class Park extends Location {
+  String name;
+  int acres;
+  Park(String name, double lat, double lng, int acres) {
+    super(lat, lng);
+    this.name = name;
+    this.acres = acres;
+  }
+  @Override
+  public String pinLabel() { return name + " (" + acres + " acres)"; }
+}
+class BusStop extends Location {
+  int route;
+  BusStop(int route, double lat, double lng) {
+    super(lat, lng);
+    this.route = route;
+  }
+  @Override
+  public String pinLabel() { return "Bus " + route; }
+}
+void main() {
+  Place[] places = {
+    new Restaurant("Taco Shop", 32.8795, -117.2359, 4.5),
+    new Park("Balboa Park", 32.7341, -117.1446, 1200),
+    new BusStop(30, 32.8790, -117.2368),
+  };
+  double south = 32.86;
+  double north = 32.90;
+  double west = -117.25;
+  double east = -117.22;
+  for (Place p : places) {
+    if (p.onScreen(south, north, west, east)) {
+      System.out.println(p.pinLabel());
+    }
+  }
+}
+```
+
+Output:
+
+```text
+Taco Shop (4.5 stars)
+Bus 30
+```
+
+Prof: So we’ve moved the idea of a location out of all these places, and made that be the job of `Location`, which can also have the correct implementation of `onScreen` shared by all the subclasses. Now each of the subclasses is solely responsible for the implementation of `pinLabel`.
+
+Student: Interesting!
+
+#### Practice
+
+Exercise:
+
+Here is a social media feed, already refactored so `Message` holds the `message` field that every post shares. `TextPost` and `Repost` are done. Fill in `VideoPost` the same way.
+
+```java
+interface Post {
+  String preview();
+  boolean mentions(String word);
+}
+class Message implements Post {
+  String message;
+  Message(String message) {
+    this.message = message;
+  }
+  public String preview() { return message; }
+  public boolean mentions(String word) { return message.contains(word); }
+}
+class TextPost extends Message {
+  boolean edited;
+  TextPost(String message, boolean edited) {
+    super(message);
+    this.edited = edited;
+  }
+  @Override
+  public String preview() {
+    if (edited) { return message + " (edited)"; }
+    return message;
+  }
+}
+class Repost extends Message {
+  String from;
+  Repost(String message, String from) {
+    super(message);
+    this.from = from;
+  }
+  @Override
+  public String preview() { return "Reposted from " + from + ": " + message; }
+}
+class VideoPost ____ {
+  int seconds;
+  VideoPost(String message, int seconds) {
+    ____
+    this.seconds = seconds;
+  }
+  @Override
+  public String preview() { return message + " [video, " + seconds + "s]"; }
+}
+
+Post[] feed = {
+  new TextPost("Exam moved to Friday", true),
+  new Repost("Free pizza in the CSE lobby", "tritons"),
+  new VideoPost("My cat learns Java", 42),
+};
+String third = feed[2].preview();
+boolean aboutCats = feed[2].mentions("cat");
+```
+
+## [Navigating Class Hierarchies](the-class-hierarchy.html)
+
+Student: So can a class extend a class that extends another class?
+
+Prof: Indeed.
+
+Student: And can two classes extend the same class?
+
+Prof: Yup.
+
+Student: And can one class extend two other classes?
+
+Prof: No! That’s actually an interesting case called **multiple inheritance**, which Java doesn’t support. I welcome you to look it up on your own, though.
+
+Student: Hm. OK. How do you keep it all straight?
+
+Prof: Class diagrams can help. We draw classes and interfaces with arrows between them. An arrow between two classes points from the subclass to the superclass. A dashed arrow points from a class to an implemented interface. We try to lay out the picture so `Object` goes on top, and all the arrows point up. Here’s an example using `Location`:
+
+```java
+interface Place { ... }
+class Location implements Place { ... }
+class Park extends Location { ... }
+class BusStop extends Location { ... }
+class Restaurant extends Location { ... }
+```
+
+```
+Object
+  toString()
+  equals(Object o)
+Location under Object, Place
+  double lat
+  double lng
+  pinLabel()
+  onScreen()
+BusStop under Location
+  int route
+  ↑ pinLabel()
+Restaurant under Location
+  double stars
+  ↑ pinLabel()
+Park under Location
+  int acres
+  ↑ pinLabel()
+Place (interface)
+  pinLabel()
+  onScreen()
+```
+
+Student: What’s the ↑?
+
+Prof: That’s a marker for a method that is **overriding** a method on a superclass.
+
+Student: Ah. Why isn’t `onScreen()` in the classes like `BusStop`?
+
+Prof: They don’t have their own implementation: they inherit it from `Location`. So if you have an object of type `BusStop`, Java needs to look around in the class hierarchy to find the method for it.
+
+Student: Oh interesting, so does the hierarchy go in a memory diagram?
+
+Prof: Kind of. It’s fixed when we write the program, because we can’t change where an arrow points when the program is running. It sort of sits off to the side and helps us figure out method and field lookups.
+
+#### Practice
+
+Exercise:
+
+Which code matches this class diagram?
+
+```
+Object
+  toString()
+  equals(Object o)
+Message under Object, Post
+  String message
+  preview()
+  mentions(String word)
+Repost under Message
+  String from
+  ↑ preview()
+VideoPost under Message
+  int seconds
+  ↑ preview()
+Post (interface)
+  preview()
+  mentions(String word)
+```
+
+Choose one:
+
+- ```java
+  interface Post { ... }
+  class Message implements Post { ... }
+  class Repost extends Message { ... }
+  class VideoPost extends Repost { ... }
+  ```
+- ```java
+  interface Post { ... }
+  class Message { ... }
+  class Repost extends Message implements Post { ... }
+  class VideoPost extends Message implements Post { ... }
+  ```
+- ```java
+  interface Post { ... }
+  class Message implements Post { ... }
+  class Repost extends Message { ... }
+  class VideoPost extends Message { ... }
+  ```
+- ```java
+  interface Post { ... }
+  class Message extends Post { ... }
+  class Repost extends Message { ... }
+  class VideoPost extends Message { ... }
+  ```
+
+Exercise:
+
+Which code matches this class diagram?
+
+```
+Object
+  toString()
+  equals(Object o)
+Location under Object, Place
+  double lat
+  double lng
+  pinLabel()
+  onScreen()
+Park under Location
+  String name
+  int acres
+  ↑ pinLabel()
+DogPark under Park
+  boolean offLeash
+  ↑ pinLabel()
+Place (interface)
+  pinLabel()
+  onScreen()
+```
+
+Choose one:
+
+- ```java
+  interface Place { ... }
+  class Location implements Place { ... }
+  class Park extends Location { ... }
+  class DogPark extends Park { ... }
+  ```
+- ```java
+  interface Place { ... }
+  class Location implements Place { ... }
+  class DogPark extends Location { ... }
+  class Park extends DogPark { ... }
+  ```
+- ```java
+  interface Place { ... }
+  class Location implements Place { ... }
+  class Park extends Location { ... }
+  class DogPark extends Location { ... }
+  ```
+- ```java
+  interface Place { ... }
+  class Location implements Place { ... }
+  class Park extends Location { ... }
+  class DogPark extends Park, Location { ... }
+  ```
+
+Exercise:
+
+Which code matches this class diagram?
+
+```
+Object
+  toString()
+  equals(Object o)
+Location under Object, Place
+  double lat
+  double lng
+  pinLabel()
+  onScreen()
+Restaurant under Location, Rated
+  String name
+  double stars
+  ↑ pinLabel()
+  stars()
+Place (interface)
+  pinLabel()
+  onScreen()
+Rated (interface)
+  stars()
+```
+
+Choose one:
+
+- ```java
+  interface Place { ... }
+  interface Rated { ... }
+  class Location implements Place, Rated { ... }
+  class Restaurant extends Location { ... }
+  ```
+- ```java
+  interface Place { ... }
+  interface Rated { ... }
+  class Location implements Place { ... }
+  class Restaurant extends Location implements Rated { ... }
+  ```
+- ```java
+  interface Place { ... }
+  interface Rated { ... }
+  class Location implements Place { ... }
+  class Restaurant extends Location, Rated { ... }
+  ```
+- ```java
+  interface Place { ... }
+  interface Rated { ... }
+  class Location implements Place { ... }
+  class Restaurant implements Location, Rated { ... }
+  ```
+
+## [Navigating the Class Hierarchy 2](instanceof.html)
+
+Student: One thing I find really confusing is when we store a subclass object in a superclass variable. Is there any way to tell which type the object actually is?
+
+Prof: There is in fact! Check it out, we can use it on our old friend, `Pict`:
+
+```java
+Pict c = new Circle(20, "red");
+boolean isCircle = c instanceof Circle;
+boolean isRectangle = c instanceof Rect;
+```
+
+Output:
+
+```text
+c = Circle[radius=20, color=red]
+[image]
+isCircle = true
+isRectangle = false
+```
+
+Prof: So it tells us that `c` is in fact a `Circle`, and is **not** a `Rect`, from our program.
+
+Student: Huh, that’s interesting. What would `c instanceof Pict` say?
+
+Prof: Let’s try a few more:
+
+```java
+Pict r = new Rect(20, 40, "red");
+boolean isCircle = r instanceof Circle;
+boolean isRectangle = r instanceof Rect;
+boolean isPict = r instanceof Pict;
+```
+
+Output:
+
+```text
+r = Rect[width=20, height=40, color=red]
+[image]
+isCircle = false
+isRectangle = true
+isPict = true
+```
+
+Student: Huh, interesting. So does it work for `extends`, too?
+
+Prof: Indeed!
+
+```java
+interface Place {}
+class Location implements Place {}
+class BusStop extends Location {}
+class Restaurant extends Location {}
+Place b = new BusStop();
+boolean isPlace = b instanceof Place;
+boolean isLocation = b instanceof Location;
+```
+
+Output:
+
+```text
+b = BusStop@aef
+isPlace = true
+isLocation = true
+```
+
+Student: OK, so how does that work? Does it like… search the class diagram?
+
+Prof: Exactly. `a instanceof C` starts at the class of the object in `a`. If that isn’t `C`, it checks that class’s superclass and anything it implements, all the way up the diagram, looking for `C`. If `a instanceof C`, then the value stored in `a` could be stored in a variable of type `C`.
+
+Student: Cool, where do I use that?
+
+Prof: Honestly? Mostly you don’t.
+
+Student: Mostly I don’t? What do you mean?
+
+Prof: Well, most of the time we try to make our programs work out using the general interface types, like `Pict` or `Place`, for most variables. Then we just rely on the methods defined on them being present. Field lookups and class-specific work happen inside the class, and calling a method will select the class for the right object. So `instanceof` is honestly not needed much in well-written code.
+
+Student: Hm… then why’d you show me?
+
+Prof: Well, you’ll still see it in some places. And we need it to wrap up some of our discussion of `Object` and `equals`.
+
+#### Practice
+
+Exercise:
+
+Using these classes, is each `instanceof` `true` or `false`?
+
+```java
+interface Place {}
+class Location implements Place {}
+class Park extends Location {}
+class DogPark extends Park {}
+class BusStop extends Location {}
+Place p = new Park();
+Location loc = new DogPark();
+```
+
+```
+Object
+Location under Object, Place
+Park under Location
+DogPark under Park
+BusStop under Location
+Place (interface)
+```
+
+`p instanceof Place` is [false / true]
+`p instanceof Location` is [false / true]
+`p instanceof DogPark` is [false / true]
+`p instanceof BusStop` is [false / true]
+`loc instanceof Park` is [false / true]
+
+Exercise:
+
+With the same classes, what is `new Location() instanceof Park`?
+
+Choose one:
+
+- `true`, because `Park` extends `Location`
+- `false`
+- It doesn’t compile
+
+## [Overriding equals and Casting to a Class](class-cast.html)
+
+Student: Professor, the thing you showed me about `equals()` doesn’t work.
+
+Prof: How do you mean?
+
+Student: Well, I wanted to write some tests, like you suggested, and I tried using `assertEquals` with the class definition for `Point`.
+
+```java
+class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  boolean equals(Point other) {
+    return this.x == other.x && this.y == other.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}
+```
+
+Output (failed):
+
+```text
+Exception in thread "Thread-0" org.opentest4j.AssertionFailedError: expected: <Point@6ef> but was: <Point@6f0>
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)
+	at main(Unknown Source)
+```
+
+Student: See, it fails! But if I make `Point` a record and get rid of `equals`, the assert passes.
+
+Prof: Ah I see. Yeah this is a pretty subtle point! Here’s what’s going on. The default `equals()` on `Object` looks like this:
+
+```java
+public boolean equals(Object other)
+```
+
+See the issue?
+
+Student: No…
+
+Prof: Let’s try two things. First, add an `@Override` on your `equals` method for `Point`.
+
+Student: OK…
+
+```java
+class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  @Override
+  boolean equals(Point other) {
+    return this.x == other.x && this.y == other.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}
+```
+
+Output (compile error):
+
+```text
+line 8: error: The method equals(Point) of type Point must override or implement a supertype method
+```
+
+Student: Huh. It fails now. But I **am** overriding `equals`.
+
+Prof: So this is where it’s a little tricky, and we need to be precise. We override a method not just by name, but by **type**. So let’s put the two methods right next to each other:
+
+```java
+public boolean equals(Object other) // the one in Java's Object
+public boolean equals(Point other)  // the one in your Point class
+```
+
+Student: So… how do I fix it? Do I have to write the `Object` version? OK, I can change the signature…
+
+```java
+class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  @Override
+  public boolean equals(Object other) {
+    return this.x == other.x && this.y == other.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}
+```
+
+Output (compile error):
+
+```text
+line 9: error: x cannot be resolved or is not a field
+line 9: error: y cannot be resolved or is not a field
+```
+
+Student: Huh? It doesn’t work now
+
+Prof: Right – since that parameter is type `Object`, Java can’t prove that it has `x` and `y` fields. You could call `new Point(4.0, 5.0).equals("a string")`, for example, and the string certainly doesn’t have those fields.
+
+Student: Ugh, OK. Oh wait! I can use `instanceof`! Because I just want to do the x and y checks if I know it’s a `Point`!
+
+```java
+class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  @Override
+  public boolean equals(Object other) {
+    if(!(other instanceof Point)) { return false; }
+    return this.x == other.x && this.y == other.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}
+```
+
+Output (compile error):
+
+```text
+line 10: error: x cannot be resolved or is not a field
+line 10: error: y cannot be resolved or is not a field
+```
+
+Student: Ugh what’s wrong?
+
+Prof: Wow, nice job. I just need to give you one more step. This is something that comes up in programming a lot – even though something is obvious to **us**, the programmer, it is not obvious to the **programming language**. Here **you** know that `other` must be a `Point` after the `if`. But Java doesn’t!
+
+Student: Well that’s silly.
+
+Prof: I know. But it’s actually a pretty common scenario. Here we need to tell Java “trust me, it’s a `Point`”. We can do that with a class cast. We write `(C)o` for some class `C` and value `o`. Java will make sure `o instanceof C`, and if it is, it will let us treat `o` as a `C`. If it’s not, that’s an error (a `ClassCastException`). So you could do that with `other` and `Point`.
+
+Student: So like… where? Like after the if?
+
+Prof: That’s the right spot, because it’s where you **know** you have a `Point`, and not some other subclass of `Object` like `String` or `Location`.
+
+Student: Here goes…
+
+```java
+class Point {
+  double x, y;
+  Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  @Override
+  public boolean equals(Object other) {
+    if(!(other instanceof Point)) { return false; }
+    Point p = (Point)other;
+    return this.x == p.x && this.y == p.y;
+  }
+}
+
+void main() {
+  Point p1 = new Point(4.0, 5.0);
+  Point p2 = new Point(4.0, 5.0);
+  assertEquals(p1, p2);
+}
+```
+
+Student: Hey, that works!
+
+Prof: Right – this also helps fully explain what was going on in the `equals` for `Raster`. This is a super common pattern: do the `instanceof` check, do the cast, and then do the checks.
+
+```java
+@Override
+public boolean equals(Object other) {
+    if (this == other) return true;
+    if (!(other instanceof Raster r)) return false;
+    if (this.width() != r.width() || this.height() != r.height()) return false;
+    for (int y = 0; y < this.height(); y++) {
+        if (!Arrays.equals(this.pixels[y], r.pixels[y])) return false;
+    }
+    return true;
+}
+```
+
+[`Pict.java`, lines 476–485](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L476-L485)
+
+Student: But that has one more line, with `==` at the top.
+
+Prof: Right, so if two objects are reference equal, they are certainly `.equals()`, so that check is also at the top of most `equals()` methods. You could add it to yours!
+
+Student: Thanks, I will
+
+#### Practice
+
+Exercise:
+
+Suppose `Point`’s `equals` skipped the `instanceof` check and cast right away:
+
+```java
+@Override
+public boolean equals(Object other) {
+  Point p = (Point)other;
+  return this.x == p.x && this.y == p.y;
+}
+```
+
+What happens with `new Point(4.0, 5.0).equals("a string")`?
+
+Choose one:
+
+- It doesn’t compile
+- It returns `false`
+- It crashes with a `ClassCastException`
+
+## [Extending Classes in Summary](summary.html)
+
+Exercise:
+
+Using the feed classes, whose method body runs for each call on `Repost r = new Repost("Free pizza in the CSE lobby", "tritons");`?
+
+```
+Object
+  toString()
+  equals(Object o)
+Message under Object, Post
+  String message
+  preview()
+  mentions(String word)
+Repost under Message
+  String from
+  ↑ preview()
+VideoPost under Message
+  int seconds
+  ↑ preview()
+Post (interface)
+  preview()
+  mentions(String word)
+```
+
+`r.preview()` runs the one in [Message / Object / Repost]
+`r.mentions("pizza")` runs the one in [Message / Object / Repost]
+`r.toString()` runs the one in [Message / Object / Repost]
+
+Exercise:
+
+With `Post p = new VideoPost("My cat learns Java", 42);`, which of these are `true`? Select all that are.
+
+Choose all that apply:
+
+- `p instanceof Repost`
+- `p instanceof Post`
+- `p instanceof Object`
+- `p instanceof Message`
+- `p instanceof VideoPost`
+
+Exercise:
+
+This `BusStop` leaves out `super(lat, lng)`. What happens?
+
+```java
+class Location {
+  double lat;
+  double lng;
+  Location(double lat, double lng) {
+    this.lat = lat;
+    this.lng = lng;
+  }
+}
+class BusStop extends Location {
+  int route;
+  BusStop(int route, double lat, double lng) {
+    this.route = route;
+  }
+}
+```
+
+Choose one:
+
+- It compiles, and `lat` and `lng` start at `0.0`
+- It compiles, and Java passes `lat` and `lng` to `Location` by itself
+- It doesn’t compile
+
+Exercise:
+
+Finish `Location`’s `equals`: two `Location`s are equal when their `lat` and `lng` match, and nothing else equals a `Location`.
+
+```java
+class Location {
+  double lat;
+  double lng;
+  Location(double lat, double lng) {
+    this.lat = lat;
+    this.lng = lng;
+  }
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) { return true; }
+    if (____) { return false; }
+    Location l = ____;
+    return lat == l.lat && lng == l.lng;
+  }
+}
+Location geisel = new Location(32.8811, -117.2376);
+boolean same = geisel.equals(new Location(32.8811, -117.2376));
+boolean notString = geisel.equals("Geisel Library");
+boolean different = geisel.equals(new Location(32.7341, -117.1446));
+```

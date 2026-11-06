@@ -1,0 +1,413 @@
+# The Main Thing
+
+## [The Main Thing](main.html)
+
+Student: Professor, you’ve been lying to me.
+
+Prof: Oh?
+
+Student: You’ve shown me a bunch of programs and said they were Java programs. But when I run them using the `java` command, nothing happens or I get errors. Look at what happened in the terminal the other day; I made a file called `DefineX.java` and ran it:
+
+`DefineX.java`:
+
+```java
+int x = 10;
+```
+
+Output (compile error):
+
+```text
+error: The method main() is undefined for the type DefineX
+```
+
+Student: What gives?
+
+Prof: You’re right, I haven’t told you the whole truth. There’s a good quote about this – “Education is the art of telling progressively smaller lies.” [Cohen, Stewart, and Pratchet](https://en.wikipedia.org/wiki/Lie-to-children) whimsically said that teaching often involves giving “a statement that is false, but which nevertheless leads the child’s mind towards a more accurate explanation”. I’ve fudged some details here, by saying things like “**the book** prints” instead of “Java prints”. So I tried not to say anything false, but I was definitely sneaky.
+
+Student: That’s not reassuring, I’m not a child, and it seems like you’re just making excuses. Just tell me what’s going on!
+
+Prof: OK so here’s the deal. We set up the **book** to be able to write examples very easily, so we allow writing a bunch of definitions, and the book prints them when you click “Run”. We’ll keep doing that! We want the examples to be short.
+
+Prof: But when you use the `java` command on a `.java` file, it looks for a method definition a the top level called `main`. It calls that method to “start the program”, and whatever happens in the `main` method is the program’s behavior. And if `main` isn’t there, it gives an error like the one you saw.
+
+Student: Hmm OK so I need to define a `main` method? How do I do that?
+
+Prof: There’s actually a few ways. With recent versions of Java, you can write it like this:
+
+`DefineX.java`:
+
+```java
+void main() {
+  int x = 10;
+}
+```
+
+Student: Uh… are you sure that worked? I don’t see anything.
+
+Prof: Right! It ran the method… which just had a single definition. Without the infrastructure of the book, nothing prints.
+
+Student: OK, so how I do I write a program that **does** something? Can I like, print it out myself?
+
+Prof: Yup. There’s a method called `System.out.println` that takes a value and prints it. If you run it from your terminal it will print there; in the book it will show on the page.
+
+```java
+void main() {
+  int x = 10;
+  System.out.println(x);
+}
+```
+
+Output:
+
+```text
+10
+```
+
+Prof: A lot of courses show something like this as the first program:
+
+```java
+void main() {
+  System.out.println("Hello, world!");
+}
+```
+
+Output:
+
+```text
+Hello, world!
+```
+
+Prof: And an important detail – you are not allowed to write `System.out.println(...)` at the top level of a program, outside of any method. Calling a method on its own like that, without any definition, is called a statement, and is only allowed inside methods.
+
+Student: OK, I think I see at least how to get things running. Make a `main` method, use `println`.
+
+#### Practice
+
+`greeting` is already defined. Finish `main` so that running this file prints it.
+
+Exercise:
+
+```java
+void main() {
+  String greeting = "Good morning, Java!";
+  ____
+}
+```
+
+## [Main and Pict](main-pict.html)
+
+Student: OK, I think I see how `main` is the starting point for programs we run from the terminal. So how do I print an image?
+
+Prof: If you just print a `Pict` value, you’ll get its record-style printing:
+
+```java
+void main() {
+  Pict c = new Circle(30, "red");
+  System.out.println(c);
+}
+```
+
+Output:
+
+```text
+Circle[radius=30, color=red]
+```
+
+Prof: That’s because `System.out.println` only knows about text – it turns every value it gets into a string and prints that. There’s a different function that comes with the image library to show images. It’s called `ImageIO_.show(...)` and it takes a `Pict`:
+
+```java
+void main() {
+  Pict c = new Circle(30, "red");
+  System.out.println(c);
+  ImageIO_.show(c);
+}
+```
+
+Output:
+
+```text
+Circle[radius=30, color=red]
+[image]
+```
+
+Prof: That shows the image in the book the way we’ve been doing it right along. If you run it from somewhere else, like Visual Studio Code’s terminal, it should pop up in a separate window. If you’re in a web browser or somewhere that can’t show you a new window, it will save it to a file.
+
+Student: I see. So different kinds of output require different kinds of methods. What does `ImageIO` mean?
+
+Prof: The `IO` stands for “input/output”, which is a common abbreviation in libraries. It’s the way provided with images to output them (we’ll see some other ways to **input** them later, like reading in an image from a file).
+
+Student: OK, I think I get it.
+
+#### Practice
+
+`fr` is the French flag from before. Finish `main` so that running this file shows it.
+
+Exercise:
+
+```java
+void main() {
+  Pict fr = new Beside(new Rect(30, 60, "blue"),
+                       new Beside(new Rect(30, 60, "white"),
+                                  new Rect(30, 60, "red")));
+  ____
+}
+```
+
+## [Into the Void](into-the-void.html)
+
+Student: Wait, you snuck something by me, didn’t you?
+
+Prof: Hm?
+
+Student: You never told me what `void` means in `void main()`. What type is that?
+
+Prof: Good question as usual, you really are keeping me honest!
+
+Student: I’m just trying to learn!
+
+Prof: `void` is a a type that only makes sense in the **return type position** of a method definition. It means the method doesn’t return a value.
+
+Student: It doesn’t return a value?
+
+Prof: That’s right – the methods we’ve seen so far have always computed some value to return, like a new `Pict` or a `int` or `String`. `main` is different – its only job is to get the program started and have effects like printing. So it has no value to meaningfully return, and gets a `void` return type. Java expects and requires that it have that return type.
+
+Student: Hmm. OK. Do we ever write other `void` methods?
+
+Prof: You might if there are other methods you write that don’t return anything, but do some printing or other work that **only** has effects.
+
+#### Practice
+
+One of these prints a greeting; the other builds one and hands it back to whoever called it. Give each the return type it needs.
+
+Exercise:
+
+```java
+[String / int / void] printGreeting(String name) {
+  System.out.println("Hello, " + name);
+}
+
+[String / int / void] createGreeting(String name) {
+  return "Hello, " + name;
+}
+```
+
+## [Just in Case](just-in-case.html)
+
+Student: I have another question.
+
+Prof: Go for it!
+
+Student: The way you write names seems to be very specific, and we talked about `String` being capitalized and `int` not being capitalized. Then things like method and variable names seem to start lowercase and become capital?
+
+Prof: Right! This is a good time to answer that, while we’re looking at some Java-specific details. This is called the casing style of identifiers. “Identifier” is a word for a name in a program; it could be a method name or a definition name or a class name, those are all identifiers. There are both **rules** and **conventions** around identifiers.
+
+Student: What’s the difference between a rule and a convention?
+
+Prof: So identifiers, in Java, have to start with a letter and can only contain letters, numbers and a few special characters like underscores (`_`). So `france` and `image2` and `MyFavoriteNumber` are all valid identifiers, while `2kool4u` and `my-favorite-number` are invalid; `java` will simply give an error if you use them as names. Those are the **rules** in Java.
+
+Student: OK, so what’s a convention?
+
+Prof: In Java, there are a few conventions, which are guidelines that most Java programmers follow to make their code more predictable to read. There are two that we have seen:
+
+- Method names, parameter names, and definition names are what’s called `camelCase`. That is, they start with a lowercase letter, and any words after the first get a capital letter. The `camel` comes from the idea that many names look like a camel (🐫) because they have humps in the middle.
+- Class and record names (like `String` and `CourseTime`) are `PascalCase`, which was a convention in an early programming language called Pascal. These are like camel case, but they have the first letter capitalized.
+
+There are other conventions, like Python which uses `snake_case` with underscores, or Scheme which uses `kebab-case` with hyphens. They have some pretty fun and whimsical names. In this book, we’ll use camel case and Pascal case following the Java conventions.
+
+Student: I see, so it’s similar to rules for writing and having good style?
+
+Prof: Correct – the **rules** are things that would be strictly wrong in writing, like saying “he are” instead of “he is”. The **conventions** are stylistic, like whether you use the “u” in colo[u]r. We often make a choice consistently for style across a whole document or kind of writing, and the consistency matters more than the specific choice that was made.
+
+#### Practice
+
+Exercise:
+
+For each identifier, say what it is now, and what Java convention says it should be.
+
+`courseSchedule`, a definition that holds a `CourseTime`: [camelCase / PascalCase / invalid in Java] → [camelCase / PascalCase]
+`GreetingCard`, a record with a `to` and a `from` field: [camelCase / PascalCase / invalid in Java] → [camelCase / PascalCase]
+`DrawHouse`, a method that returns a `Pict`: [camelCase / PascalCase / invalid in Java] → [camelCase / PascalCase]
+`songInfo`, a record with a title and an artist: [camelCase / PascalCase / invalid in Java] → [camelCase / PascalCase]
+`2ndPlace`, a definition that holds a runner’s name: [camelCase / PascalCase / invalid in Java] → [camelCase / PascalCase]
+`total-price`, a parameter of a method: [camelCase / PascalCase / invalid in Java] → [camelCase / PascalCase]
+
+## [Checking Assertively](checking-assertively.html)
+
+Student: Professor, my fingers and eyes are tired.
+
+Prof: You should get some rest!
+
+Student: No, I mean that I’m annoyed at how much typing and reading something is taking in my program. Can you help me make it shorter?
+
+Prof: Oh, I see. Show me what’s going on.
+
+Student: Well, I wrote a cool method, I think, to calculate the difference between two times. I wanted to use `main` like you showed me. There are two things I don’t like. One is all the times I have to type `System.out.println` (I know I can get AI to do it for me, but I feel like the practice is good). But the other is that it’s hard for me to check the output by reading it. Here’s my code:
+
+```java
+record Time(int hour, int minute) {
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
+  int minutesBetween(Time other) {
+    return Math.abs(toMinutes() - other.toMinutes());
+  }
+}
+
+void main() {
+  System.out.println(new Time(9, 0).minutesBetween(new Time(10, 30)));
+  System.out.println(new Time(10, 30).minutesBetween(new Time(9, 0)));
+  System.out.println(new Time(12, 0).minutesBetween(new Time(12, 0)));
+  System.out.println(new Time(8, 15).minutesBetween(new Time(8, 45)));
+  System.out.println(new Time(0, 0).minutesBetween(new Time(23, 59)));
+  System.out.println(new Time(11, 50).minutesBetween(new Time(13, 10)));
+  System.out.println(new Time(14, 5).minutesBetween(new Time(9, 55)));
+  System.out.println(new Time(7, 0).minutesBetween(new Time(19, 0)));
+  System.out.println(new Time(16, 20).minutesBetween(new Time(16, 21)));
+  System.out.println(new Time(22, 45).minutesBetween(new Time(1, 15)));
+  System.out.println(new Time(10, 0).minutesBetween(new Time(10, 59)));
+  System.out.println(new Time(13, 30).minutesBetween(new Time(3, 30)));
+}
+```
+
+Output:
+
+```text
+90
+90
+0
+30
+1439
+80
+250
+720
+1
+1290
+59
+600
+```
+
+Prof: I see. So it’s printing out all these times and you don’t know which is which?
+
+Student: Right – I see all the numbers, but like… I lose track. And I **also** tried a version that made 12 separate definitions with like `int shouldBe90 = ...`, but that didn’t help *that* much.
+
+Prof: First of all, great job. You’re doing the right thing by checking your work, **and** you’re making a great observation here. Think about how bad this would get if you had a dozen methods like this! Printed output isn’t the right way to check things once programs get large.
+
+Student: Yeah how do big companies manage this? They have tons of code, right?
+
+Prof: Right! So the main thing people use here is something that:
+
+- Checks a result from **our program** against an **expected result**. These are called test assertions or just tests
+- Only prints or reports when things **fail**. That’s called a test harness or a test runner
+
+The standard one for Java is called [JUnit](https://junit.org). The book runs a simplified version. The main function we need is `assertEquals`:
+
+`void assertEquals(value1, value2)`
+
+It’s somewhat special in that it can take and compare **any two values** (which is why for now I didn’t give them any type). It reports an error if the values aren’t equal, and does nothing if they pass.
+
+Here’s what it looks like for just two tests of your `minutesBetween` method:
+
+```java
+record Time(int hour, int minute) {
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
+  int minutesBetween(Time other) {
+    return Math.abs(toMinutes() - other.toMinutes());
+  }
+}
+
+void main() {
+  assertEquals(90, new Time(9, 0).minutesBetween(new Time(10, 30)));
+  assertEquals(90, new Time(10, 30).minutesBetween(new Time(9, 0)));
+}
+```
+
+Prof: Notice how the first value (90) is the **expected** value that we wrote out by hand (or copied from somewhere).
+
+Student: But it didn’t print anything!
+
+Prof: Right! That was kind of the goal, right? No noise if everything went well. But I agree that it can be jarring to see nothing. One thing we can do, for our book examples, is put one print statement to see that we got to the end.
+
+```java
+record Time(int hour, int minute) {
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
+  int minutesBetween(Time other) {
+    return Math.abs(toMinutes() - other.toMinutes());
+  }
+}
+
+void main() {
+  assertEquals(90, new Time(9, 0).minutesBetween(new Time(10, 30)));
+  assertEquals(90, new Time(10, 30).minutesBetween(new Time(9, 0)));
+  System.out.println("All tests succeeded!");
+}
+```
+
+Output:
+
+```text
+All tests succeeded!
+```
+
+Prof: Now we know we got to that line if we see it, and can rest easy knowing our tests succeeded. Now try writing a test that fails!
+
+Student: Like this?
+
+```java
+record Time(int hour, int minute) {
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
+  int minutesBetween(Time other) {
+    return Math.abs(toMinutes() - other.toMinutes());
+  }
+}
+
+void main() {
+  assertEquals(90, new Time(9, 0).minutesBetween(new Time(10, 30)));
+  assertEquals(90, new Time(10, 30).minutesBetween(new Time(9, 0)));
+  assertEquals(1, new Time(12, 0).minutesBetween(new Time(12, 0)));
+  System.out.println("All tests succeeded!");
+}
+```
+
+Output (failed):
+
+```text
+Exception in thread "Thread-0" org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)
+	at org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)
+	at main(Unknown Source)
+```
+
+Student: Oh cool! It doesn’t print the “all succeeded” message this time, and says what failed.
+
+Prof: Right, so that’s what it looks like when the **expectation** (which you wrote as `1`, good work) doesn’t match the actual value the method gives back (which is `0`). In this case, we just did that to see what would happen. In big programs, the usual idea is that the expected result is what you carefully check yourself, and then the assertion makes sure that your program did what you expect.
+
+Student: Got it. So I can use `assertEquals`, which will check something about my program and only report it if something went wrong.
+
+Prof: Exactly, and that’s a critical tool for having confidence in our programs; seeing the assertions succeed tells us a lot about what our program did!
+
+#### Practice
+
+Work out by hand how many seats each course has left, and write that as the expected value of its test.
+
+Exercise:
+
+```java
+record Course(String name, int maxEnrollment, int enrollment) {
+  int seatsAvailable() {
+    return maxEnrollment - enrollment;
+  }
+}
+
+void main() {
+  assertEquals(____, new Course("CSE 11", 400, 385).seatsAvailable());
+  assertEquals(____, new Course("CSE 12", 200, 200).seatsAvailable());
+  System.out.println("All tests succeeded!");
+}
+```

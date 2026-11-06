@@ -1,0 +1,103 @@
+# Glossary
+
+## argument
+
+A value given to a constructor or method call. One of the things in the parentheses when making a call. Can be an expression that evaluates to a value; the argument expressions are evaluated first to values, then the method is called.
+
+## `boolean`
+
+A primitive value that is either `true` or `false`, for use in conditional checks.
+
+## composition
+
+Taking the results of one or more methods or values and combining them together with new methods or constructors to create new results.
+
+## constructor
+
+A special kind of method that works with `new`. Constructors are created along with each `record` or `class` definition.
+
+## constructor use
+
+An expression of the form `new Name(arguments...)`. `Name` must be the name of a `class` or `record`. The arguments are given to the constructor, usually to initialize field values.
+
+## definition
+
+A statement of the form `Type name = value;`
+
+Can appear at the toplevel, in a method body, or as a class member.
+
+## `double`
+
+One of the types of “floating-point” numbers, which can represent non-integer numbers in a wide range. Arithmetic on `double` often has unavoidable error, so programs that use `double`s need to consider arithmetic error.
+
+## field
+
+A part of a record or class definition. Consists of a name, a type, and optional modifiers. Defines a storage slot for instances of that class or record.
+
+## instance
+
+Synonym for object.
+
+## `int`
+
+A primitive type, describing exact integers in the range −231 to 231 - 1, inclusive.
+
+## integer division
+
+Division that truncates towards 0, applied when using `/` on integer values.
+
+## method body
+
+The statements that compute a return value (or have effects, in the case of a `void` returning method) in a method definition.
+
+## nested data
+
+When an instance of one compound data type is stored inside another.
+
+## object
+
+A value created via constructor use. Has fields and stores the name of the constructor used to create it (known as the object’s `class`).
+
+## operator
+
+Operators are symbols like `+` and `<` and `&&` that go in between two expressions. They have specific meaning on number types and `boolean`s and `String`s.
+
+## parameter
+
+The names in a method definition that get their values at method call time from the arguments that are passed. Written with a type and a name (but no value; that is supplied at the call). Java checks that method calls use the right types.
+
+## `Pict`
+
+A datatype specific to the library that comes with this book for representing images.
+
+## primitive type
+
+A set of fixed-size, base values part of the Java language. They have keyword, lowercase types (`int`, `double`, `boolean`, and so on). They are stored directly in variables, fields, and array elements, and never have a reference created for them.
+
+## `record`
+
+A definition of a new datatype, with specific fields and methods. Java defines a canonical constructor for the record that takes all the listed fields, an `equals` method, a `toString` method, accessor methods, and other defaults.
+
+## reference type
+
+Types of values that are stored on the heap — objects and arrays. A reference type is either an array type, the name of a class, or the name of an interface. By convention these are usually written in uppercase. A reference-typed field, variable, or array element stores the reference, with the contents of the object or array stored in a dedicated address on the heap.
+
+## return type
+
+A type that describes what a method definition is guaranteed to return. Java will check that the method body in fact returns a value of that type.
+
+## `String`
+
+A built-in class in Java for representing text data. Stores a sequence of characters. Every string literal turns into one.
+
+## string literal
+
+Text between double quotes. Turns into a `String` when the program runs.
+
+## type
+
+A name for a set of values. Can be an **object type**, typically written in uppercase as the name of a class, record, or interface, an **array type** which has an object or array type followed by brackets `[]`, or a primitive type like `int`, `double`, or `boolean`
+
+## value
+
+Things that can be stored in variables, fields, and array elements, passed as arguments, or returned from methods are values. All the primitives are values, and references are values. Technically, arrays and objects are not values in Java, only references to them are values, but sometimes we conflate the two when talking about code.

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Default Implementations vs. Abstract Methods — Abstract Classes and Mutation</title>
 <link rel="stylesheet" href="../assets/book.css?v=fa4d2e038929">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
 <meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
 </head>
 <body>
@@ -51,7 +52,7 @@ abstract class Location implements Place {
     this.seconds = seconds;" rows="3" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public String preview() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return "@" + username + ": " + message + " [video, " + seconds + "s] | " + likes + " likes";<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br><br>Post[] feed = {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>new TextPost("cse11", "Exam moved to Friday", 12, true),<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>new Repost("ana", "Free pizza in the CSE lobby", 40, "tritons"),<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>new VideoPost("ben", "My cat learns Java", 7, 42),<br>};<br>String[] previews = { feed[0].preview(), feed[1].preview(), feed[2].preview() };<br>String[] snippets = { feed[0].snippet(), feed[1].snippet(), feed[2].snippet() };<br></div></div></div></article>
 <nav class="pagenav"><a class="prev" href="../extending-classes/summary.html">← Extending Classes in Summary</a> <a class="next" href="dynamic-dispatch.html">Dynamic Dispatch →</a></nav>
 </main>
-<footer><a href="../glossary.html">Glossary</a> · Fall 2026 rewrite · runs Java in your browser via
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
 <a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
 <script type="application/x-steps">{"section": "abstract-classes-and-mutation", "title": "Abstract Classes and Mutation", "current": 0, "steps": [{"title": "Default Implementations vs. Abstract Methods", "slug": "abstract-classes", "url": "abstract-classes.html", "path": "/abstract-classes-and-mutation/abstract-classes.html"}, {"title": "Dynamic Dispatch", "slug": "dynamic-dispatch", "url": "dynamic-dispatch.html", "path": "/abstract-classes-and-mutation/dynamic-dispatch.html"}, {"title": "Liking a Post", "slug": "likes", "url": "likes.html", "path": "/abstract-classes-and-mutation/likes.html"}, {"title": "Sharing vs. Copying", "slug": "sharing-vs-copying", "url": "sharing-vs-copying.html", "path": "/abstract-classes-and-mutation/sharing-vs-copying.html"}, {"title": "Abstract Classes and Mutation in Summary", "slug": "summary", "url": "summary.html", "path": "/abstract-classes-and-mutation/summary.html"}]}</script>
 <script src="../assets/runner.js?v=8d3dd75b8dcf"></script>

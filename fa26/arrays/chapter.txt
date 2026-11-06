@@ -1,0 +1,940 @@
+# Collecting Values
+
+## [A List of Names](collections.html)
+
+Student: Professor, I’m unsatisfied with what we’ve learned. I feel like you’re not telling the whole story.
+
+Prof: Oh? In what way?
+
+Student: Well, we talk about records for storing students, but not a whole list of them. Surely things like TSS don’t have a different definition for every student. And there was an example with a `ShoppingItem` or something like that, but it only had one item in it. When you shop online your cart is a whole bunch of different items. And a lot of pictures you might want to make have **lots** of little pieces, like a lot of stripes or something like that. I don’t see at all how you’d do that with what you’ve shown me.
+
+Prof: Ah, you want to create collections or sequences of values of the same type!
+
+Student: Uh, yeah? Sure, I guess, that sounds kind of right.
+
+Prof: There are a lot of ways to do that in Java, but arrays are one really common tool. Here’s an array in Java, and how to access its pieces:
+
+```java
+String[] names = { "Anya", "Rachel", "Neelkanth", "Sydney", "Daniela", "Gonzalo" };
+String anya = names[0];
+String rachel = names[1];
+String sydney = names[3];
+int gonzaloIndex = 5;
+String gonzalo = names[gonzaloIndex];
+int numberOfNames = names.length;
+```
+
+Output:
+
+```text
+names = [Anya, Rachel, Neelkanth, Sydney, Daniela, Gonzalo]
+anya = Anya
+rachel = Rachel
+sydney = Sydney
+gonzaloIndex = 5
+gonzalo = Gonzalo
+numberOfNames = 6
+```
+
+Student: OK, so the array itself is stored in `names`, and you can use the `[]` to look it up? And indexes start at 0?
+
+Prof: That’s right. We call `array[i]` array indexing, and `i` has to be an `int` that is between `0` and the size of the array minus 1
+
+Student: Why minus 1?
+
+Prof: Well, how many elements are in that array (we call each value in an array an element)?
+
+Student: Six…
+
+Prof: And what’s the index of the last one?
+
+Student: You made a definition for it, it was 5… oh! I see.
+
+#### Practice
+
+Exercise:
+
+Here is an array of `double`s:
+
+```java
+double[] temps = { 72.5, 68.0, 75.2, 80.1 };
+```
+
+Which of these are valid ways to index `temps`? Select all that apply.
+
+Choose all that apply:
+
+- `temps[3]`
+- `temps[0]`
+- `temps[1.0]`
+- `temps[-1]`
+- `temps[4]`
+
+## [Arrays and Records](arrays-and-records.html)
+
+Student: OK, so we can make collections of strings. I’m not impressed.
+
+Prof: Oh?
+
+Student: I started this conversation wanting to make big collections of like, lots of images or course rosters like you keep suggesting.
+
+Prof: I see, that makes sense. Let me think of a good first example… OK how about this. We’ll have a class that stores an **array** of points, representing a bunch of positions on a coordinate plane. In, say, sports analytics, this could be positions of players on a field. In a physics experiment, it could be positions of particles.
+
+```java
+record Point(double x, double y) { }
+record Positions(Point[] points) { }
+```
+
+Student: OK, so now you’ve used `Point[]` as the type of a field?
+
+Prof: That’s right. Why don’t you try constructing some example points and a `Positions` instance?
+
+Student: Sure.
+
+```java
+record Point(double x, double y) { }
+record Positions(Point[] points) { }
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Positions posns = new Positions(p1, p2, p3);
+```
+
+Output (compile error):
+
+```text
+line 6: error: The constructor Positions(Point, Point, Point) is undefined
+```
+
+Student: Huh, that didn’t work. Why not?
+
+Prof: How many fields does `Positions` have?
+
+Student: Three?
+
+Prof: Setting aside your example for a minute, just look at `record Positions(Point[] points)`. How many fields?
+
+Student: Oh, just one. Ohhhh so I have to make an array and give just one array to the constructor? Like this:
+
+```java
+record Point(double x, double y) { }
+record Positions(Point[] points) { }
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);
+```
+
+Output:
+
+```text
+p1 = Point[x=3.0, y=4.0]
+p2 = Point[x=7.0, y=8.0]
+p3 = Point[x=5.0, y=-1.0]
+parray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]
+posns = Positions[points=[LPoint;@a01]
+```
+
+Prof: You got it. OK so let’s think of some interesting methods to write for `Positions`. Can you think of any?
+
+Student: Um… maybe like which points are the closest to each other or furthest?
+
+Prof: Great. Let’s do “which point is closest to a given point”, how about that? That could make sense for a lot of tasks, like which player is closest to a goal, or which particle is closest to some stimulus in an experiment.
+
+Student: Sure, I buy that.
+
+Prof: Let’s assume `Point` defines `double distanceTo(Point other)`; we’ve seen things like that before, and focus on this new method in the `Positions` record. What do you think the method header looks like?
+
+Student: OK, I need a name and the arguments. So probably the name is like `closestTo` and then the argument is a `Point`?
+
+Prof: And you need one more thing – the return type.
+
+Student: Oh, probably it returns a point, like the one it found that is closest.
+
+Prof: Great. What’s a good placeholder value for the method?
+
+Student: Maybe just like… the first point in the array?
+
+Prof: Sure – go ahead and let’s get that in. Maybe at the same time write a few examples of **calling** it with comments for what you expect?
+
+```java
+record Point(double x, double y) {
+  double distanceTo(Point other) {
+    double dx = x - other.x;
+    double dy = y - other.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+}
+record Positions(Point[] points) {
+  Point closestTo(Point target) {
+    return points[0];
+  }
+}
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);
+Point closestOrigin = posns.closestTo(new Point(0.0, 0.0));
+Point closesttTopRight = posns.closestTo(new Point(9.0, 9.0));
+```
+
+Output:
+
+```text
+p1 = Point[x=3.0, y=4.0]
+p2 = Point[x=7.0, y=8.0]
+p3 = Point[x=5.0, y=-1.0]
+parray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]
+posns = Positions[points=[LPoint;@b82]
+closestOrigin = Point[x=3.0, y=4.0]
+closesttTopRight = Point[x=3.0, y=4.0]
+```
+
+Prof: Excellent! So both of these are always returning the 3.0, 4.0 point for now because that’s the first one. Now we need to fill it in.
+
+Student: Awesome!
+
+#### Practice
+
+Exercise:
+
+Make `order` a `PizzaOrder` that holds both pizzas: fill in the type of the `pizzas` field, define an array of the pizzas on the empty line, and pass it to the constructor.
+
+```java
+record Pizza(double inches, int costCents) { }
+record PizzaOrder(____ pizzas) { }
+Pizza big = new Pizza(16, 1000);
+Pizza small = new Pizza(10, 500);
+____
+PizzaOrder order = new PizzaOrder(____);
+```
+
+## [Arrays and Loops](loops.html)
+
+Prof: There are actually a lot of ways to do this in Java. We’ll use a loop; it’s one of the most common and it works well with arrays.
+
+Student: Finally, real code!
+
+Prof: Hey, everything up to now was extremely real, we watched it all run and everything!
+
+Student: Just show me the loop, please!
+
+Prof: Fine. First tell me the plan for this method body, though.
+
+Student: The plan?
+
+Prof: Yeah. Loop plans over arrays will often say something like “for each element of the array, the code will…”
+
+Student: OK. For each point, the code will get its distance to the target and check if it’s closer than… the other… closer than something.
+
+Prof: Right, we need a point of comparison. This is a kind of accumulator loop because it’s going to track a value that “accumulates” some information over time. Here I’d call it a best-so-far accumulator, which tracks “the closest point we’ve seen so far”.
+
+Student: OK, so for each point, the code will get its distance to the target and check if it’s closer than the closest point we’ve seen so far.
+
+Prof: And what does it do if we get something closer?
+
+Student: I guess it… updates it?
+
+Prof: Cool! Let’s put it all together.
+
+```java
+record Point(double x, double y) {
+  // distance from this point to other
+  double distanceTo(Point other) {
+    double dx = x - other.x;
+    double dy = y - other.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+}
+record Positions(Point[] points) {
+  Point closestTo(Point target) {
+    Point closest = points[0];
+    for(Point p: points) {
+      if(p.distanceTo(target) < closest.distanceTo(target)) {
+        closest = p;
+      }
+    }
+    return closest;
+  }
+}
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);
+Point closestOrigin = posns.closestTo(new Point(0.0, 0.0));
+Point closesttTopRight = posns.closestTo(new Point(9.0, 9.0));
+```
+
+Output:
+
+```text
+p1 = Point[x=3.0, y=4.0]
+p2 = Point[x=7.0, y=8.0]
+p3 = Point[x=5.0, y=-1.0]
+parray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]
+posns = Positions[points=[LPoint;@78a]
+closestOrigin = Point[x=3.0, y=4.0]
+closesttTopRight = Point[x=7.0, y=8.0]
+```
+
+Student: Wow, that’s so interesting. There’s a lot going on!
+
+Prof: Indeed. We just saw two things at once:
+
+- Assignment – the definition of `closest` **starts** as the first value in the array, and then **changes** when we use `closest = p`
+- A `for` loop – the syntax `for(Point p: points) { /* loop body */ }`. It runs the loop body once for each element of `points`, and each time it runs, the next element is stored in `p`.
+
+These two things tend to go together in programming: many loops that we want to write only work with assignment.
+
+And one other bit of jargon – a mathy name for a best-so-far loop that returns the element that is the “smallest” in some way is argmin, which you might see in other contexts. Here that “something” is the distance to a target.
+
+Student: Cool!
+
+#### Practice
+
+Exercise:
+
+`Pizza` has the `area` and `betterDeal` methods from before. Write the whole body of `bestDeal`, which returns the pizza in the order with the best (lowest) price per square inch.
+
+```java
+record Pizza(double inches, int costCents) {
+  double area() {
+    double radius = inches / 2;
+    return radius * radius * Math.PI;
+  }
+  boolean betterDeal(Pizza other) {
+    return costCents / area() < other.costCents / other.area();
+  }
+}
+record PizzaOrder(Pizza[] pizzas) {
+  Pizza bestDeal() {
+____
+  }
+}
+Pizza small = new Pizza(10, 500);
+Pizza big = new Pizza(16, 1000);
+Pizza medium = new Pizza(12, 900);
+Pizza[] partyPizzas = { small, big, medium };
+PizzaOrder party = new PizzaOrder(partyPizzas);
+Pizza[] lunchPizzas = { medium, small };
+PizzaOrder lunch = new PizzaOrder(lunchPizzas);
+Pizza partyBest = party.bestDeal();
+Pizza lunchBest = lunch.bestDeal();
+```
+
+## [More Arrays and Loops](more-loops.html)
+
+Student: OK so you mentioned that we have “accumulator” loops and we did a “best-so-far” loop. What are some other kinds?
+
+Prof: Glad you asked! There are lots of tasks we like to do with arrays, and many involve loops, and many do have logical “plans” and even useful names. Let’s write a method that is a small change to `closestTo`: `averageDistanceTo`. Based on the name, what do you think it does?
+
+Student: I guess it takes a point and averages up all the distances to that point?
+
+Prof: Right! What do you think it will need to track?
+
+Student: I guess the total distance, so we can divide it later?
+
+Prof: Right! We’d call that a running-sum accumulator. What type do you think it would be, what’s a good name for it, and what’s a good initial value?
+
+Student: I guess `double`? Named `total`, starting at `0`?
+
+Prof: Let’s try it.
+
+```java
+record Point(double x, double y) {
+  // distance from this point to other
+  double distanceTo(Point other) {
+    double dx = x - other.x;
+    double dy = y - other.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+}
+record Positions(Point[] points) {
+  Point closestTo(Point target) {
+    Point closest = points[0];
+    for(Point p: points) {
+      if(p.distanceTo(target) < closest.distanceTo(target)) {
+        closest = p;
+      }
+    }
+    return closest;
+  }
+  double averageDistanceTo(Point target) {
+    double total = 0;
+    for(Point p: points) {
+      total += p.distanceTo(target);
+    }
+    return total / points.length;
+  }
+}
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);
+double avgToOrigin = posns.averageDistanceTo(new Point(0, 0));
+double avgToY10 = posns.averageDistanceTo(new Point(0, 10));
+```
+
+Output:
+
+```text
+p1 = Point[x=3.0, y=4.0]
+p2 = Point[x=7.0, y=8.0]
+p3 = Point[x=5.0, y=-1.0]
+parray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]
+posns = Positions[points=[LPoint;@7aa]
+avgToOrigin = 6.909721775442478
+avgToY10 = 8.69045326512482
+```
+
+Student: OK, I think I get that.
+
+Prof: There are also counter loops, that, well, count something. For example, you could count how many Points are within a certain range of a target. What would the method header be for something like that?
+
+Student: Hmmm maybe like `countNearby`? And I guess it returns an `int` because that’s what a count is.
+
+Prof: Great, and the parameters?
+
+Student: I guess another `Point target` like we’ve been doing?
+
+Prof: Anything else? Did we talk about any other data in the problem description?
+
+Student: Well you said “within a certain range”. I guess we need to pick that. Should it be a parameter?
+
+Prof: You could try it that way!
+
+Student: OK so `int countNearby(Point target, double range)`
+
+Prof: Looks great. Let’s try to write it.
+
+```java
+record Point(double x, double y) {
+  // distance from this point to other
+  double distanceTo(Point other) {
+    double dx = x - other.x;
+    double dy = y - other.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+}
+record Positions(Point[] points) {
+  Point closestTo(Point target) {
+    Point closest = points[0];
+    for(Point p: points) {
+      if(p.distanceTo(target) < closest.distanceTo(target)) {
+        closest = p;
+      }
+    }
+    return closest;
+  }
+  double averageDistanceTo(Point target) {
+    double total = 0;
+    for(Point p: points) {
+      total += p.distanceTo(target);
+    }
+    return total / points.length;
+  }
+  int countNearby(Point target, double range) {
+    int count = 0;
+    for(Point p: points) {
+        if(p.distanceTo(target) < range) {
+            count += 1;
+        }
+    }
+    return count;
+  }
+}
+Point p1 = new Point(3.0, 4.0);
+Point p2 = new Point(7.0, 8.0);
+Point p3 = new Point(5.0, -1.0);
+Point[] parray = { p1, p2, p3 };
+Positions posns = new Positions(parray);
+int within6Origin = posns.countNearby(new Point(0.0, 0.0), 6.0);
+int within1OfTenTen = posns.countNearby(new Point(10.0, 10.0), 1.0);
+```
+
+Output:
+
+```text
+p1 = Point[x=3.0, y=4.0]
+p2 = Point[x=7.0, y=8.0]
+p3 = Point[x=5.0, y=-1.0]
+parray = [Point[x=3.0, y=4.0], Point[x=7.0, y=8.0], Point[x=5.0, y=-1.0]]
+posns = Positions[points=[LPoint;@929]
+within6Origin = 2
+within1OfTenTen = 0
+```
+
+Student: I see. OK so we’ve seen running-sum, best-so-far, and counters. That’s a cool way to organize thinking about loops and arrays. I hadn’t thought of giving them those names before.
+
+Prof: I hope it helps you write cool array programs!
+
+#### Practice
+
+Exercise:
+
+Recall `Pizza` and `PizzaOrder`:
+
+```java
+record Pizza(double inches, int costCents) {
+  double area() {
+    double radius = inches / 2;
+    return radius * radius * Math.PI;
+  }
+}
+record PizzaOrder(Pizza[] pizzas) { }
+```
+
+Each of these `PizzaOrder` methods loops over its `pizzas`. Which kind of loop fits each one best?
+
+`int countCheaperThan(int limitCents)` – how many pizzas in the order cost less than `limitCents`: [running-sum / counter / best-so-far]
+`Pizza largest()` – the pizza with the biggest diameter: [running-sum / counter / best-so-far]
+`double totalArea()` – how many square inches of pizza the whole order adds up to: [running-sum / counter / best-so-far]
+
+## [Arrays and main](command-line-args.html)
+
+Student: Wait a minute. I just realized I’ve seen `String[]` before.
+
+Prof: Oh really? Where?
+
+Student: Well, um, my friend told me that the way you do `main` in this book is all wrong. What she learned looked more like
+
+```java
+public static void main(String[] args) {
+  ...
+}
+```
+
+Prof: Oh, interesting. How long has your friend been a Java programmer?
+
+Student: Oh she’s um, actually, my friend is uh… well, AI wrote that when I asked it to do the homework. I want to know what it does.
+
+Prof: Gothca. Well, your “friend” isn’t totally off base, she’s just a few versions behind. That’s how you had to write Java until a few years ago; the short `void main()` is new. And this is actually a great time to talk about `main` and `String[] args` so I’m glad you brought it up.
+
+Student: What about `public static`?
+
+Prof: Not quite the right time. Remember, learning is—
+
+Student: Yeah yeah a series of successively smaller lies and omissions. OK fine tell me about `String[]` in `main`.
+
+Prof: OK so you know how we type things like `java MyProgram.java` at the terminal?
+
+Student: Right, like in the homeworks.
+
+Prof: That’s right. So we can put **more stuff** after the name of the java file. For example, we can write
+
+```text
+$ java MyProgram.java more stuff here
+```
+
+Student: OK, why would you do that?
+
+Prof: A lot of programs use it to pass in extra options or configuration to a program that gets started from the terminal. They are called command line arguments. I have an example in mind – imagine we want to write a program that runs from the terminal and creates a flag image, let’s re-use Bangladesh because the image is simple to make. However, we want to say, when we run `java MakeFlag.java`, what width to use for it. So I could say
+
+```text
+$ java MakeFlag.java 400
+```
+
+and it would make a flag of width 400, but if I wrote
+
+```text
+$ java MakeFlag.java 200
+```
+
+the width would be 200.
+
+```java
+void main(String[] args) {
+  int width = Integer.parseInt(args[0]);
+  int height = width * 3 / 5;
+  Pict sun = new Circle(width / 5, "red");
+  Pict cloth = new Rect(width, height, "green");
+  Pict flag = new Overlay(sun, cloth);
+  System.out.println("Bangladesh, " + width + " by " + height);
+  ImageIO_.show(flag);
+}
+```
+
+```text
+$ java MakeFlag.java 400
+Bangladesh, 400 by 240
+$ java MakeFlag.java 200
+Bangladesh, 200 by 120
+$ 
+```
+
+Student: Oh that’s super interesting. Cool. What’s `Integer.parseInt`?
+
+Prof: We need to use that to turn a `String` into an `int`. If we left it out, we’d get an error from Java that `width` is a `String`, not a number, when we try to use `*` or `/` with it.
+
+Student: OK, so it’s another built-in method?
+
+Prof: Exactly, and we use it a lot when we want to use data that comes in from outside our program. The word parse usually means to turn a `String` into another kind of structured data. Another thing to notice – the arguments are everything after the filename, the `"200"` is at index `0`. The other stuff on the command line, like `java` and the filename, are not included in `args`.
+
+#### Practice
+
+Exercise:
+
+`args` is a `String[]`. Which line gets the first command line argument as an `int`?
+
+Choose one:
+
+- `int width = args[0];`
+- `int width = Integer.parseInt(args[0]);`
+- `int width = args.length;`
+
+Exercise:
+
+How many elements does `args` have for this command?
+
+```text
+$ java MakeFlag.java 300 blue
+```
+
+Answer: ____
+
+Exercise:
+
+For that same command, what is `args[1]`?
+
+Choose one:
+
+- `"MakeFlag.java"`
+- `"blue"`
+- Nothing: `MakeFlag` stops with an error
+- `"300"`
+
+Exercise:
+
+What happens here?
+
+```text
+$ java MakeFlag.java
+```
+
+Choose one:
+
+- It makes a flag of some default width
+- It stops with an `ArrayIndexOutOfBoundsException`: `args` has length `0`, so there is no `args[0]`.
+- It does not compile
+
+## [Counter as an Index](combining-patterns.html)
+
+Student: I could use some more practice and ideas with arrays.
+
+Prof: Glad you asked. Let’s see how to combine a **counter** and a **running total** to do something cool with an array.
+
+Student: I’m game
+
+Prof: Let’s imagine we want to print an array of strings, but numbered. So we have `{"apple", "banana"}` and we want to print it as
+
+```
+1. apple
+2. banana
+```
+
+Student: I can see that being useful.
+
+Prof: So we’ll set it up as a `record` with a field that’s a `String[]`, and then a method that builds this numbered string. One thing I need to mention first – `"\n"` means “newline” in Java. It’s a escape character that has a special meaning. It won’t print as `\n`, it’ll make the rest of the string go onto the next line when printed.
+
+Student: Alright, I’ll be ready for it.
+
+```java
+record ItemList(String[] items) {
+  String numberedList() {
+    int counter = 1;
+    String result = "";
+    for(String item: items) {
+      result = result + counter + ". " + item + "\n";
+      counter = counter + 1;
+    }
+    return result;
+  }
+}
+String[] groceryItems = { "eggs", "milk", "bread" };
+ItemList groceries = new ItemList(groceryItems);
+String list = groceries.numberedList();
+```
+
+Output:
+
+```text
+groceryItems = [eggs, milk, bread]
+groceries = ItemList[items=[Ljava.lang.String;@7b4]
+list = 1. eggs
+2. milk
+3. bread
+```
+
+Student: I see the `\n`, that is making them show up on separate lines. And when you do `+ counter` that’s concatenating the number in?
+
+Prof: That’s right. So this example is really using two loop patterns together. The counter is **always** increasing by 1 in this case (not conditionally like in our other counters), and it’s used as part of the accumulated `result`.
+
+#### Practice
+
+Exercise:
+
+Trace `groceries.numberedList()`. For each run of the loop body, fill in `counter` as the body starts, and the line the body adds to `result`.
+
+`item` is `"eggs"`: `counter` is ____, and the body adds ____
+`item` is `"milk"`: `counter` is ____, and the body adds ____
+`item` is `"bread"`: `counter` is ____, and the body adds ____
+After the loop, `counter` is ____.
+
+## [Arrays of Unusual Size](more-array-creation.html)
+
+Student: Do you always have to type out all the elements of an array?
+
+Prof: How do you mean?
+
+Student: Well, like, I know programs can work with really big data. So when you have an array with, like, a million numbers in it, do you have to type them all in?
+
+Prof: Ah, I get what you’re asking. No! You can create arrays with a **calculated size**:
+
+```java
+int[] zeros = new int[5];
+int[] morezeros = new int[zeros.length * 2];
+```
+
+Output:
+
+```text
+zeros = [0, 0, 0, 0, 0]
+morezeros = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+```
+
+Student: OK, so the number in brackets is how many elements the array has? I get it. Why are they all zero?
+
+Prof: It turns out Java has a built-in idea of placeholder values, and `0` is the placeholder value for `int`.
+
+Student: What happens for `String` then?
+
+Prof: Ah it has a special placeholder called `null`:
+
+```java
+String[] strs = new String[4];
+```
+
+Output:
+
+```text
+strs = [null, null, null, null]
+```
+
+Student: What’s `null`? Why isn’t it like `""` or something?
+
+Prof: Ah we will say more about `null` very soon. For now we won’t use `null` as a value, it’ll just be in arrays that we create and we’ll always fill them in before we use them.
+
+Student: OK so we can use `new Type[count]` to make an array of `count` elements. And it works for any type?
+
+Prof: That’s right. We call it array creation.
+
+#### Practice
+
+Exercise:
+
+What is `scores.length`?
+
+```java
+String[] names = { "Ada", "Alan", "Grace" };
+double[] scores = new double[names.length + 1];
+```
+
+Answer: ____
+
+Exercise:
+
+What does the book show for `answered`?
+
+```java
+boolean[] answered = new boolean[3];
+```
+
+Choose one:
+
+- `answered = [0, 0, 0]`
+- `answered = []`
+- `answered = [false, false, false]`
+- `answered = [null, null, null]`
+
+Exercise:
+
+What is in `corners`?
+
+```java
+record Point(double x, double y) { }
+Point[] corners = new Point[4];
+```
+
+Choose one:
+
+- Four `null`s, the same placeholder as for `String`
+- It is an error, because `Point` needs an `x` and a `y`
+- Four `Point(0.0, 0.0)`s
+
+## [Making Arrays](builder.html)
+
+Student: OK I’m liking these patterns. What are some other ones?
+
+Prof: Great let’s keep going. Sometimes you want to take an array and produce a **new** array with a value calculated from each element of the original array. That requires some new thinking. An example is something like taking a roster of `Student` records and getting all their emails as a `String` array.
+
+Student: OK, I can see that being useful.
+
+Prof: Let’s set it up. A `Student` record and a `CourseRoster` record with an array of students
+
+```java
+record Student(String displayName, String username, String id) {
+  String email(String domain) { return username + "@" + domain; }
+}
+record CourseRoster(Student[] students) {
+  
+}
+Student ada = new Student("Ada Lovelace", "alovelace", "A10000001");
+Student alan = new Student("Alan Turing", "aturing", "A10000002");
+Student grace = new Student("Grace Hopper", "ghopper", "A10000003");
+Student[] enrolled = { ada, alan, grace };
+CourseRoster cse11 = new CourseRoster(enrolled);
+```
+
+Output:
+
+```text
+ada = Student[displayName=Ada Lovelace, username=alovelace, id=A10000001]
+alan = Student[displayName=Alan Turing, username=aturing, id=A10000002]
+grace = Student[displayName=Grace Hopper, username=ghopper, id=A10000003]
+enrolled = [Student[displayName=Ada Lovelace, username=alovelace, id=A10000001], Student[displayName=Alan Turing, username=aturing, id=A10000002], Student[displayName=Grace Hopper, username=ghopper, id=A10000003]]
+cse11 = CourseRoster[students=[LStudent;@793]
+```
+
+Student: OK, I see. So we’re going to try to write `String[] emails(String domain)`?
+
+Prof: That’s right, and we need one more feature of arrays to handle it. The pattern here is called builder, and the new feature is **changing** an element of an array `arr[i] = v` where `arr` is an array and `i` is an integer. That’s called array update, and it’s how we make sure the `null` values are all replaced with the values we want before returning the new array.
+
+Student: OK, so we make the array at the top, kind of like we initialized the totals or counters, and then we update in a loop?
+
+Prof: Yup, that’s right. Like with `numberedList`, we combine it with a counter, so that we can refer to indices correctly. Here the counter is used as the index for the array update
+
+```java
+record Student(String displayName, String username, String id) {
+  String email(String domain) { return username + "@" + domain; }
+}
+record CourseRoster(Student[] students) {
+  String[] emails(String domain) {
+    String[] emailStrings = new String[students.length];
+    int index = 0;
+    for(Student s: students) {
+      emailStrings[index] = s.email(domain);
+      index += 1;
+    }
+    return emailStrings;
+  }
+}
+Student ada = new Student("Ada Lovelace", "alovelace", "A10000001");
+Student alan = new Student("Alan Turing", "aturing", "A10000002");
+Student grace = new Student("Grace Hopper", "ghopper", "A10000003");
+Student[] enrolled = { ada, alan, grace };
+CourseRoster cse11 = new CourseRoster(enrolled);
+String[] ucsdEmails = cse11.emails("ucsd.edu");
+```
+
+Output:
+
+```text
+ada = Student[displayName=Ada Lovelace, username=alovelace, id=A10000001]
+alan = Student[displayName=Alan Turing, username=aturing, id=A10000002]
+grace = Student[displayName=Grace Hopper, username=ghopper, id=A10000003]
+enrolled = [Student[displayName=Ada Lovelace, username=alovelace, id=A10000001], Student[displayName=Alan Turing, username=aturing, id=A10000002], Student[displayName=Grace Hopper, username=ghopper, id=A10000003]]
+cse11 = CourseRoster[students=[LStudent;@919]
+ucsdEmails = [alovelace@ucsd.edu, aturing@ucsd.edu, ghopper@ucsd.edu]
+```
+
+Student: Interesting. So it returns the whole array.
+
+Prof: Right. The `new String[students.length]` makes a brand new array, and the loop fills it in with string values from the results of the `.email` method.
+
+#### Practice
+
+Exercise:
+
+`areas` should return a new array holding the area of each pizza in the order, in the same order. Fill in the three missing pieces.
+
+```java
+record Pizza(double inches, int costCents) {
+  double area() {
+    double radius = inches / 2;
+    return radius * radius * Math.PI;
+  }
+}
+record PizzaOrder(Pizza[] pizzas) {
+  double[] areas() {
+    double[] result = ____;
+    int index = 0;
+    for(Pizza p: pizzas) {
+      ____;
+      ____;
+    }
+    return result;
+  }
+}
+Pizza small = new Pizza(10, 500);
+Pizza big = new Pizza(16, 1000);
+Pizza medium = new Pizza(12, 900);
+Pizza[] partyPizzas = { small, big, medium };
+PizzaOrder party = new PizzaOrder(partyPizzas);
+double[] partyAreas = party.areas();
+```
+
+## [Collecting Values in Summary](summary.html)
+
+Exercise:
+
+Each of these `CourseRoster` methods loops over `students`. Which kind of loop fits each one best?
+
+`String[] usernames()` – every student’s username, in order: [best-so-far / builder / counter / running-sum]
+`int countWithShortNames(int max)` – how many students have a `displayName` shorter than `max`: [best-so-far / builder / counter / running-sum]
+`Student longestName()` – the student whose `displayName` is longest: [best-so-far / builder / counter / running-sum]
+`String allIds()` – every `id`, joined into one `String`: [best-so-far / builder / counter / running-sum]
+
+Exercise:
+
+Write the body of `usernames`, which returns a new array with each student’s `username`, in order.
+
+```java
+record Student(String displayName, String username, String id) { }
+record CourseRoster(Student[] students) {
+  String[] usernames() {
+____
+  }
+}
+Student ada = new Student("Ada Lovelace", "alovelace", "A10000001");
+Student alan = new Student("Alan Turing", "aturing", "A10000002");
+Student grace = new Student("Grace Hopper", "ghopper", "A10000003");
+Student[] enrolled = { ada, alan, grace };
+CourseRoster cse11 = new CourseRoster(enrolled);
+String[] names = cse11.usernames();
+```
+
+Exercise:
+
+Here is `usernames` with one line left out. With the same `cse11` as above, what does the book show for `names`?
+
+```java
+String[] usernames() {
+  String[] result = new String[students.length];
+  int index = 0;
+  for(Student s: students) {
+    result[index] = s.username;
+  }
+  return result;
+}
+```
+
+Choose one:
+
+- `names = [ghopper, null, null]`
+- `names = [alovelace, null, null]`
+- It doesn’t compile
+- `names = [alovelace, aturing, ghopper]`
