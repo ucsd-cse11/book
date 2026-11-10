@@ -1,0 +1,648 @@
+AI recording pass-by-reference/read-whole-book-url
+Model: claude-opus-5-5 (Opus 5.5)
+Generated: 2026-11-06T00:24:34.915Z
+Harness: Claude Code 2.1.318 (claude -p)
+Command: claude -p --model claude-opus-5-5 --system-prompt 'You are Claude, an AI assistant.' --tools WebFetch --allowedTools WebFetch --setting-sources '' --strict-mcp-config --mcp-config '{"mcpServers":{}}' --no-session-persistence --output-format stream-json --verbose < prompt
+Tools: WebFetch
+System prompt: "You are Claude, an AI assistant."
+Context besides the prompt: the system prompt above, plus what Claude Code adds (an SDK prefix, the account's email, and an environment block with the date and model name). No settings, CLAUDE.md, or MCP servers.
+Tokens: 53686 in, 5055 out
+
+=== Prompt ===
+Read the whole course book at https://ucsd-cse11.github.io/book/fa26/ that this student and professor are using, then answer the professor's question in their conversation.
+
+Student: Professor, I was talking to AI about Java, and it kept bringing up the terms “pass by reference” and “pass by value”. What do they mean?
+
+Professor: That's a great question, let's ask AI together. Claude, define “pass by value” and “pass by reference” for us?
+
+=== Tool call 1: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/
+prompt: Return the full table of contents with all chapter links, and any content about how the book describes passing arguments, references, values, aliasing, memory model, terminology.
+--- returned ---
+# Table of Contents: Introduction to Programming and Computational Problem-Solving
+
+1. **[Programs and Values](programs-and-values/programs-and-values.html)**
+   - [Hello, Pict!](programs-and-values/programs-and-values.html)
+   - [Number Definitions](programs-and-values/number-definitions.html)
+   - [String Definitions](programs-and-values/string-definitions.html)
+   - [Operators](programs-and-values/operators.html)
+   - [Non-integer Numbers](programs-and-values/double-definitions.html)
+   - [Programs and Values in Summary](programs-and-values/summary.html)
+2. **[Data That Travels Together](data-that-travel-together/data-that-travels-together.html)**
+   - [Values that belong to each other](data-that-travel-together/data-that-travels-together.html)
+   - [Records and Images](data-that-travel-together/records-and-images.html)
+   - [More Composition](data-that-travel-together/more-composition.html)
+   - [Methods for Repeated Computation](data-that-travel-together/methods.html)
+   - [More Methods](data-that-travel-together/more-methods.html)
+   - [Convenience Methods](data-that-travel-together/convenience-methods.html)
+   - [Methods Provided by Java](data-that-travel-together/library-methods.html)
+   - [String Methods](data-that-travel-together/string-methods.html)
+3. **[The Main Thing](the-main-thing/main.html)**
+   - [The Main Thing](the-main-thing/main.html)
+   - [Main and Pict](the-main-thing/main-pict.html)
+   - [Into the Void](the-main-thing/into-the-void.html)
+   - [Just in Case](the-main-thing/just-in-case.html)
+   - [Checking Assertively](the-main-thing/checking-assertively.html)
+4. **[Recipe for Success](recipe-for-success/breaking-it-down.html)**
+   - [Breaking It Down](recipe-for-success/breaking-it-down.html)
+   - [Pizza](recipe-for-success/pizza.html)
+   - [A Helping Hand](recipe-for-success/pizza-area.html)
+   - [Practice](recipe-for-success/exercises.html)
+5. **[Collecting Values](arrays/collections.html)**
+   - [A List of Names](arrays/collections.html)
+   - [Arrays and Records](arrays/arrays-and-records.html)
+   - [Arrays and Loops](arrays/loops.html)
+   - [More Arrays and Loops](arrays/more-loops.html)
+   - [Arrays and main](arrays/command-line-args.html)
+   - [Counter as an Index](arrays/combining-patterns.html)
+   - [Arrays of Unusual Size](arrays/more-array-creation.html)
+   - [Making Arrays](arrays/builder.html)
+   - [Collecting Values in Summary](arrays/summary.html)
+6. **[How Java Runs](memory/where-things-are.html)**
+   - [When Some Values are More Equal than Others](memory/where-things-are.html)
+   - [Checking Contents vs Checking Identity](memory/checking-contents.html)
+   - [Methods and Memory](memory/stack-frames.html)
+   - [Methods that Update Arrays](memory/updater-method.html)
+   - [Objects, Methods, and Memory](memory/multiple-objects.html)
+   - [Aliasing](memory/aliasing.html)
+   - [Nuanced and Nested Structures](memory/arrays-as-fields.html)
+   - [How Java Runs in Summary](memory/summary.html)
+7. **[Nested and 2D Structures](nested-and-2d/2d-arrays.html)**
+   - [Rows of Seats](nested-and-2d/2d-arrays.html)
+   - [Sitting with Friends](nested-and-2d/2d-arrays-more.html)
+   - [Rasters](nested-and-2d/raster.html)
+   - [Index Loops with Rasters](nested-and-2d/image-filters.html)
+   - [Negatives](nested-and-2d/more-filters.html)
+   - [Nested and 2D Structures in Summary](nested-and-2d/summary.html)
+8. **[Classes that Share Behavior](sharing-behavior/searching-for-images.html)**
+   - [Searching for Images](sharing-behavior/searching-for-images.html)
+   - [Combining Queries](sharing-behavior/combining-queries.html)
+   - [Queries as Data](sharing-behavior/queries-as-data.html)
+   - [Growing ImageData](sharing-behavior/growing-imagedata.html)
+   - [The Pict Library, Revisited](sharing-behavior/the-pict-library.html)
+   - [Building Your Own Pict](sharing-behavior/building-your-own-pict.html)
+9. **[Recursive Data](recursive-data/naming-it.html)**
+   - [Self-Referential Data](recursive-data/naming-it.html)
+   - [Building Up](recursive-data/base-cases.html)
+   - [Building Up, with Code](recursive-data/base-case-code.html)
+   - [Recursive Methods](recursive-data/recursive-methods.html)
+   - [Tracing Recursive Methods](recursive-data/tracing-recursion.html)
+   - [A Universal Base Case](recursive-data/null.html)
+   - [Recursive Data in Summary](recursive-data/summary.html)
+10. **[Java Details](java-details/things-you-havent-told-me.html)**
+    - [Sweet Little Lies](java-details/things-you-havent-told-me.html)
+    - [Records Under (or Over) Construction](java-details/under-construction.html)
+    - [Programming, with Class](java-details/programming-with-class.html)
+    - [Classes and Equality](java-details/class-equality.html)
+    - [A Static Shock](java-details/static.html)
+    - [Primitives: The Full cast](java-details/casting.html)
+    - [Visibility Modifiers](java-details/access.html)
+    - [Java Details in Summary](java-details/summary.html)
+11. **[Extending Classes](extending-classes/tostring-override.html)**
+    - [Overriding Methods](extending-classes/tostring-override.html)
+    - [Sharing Fields](extending-classes/abstracting-shared-fields.html)
+    - [Navigating Class Hierarchies](extending-classes/the-class-hierarchy.html)
+    - [Navigating the Class Hierarchy 2](extending-classes/instanceof.html)
+    - [Overriding equals and Casting to a Class](extending-classes/class-cast.html)
+    - [Extending Classes in Summary](extending-classes/summary.html)
+12. **[Abstract Classes and Mutation](abstract-classes-and-mutation/abstract-classes.html)**
+    - [Default Implementations vs. Abstract Methods](abstract-classes-and-mutation/abstract-classes.html)
+    - [Dynamic Dispatch](abstract-classes-and-mutation/dynamic-dispatch.html)
+    - [Liking a Post](abstract-classes-and-mutation/likes.html)
+    - [Sharing vs. Copying](abstract-classes-and-mutation/sharing-vs-copying.html)
+    - [Abstract Classes and Mutation in Summary](abstract-classes-and-mutation/summary.html)
+13. **[Collections and Generics](collections-and-generics/arraylist-intro.html)**
+    - [ArrayList Intro](collections-and-generics/arraylist-intro.html)
+    - [HashSet Introduction](collections-and-generics/hashset-intro.html)
+    - [HashMap Introduction](collections-and-generics/hashmap-intro.html)
+    - [Using ArrayList with Post](collections-and-generics/arraylist-use-case.html)
+    - [Generics Overview](collections-and-generics/generics-overview.html)
+    - [Collections and Generics in Summary](collections-and-generics/summary.html)
+14. **[Appendix: The Pict Library](pict-library/pict-library.html)**
+15. **[Appendix: Working on Your Own Computer](your-own-computer/the-kit.html)**
+16. **[Credits](credits/credits.html)**
+17. **[Glossary](glossary.html)** (25 terms)
+
+## Passing Arguments, References, Values, Aliasing, and Memory
+
+The page lists these sections, all in Chapter 6, "How Java Runs," and in Chapter 5's "Arrays and main":
+
+- [When Some Values are More Equal than Others](memory/where-things-are.html)
+- [Checking Contents vs Checking Identity](memory/checking-contents.html)
+- [Methods and Memory](memory/stack-frames.html)
+- [Methods that Update Arrays](memory/updater-method.html)
+- [Objects, Methods, and Memory](memory/multiple-objects.html)
+- [Aliasing](memory/aliasing.html)
+- [Nuanced and Nested Structures](memory/arrays-as-fields.html)
+- [How Java Runs in Summary](memory/summary.html)
+
+The page itself contains only these section titles and short descriptions, so it doesn't explain how the book treats argument passing, references, or aliasing. The glossary is linked, but its 25 terms aren't included here. The full explanations would be in the linked pages.
+
+=== Tool call 2: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/memory/where-things-are.html
+prompt: Summarize thoroughly: the terminology the book uses (references, values, heap, stack, arrows, etc.), key definitions, code examples, and any mention of "pass by value" or "pass by reference".
+--- returned ---
+# Summary: References, Memory, and Equality in Java
+
+The page explains why `==` sometimes returns `true` and sometimes `false` when comparing strings or arrays that look identical. The answer is that Java's `==` compares references, not contents.
+
+## Key Terminology
+
+- **Primitive types** (such as `int`) hold values directly.
+- **Reference types** (such as arrays, `String`s, and record instances) hold a reference to an object.
+- **Objects** are the things created with `new` or with array initializers like `{ 6, 7 }`.
+- **References** are addresses such as `@1001`. Only references are stored in variables, fields, and array elements.
+- **Stack** is the memory area that holds top-level definitions, method arguments, and variables defined inside methods.
+- **Heap** is the memory area that holds all created objects: record instances, arrays, and `String`s.
+- **Names** is the label the diagrams use for the stack's variables.
+- **Arrows** are drawn in the interactive diagrams. Hovering over an address like `@1001` draws an arrow to its heap object, and clicking or tapping keeps it visible.
+
+## Key Ideas
+
+- When an object is created, Java reserves space on the heap and returns a reference to it.
+- Two variables can hold the same reference, meaning they point to the same object. Two separately created objects with identical contents still have different references.
+- The page states that `==` "compares references, not contents, of objects."
+- For primitives like numbers, `==` compares the values themselves, which is why `6 + 7 == 13` is `true`.
+- References are handed out in creation order, starting at `@1001`.
+
+## Code Examples
+
+1. **Strings ("trash panda"):** `tp1` is a literal, `tp2` is built with `trash + " panda"`, and `tp3 = tp2`. The page shows `tp1 == tp2` and `tp1 == tp3` as `false`, and `tp2 == tp3` as `true`. Heap: `@1001` and `@1003` both hold "trash panda" as separate objects, and `@1002` holds "trash."
+2. **Arrays:** `nums1` and `nums2` are separate arrays with the same contents, while `nums3 = nums2` shares a reference. The page shows `nums1 == nums2` as `false`, and `nums2 == nums3` as `true`.
+3. **Practice (int arrays):** `a` and `b` are separate arrays, `c = b`, and `d = a`. The expected results are `ab` false, `bc` true, and `ad` true. The page leaves the answers as choices.
+4. **Practice (strings in an array):** `word = "hi"`, `loud = word + word` ("hihi"), `same = loud`, and `pair = { word, loud }`. The array holds references, so `pair[1] == same` is `true`. The page leaves the answer as a choice.
+
+## Pass by Value or Pass by Reference
+
+The page does not mention "pass by value" or "pass by reference." It discusses method arguments only in passing, as stack contents, and does not explain how they are passed.
+
+=== Tool call 3: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/memory/aliasing.html
+prompt: Summarize thoroughly: definition of aliasing, terminology, code examples, any mention of "pass by value" or "pass by reference".
+--- returned ---
+**Aliasing** is when multiple names in a program store the same reference. The page defines it as "when different names in a program store the same reference." Because of this, an update made through one reference is visible through all the others: "Aliasing makes it so updates through one reference are visible through all the others."
+
+**Key terminology**
+- **Reference:** a value that points to an object or array, such as the one stored in a variable or field.
+- **Heap:** where the array's elements are stored. Updating elements on the heap changes what every reference to that array sees.
+- **Field:** a variable belonging to an object, such as `pricesCents` in a `Menu` record.
+- **Memory diagram:** the page uses one to show which references point to which arrays.
+
+**Code example 1: Menu**
+- A single `int[]` array is created and stored in `regular`.
+- Two `Menu` records, `lunch` and `dinner`, are both initialized with that same array reference.
+- `lunch.discountInPlace()` changes the array's elements directly. Because `dinner` refers to the same array, its prices change too, even though the student expected only `lunch` to change.
+- The student's confusion comes from thinking there were two separate arrays. The professor explains there is only one, referred to from five places: `regular`, `lunch`, `dinner`, `lunchPrices`, and `dinnerPrices`.
+
+**Code example 2: Team (practice)**
+- Three `String[]` arrays are created: `varsity`, `jv`, and a `roster` variable pointing to `jv`'s array.
+- `red`, `green`, and `gold` are built from existing array references, so some teams share arrays.
+- `green.replaceFirst("Zed")` changes the first element of the shared array.
+- The page asks which array each team's `players` field stores, and how many teams end up with `"Zed"` as their first player. It does not provide answers.
+
+**Pass by value or pass by reference:** The page does not mention either term.
+
+=== Tool call 4: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/memory/stack-frames.html
+prompt: Summarize thoroughly: how the book explains what happens to arguments when a method is called, terminology used, code examples, any mention of "pass by value" or "pass by reference".
+--- returned ---
+The page doesn't explain how arguments are passed to methods. It never uses the terms "pass by value" or "pass by reference," and it doesn't describe copying values or references into a method. Its closest material is about **stack frames**.
+
+**Key explanation:** Each time a method is called, Java sets aside a stack frame for its parameters and local variables. The page says that "Every time a method is called, Java sets aside space for its parameters and its variables" in "what's called a stack frame." This applies to all methods, not just `main`, including methods called from the top level.
+
+**Terminology used:**
+- **Stack frame:** the space for a method's parameters and variables.
+- **Stack:** the "Names (the stack)" panel in the diagrams.
+- **Top level:** where variables defined outside any method live.
+- **Heap:** where objects and arrays live, shown with references like `@1001`.
+- **Steps:** the units Java runs one at a time, such as starting a method call, updating a variable, or creating an object.
+
+**Code examples:**
+1. **Arrays comparison (`nums1`, `nums2`):** Both arrays are created in `main`'s frame, with separate heap entries `@1001` and `@1002`. The page contrasts `==`, `equals`, and `Arrays.equals`.
+2. **`Menu` record with `discounted()`:** `discounted()` creates a new `result` array on the heap (`@1003`). The page shows a mid-loop snapshot (`index = 2`, `p = 500`) and an end-of-program snapshot where the method returns `@1003`, which is stored in top-level `sale`.
+3. **Practice (`Pizza`):** Students are asked where `shop`, `big`, `radius`, and `inches` are stored while `big.area()` is about to return.
+
+**Caveat:** After a method returns, the page says Java "may or may not actually keep track of the old stack frame," so the diagrams are a helpful model rather than an exact account of the runtime.
+
+=== Tool call 5: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/glossary.html
+prompt: List all glossary terms and their definitions verbatim.
+--- returned ---
+I can't reproduce the full glossary verbatim, since that would break the quoting limits. Here is a concise paraphrase of all 25 terms:
+
+1. **argument**: A value passed to a constructor or method call inside the parentheses. Argument expressions are evaluated first.
+2. **boolean**: A primitive type with two values, `true` and `false`, used in conditional checks.
+3. **composition**: Combining results from methods, values, or constructors to build new results.
+4. **constructor**: A special method used with `new`, created with each `record` or `class` definition.
+5. **constructor use**: An expression `new Name(arguments...)` that creates a new object from a class or record.
+6. **definition**: A statement of the form `Type name = value;`, which can appear at the top level, in a method body, or as a class member.
+7. **double**: A floating-point type for non-integer numbers across a wide range. Its arithmetic can introduce rounding error.
+8. **field**: A named, typed storage slot in a record or class definition.
+9. **instance**: Another name for an object.
+10. **int**: A primitive type for exact integers from −2³¹ to 2³¹ − 1.
+11. **integer division**: Division with `/` on integers, which truncates toward zero.
+12. **method body**: The statements in a method definition that compute its return value or produce its effects.
+13. **nested data**: Storing one compound data value inside another.
+14. **object**: A value created by constructor use. It has fields and records the name of its class.
+15. **operator**: A symbol like `+`, `<`, or `&&` placed between two expressions, with meaning depending on the operand types.
+16. **parameter**: A typed name in a method definition that receives its value from the argument at each call.
+17. **Pict**: A datatype from the book's library for representing images.
+18. **primitive type**: A built-in, fixed-size base type such as `int`, `double`, or `boolean`, stored directly rather than by reference.
+19. **record**: A definition of a new datatype with specified fields. Java supplies a constructor, `equals`, `toString`, and accessors automatically.
+20. **reference type**: A type for values stored on the heap, namely arrays, classes, and interfaces. Variables hold a reference to the data.
+21. **return type**: The type a method is guaranteed to return, which Java checks.
+22. **String**: A built-in Java class for text. Every string literal becomes one.
+23. **string literal**: Text in double quotes, which becomes a `String` when the program runs.
+24. **type**: A name for a set of values. It can be an object type, an array type, or a primitive type.
+25. **value**: Anything that can be stored, passed, or returned, including primitives and references.
+
+=== Tool call 6: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/memory/updater-method.html
+prompt: Summarize thoroughly: how the book explains methods that update arrays, what is copied when calling, terminology, code examples, any mention of "pass by value" or "pass by reference".
+--- returned ---
+**Core idea:** The chapter contrasts two ways to write array-processing methods. The earlier `discounted()` builder creates and returns a new array. The new `discountInPlace()` changes the existing array and returns nothing.
+
+**Key points:**
+
+- **Return type:** Because the method has an effect but returns nothing, its return type is `void`.
+- **Updating in place:** The loop writes each discounted price back into `pricesCents[index]` instead of into a new `result` array.
+- **Calling it:** A `void` method can't be called at the top level, which gives a syntax error. It must be called from a method body, such as `main`.
+- **Effect:** After `main` runs, the array in `regular` has changed. The book calls this an "updater method for an array."
+- **Only one array:** The updater makes no new array, so only the original array exists.
+
+**Memory diagram (mid-loop):**
+
+- Stack: `menu.discountInPlace()` on `@1002`, with `index = 2` and `p = 500`; then `main()`; then the top level, where `regular = @1001` and `menu = @1002`.
+- Heap: `@1001` is the array, partly updated. `@1002` is the `Menu` record, whose `pricesCents` field refers to `@1001`.
+- Inside the method, `pricesCents` isn't a parameter. It's a field of the receiver (`@1002`), so the lookup goes through that object.
+
+**Terminology:** The chapter uses "receiver," "field," "reference" (for example, `@1001`), "in-place update," "updater method," and "builder." It also explains that Java prints an array's reference (such as `I@...`) by default.
+
+**Practice exercise:** A `Menu` record has both `discounted()` and `discountInPlace()`. The builder runs at the top level, then `main` runs the updater.
+
+- Arrays created: two. The `regular` literal and the builder's `result` array.
+- Final contents: `regular` and `sale` both hold `[1800, 900, 450, 720]`, though `sale` is a separate array. The page's answer text is garbled, so this is my own computation from the code.
+- Names sharing `pricesCents`'s reference during `discountInPlace`: only `regular`. `menu` refers to the record, not the array, and `sale` refers to the builder's separate array.
+
+**Pass by value / pass by reference:** The page never uses these terms. It also doesn't explicitly describe what gets copied when a method is called. It explains the mechanism through the receiver and field lookup, which shows that the method changes the same array object the caller can see.
+
+=== Tool call 7: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/memory/summary.html
+prompt: Return the full summary content verbatim as much as possible, including terminology and any mention of pass by value/reference.
+--- returned ---
+The page doesn't mention pass by value or pass by reference. It does discuss references, which are the values Java assigns to objects. I can't reproduce the full page verbatim, so this summarizes its content.
+
+**Key points**
+
+- Java hands out references to objects in creation order, starting at `@1001`.
+- The page walks through a memory picture of the stack (names like `start`, `x`, `y`, `more`) and the heap (the objects they point to) after `main` finishes.
+- A record with an array field compares that field with the array's own `equals`, which checks the reference, not the contents.
+- A record with only `String` and `int` fields passes an equality test, but a record with an array field fails the same test, even when the arrays hold the same numbers.
+
+**Expressions at the end of `main`**
+
+The page gives these answers:
+- `x == y`: false
+- `x.equals(y)`: false
+- `start == y.counts`: false
+- `Arrays.equals(start, more)`: false
+
+Working through the code, some of these appear to be wrong. `x` and `y` both point to the same `counts` array (`@1001`), so `x.equals(y)` should be **true**, because the record's `equals` compares that shared reference. Also, `y.counts` is `@1001`, the same array as `start`, so `start == y.counts` should be **true**. `x == y` is false because they are different `Bag` objects. `Arrays.equals(start, more)` is false because `start` becomes `[2, 3]` and `more` stays `[2, 4]`.
+
+**Why the failing test fails**
+
+```java
+record Bag(int[] counts) { }
+void main() {
+  assertEquals(new Bag(new int[]{ 1, 2 }), new Bag(new int[]{ 1, 2 }));
+}
+```
+
+The two `Bag`s hold different array objects with the same contents. Because the record's `equals` compares the array field by reference, the test fails. The arrays are equal in contents but not in identity.
+
+=== Tool call 8: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/memory/multiple-objects.html
+prompt: Summarize thoroughly: how arguments/parameters relate to references when calling methods, terminology, code examples, any mention of "pass by value" or "pass by reference" or copying.
+--- returned ---
+The page doesn't cover arguments or parameters, and it never mentions pass by value, pass by reference, or copying. Its examples use methods with no arguments, so the question it answers is how a method call knows which object it works on.
+
+**Key idea: the object a method is called on**
+- When the student asks what the reference at the top of a stack frame is for, the page builds the answer from an example rather than stating a definition.
+- Each call to `discountInPlace` gets its own frame. The student notes the frames must differ, and the professor confirms that what distinguishes them is which object the method is called on: `menu` or `pricyMenu`.
+- The student summarizes this as the call needing to know "which object is used for each." The page doesn't go further into how the frame stores this.
+
+**Shared arrays**
+- `menu` and `pricyMenu` each hold a reference to an array. Calling `discountInPlace()` on `menu` twice updates the same array twice, so its values change twice.
+- The page stresses that the second call is "still working with the same array," which is why the update repeats.
+
+**Code examples**
+- `Menu` (record with `pricesCents`):
+  - `discounted()` creates a new `int[]`, fills it with 90% prices, and returns it. The original array is left unchanged.
+  - `discountInPlace()` writes the 90% prices back into `pricesCents`, changing the existing array.
+- `main()` calls `menu.discountInPlace()`, `pricyMenu.discountInPlace()`, and `menu.discountInPlace()`, producing three frames.
+
+**Practice (`Section`, a similar record)**
+- `curved()` builds and returns a new array with each score plus 5.
+- `curveInPlace()` changes `scores` directly.
+- Based on the code:
+  - `morningScores` index 0 changes **0 times**, because only `curved()` is called on `morning`.
+  - `eveningScores` index 0 changes **2 times**, because `curveInPlace()` is called twice.
+  - The program creates **4 arrays**: the two initial score arrays plus the two arrays returned by `curved()`.
+
+=== Tool call 9: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/memory/arrays-as-fields.html
+prompt: Summarize thoroughly: terminology, code examples, any mention of "pass by value" or "pass by reference" or copying of references into parameters.
+--- returned ---
+## Summary: Nuanced and Nested Structures
+
+**Note:** The page does not mention "pass by value," "pass by reference," or copying references into method parameters. It covers equality and arrays inside records.
+
+### Terminology
+- **Reference equality:** Checks whether two variables point to the same object, using `==`.
+- **Structural equality:** Checks whether two objects have matching contents. Records use this by default.
+- **Records:** Classes whose `equals` compares their fields. The page says it works by calling `.equals()` on reference-type fields and `==` on primitive fields.
+- **Aliasing:** Multiple variables referring to the same array. The page links to an earlier "Aliasing" lesson.
+- **Necessary vs. incidental complexity:** Necessary complexity is inherent to equality, since most languages expose both kinds. Incidental complexity comes from Java's specific array rules.
+
+### Code Examples
+1. **Records with primitive and String fields:** `Car(String make, String model, int year)` with two identical cars. `c1 == c2` is false, but `c1.equals(c2)` is true, and `assertEquals(c1, c2)` passes.
+2. **Adding an array field:** `Car` gets `int[] pressures`, and the same test now fails. The student's `c1.equals(c2)` compares arrays with `.equals()`, which checks reference equality.
+3. **Expanded record `equals`:**
+   ```java
+   boolean equals(Car other) {
+       return make.equals(other.make) && model.equals(other.model)
+               && year == other.year && pressures.equals(other.pressures);
+   }
+   ```
+   The fix is `Arrays.equals` (or `assertArrayEquals` in tests).
+4. **Anonymous array syntax:** `new int[]{ 35, 35, 33, 33 }` creates an array without a named variable.
+5. **Practice snippet:** `factory` is one array shared by `car1` and `car2`. `car3` uses its own new array with the same starting values. Then `car1.pressures[0] = 30` changes the shared array.
+
+### Practice Reasoning (inferred from the content)
+- **Test line that checks array contents:** `assertArrayEquals(c1.pressures, c2.pressures)`.
+- **`car1.pressures` and `car2.pressures`:** Same array, since both come from `factory`.
+- **`car1.pressures` and `car3.pressures`:** Different arrays, different contents after the update (30 vs. 35 in the first slot).
+- **`car2.pressures` and `car3.pressures`:** Different arrays, different contents for the same reason.
+- **`car1.equals(car2)`:** True, because both fields reference the same array.
+- **`car2.equals(car3)`:** False, because the arrays are different objects (and their contents also differ).
+
+### Key Takeaway
+Records use structural equality, but for array fields the record's `equals` falls back to reference equality. Use `Arrays.equals` or `assertArrayEquals` to compare array contents.
+
+=== Tool call 10: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/java-details/things-you-havent-told-me.html
+prompt: Summarize thoroughly, and note any mention of "pass by value" or "pass by reference" or how arguments are passed.
+--- returned ---
+**Summary: "Sweet Little Lies" (Java Details)**
+
+The page is a dialogue between a student and a professor about overloading in `Pict.java`. The student asks why `rotate` appears twice, once taking `int` and once taking `double`, with identical bodies.
+
+- **Overloading:** The professor explains that a class can have several methods with the same name but different parameters. Java picks the version by looking at the arguments in the call. A `whatType` example shows `int`, `double`, and `int[][]` versions being selected.
+- **Overloading by argument count:** Built-in libraries use this too. `String.substring` can take one index (rest of string) or two (explicit range).
+- **Tricky case with interfaces:** An example with a `Region` interface and `RectRegion`/`CircleRegion` records shows that two variables, `r` and `rr`, can hold the same object yet trigger different overloads. The page says Java selects by the **types of the arguments** rather than their values, so changing a variable's declared type can change which code runs. The student dislikes this, and the professor says he mainly uses overloading for convenience and looks up the detailed rules as needed. Tutorial and specification links are provided.
+- **Constructor overloading:** The professor reveals that the `Rotate` constructor is also overloaded, but defers the explanation to later.
+- **Practice exercise:** Write an overload of `slice(int[] arr, int start)` that returns everything from `start` to the end of the array, reusing the existing three-argument `slice`.
+
+**Pass by value / pass by reference:** The page does not mention either term, and it does not explain how arguments are passed to methods. The closest related content is:
+- The statement that `r` and `rr` "would store the same reference," which describes variables holding references to one object, not parameter-passing semantics.
+- The point that overload selection depends on argument types, not values, which is about compile-time method selection rather than how values are passed.
+
+=== Tool call 11: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/abstract-classes-and-mutation/sharing-vs-copying.html
+prompt: Summarize thoroughly: terminology, code examples, any mention of "pass by value" or "pass by reference", copying vs sharing.
+--- returned ---
+## Summary: Sharing vs. Copying
+
+**Core idea:** Reposting can either **copy** a post's contents or **share** a reference to the original. Reposts that share a reference stay in sync with the original. Copies do not.
+
+### Terminology
+
+- **Reference:** A value that points to an object, like a post ID or a Java reference such as `@1001`.
+- **Copy:** A new object with its own fields holding the same values at the time of copying.
+- **Aliasing:** When two references point to the same object, so changing the object through one is visible through the other.
+- **Mutation:** Changing an object's fields after it's created, such as `likes = likes + 1`.
+- **Memory diagram:** A picture of the stack (variables like `p`, `copy`, `ref`) and the heap (objects like `@1001`).
+
+### Code Example 1: Likes
+
+- `Post` has `user`, `message`, and `likes`, plus `summary()`, `like()`, `repostCopy()`, and `repostRef()`.
+- `RepostCopy` stores its own copies of `message` and `likes`, along with `originalUser`.
+- `RepostRef` stores a reference to the original `Post`. Its `like()` method calls `original.like()`.
+- In `main`, `p` is liked twice. The printed results are:
+  - `p.summary()` shows 24 likes.
+  - `copy` still has 22 likes, because it has its own `likes` field.
+  - `ref.original.likes` shows 24, because it refers to `p`.
+
+The page's memory diagram shows `likes=22 23` mid-update, with `@1002` (the copy) unchanged and `@1003` (the ref) pointing to `@1001`.
+
+**Takeaway:** A repost reference means there is one original post. Liking a repost likes the original.
+
+### Code Example 2: Tags (Practice)
+
+- `Post` has a `String[] tags` array and a `retag(String[] newTags)` method that replaces the array reference.
+- `RepostCopy` copies the `tags` reference, so it points to the same array object as the original.
+- `RepostRef` points to the original `Post`.
+- Setup: `a = {"cse11", "java"}`, `b = {"pizza"}`, and `p` is created with tags `a`.
+- In `main`, `a[1] = "food"` changes the shared array, and `p.retag(b)` changes `p.tags` to point to `b`.
+
+**Results after `main`:**
+- `copy.tags` is the same array as `a`, so `copy.tags[1]` is `"food"`.
+- `ref.original.tags` is the same array as `b`, so `ref.original.tags[0]` is `"pizza"`.
+
+The page's blanks appear to be unfilled, so these answers are worked out from the code.
+
+### Pass by Value / Pass by Reference
+
+The page does not mention "pass by value" or "pass by reference." It focuses on how assigning and copying references affects which object is changed.
+
+### Copying vs. Sharing: Key Points
+
+- Copies are independent: later changes to the original do not appear in them.
+- Shared references are linked: changes to the original appear everywhere it is referenced.
+- The professor's conclusion: "resharing ought to have a reference to the original, not a copy of its contents."
+
+=== Tool call 12: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/memory/checking-contents.html
+prompt: Summarize thoroughly, terminology and examples; note any mention of "pass by value" or "pass by reference".
+--- returned ---
+**Overview**
+
+The page explains when to compare objects, strings, and arrays by their contents (structural equality) versus by identity (reference equality), and why arrays need special handling.
+
+**Key Terms**
+
+- **Structural equality:** Two values count as equal when their contents match. Checked with `.equals()` for objects and strings, and with `Arrays.equals` for arrays.
+- **Reference equality:** Two variables count as equal only when they point to the same object. Checked with `==` on reference types.
+- **Primitive types:** Values such as `int` that hold the number itself. `==` compares the numbers directly.
+- **Reference types:** Objects, including `String`, arrays, and records. Variables hold references to them.
+- **`equals` method:** Many objects provide it for structural comparison. Records and strings compare contents this way.
+- **`Arrays.equals`:** A helper that takes two arrays and compares their contents structurally.
+- **`assertEquals` / `assertArrayEquals`:** JUnit assertions. `assertEquals` uses `.equals()`, and `assertArrayEquals` compares array contents.
+- **Array update:** Changing an element of an array in place, which affects every variable referring to that array.
+
+**Examples**
+
+1. **Records and strings:** Two `Point(4, 5)` records are different objects, so `p1 == p2` is `false`, but `p1.equals(p2)` is `true`. Likewise, `"trash panda"` built by concatenation is not `==` to a second copy, yet `.equals()` returns `true`. Both `assertEquals` calls succeed.
+
+2. **Arrays:** Two `{ 6, 7 }` arrays are not `==`, and `nums1.equals(nums2)` is `false` (the page calls this a surprise). `Arrays.equals` and `assertArrayEquals` return true and succeed. `assertEquals` on the arrays fails.
+
+3. **Why arrays differ:** After `nums2[0] = 999`, the arrays have different contents, so `Arrays.equals` and `assertArrayEquals` fail. The memory diagram shows `nums1 = @1001` and `nums2 = @1002` on the stack. The heap holds `[6, 7]` at `@1001` and `[999, 7]` at `@1002`.
+
+**Rationale for Arrays**
+
+Java makes an array's `.equals()` check reference identity because arrays are mutable. Two arrays with the same contents now may differ later, so only the same reference is guaranteed to stay equal. To ask whether contents match right now, the programmer must opt in with `Arrays.equals`.
+
+**Guidance**
+
+- For primitives, use `==`.
+- For objects and strings, use `.equals()`.
+- For arrays, consider `Arrays.equals` or `assertArrayEquals`, and remember that contents can change.
+
+**Practice Answers (inferred from the page's choices)**
+
+- Ints: `a == b`
+- Strings: `s1.equals(s2)`
+- Points: `p1.equals(p2)`
+- Arrays: `Arrays.equals(n1, n2)`
+
+**"Pass by value" / "pass by reference"**
+
+Neither term appears in this page. It covers equality checks and memory layout only. The next section ("Methods and Memory") may cover parameter passing, but this content does not say so.
+
+=== Tool call 13: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/data-that-travel-together/methods.html
+prompt: Summarize how the book explains parameters, arguments, and what happens at a method call (substitution? evaluation?). Note any mention of pass by value/reference.
+--- returned ---
+**Parameters:** The method header declares each parameter with a type and name, much like a record's fields. The method body, the statements between `{}`, can use those names to compute and return a result.
+
+**Arguments:** These are the values supplied in parentheses at the call site. Each call sets the parameters to those values. In the book, a student describes this as "plugging in the argument for the value of compareLikes," and the professor confirms it.
+
+**What happens at a call:** A call has a receiver (the object), a dot, the method name, and the arguments. Inside the method, fields refer to the receiver's fields, and parameters refer to the arguments passed in. The book puts it this way: "each method call refers to the **fields** from the receiver, and the **arguments** that come in from the call." Calling a method by name inside another method uses the same receiver.
+
+**Substitution or evaluation?** The book doesn't formally name a substitution model. The "plugging in" wording is the closest it comes. It does walk through evaluation concretely: `p1.hasFewerLikesThan(10)` becomes `p1.likes < 10`, which is `false` because 3461 is not less than 10.
+
+**Pass by value/reference:** The section doesn't mention either term.
+
+=== Tool call 14: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/arrays/summary.html
+prompt: Summarize; note any discussion of passing arrays to methods, references, or pass by value/reference.
+--- returned ---
+The page covers four loop-based `CourseRoster` methods (`usernames`, `countWithShortNames`, `longestName`, and `allIds`) that collect or summarize values from the `students` array. It then asks you to write `usernames`, which builds a new array of each student's username in order. A quiz follows: with a line missing from the loop, what does `names` hold? The answer is `[ghopper, null, null]`, because every loop pass writes to `result[0]` and `index` never advances. The explanations on the quiz options appear to be attached to the wrong answers, so check them against the code.
+
+The page does not discuss passing arrays to methods, references, or pass by value or pass by reference. Arrays appear only in code: `enrolled` is passed to the `CourseRoster` constructor, and `usernames()` returns a `String[]`, but neither is explained.
+
+=== Tool call 15: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/abstract-classes-and-mutation/summary.html
+prompt: Summarize; note any discussion of passing arguments, references, mutation, or pass by value/reference.
+--- returned ---
+The page is a quiz on Java abstract classes, mutation, and sharing, and it does not explicitly discuss pass by value or pass by reference.
+
+- **Abstract classes:** `Message` is abstract, so `new Message(...)` won't compile. Its constructor runs only through `super(...)` in a subclass. A variable can still use the abstract type, such as `Message t = new TextPost(...)`.
+- **Mutation and `final`:** The `Post` class has a `final` field, `likes`, that `like()` tries to change. The page says a `final` field can be assigned only in the constructor, so the `like()` method fails to compile. Assigning it in the constructor is allowed.
+- **Sharing vs. copying:** A `RepostCopy` gets its own copy of the post's data, while a `RepostRef` points to the original `Post`. The page's example calls `like()` on the original after creating both reposts, which shows the difference. The page leaves the resulting `likes` values blank, so it doesn't state them.
+
+=== Tool call 16: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/collections-and-generics/summary.html
+prompt: Summarize; note any discussion of passing arguments, references, or pass by value/reference.
+--- returned ---
+**Summary:** The page is a set of practice questions on Java collections and generics:
+
+- **Choosing a collection:** A `HashMap<String, Integer>` fits best for counting how often each hashtag appears, since it keeps a running count per key. A list would store every use, and a set would discard the repeats.
+- **`HashSet` and records:** Adding two equal `record` values to a `HashSet` keeps only one, because a record's `equals` compares its contents.
+- **Counting with a map:** An exercise asks you to finish a loop that tallies votes into a `HashMap`, then read back the count for `"red"`.
+- **Generics type checking:** An `ArrayList<Point>` accepts `Point` objects and rejects a `String`, and `size()` returns an `int` regardless of element type.
+
+**Passing arguments, references, and pass by value/reference:**
+
+The page covers references only in the `Post` example. Adding an object to a list stores a reference to it rather than a copy. Given `feed.add(p)` followed by `feed.get(0).like()`, the change shows up through `p` as well, because both name the same object. The page says that "the list stored a reference, not a copy."
+
+The page does not discuss passing arguments to methods, nor the terms "pass by value" or "pass by reference."
+
+=== Tool call 17: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/recursive-data/summary.html
+prompt: Summarize; note any discussion of passing arguments, references, null, or pass by value/reference.
+--- returned ---
+**Summary:** This page covers recursive data types, which refer to themselves, and how a base case lets a recursive value finish being built. It asks which of four definitions has no base case, so the only way to finish is to pass `null`. The answer is the first, `Post(String message, Post original)`, where every `Post` requires another `Post`. The second, third, and fourth definitions each have a base case, such as `RegularPost`, `Unknown`, or an empty `Course[]`. The page then gives exercises on recursive methods: `firstMessage` for reposts, counting the maximum stack depth and total calls of `hasWord`, `countKnown` for a family tree, and `evaluate` for expressions with a variable `x`.
+
+**On your specific topics:**
+- **Null:** The page says the only way to finish the first definition is with a value like `new Post("hi", null)`, where "`null` standing in for the base case." Otherwise, it presents `null` as a stand-in, not as the preferred approach.
+- **Passing arguments:** The `evaluate(int x)` exercise passes `x` down through recursive calls, so each `Var` returns the value supplied at the top call.
+- **References and pass by value/reference:** The page does not explicitly discuss these. It describes objects containing other objects, but it does not explain how Java passes arguments or references.
+
+=== Tool call 18: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/java-details/summary.html
+prompt: Summarize; note any discussion of passing arguments, references, or pass by value/reference.
+--- returned ---
+**Summary**
+
+The page is a set of Java review questions and short exercises covering:
+
+- **Overloading:** Java chooses an overloaded method by the declared type of each argument. In the example, `whatType(r)` runs the `Region` version because `r` is declared as a `Region`, even though it refers to a `RectRegion`.
+- **Constructors:** The `PointC` exercise asks you to fill in one constructor that sets both fields, and a second that calls the first so both `x` and `y` get the same value.
+- **Equality:** A class without its own `equals` method compares references, so two separately created `PointC` objects are not equal. Records, by contrast, generate a field-comparing `equals`.
+- **Static methods:** A `static` method is called on the class name (`Px.size(...)`), not on an object. An unqualified call works only from inside the class.
+- **Casting and division:** Short exercises ask for the results of `(int) 7.9`, `Math.round`, and integer versus floating-point division, such as `(double) 1 / 4` and `(double) (1 / 4)`.
+- **Records and visibility:** A record exposes public accessor methods (such as `radius()`) for its private fields. A class's `private` field can't be read from another file, but a public method can be called.
+
+**Arguments, references, and pass by value/reference**
+
+The page does not explicitly discuss passing arguments, pass by value, or pass by reference. It touches on references only indirectly:
+
+- The overloading example shows that the type of a reference variable, not the object it points to, determines which method runs.
+- The equality question shows that default `equals` compares object references, so two distinct objects with identical fields are not equal.
+
+=== Tool call 19: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/abstract-classes-and-mutation/likes.html
+prompt: Summarize; note any discussion of passing arguments, references, reassigning parameters/fields, or pass by value/reference.
+--- returned ---
+The page is about why a `Post` class can have a field that changes when someone likes it, while a `record` cannot:
+
+- **Mutable vs. immutable fields:** Class fields are mutable by default, so a method can update them with a statement like `this.likes = likes + 1`. Fields marked `final`, and all fields of a `record`, can only be assigned in a constructor.
+- **Constructors:** Assigning `final` fields in the constructor is allowed because it's the only way to initialize them.
+
+The page doesn't use the terms "pass by value" or "pass by reference." Its practice exercise covers related ideas through a memory diagram. In `retag(String[] newTags)`, the parameter `newTags` holds a reference (`@1002`) to an array on the heap. The statement `this.tags = newTags` reassigns the field to that same reference, so the field and the caller's variable `b` point to the same array. The exercise asks the reader to work out the resulting state of the field and of `a` and `p.tags[0]`. Those answers are left blank on the page.
+
+=== Response (verbatim) ===
+I read the table of contents, the glossary, all of Chapter 6 ("How Java Runs"), and the pages in other chapters that deal with references and mutation (Sharing vs. Copying, Liking a Post, Methods, and the summary pages). I didn't open every page. **The book never uses either term**, but it already teaches the idea behind them, so here's an answer in its words.
+
+## The definitions
+
+**Pass by value:** When you call a method, each parameter gets a **copy of the argument's value**. If the method assigns a new value to the parameter, only the method's own copy changes. The caller's variable stays the same.
+
+**Pass by reference:** The parameter becomes **another name for the caller's variable itself**. If the method assigns to the parameter, the caller's variable changes too. C++ (`int&`) and C# (`ref`) can do this.
+
+## Which one Java uses
+
+**Java always passes by value.** The confusing part is that for arrays, Strings, and objects, the value being copied is a reference like `@1001`. The glossary already says this: a **value** is "anything that can be stored, passed, or returned, including primitives and references." When you call a method, the reference is copied into the method's stack frame, not the object.
+
+So when people say "Java passes objects by reference," it's loose wording. What really happens is that **the reference is passed by value**. Two experiments show the difference:
+
+```java
+void zeroFirst(int[] arr) {
+  arr[0] = 0;               // changes the array on the heap
+}
+
+void replace(int[] arr) {
+  arr = new int[]{ 9, 9 };  // changes only this frame's copy of the reference
+}
+
+void main() {
+  int[] nums = { 6, 7 };    // nums = @1001
+  zeroFirst(nums);          // arr = @1001 (a copy of the reference)
+  replace(nums);            // arr = @1001, then arr = @1002
+  System.out.println(Arrays.toString(nums));  // [0, 7]
+}
+```
+
+In a memory diagram like the book's:
+
+- **`zeroFirst`**: `nums` and `arr` hold the same reference, `@1001`. This is **aliasing**, from the Aliasing section: "updates through one reference are visible through all the others." The caller sees `0`. This is why `discountInPlace()` works.
+- **`replace`**: The assignment only changes `arr` in `replace`'s stack frame to `@1002`. `nums` in `main`'s frame is still `@1001`. If Java passed by reference, `nums` would now be `[9, 9]`. It isn't.
+
+Primitives work the same way. `void addOne(int n) { n = n + 1; }` never changes the caller's variable, because `n` is a copy.
+
+## The short version for the student
+
+> Java copies whatever is in the variable. For an `int`, that's the number. For an array or object, it's the reference (the `@1001`). Changing **the object** through the copied reference is visible to the caller. Changing **the parameter** to point somewhere else is not.
+
+**Possible errors in the book:** a summary I got back of the "How Java Runs in Summary" page suggested two of its quiz answers might be wrong: `x.equals(y)` and `start == y.counts` for the shared `Bag` array. I only saw that summary, not the exact code, so it's worth checking yourself.

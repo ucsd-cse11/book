@@ -1,0 +1,255 @@
+AI recording pass-by-reference/whole-book-source
+Model: claude-opus-5-5 (Opus 5.5)
+Generated: 2026-11-06T00:10:13.797Z
+Harness: Claude Code 2.1.318 (claude -p)
+Command: claude -p --model claude-opus-5-5 --system-prompt 'You are Claude, an AI assistant.' --tools '' --setting-sources '' --strict-mcp-config --mcp-config '{"mcpServers":{}}' --no-session-persistence --output-format stream-json --verbose < prompt
+Tools: none
+System prompt: "You are Claude, an AI assistant."
+Context besides the prompt: the system prompt above, plus what Claude Code adds (an SDK prefix, the account's email, and an environment block with the date and model name). No settings, CLAUDE.md, or MCP servers.
+Tokens: 183023 in, 1464 out
+
+=== Prompt ===
+Below is the source (Typst) of the course book (chapters 1–13) this student and professor are using, then their conversation.
+<book>
+=== chapters/01-programs-and-values/01-programs-and-values.typ
+[contents of chapters/01-programs-and-values/01-programs-and-values.typ at commit 5b42a34, omitted here]
+=== chapters/01-programs-and-values/02-number-definitions.typ
+[contents of chapters/01-programs-and-values/02-number-definitions.typ at commit 5b42a34, omitted here]
+=== chapters/01-programs-and-values/03-string-definitions.typ
+[contents of chapters/01-programs-and-values/03-string-definitions.typ at commit 5b42a34, omitted here]
+=== chapters/01-programs-and-values/04-operators.typ
+[contents of chapters/01-programs-and-values/04-operators.typ at commit 5b42a34, omitted here]
+=== chapters/01-programs-and-values/05-double-definitions.typ
+[contents of chapters/01-programs-and-values/05-double-definitions.typ at commit 5b42a34, omitted here]
+=== chapters/01-programs-and-values/06-summary.typ
+[contents of chapters/01-programs-and-values/06-summary.typ at commit 5b42a34, omitted here]
+=== chapters/01-programs-and-values/section.typ
+[contents of chapters/01-programs-and-values/section.typ at commit 5b42a34, omitted here]
+=== chapters/02-data-that-travel-together/01-data-that-travels-together.typ
+[contents of chapters/02-data-that-travel-together/01-data-that-travels-together.typ at commit 5b42a34, omitted here]
+=== chapters/02-data-that-travel-together/02-records-and-images.typ
+[contents of chapters/02-data-that-travel-together/02-records-and-images.typ at commit 5b42a34, omitted here]
+=== chapters/02-data-that-travel-together/03-more-composition.typ
+[contents of chapters/02-data-that-travel-together/03-more-composition.typ at commit 5b42a34, omitted here]
+=== chapters/02-data-that-travel-together/04-methods.typ
+[contents of chapters/02-data-that-travel-together/04-methods.typ at commit 5b42a34, omitted here]
+=== chapters/02-data-that-travel-together/05-more-methods.typ
+[contents of chapters/02-data-that-travel-together/05-more-methods.typ at commit 5b42a34, omitted here]
+=== chapters/02-data-that-travel-together/06-convenience-methods.typ
+[contents of chapters/02-data-that-travel-together/06-convenience-methods.typ at commit 5b42a34, omitted here]
+=== chapters/02-data-that-travel-together/07-library-methods.typ
+[contents of chapters/02-data-that-travel-together/07-library-methods.typ at commit 5b42a34, omitted here]
+=== chapters/02-data-that-travel-together/08-string-methods.typ
+[contents of chapters/02-data-that-travel-together/08-string-methods.typ at commit 5b42a34, omitted here]
+=== chapters/02-data-that-travel-together/section.typ
+[contents of chapters/02-data-that-travel-together/section.typ at commit 5b42a34, omitted here]
+=== chapters/03-the-main-thing/01-main.typ
+[contents of chapters/03-the-main-thing/01-main.typ at commit 5b42a34, omitted here]
+=== chapters/03-the-main-thing/02-main-pict.typ
+[contents of chapters/03-the-main-thing/02-main-pict.typ at commit 5b42a34, omitted here]
+=== chapters/03-the-main-thing/03-into-the-void.typ
+[contents of chapters/03-the-main-thing/03-into-the-void.typ at commit 5b42a34, omitted here]
+=== chapters/03-the-main-thing/04-just-in-case.typ
+[contents of chapters/03-the-main-thing/04-just-in-case.typ at commit 5b42a34, omitted here]
+=== chapters/03-the-main-thing/05-checking-assertively.typ
+[contents of chapters/03-the-main-thing/05-checking-assertively.typ at commit 5b42a34, omitted here]
+=== chapters/04-recipe-for-success/01-breaking-it-down.typ
+[contents of chapters/04-recipe-for-success/01-breaking-it-down.typ at commit 5b42a34, omitted here]
+=== chapters/04-recipe-for-success/02-pizza.typ
+[contents of chapters/04-recipe-for-success/02-pizza.typ at commit 5b42a34, omitted here]
+=== chapters/04-recipe-for-success/03-pizza-area.typ
+[contents of chapters/04-recipe-for-success/03-pizza-area.typ at commit 5b42a34, omitted here]
+=== chapters/04-recipe-for-success/04-exercises.typ
+[contents of chapters/04-recipe-for-success/04-exercises.typ at commit 5b42a34, omitted here]
+=== chapters/04-recipe-for-success/section.typ
+[contents of chapters/04-recipe-for-success/section.typ at commit 5b42a34, omitted here]
+=== chapters/05-arrays/01-collections.typ
+[contents of chapters/05-arrays/01-collections.typ at commit 5b42a34, omitted here]
+=== chapters/05-arrays/02-arrays-and-records.typ
+[contents of chapters/05-arrays/02-arrays-and-records.typ at commit 5b42a34, omitted here]
+=== chapters/05-arrays/05-command-line-args.typ
+[contents of chapters/05-arrays/05-command-line-args.typ at commit 5b42a34, omitted here]
+=== chapters/05-arrays/06-combining-patterns.typ
+[contents of chapters/05-arrays/06-combining-patterns.typ at commit 5b42a34, omitted here]
+=== chapters/05-arrays/07-more-array-creation.typ
+[contents of chapters/05-arrays/07-more-array-creation.typ at commit 5b42a34, omitted here]
+=== chapters/05-arrays/08-builder.typ
+[contents of chapters/05-arrays/08-builder.typ at commit 5b42a34, omitted here]
+=== chapters/05-arrays/09-summary.typ
+[contents of chapters/05-arrays/09-summary.typ at commit 5b42a34, omitted here]
+=== chapters/05-arrays/section.typ
+[contents of chapters/05-arrays/section.typ at commit 5b42a34, omitted here]
+=== chapters/06-memory/01-where-things-are.typ
+[contents of chapters/06-memory/01-where-things-are.typ at commit 5b42a34, omitted here]
+=== chapters/06-memory/02-checking-contents.typ
+[contents of chapters/06-memory/02-checking-contents.typ at commit 5b42a34, omitted here]
+=== chapters/06-memory/03-stack-frames.typ
+[contents of chapters/06-memory/03-stack-frames.typ at commit 5b42a34, omitted here]
+=== chapters/06-memory/04-updater-method.typ
+[contents of chapters/06-memory/04-updater-method.typ at commit 5b42a34, omitted here]
+=== chapters/06-memory/05-multiple-objects.typ
+[contents of chapters/06-memory/05-multiple-objects.typ at commit 5b42a34, omitted here]
+=== chapters/06-memory/06-aliasing.typ
+[contents of chapters/06-memory/06-aliasing.typ at commit 5b42a34, omitted here]
+=== chapters/06-memory/07-arrays-as-fields.typ
+[contents of chapters/06-memory/07-arrays-as-fields.typ at commit 5b42a34, omitted here]
+=== chapters/06-memory/08-summary.typ
+[contents of chapters/06-memory/08-summary.typ at commit 5b42a34, omitted here]
+=== chapters/06-memory/section.typ
+[contents of chapters/06-memory/section.typ at commit 5b42a34, omitted here]
+=== chapters/07-nested-and-2d/01-2d-arrays.typ
+[contents of chapters/07-nested-and-2d/01-2d-arrays.typ at commit 5b42a34, omitted here]
+=== chapters/07-nested-and-2d/02-2d-arrays-more.typ
+[contents of chapters/07-nested-and-2d/02-2d-arrays-more.typ at commit 5b42a34, omitted here]
+=== chapters/07-nested-and-2d/03-raster.typ
+[contents of chapters/07-nested-and-2d/03-raster.typ at commit 5b42a34, omitted here]
+=== chapters/07-nested-and-2d/04-image-filters.typ
+[contents of chapters/07-nested-and-2d/04-image-filters.typ at commit 5b42a34, omitted here]
+=== chapters/07-nested-and-2d/05-more-filters.typ
+[contents of chapters/07-nested-and-2d/05-more-filters.typ at commit 5b42a34, omitted here]
+=== chapters/07-nested-and-2d/90-summary.typ
+[contents of chapters/07-nested-and-2d/90-summary.typ at commit 5b42a34, omitted here]
+=== chapters/07-nested-and-2d/section.typ
+[contents of chapters/07-nested-and-2d/section.typ at commit 5b42a34, omitted here]
+=== chapters/08-sharing-behavior/01-searching-for-images.typ
+[contents of chapters/08-sharing-behavior/01-searching-for-images.typ at commit 5b42a34, omitted here]
+=== chapters/08-sharing-behavior/02-combining-queries.typ
+[contents of chapters/08-sharing-behavior/02-combining-queries.typ at commit 5b42a34, omitted here]
+=== chapters/08-sharing-behavior/03-queries-as-data.typ
+[contents of chapters/08-sharing-behavior/03-queries-as-data.typ at commit 5b42a34, omitted here]
+=== chapters/08-sharing-behavior/04-growing-imagedata.typ
+[contents of chapters/08-sharing-behavior/04-growing-imagedata.typ at commit 5b42a34, omitted here]
+=== chapters/08-sharing-behavior/05-the-pict-library.typ
+[contents of chapters/08-sharing-behavior/05-the-pict-library.typ at commit 5b42a34, omitted here]
+=== chapters/08-sharing-behavior/06-building-your-own-pict.typ
+[contents of chapters/08-sharing-behavior/06-building-your-own-pict.typ at commit 5b42a34, omitted here]
+=== chapters/08-sharing-behavior/section.typ
+[contents of chapters/08-sharing-behavior/section.typ at commit 5b42a34, omitted here]
+=== chapters/09-recursive-data/01-naming-it.typ
+[contents of chapters/09-recursive-data/01-naming-it.typ at commit 5b42a34, omitted here]
+=== chapters/09-recursive-data/02-base-cases.typ
+[contents of chapters/09-recursive-data/02-base-cases.typ at commit 5b42a34, omitted here]
+=== chapters/09-recursive-data/03-base-case-code.typ
+[contents of chapters/09-recursive-data/03-base-case-code.typ at commit 5b42a34, omitted here]
+=== chapters/09-recursive-data/04-recursive-methods.typ
+[contents of chapters/09-recursive-data/04-recursive-methods.typ at commit 5b42a34, omitted here]
+=== chapters/09-recursive-data/05-tracing-recursion.typ
+[contents of chapters/09-recursive-data/05-tracing-recursion.typ at commit 5b42a34, omitted here]
+=== chapters/09-recursive-data/06-null.typ
+[contents of chapters/09-recursive-data/06-null.typ at commit 5b42a34, omitted here]
+=== chapters/09-recursive-data/90-summary.typ
+[contents of chapters/09-recursive-data/90-summary.typ at commit 5b42a34, omitted here]
+=== chapters/09-recursive-data/section.typ
+[contents of chapters/09-recursive-data/section.typ at commit 5b42a34, omitted here]
+=== chapters/10-java-details/01-things-you-havent-told-me.typ
+[contents of chapters/10-java-details/01-things-you-havent-told-me.typ at commit 5b42a34, omitted here]
+=== chapters/10-java-details/02-under-construction.typ
+[contents of chapters/10-java-details/02-under-construction.typ at commit 5b42a34, omitted here]
+=== chapters/10-java-details/03-programming-with-class.typ
+[contents of chapters/10-java-details/03-programming-with-class.typ at commit 5b42a34, omitted here]
+=== chapters/10-java-details/04-class-equality.typ
+[contents of chapters/10-java-details/04-class-equality.typ at commit 5b42a34, omitted here]
+=== chapters/10-java-details/05-static.typ
+[contents of chapters/10-java-details/05-static.typ at commit 5b42a34, omitted here]
+=== chapters/10-java-details/06-casting.typ
+[contents of chapters/10-java-details/06-casting.typ at commit 5b42a34, omitted here]
+=== chapters/10-java-details/07-access.typ
+[contents of chapters/10-java-details/07-access.typ at commit 5b42a34, omitted here]
+=== chapters/10-java-details/90-summary.typ
+[contents of chapters/10-java-details/90-summary.typ at commit 5b42a34, omitted here]
+=== chapters/10-java-details/section.typ
+[contents of chapters/10-java-details/section.typ at commit 5b42a34, omitted here]
+=== chapters/11-extending-classes/01-tostring-override.typ
+[contents of chapters/11-extending-classes/01-tostring-override.typ at commit 5b42a34, omitted here]
+=== chapters/11-extending-classes/02-abstracting-shared-fields.typ
+[contents of chapters/11-extending-classes/02-abstracting-shared-fields.typ at commit 5b42a34, omitted here]
+=== chapters/11-extending-classes/90-summary.typ
+[contents of chapters/11-extending-classes/90-summary.typ at commit 5b42a34, omitted here]
+=== chapters/11-extending-classes/section.typ
+[contents of chapters/11-extending-classes/section.typ at commit 5b42a34, omitted here]
+=== chapters/12-abstract-classes-and-mutation/01-abstract-classes.typ
+[contents of chapters/12-abstract-classes-and-mutation/01-abstract-classes.typ at commit 5b42a34, omitted here]
+=== chapters/12-abstract-classes-and-mutation/02-dynamic-dispatch.typ
+[contents of chapters/12-abstract-classes-and-mutation/02-dynamic-dispatch.typ at commit 5b42a34, omitted here]
+=== chapters/12-abstract-classes-and-mutation/03-likes.typ
+[contents of chapters/12-abstract-classes-and-mutation/03-likes.typ at commit 5b42a34, omitted here]
+=== chapters/12-abstract-classes-and-mutation/04-sharing-vs-copying.typ
+[contents of chapters/12-abstract-classes-and-mutation/04-sharing-vs-copying.typ at commit 5b42a34, omitted here]
+=== chapters/12-abstract-classes-and-mutation/90-summary.typ
+[contents of chapters/12-abstract-classes-and-mutation/90-summary.typ at commit 5b42a34, omitted here]
+=== chapters/12-abstract-classes-and-mutation/section.typ
+[contents of chapters/12-abstract-classes-and-mutation/section.typ at commit 5b42a34, omitted here]
+=== chapters/13-collections-and-generics/01-arraylist-intro.typ
+[contents of chapters/13-collections-and-generics/01-arraylist-intro.typ at commit 5b42a34, omitted here]
+=== chapters/13-collections-and-generics/02-hashset-intro.typ
+[contents of chapters/13-collections-and-generics/02-hashset-intro.typ at commit 5b42a34, omitted here]
+=== chapters/13-collections-and-generics/03-hashmap-intro.typ
+[contents of chapters/13-collections-and-generics/03-hashmap-intro.typ at commit 5b42a34, omitted here]
+=== chapters/13-collections-and-generics/04-arraylist-use-case.typ
+[contents of chapters/13-collections-and-generics/04-arraylist-use-case.typ at commit 5b42a34, omitted here]
+=== chapters/13-collections-and-generics/05-generics-overview.typ
+[contents of chapters/13-collections-and-generics/05-generics-overview.typ at commit 5b42a34, omitted here]
+=== chapters/13-collections-and-generics/90-summary.typ
+[contents of chapters/13-collections-and-generics/90-summary.typ at commit 5b42a34, omitted here]
+=== chapters/13-collections-and-generics/section.typ
+[contents of chapters/13-collections-and-generics/section.typ at commit 5b42a34, omitted here]
+</book>
+
+Student: Professor, I was talking to AI about Java, and it kept bringing up the terms “pass by reference” and “pass by value”. What do they mean?
+
+Professor: That's a great question, let's ask AI together. Claude, define “pass by value” and “pass by reference” for us?
+
+=== Response (verbatim) ===
+## Pass by value vs. pass by reference
+
+Both terms describe **what a method's parameter is** when you call the method.
+
+**Pass by value:** The method gets a *copy of the value* of each argument, stored in a new variable in the method's own stack frame. If the method assigns a new value to its parameter (`param = ...`), the caller's variable doesn't change.
+
+**Pass by reference:** The parameter is *another name for the caller's variable itself*. If the method assigns to the parameter, the caller's variable changes too. Java doesn't have this, but some languages do, such as C++ (`int& x`) and C# (`ref int x`).
+
+## What Java does
+
+**Java is always pass by value.** The confusion comes from what the value *is*:
+
+- For a primitive like `int`, the value is the number, such as `17`.
+- For a reference type (arrays, `String`, records, classes), the value is a **reference**, like the @1001 in the book's memory diagrams.
+
+So when you pass an array, Java copies the reference into the new stack frame. The caller and the method then hold the *same reference*. That is **aliasing**, from the "How Java Runs" chapter. This program shows both effects:
+
+```java
+void change(int n, int[] arr) {
+  n = 99;               // changes only this frame's copy of n
+  arr[0] = 99;          // changes the array on the heap: the caller sees it
+  arr = new int[]{ 0 }; // changes only this frame's copy of the reference
+  arr[0] = -1;          // changes the new array, which the caller never sees
+}
+
+void main() {
+  int x = 5;
+  int[] nums = { 1, 2, 3 };
+  change(x, nums);
+  System.out.println(x);        // 5
+  System.out.println(nums[0]);  // 99
+}
+```
+
+Here's what memory looks like right after the line `arr[0] = 99;` runs:
+
+```
+main()                 x = 5, nums = @1001
+change(x, nums)        n = 99, arr = @1001
+
+Heap
+@1001: [99, 2, 3]
+```
+
+Only one array exists, and both frames refer to it. The next line, `arr = new int[]{ 0 };`, gives `arr` a new reference, @1002. The `nums` variable in `main` still holds @1001. If Java were truly pass by reference, that assignment would have changed `nums` too.
+
+## Connecting it to the book
+
+You've already seen this behavior:
+- `discountInPlace` changed the contents of `regular`, because the `Menu` held the same reference.
+- In the `retag` exercise, `this.tags = newTags` gave the field a new reference, but the array in `a` kept its old contents.
+
+When an AI says "Java passes objects by reference," it usually means "methods can change objects you pass to them." That's true, but it's because the method gets a copy of a reference, not because Java has pass by reference. Some people call this "passing references by value." To predict what a program will do, draw the memory diagram: a new frame, with copies of the argument values in it.

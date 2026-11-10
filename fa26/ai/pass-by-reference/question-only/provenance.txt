@@ -1,0 +1,69 @@
+AI recording pass-by-reference/question-only
+Model: claude-opus-5-5 (Opus 5.5)
+Generated: 2026-11-06T00:10:07.630Z
+Harness: Claude Code 2.1.318 (claude -p)
+Command: claude -p --model claude-opus-5-5 --system-prompt 'You are Claude, an AI assistant.' --tools '' --setting-sources '' --strict-mcp-config --mcp-config '{"mcpServers":{}}' --no-session-persistence --output-format stream-json --verbose < prompt
+Tools: none
+System prompt: "You are Claude, an AI assistant."
+Context besides the prompt: the system prompt above, plus what Claude Code adds (an SDK prefix, the account's email, and an environment block with the date and model name). No settings, CLAUDE.md, or MCP servers.
+Tokens: 616 in, 858 out
+
+=== Prompt ===
+Claude, define “pass by value” and “pass by reference” for us?
+
+=== Response (verbatim) ===
+## Pass by value
+
+The function receives a **copy of the argument's value**. The parameter is a new, independent variable initialized with that value. Assigning to the parameter inside the function has no effect on the caller's variable.
+
+```c
+void f(int x) { x = 10; }
+
+int a = 5;
+f(a);
+// a is still 5
+```
+
+## Pass by reference
+
+The function receives a **reference to the caller's variable itself**, not a copy of its value. The parameter becomes an alias for the caller's storage location, so assigning to the parameter changes the caller's variable.
+
+```cpp
+void f(int& x) { x = 10; }
+
+int a = 5;
+f(a);
+// a is now 10
+```
+
+**A useful test:** can you write a `swap(a, b)` function that exchanges the contents of the caller's two variables? With pass by reference, yes. With pass by value, no.
+
+## The common confusion: passing references *by value*
+
+Languages like Java, Python, JavaScript, and Ruby are often described as pass by reference, but they are **pass by value**. The value being copied just happens to be a reference (pointer) to an object. This is sometimes called **call by sharing** or **call by object reference**.
+
+```python
+def f(lst):
+    lst.append(4)   # mutates the shared object; the caller sees it
+    lst = [99]      # rebinds the local parameter; the caller does NOT see it
+
+a = [1, 2, 3]
+f(a)
+# a is [1, 2, 3, 4]
+```
+
+- **Mutation is visible** because the caller and the callee both point to the same object.
+- **Reassignment is not visible** because the parameter is a copy of the pointer, not an alias for the caller's variable `a`.
+
+So the key question is not "can the function change the object?" It is "**can the function change which value the caller's variable holds?**" Only true pass by reference allows that.
+
+## Quick reference
+
+| | Pass by value | Pass by reference |
+|---|---|---|
+| Parameter is... | a new variable holding a copy | an alias for the caller's variable |
+| Assigning to the parameter affects the caller? | No | Yes |
+| `swap(a, b)` possible? | No | Yes |
+| Examples | C, Java, Python, JS (all args) | C++ `&`, C# `ref`, Pascal `var`, Fortran |
+
+Note that C's "pass a pointer" (`void f(int *p)`) is pass by value of a pointer. It *simulates* pass by reference, but the pointer itself is still copied.

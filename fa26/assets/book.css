@@ -7,9 +7,10 @@
   --soft-bg: color-mix(in srgb, currentColor 6%, transparent);
   --prof: #2d7d46;
   --stud: #5a4bbf;
+  --ai: #a0561a;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --prof: #63b37e; --stud: #a99bf0; }
+  :root { --prof: #63b37e; --stud: #a99bf0; --ai: #e3a25f; }
 }
 * { box-sizing: border-box; }
 body {
@@ -164,6 +165,15 @@ body.toc .subtitle { opacity: .75; }
 .speech .who { float: left; margin-right: .4rem; font-weight: 650; }
 .speech.prof .who { color: var(--prof); }
 .speech.student .who { color: var(--stud); }
+.speech.ai { border-left: 3px solid var(--ai); background: var(--soft-bg);
+  padding: .6rem .8rem; border-radius: 0 6px 6px 0; }
+.speech.ai .who { color: var(--ai); }
+.speech.ai .bubble table { border-collapse: collapse; margin: .5rem 0; font-size: .92rem; }
+.speech.ai .bubble td { border: 1px solid var(--card-border); padding: .2rem .45rem; vertical-align: top; }
+.speech.ai .bubble blockquote { margin: .5rem 0; padding-left: .8rem;
+  border-left: 2px solid var(--card-border); }
+.speech.ai:not(.excerpt) .bubble { max-height: 20em; overflow-y: auto; }
+.speech.ai .ai-source { text-align: right; margin: 0 0 .4rem; font-size: .8rem; opacity: .75; }
 /* stage direction as a system message */
 .scene {
   display: flex; align-items: center; gap: .8rem;
