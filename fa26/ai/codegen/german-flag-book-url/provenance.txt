@@ -1,0 +1,401 @@
+AI recording codegen/german-flag-book-url
+Model: claude-opus-5-5 (Opus 5.5)
+Generated: 2026-11-11T18:39:19.186Z
+Harness: Claude Code 2.1.322 (claude -p)
+Command: claude -p --model claude-opus-5-5 --system-prompt 'You are Claude, an AI assistant.' --tools WebFetch --allowedTools WebFetch --setting-sources '' --strict-mcp-config --mcp-config '{"mcpServers":{}}' --no-session-persistence --output-format stream-json --verbose < prompt
+Tools: WebFetch
+System prompt: "You are Claude, an AI assistant."
+Context besides the prompt: the system prompt above, plus what Claude Code adds (an SDK prefix, the account's email, and an environment block with the date and model name). No settings, CLAUDE.md, or MCP servers.
+Tokens: 27691 in, 2951 out
+
+=== Prompt ===
+Read the whole book at https://ucsd-cse11.github.io/book/fa26/ and then write a program in that style that makes a Pict of the German flag
+
+=== Tool call 1: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/
+prompt: Give the full table of contents with links to all chapters, and summarize content. Include any code examples verbatim, especially anything about Pict, images, drawing.
+--- returned ---
+The page contains only the table of contents and no code examples, so there is no Pict, image, or drawing code to reproduce. The book is an introduction to programming in Java, using the Pict library for images and drawing.
+
+**Table of Contents**
+
+| # | Chapter | Link | Summary |
+|---|---|---|---|
+| 1 | Programs and Values | [programs-and-values/programs-and-values.html](programs-and-values/programs-and-values.html) | Run first programs in the browser: starts with "Hello, Pict!", then numbers, strings, operators, and non-integer values. |
+| 2 | Data That Travels Together | [data-that-travel-together/data-that-travels-together.html](data-that-travel-together/data-that-travels-together.html) | Records for declaring the shape of data, plus methods, Java's built-in library methods, and String methods. |
+| 3 | The Main Thing | [the-main-thing/main.html](the-main-thing/main.html) | How Java handles a file, why `main` matters, and other ways to run and check programs. |
+| 4 | Recipe for Success | [recipe-for-success/breaking-it-down.html](recipe-for-success/breaking-it-down.html) | Turning word problems into code, using a pizza example and a worked area problem. |
+| 5 | Collecting Values | [arrays/collections.html](arrays/collections.html) | Arrays as a first collection type: with records, loops, `main`, index counters, and array creation. |
+| 6 | How Java Runs | [memory/where-things-are.html](memory/where-things-are.html) | How Java manages memory: equality vs. identity, stack frames, aliasing, and nested structures. |
+| 7 | Nested and 2D Structures | [nested-and-2d/2d-arrays.html](nested-and-2d/2d-arrays.html) | Arrays of arrays, rasters (image grids), index loops, and image filters. |
+| 8 | Classes that Share Behavior | [sharing-behavior/searching-for-images.html](sharing-behavior/searching-for-images.html) | Querying data with methods, combining queries, growing image data, and building your own Pict. |
+| 9 | Recursive Data | [recursive-data/naming-it.html](recursive-data/naming-it.html) | Self-referential data types, base cases, recursive methods, and the null base case. |
+| 10 | Java Details | [java-details/things-you-havent-told-me.html](java-details/things-you-havent-told-me.html) | Classes and equality, static members, primitive casting, and visibility modifiers. |
+| 11 | Extending Classes | [extending-classes/tostring-override.html](extending-classes/tostring-override.html) | Overriding methods, sharing fields, class hierarchies, `instanceof`, and casting to a class. |
+| 12 | Abstract Classes and Mutation | [abstract-classes-and-mutation/abstract-classes.html](abstract-classes-and-mutation/abstract-classes.html) | Abstract methods vs. defaults, dynamic dispatch, a "liking a post" example, and sharing vs. copying. |
+| 13 | Collections and Generics | [collections-and-generics/arraylist-intro.html](collections-and-generics/arraylist-intro.html) | `ArrayList`, `HashSet`, `HashMap`, using collections with posts, and generics. |
+| 14 | Appendix: The Pict Library | [pict-library/pict-library.html](pict-library/pict-library.html) | Reference for Pict constructors and methods. |
+| 15 | Appendix: Working on Your Own Computer | [your-own-computer/the-kit.html](your-own-computer/the-kit.html) | Setting up the Pict library, JUnit, and a Codespace. |
+| 16 | Credits | [credits/credits.html](credits/credits.html) | Citations, references, and inspiration. |
+| 17 | Glossary | [glossary.html](glossary.html) | 25 terms. |
+
+The book is written by Joe Politz, Rachel Lim, Sunwoo Kim, Gerald Soosairaj, and Niema Moshiri. A plain-text version is available at `llms.txt`.
+
+=== Tool call 2: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/llms.txt
+prompt: Return the content as fully as possible, especially all code examples verbatim involving Pict, rectangles, colors, stacking (above/beside), main methods, and the style conventions (records, tests, method naming).
+--- returned ---
+The page is a table of contents for the book *Introduction to Programming and Computational Problem-Solving* by Joe Politz, Rachel Lim, Sunwoo Kim, Gerald Soosairaj, and Niema Moshiri. It doesn't include the chapter text, so I can't provide the Pict code, rectangle or color examples, stacking examples, main-method examples, or style conventions you asked for. The page says exercise answers are omitted.
+
+Here is the chapter list with the summaries given on the page:
+
+1. **Programs and Values**: running first programs in the page itself
+2. **Data That Travels Together**: records, for declaring the shape of data
+3. **The Main Thing**: what Java does with a file, why `main` matters, and other ways to run and check programs
+4. **Recipe for Success**: going from a word problem to code
+5. **Collecting Values**: arrays, the first collection example
+6. **How Java Runs**: the details of how Java runs programs
+7. **Nested and 2D Structures**: arrays of arrays, and objects containing arrays
+8. **Classes that Share Behavior**: asking questions about data with methods
+9. **Recursive Data**: datatypes that refer to themselves
+10. **Java Details**: "Telling (slightly) fewer lies"
+11. **Extending Classes**
+12. **Abstract Classes and Mutation**
+13. **Collections and Generics**: building collections of objects
+14. **Appendix: The Pict Library**: Pict constructors and methods
+15. **Appendix: Working on Your Own Computer**: the Pict library, JUnit, and a Codespace
+16. **Credits**: citations, references, and inspiration
+
+The Glossary and the full book in one file (`llms-full.txt`) are also linked. The full-book file is the most likely place to find the Pict examples, style conventions, and other code you need. The chapter-specific `chapter.txt` links would cover individual topics.
+
+=== Tool call 3: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/programs-and-values/programs-and-values.html
+prompt: Return all code examples verbatim, especially Hello Pict and how a program is structured (class, main, imports).
+--- returned ---
+The page doesn't show a full program structure. It has no `class`, `main` method, or `import` statements. The only Hello, Pict! code is this two-line snippet:
+
+```java
+Pict dot = new Circle(25, "red"); Pict box = new Rect(20, 30, "blue");
+```
+
+The other code examples on the page are:
+
+- **Definition pattern:** `SomeType name = value;`
+- **Constructor use:** `new ConstructorName(argument1, argument2, ...)`
+- **Constructor signatures:**
+  - `Circle(int radius, String color)`
+  - `Rect(int width, int height, String color)`
+  - `Triangle(int width, int height, String color)`
+
+The page explains that a definition has a type, a name, and a value. It also says that `Circle` and `Rect` are constructors that create `Pict` objects, and that the numbers are a radius, or a width and height, while the string sets the color.
+
+For the practice exercise, you're asked to use the `Triangle` constructor to create a `Pict` variable named `t`. The page doesn't give a solution. For the full program layout, the page's plain-text version of the chapter or the Glossary may include more detail.
+
+=== Tool call 4: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/pict-library/pict-library.html
+prompt: Return the full Pict library reference verbatim: all constructors, static methods, instance methods, color handling, and code examples.
+--- returned ---
+I can't reproduce the full reference verbatim here, since you asked for a concise response and the source is long. Here's a summary of its contents, and the page links to a plain-text version of the chapter if you need the complete text.
+
+**Shapes (constructors)**
+- Filled and outline versions of circles, rectangles, and triangles, each taking a size and a color.
+- `Text(content, size, color)` for text.
+- A size of 0 gives an empty picture, useful as a starting point. Negative sizes are an error.
+
+**Colors**
+- Sixteen named strings, from `"red"` through `"darkgray"`.
+- `"transparent"` takes up space but paints nothing.
+
+**Combining pictures**
+- `Beside`, `Above`, `Below`, and `Overlay` arrange pictures next to or on top of each other.
+- `OverlayAt` places a picture at x and y coordinates.
+- `OverlayAtAlign` positions by alignment: center, or one of four corners.
+- `AddLine` draws a line onto a picture, with optional thickness.
+
+**Transformations**
+- `Rotate(pict, degrees)` rotates a picture.
+
+**Pict instance methods**
+- `width()` and `height()`, plus chainable versions of the combination operations (`beside`, `above`, `below`, `overlay`, `overlayAt`, `overlayAtAlign`, `addLine`, `rotate`).
+- `render()` converts a picture into a `Raster`.
+
+**Fractional values**
+- Every size, position, thickness, and angle also accepts `double`, rounded to whole pixels or degrees. `NaN` and infinity are errors.
+
+**Rasters**
+- A `Raster` is a grid of `java.awt.Color` pixels, with (0,0) at the top left.
+- Constructors take a `Color[][]` (copied, and no nulls allowed) or a width and height (all transparent).
+- Methods: `width()`, `height()`, `colorAt(x, y)`, `setColorAt(x, y, color)`.
+- `FromRaster` turns a raster into a picture. Two rasters are equal if they match in size and every pixel color.
+
+**Java colors**
+- Constants such as `Color.RED`, plus `new Color(r, g, b)` and `new Color(r, g, b, alpha)` with values from 0 to 255.
+- `toString` omits alpha, so a transparent pixel prints the same as black.
+
+**Showing and saving**
+- `ImageIO_.show` and `ImageIO_.save` accept a picture or raster.
+- `save` can also write an animated GIF from an array of pictures, with optional frame delay and looping.
+- `ImageIO_.load` reads a raster from a file. Your saved files take priority over the book's images with the same name.
+- `ImageIO_.render` converts a picture to a raster.
+- Showing an empty picture displays a small gray dotted circle. Saving one is an error.
+
+**Book images**
+- Seven built-in images, including `geisel.png`, `salk.png`, and `cove.png`.
+
+=== Tool call 5: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/llms-full.txt
+prompt: Quote verbatim: (1) the complete list of named color strings for Pict, (2) every complete program example that has a class and main method using Pict (with ImageIO_.show), (3) exact constructor signatures for Rect/FilledRect/Above/Beside, (4) any style conventions like test methods or record usage around building pictures. Also report total length/whether content is truncated.
+--- returned ---
+**Content status:** The text is truncated. It cuts off mid-sentence in the "Arrays and Records" section, so later material is not included.
+
+**1. Named color strings for `Pict`**
+
+The content does not give a complete list. These color strings appear in examples:
+- red, blue, green, purple, brown, white, orange, black, yellow
+
+**2. Complete programs with `main` and `ImageIO_.show`**
+
+The only complete example is in "Main and Pict":
+
+```java
+void main() {
+  Pict c = new Circle(30, "red");
+  System.out.println(c);
+  ImageIO_.show(c);
+}
+```
+
+Output:
+
+```text
+Circle[radius=30, color=red]
+[image]
+```
+
+The content does not use a `class` keyword in these examples. It uses top-level `void main()` methods. The French flag exercise in the same section is incomplete.
+
+**3. Constructor signatures**
+
+- `Circle(int radius, String color)`
+- `Rect(int width, int height, String color)`
+- `Triangle(int width, int height, String color)`
+- `Above(top, bottom)`, shown as `new Above(top, trunk)`. The printed record fields are `top` and `bottom`, so the parameter types are `Pict`.
+- `Below(Pict bottom, Pict top)`
+- `Beside(Pict left, Pict right)`
+- `Overlay(Pict front, Pict back)`
+
+`FilledRect` does not appear in the content.
+
+**4. Style conventions**
+
+- Naming: "we'll use camel case and Pascal case following the Java conventions." Methods and definitions use camelCase. Records use PascalCase.
+- Records: Shapes are composed by nesting constructors. Records can hold methods, and convenience methods like `beside` exist for combining images. The text gives this example: `blue.beside(white).beside(red)`.
+- Testing: Tests use `assertEquals(expected, actual)` inside `main`. A final `System.out.println("All tests succeeded!");` is used as a sign that the code reached the end.
+
+[WebFetch note: this page's text is 414010 characters long and the answer above covers only characters 0 to 100000; the final 314010 were not read — to read on, call WebFetch again with the same url and offset: 100000.]
+
+=== Tool call 6: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/llms-full.txt
+prompt: Quote verbatim any flag examples or Pict-building programs in full (with main), the design recipe steps, and code style conventions (comments, test style, assertEquals usage, record definitions with methods returning Pict).
+offset: 100000
+--- returned ---
+I can't reproduce the flag program or other examples in full, because the 125-character limit applies to any quoted source text. The excerpt also doesn't include the design recipe steps, since they fall in the truncated portion. Here is what I can summarize from the visible content.
+
+**Flag example (`MakeFlag`):** It uses a `void main(String[] args)` entry point. It reads a width from the command line with `Integer.parseInt(args[0])`, derives the height as `width * 3 / 5`, and builds the flag from `Circle`, `Rect`, and `Overlay` `Pict` objects. It prints a label line and displays the result with `ImageIO_.show`.
+
+**Code style conventions visible in the excerpt:**
+- Records hold data, and methods are defined inside the record body.
+- Methods use `this.` when referring to fields, as in `this.fileType.equals(ext)`.
+- Loops are for-each loops for arrays, accumulator variables are declared before the loop, and `return` follows the loop.
+- Tests are written in `void main()` with `assertEquals` or `assertArrayEquals`, and comments describe the expected result, such as `// succeeds!` or `// fails`.
+- Output is labeled with `System.out.println` and string concatenation.
+- Multi-line `for` and `if` bodies are indented; most examples use two spaces, and some use four.
+
+**Not visible in this excerpt:** the design recipe steps and the `Pict`-returning record examples beyond the flag program. Those would need to be read from the full page.
+
+[WebFetch note: this page's text is 414010 characters long and the answer above covers only characters 100000 to 200000; the final 214010 were not read — to read on, call WebFetch again with the same url and offset: 200000.]
+
+=== Tool call 7: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/llms-full.txt
+prompt: Quote verbatim any flag examples or complete Pict programs, and summarize the topics covered in this portion.
+offset: 200000
+--- returned ---
+**Flag examples:** None appear in this portion. The French flag is mentioned only in passing, with no code shown.
+
+**Complete Pict programs:** This portion includes only partial Pict excerpts, not complete runnable programs. One short line from the excerpt is:
+
+`Pict viaMethod = dot.beside(square);`
+
+**Topics covered:**
+
+- **Interfaces and default methods:** Interfaces describe shared behavior, and `default` methods supply a body that every implementing record inherits. This is how `and`, `or`, and `not` work on queries, and how `beside` and `above` work in Pict.
+- **Access modifiers:** Methods in an interface must be `public`, and implementations cannot reduce that visibility.
+- **Queries and combinators:** Queries are passed around as values, and combinator records like `And`, `Or`, `Not`, and `Xor` hold other queries. Strings are matched with `.equals()` or `.contains()`, with edge cases such as substring matches and case sensitivity.
+- **Overloading:** Methods and constructors can share a name if their parameter lists differ. Java picks the version based on argument types, and constructors can call each other with `this(...)`.
+- **Classes vs. records:** Classes need explicit fields, constructors, and `this.x = x` field updates. Their default `.equals()` compares references, so you must override it for value comparison, as Raster does for arrays.
+- **Static methods and exceptions:** Static methods have no receiver and are called on the class name, as with `Px.size`. `throw` reports errors, and the stack trace shows the chain of calls.
+- **Recursive data and methods:** Recursive data has a self-referential case and one or more base cases. Recursive methods follow the same structure and trust the recursive call to return the right answer. Examples include `hasWord`, `totalMessageLength`, and `oldestKnownGeneration`.
+- **Call stacks:** Traces show how recursive calls build up and then unwind, and how `||` and `&&` short-circuit.
+- **Null as a base case:** `null` can stand in for a base case, but it often causes `NullPointerException`, so the author recommends null-free designs.
+- **Building your own library:** Art, Block, SideBySide, and Frame show how to build a small Pict-style library from an interface and combinator records.
+
+[WebFetch note: this page's text is 414010 characters long and the answer above covers only characters 200000 to 300000; the final 114010 were not read — to read on, call WebFetch again with the same url and offset: 300000.]
+
+=== Tool call 8: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/llms-full.txt
+prompt: Quote verbatim the French flag exercise and any flag examples (e.g. Italy, France), plus the surrounding 'Main and Pict' section text and any examples with methods returning Pict (e.g. Pict flag(...)) and tests. Also quote any 'design recipe' style examples involving pictures.
+--- returned ---
+**French flag (More Composition):** The prompt reads "Let's try the 50 stars after we've learned a **little** more! How about, say, the French flag?" The code:
+
+```java
+int w = 40;
+int h = 80;
+Pict blue = new Rect(w, h, "blue");
+Pict white = new Rect(w, h, "white");
+Pict red = new Rect(w, h, "red");
+Pict bluewhite = new Beside(blue, white);
+Pict flag = new Beside(bluewhite, red);
+```
+
+**Main and Pict (French flag exercise):** The prompt reads "`fr` is the French flag from before. Finish `main` so that running this file shows it." The starter code:
+
+```java
+void main() {
+  Pict fr = new Beside(new Rect(30, 60, "blue"),
+                       new Beside(new Rect(30, 60, "white"),
+                                  new Rect(30, 60, "red")));
+  ____
+}
+```
+
+**Other flags (More Methods):** The text says "We saw a French flag 🇫🇷, and we can easily imagine other tri-color flags like Italy" (truncated in the source). The Italy definition is:
+
+```java
+Pict it = new Beside(new Rect(10, 20, "green"),
+                    new Beside(new Rect(10, 20, "white"), new Rect(10, 20, "red")));
+```
+
+**Bangladesh flag (Records and Images exercise):** The prompt reads "Make the flag of Bangladesh: a red circle in front of a green rectangle. Name the finished picture `flag`." The answer is left blank (`____`).
+
+**Methods returning Pict (More Methods):** The visible content has no method named `flag`. The closest is `drawFlag`:
+
+```java
+Pict drawFlag(int width, int height) {
+    return new Beside(new Rect(width, height, left),
+```
+
+Calls to it:
+
+```java
+Pict frPic = fr.drawFlag(10, 20);
+Pict bigFr = fr.drawFlag(30, 60);
+```
+
+**Tests:** The visible content has no tests for pictures. The `assertEquals` examples all concern `Time`, `Course`, or `Pizza`-free numeric logic. The `assertEquals` signature is given as "`void assertEquals(value1, value2)`."
+
+**Design recipe with pictures:** None appear in the visible content. The design recipe examples use `Subscription` (`costAfter`) and `Pizza` (`betterDeal` and `area`), but neither involves images.
+
+The source is truncated after the "Arrays and Records" section, so any later flag or picture examples are not included here.
+
+[WebFetch note: this page's text is 414010 characters long and the answer above covers only characters 0 to 100000; the final 314010 were not read — to read on, call WebFetch again with the same url and offset: 100000.]
+
+=== Tool call 9: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/llms-full.txt
+prompt: Quote verbatim any flag examples or complete Pict programs, and summarize the topics covered in this portion. Quote verbatim the full list of named colors in the Pict library appendix if present.
+offset: 300000
+--- returned ---
+**Flag examples:** None appear in this portion. There are no command-line flags.
+
+**Complete Pict programs:** The portion includes Pict-based snippets, but I won't reproduce any in full. A short excerpt from the dynamic dispatch section is `Pict r = new Rect(10, 20, "blue");`.
+
+**Named colors:** The Pict Library Reference appendix is cut off at its "Shapes" heading, so the named-color list isn't in this portion and I can't quote it.
+
+**Topics covered:**
+
+- **Static vs. instance methods:** Calls on a class versus calls on an object.
+- **Primitives and casting:** NaN and Infinity from double arithmetic, `(int)` casts that clamp to the int maximum, the eight primitive types, and when Java requires a cast.
+- **Visibility:** `private`, package-private, and `public` access. Record fields are private and final, with generated accessor methods.
+- **Overriding and `Object`:** Default `toString` and `equals`, the `@Override` annotation, and why `equals` must take an `Object` parameter. Also `instanceof` checks and class casts.
+- **Inheritance:** `extends`, `super(...)`, shared fields in base classes, class diagrams, and why Java lacks multiple inheritance.
+- **Abstract classes and interfaces:** Abstract methods, why abstract classes can't be instantiated, and how they relate to interfaces.
+- **Dynamic dispatch:** Method selection based on the object's runtime class, not the variable's declared type.
+- **Mutation and references:** Mutable fields versus `final`, aliasing, and copying versus referencing when reposting.
+- **Collections and generics:** `ArrayList`, `HashSet`, and `HashMap`, their key methods, when to use each, and how type arguments constrain what goes in and comes out.
+
+[WebFetch note: this page's text is 414010 characters long and the answer above covers only characters 300000 to 400000; the final 14010 were not read — to read on, call WebFetch again with the same url and offset: 400000.]
+
+=== Tool call 10: WebFetch ===
+url: https://ucsd-cse11.github.io/book/fa26/llms-full.txt
+prompt: Quote verbatim the full list of named colors in the Pict library appendix, Rect constructor docs, and any flag examples. Summarize topics in this portion.
+offset: 400000
+--- returned ---
+**Named colors (Pict library appendix, Colors section):**
+
+> "`"red"`, `"green"`, `"blue"`, `"yellow"`, `"orange"`, `"pink"`, `"magenta"`, `"cyan"`, `"purple"`, `"brown"`"
+
+> "`"black"`, `"white"`, `"gray"`, `"grey"`, `"lightgray"`, `"darkgray"`"
+
+The section also lists `"transparent"`, which paints nothing but takes up its size like any other picture.
+
+**Rect constructor docs (Shapes section):**
+
+> "`Rect(int width, int height, String color)`"
+
+> "`Rect(double width, double height, String color)`"
+
+**Flag examples:** None appear in this portion.
+
+**Summary of topics:**
+
+- **Pict shapes:** Constructors for circles, rectangles, triangles, and text, each in filled and outline forms where applicable. A size of 0 gives an empty picture, and a negative size is an error.
+- **Colors:** A set of named colors, plus a transparent option.
+- **Combining pictures:** Placing pictures beside, above, below, or over one another, placing them at coordinates or by alignment, and adding lines.
+- **Transformations and methods:** Rotating pictures, plus the matching instance methods for combining and rendering.
+- **Fractional values:** Sizes, positions, thicknesses, and angles can be `double`s, rounded to whole pixels or degrees. NaN and infinity are errors.
+- **Rasters:** Pixel grids of Java `Color` values, with constructors, pixel access, equality by content, and conversion to and from `Pict`.
+- **Showing and saving:** `ImageIO_` methods to show, save, load, and render pictures or rasters, including animated GIFs. The book also provides several sample images.
+- **Appendix (own computer):** Options for getting the kit through a GitHub Codespace or a download, which requires Java 25 or newer. It covers the included files, how to run the example, and how to run the JUnit tests.
+- **Credits and glossary:** Acknowledgments to the works that influenced the book and Pict library, and a glossary of Java terms such as argument, constructor, field, `double`, `int`, object, and `String`.
+
+=== Response (verbatim) ===
+I read through the whole book. Here's a German flag in the same style as its French flag example. That example puts three `Rect`s next to each other with `Beside`, inside a top-level `void main()`, and shows the result with `ImageIO_.show`. The German flag has horizontal stripes, so this version stacks them with `Above` instead:
+
+```java
+void main() {
+  int w = 100;
+  int h = 20;
+  Pict black = new Rect(w, h, "black");
+  Pict red = new Rect(w, h, "red");
+  Pict gold = new Rect(w, h, "yellow");
+  Pict redgold = new Above(red, gold);
+  Pict flag = new Above(black, redgold);
+  System.out.println(flag);
+  ImageIO_.show(flag);
+}
+```
+
+Each stripe is 100 by 20, so the flag is 100 wide and 60 tall. That's the real 5:3 shape of the German flag.
+
+**About the gold stripe:** Pict's 16 named colors don't include gold, so I used `"yellow"`, the closest one. To get the official gold (`new Color(255, 206, 0)`), you'd have to build that stripe as a `Raster`, which is more work than this example needs.
+
+**Using a method, like the book's `drawFlag`:** In the "More Methods" chapter, the book puts a flag's colors in a record and draws them with a `drawFlag` method. The same idea works for flags with horizontal stripes:
+
+```java
+record HorizontalFlag(String top, String middle, String bottom) {
+  Pict drawFlag(int width, int height) {
+    return new Above(new Rect(width, height, this.top),
+                     new Above(new Rect(width, height, this.middle),
+                               new Rect(width, height, this.bottom)));
+  }
+}
+
+void main() {
+  HorizontalFlag de = new HorizontalFlag("black", "red", "yellow");
+  Pict dePic = de.drawFlag(100, 20);
+  Pict bigDe = de.drawFlag(300, 60);
+  ImageIO_.show(dePic);
+  ImageIO_.show(bigDe);
+}
+```
+
+You can reuse the record for other flags with three horizontal stripes. For example, `new HorizontalFlag("white", "blue", "red")` draws Russia's flag.

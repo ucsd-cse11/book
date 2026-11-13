@@ -1,0 +1,71 @@
+AI recording codegen/polygon-examples
+Model: claude-opus-5-5 (Opus 5.5)
+Generated: 2026-11-11T21:51:12.659Z
+Harness: Claude Code 2.1.322 (claude -p)
+Command: claude -p --model claude-opus-5-5 --system-prompt 'You are Claude, an AI assistant.' --tools '' --setting-sources '' --strict-mcp-config --mcp-config '{"mcpServers":{}}' --no-session-persistence --output-format stream-json --verbose < prompt
+Tools: none
+System prompt: "You are Claude, an AI assistant."
+Context besides the prompt: the system prompt above, plus what Claude Code adds (an SDK prefix, the account's email, and an environment block with the date and model name). No settings, CLAUDE.md, or MCP servers.
+Tokens: 1245 in, 741 out
+Time: 8.0 s (API 7.9 s, 1 turns)
+
+=== Prompt ===
+```java
+record Point(double x, double y) {}
+interface Region { boolean contains(Point p); }
+record RectRegion(Point corner, double width, double height) implements Region {
+  public boolean contains(Point p) {
+    return p.x() >= this.corner.x() && p.x() <= this.corner.x() + this.width
+        && p.y() >= this.corner.y() && p.y() <= this.corner.y() + this.height;
+  }
+}
+record CircRegion(Point center, double radius) implements Region {
+  public boolean contains(Point p) {
+    double dx = p.x() - this.center.x();
+    double dy = p.y() - this.center.y();
+    return Math.sqrt(dx * dx + dy * dy) <= this.radius;
+  }
+}
+record Union(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) || this.b.contains(p); }
+}
+record Intersect(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) && this.b.contains(p); }
+}
+record Polygon(Point[] outline) {}
+
+Region lens = new Intersect(new CircRegion(new Point(0, 0), 2),
+                            new CircRegion(new Point(3, 0), 2));
+Region plus = new Union(new RectRegion(new Point(0, 2), 6, 2),
+                        new RectRegion(new Point(2, 0), 2, 6));
+
+Polygon lShape = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 20), new Point(10, 20),
+  new Point(10, 10), new Point(20, 10), new Point(20, 0) });
+
+void main() {
+  assertEquals(true, lens.contains(new Point(1.5, 0)));
+  assertEquals(false, lens.contains(new Point(-1, 0)));
+  assertEquals(true, plus.contains(new Point(3, 3)));
+  assertEquals(false, plus.contains(new Point(1, 1)));
+}
+```
+
+Fill in two more examples, one of a trapezoid and one of a 10-sided polygon, after lShape
+
+=== Response (verbatim) ===
+```java
+Polygon trapezoid = new Polygon(new Point[] {
+  new Point(0, 0), new Point(5, 10), new Point(15, 10), new Point(20, 0) });
+
+Polygon staircase = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 8), new Point(2, 8),
+  new Point(2, 6), new Point(4, 6), new Point(4, 4),
+  new Point(6, 4), new Point(6, 2), new Point(8, 2),
+  new Point(8, 0) });
+```
+
+- **`trapezoid`** has a 20-wide bottom edge, a 10-wide top edge, and a height of 10. The top and bottom edges are parallel.
+- **`staircase`** has 10 vertices and steps down 2 units at a time from the top-left. It is a longer version of `lShape`.
+
+Both list their points in the same clockwise order as `lShape`. They start at the origin and go up the left side first.

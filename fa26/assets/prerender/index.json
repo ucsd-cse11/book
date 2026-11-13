@@ -1377,5 +1377,96 @@
   "state": "done",
   "text": "directory = {12345=Ricardo}\nname = Ricardo\n",
   "images": 0
+ },
+ "cd58ba1e": {
+  "slug": "dramatis-personai/codegen",
+  "widget": 0,
+  "state": "done",
+  "text": "Above[top=Rect[width=100, height=20, color=black], bottom=Above[top=Rect[width=100, height=20, color=red], bottom=Rect[width=100, height=20, color=yellow]]]\n[[IMG:0]]",
+  "images": 1
+ },
+ "89bccc3f": {
+  "slug": "dramatis-personai/recipe-and-codegen",
+  "widget": 0,
+  "state": "done",
+  "text": "lens = Intersect[a=CircRegion[center=Point[x=0.0, y=0.0], radius=2.0], b=CircRegion[center=Point[x=3.0, y=0.0], radius=2.0]]\nplus = Union[a=RectRegion[corner=Point[x=0.0, y=2.0], width=6.0, height=2.0], b=RectRegion[corner=Point[x=2.0, y=0.0], width=2.0, height=6.0]]\n",
+  "images": 0
+ },
+ "3c2a1de3": {
+  "slug": "dramatis-personai/recipe-and-codegen",
+  "widget": 1,
+  "state": "done",
+  "text": "lens = Intersect[a=CircRegion[center=Point[x=0.0, y=0.0], radius=2.0], b=CircRegion[center=Point[x=3.0, y=0.0], radius=2.0]]\nplus = Union[a=RectRegion[corner=Point[x=0.0, y=2.0], width=6.0, height=2.0], b=RectRegion[corner=Point[x=2.0, y=0.0], width=2.0, height=6.0]]\n",
+  "images": 0
+ },
+ "71c7ba4f": {
+  "slug": "dramatis-personai/recipe-and-codegen",
+  "widget": 2,
+  "state": "done",
+  "text": "lens = Intersect[a=CircRegion[center=Point[x=0.0, y=0.0], radius=2.0], b=CircRegion[center=Point[x=3.0, y=0.0], radius=2.0]]\nplus = Union[a=RectRegion[corner=Point[x=0.0, y=2.0], width=6.0, height=2.0], b=RectRegion[corner=Point[x=2.0, y=0.0], width=2.0, height=6.0]]\nlShape = Polygon[outline=[LPoint;@b4c]\n",
+  "images": 0
+ },
+ "5fa383b5": {
+  "slug": "dramatis-personai/methods-from-tests",
+  "widget": 0,
+  "state": "done",
+  "text": "lens = Intersect[a=CircRegion[center=Point[x=0.0, y=0.0], radius=2.0], b=CircRegion[center=Point[x=3.0, y=0.0], radius=2.0]]\nplus = Union[a=RectRegion[corner=Point[x=0.0, y=2.0], width=6.0, height=2.0], b=RectRegion[corner=Point[x=2.0, y=0.0], width=2.0, height=6.0]]\nlShape = Polygon[outline=[LPoint;@7f0]\ntrapezoid = Polygon[outline=[LPoint;@7f1]\nstaircase = Polygon[outline=[LPoint;@7f2]\n",
+  "images": 0
+ },
+ "d74d83fa": {
+  "slug": "dramatis-personai/methods-from-tests",
+  "widget": 1,
+  "state": "failed",
+  "text": "Exception in thread \"Thread-0\" org.opentest4j.AssertionFailedError: expected: <true> but was: <false>\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "69df1254": {
+  "slug": "dramatis-personai/methods-from-tests",
+  "widget": 2,
+  "state": "failed",
+  "text": "Exception in thread \"Thread-0\" org.opentest4j.AssertionFailedError: expected: <true> but was: <false>\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "62b17274": {
+  "slug": "dramatis-personai/methods-from-tests",
+  "widget": 3,
+  "state": "failed",
+  "text": "Exception in thread \"Thread-0\" org.opentest4j.AssertionFailedError: expected: <true> but was: <false>\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.failNotEqual(Unknown Source)\n\tat org.junit.jupiter.api.Assertions.assertEquals(Unknown Source)\n\tat main(Unknown Source)\n",
+  "images": 0
+ },
+ "5b093bfd": {
+  "slug": "dramatis-personai/methods-from-tests",
+  "widget": 4,
+  "state": "done",
+  "text": "lens = Intersect[a=CircRegion[center=Point[x=0.0, y=0.0], radius=2.0], b=CircRegion[center=Point[x=3.0, y=0.0], radius=2.0]]\nplus = Union[a=RectRegion[corner=Point[x=0.0, y=2.0], width=6.0, height=2.0], b=RectRegion[corner=Point[x=2.0, y=0.0], width=2.0, height=6.0]]\nlShape = Polygon[outline=[LPoint;@e91]\ntrapezoid = Polygon[outline=[LPoint;@e92]\nstaircase = Polygon[outline=[LPoint;@e93]\n",
+  "images": 0
+ },
+ "d469306f": {
+  "slug": "dramatis-personai/skylines",
+  "widget": 0,
+  "state": "done",
+  "text": "240000 checks passed\n[[IMG:0]][[IMG:1]]",
+  "images": 2
+ },
+ "a8c0c0e8": {
+  "slug": "dramatis-personai/same-shape-different-outline",
+  "widget": 0,
+  "state": "done",
+  "text": "640000 checks passed\n",
+  "images": 0
+ },
+ "0a4130e3": {
+  "slug": "dramatis-personai/same-shape-different-outline",
+  "widget": 1,
+  "state": "done",
+  "text": "850000 checks passed\n",
+  "images": 0
+ },
+ "5883f2f4": {
+  "slug": "dramatis-personai/swapping-the-code",
+  "widget": 0,
+  "state": "done",
+  "text": "850000 checks passed\n",
+  "images": 0
  }
 }

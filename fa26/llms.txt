@@ -19,6 +19,7 @@ By Joe Politz, Rachel Lim, Sunwoo Kim, Gerald Soosairaj, and Niema Moshiri
 - [Extending Classes](extending-classes/chapter.txt)
 - [Abstract Classes and Mutation](abstract-classes-and-mutation/chapter.txt)
 - [Collections and Generics](collections-and-generics/chapter.txt): Building collections of objects
+- [Dramatis Personai](dramatis-personai/chapter.txt): The cast grows
 - [Appendix: The Pict Library](pict-library/chapter.txt): Pict constructors and methods
 - [Appendix: Working on Your Own Computer](your-own-computer/chapter.txt): The kit: the Pict library, JUnit, and a Codespace
 - [Credits](credits/chapter.txt): Citations, references, and inspiration for the book

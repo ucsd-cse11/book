@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swapping the Code — Dramatis Personai</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Dramatis Personai</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Swapping the Code</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>So we put all this work into testing this code. Maybe we should have just tried to understand it? Like, I think I can kinda read it.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>You’re right – it’s not <strong>that</strong> complex. It definitely takes a few hours to understand, but we’re capable, certainly. I don’t mean to suggest that you should <strong>avoid</strong> reading that kind of output. However, our verification is still quite valuable.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well, it definitely helped my confidence in the code. But I think you’re saying more than that?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>I am. Here’s something else we can do now – as long as we trust our verifier, we can swap in different implementations without changing our confidence much. I’ll give an AI system the whole checking program and ask it: “Replace the body of contains in Polygon with a completely different approach. No ray casting.”</div></div><div class="speech ai" data-ai="codegen/different-contains" data-match="yes" data-gate><p class="ai-source">Given the checking program and ‘Replace the body of contains in Polygon with a completely different approach. No ray casting.’ · Opus 5.5 · 2026-11-12 · <a href="../ai/codegen/different-contains/provenance.txt">how this was made</a></p><div class="bubble"><p><span class="who">Claude:<span style="white-space: pre-wrap">&#x20;</span></span> Here’s a replacement that uses the <strong>winding angle</strong> instead of ray casting. Stand at <code>p</code> and turn to face each vertex in order around the outline, adding up how far you turn. If <code>p</code> is inside, you make one full turn, so the total is ±2π. If <code>p</code> is outside, you turn back as far as you turned forward, so the total is 0.</p><pre><code data-lang="java">  <span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">contains</span>(<span style="color: #4b69c6">Point</span> p) {
+    <span style="color: #d73948">int</span> n <span style="color: #d73948">=</span> <span style="color: #d73948">this</span>.outline.length;
+    <span style="color: #d73948">double</span> totalAngle <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;
+    <span style="color: #74747c">//</span><span style="color: #74747c"> Look at each edge (a, b), wrapping from the last point back to the first</span>
+    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>, j <span style="color: #d73948">=</span> n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;</span> n; j <span style="color: #d73948">=</span> i, i <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>) {
+      <span style="color: #4b69c6">Point</span> a <span style="color: #d73948">=</span> <span style="color: #d73948">this</span>.outline[j];
+      <span style="color: #4b69c6">Point</span> b <span style="color: #d73948">=</span> <span style="color: #d73948">this</span>.outline[i];
+
+      <span style="color: #74747c">//</span><span style="color: #74747c"> Points on the outline count as inside, like RectRegion and CircRegion</span>
+      <span style="color: #d73948">if</span> (<span style="color: #4b69c6">onSegment</span>(a, b, p)) { <span style="color: #d73948">return</span> <span style="color: #d73948">true</span>; }
+
+      <span style="color: #74747c">//</span><span style="color: #74747c"> Vectors from p to each end of the edge</span>
+      <span style="color: #d73948">double</span> ax <span style="color: #d73948">=</span> a.<span style="color: #4b69c6">x</span>() <span style="color: #d73948">-</span> p.<span style="color: #4b69c6">x</span>(), ay <span style="color: #d73948">=</span> a.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">-</span> p.<span style="color: #4b69c6">y</span>();
+      <span style="color: #d73948">double</span> bx <span style="color: #d73948">=</span> b.<span style="color: #4b69c6">x</span>() <span style="color: #d73948">-</span> p.<span style="color: #4b69c6">x</span>(), by <span style="color: #d73948">=</span> b.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">-</span> p.<span style="color: #4b69c6">y</span>();
+
+      <span style="color: #74747c">//</span><span style="color: #74747c"> Signed angle turned going from a to b, as seen from p.</span>
+      <span style="color: #74747c">//</span><span style="color: #74747c"> The cross product gives the sine part (and the direction of the turn),</span>
+      <span style="color: #74747c">//</span><span style="color: #74747c"> the dot product gives the cosine part. atan2 combines them into an</span>
+      <span style="color: #74747c">//</span><span style="color: #74747c"> angle between -π and π.</span>
+      <span style="color: #d73948">double</span> cross <span style="color: #d73948">=</span> ax <span style="color: #d73948">*</span> by <span style="color: #d73948">-</span> ay <span style="color: #d73948">*</span> bx;
+      <span style="color: #d73948">double</span> dot <span style="color: #d73948">=</span> ax <span style="color: #d73948">*</span> bx <span style="color: #d73948">+</span> ay <span style="color: #d73948">*</span> by;
+      totalAngle <span style="color: #d73948">+=</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">atan2</span>(cross, dot);
+    }
+    <span style="color: #74747c">//</span><span style="color: #74747c"> Inside: about ±2π (one full turn, either direction). Outside: about 0.</span>
+    <span style="color: #74747c">//</span><span style="color: #74747c"> Comparing against π leaves plenty of room for rounding error.</span>
+    <span style="color: #d73948">return</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">abs</span>(totalAngle) <span style="color: #d73948">></span> <span style="color: #4b69c6">Math</span>.<span style="color: #b60157">PI</span>;
+  }</code></pre><p>Why this passes the existing tests:</p><ul><li><strong>Boundary points</strong>: the <code>onSegment</code> check runs first, just as before. Any point on an edge or at a vertex returns <code>true</code> before any angle is computed. This also means <code>p</code> never equals <code>a</code> or <code>b</code> when we call <code>atan2</code>, so we never compute the angle of a zero-length vector.</li><li><strong>Starting point and direction</strong> (<code>checkOutlines</code>): changing the starting vertex only reorders the terms in the sum. Reversing the outline negates every angle, so the total changes sign (2π becomes −2π). Taking <code>Math.abs</code> makes both directions give the same answer.</li><li><strong>Skylines with collinear vertices</strong>: an edge whose endpoints line up with <code>p</code> contributes an angle of 0 or ±π. Because <code>onSegment</code> already handled the case where <code>p</code> lies between them, the remaining case is 0, which doesn’t affect the sum.</li><li><strong>Rounding</strong>: each <code>atan2</code> is accurate to within a few ulps. With at most about 14 edges in these tests, the total stays far from the π threshold.</li></ul><p>The tradeoff is that ray casting uses only arithmetic and comparisons, while this approach calls <code>atan2</code> once per edge. That makes it slower, and it gives an approximate total rather than an exact count. In exchange, it has no special cases for vertices that lie exactly at <code>p.y()</code>.</p></div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>I pasted that into the checking program. I also put back the tests we wrote by hand for the L, folded up in <code>testsFromBefore</code>.</div></div><div class="runner" id="w1796896358" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  private static boolean onSegment(Point a, Point b, Point p) { … }&quot;,&quot;code&quot;:&quot;  private static boolean onSegment(Point a, Point b, Point p) {\n    // Cross product is 0 when a, b, and p are on the same line\n    double cross = (b.x() - a.x()) * (p.y() - a.y()) - (b.y() - a.y()) * (p.x() - a.x());\n    if (cross != 0) { return false; }\n    // p must also be between a and b\n    return p.x() >= Math.min(a.x(), b.x()) &amp;&amp; p.x() <= Math.max(a.x(), b.x())\n        &amp;&amp; p.y() >= Math.min(a.y(), b.y()) &amp;&amp; p.y() <= Math.max(a.y(), b.y());\n  }&quot;},{&quot;line&quot;:&quot;Polygon skyline(int width, int[] heights) { … }&quot;,&quot;code&quot;:&quot;Polygon skyline(int width, int[] heights) {\n  Point[] outline = new Point[2 * heights.length + 2];\n  outline[0] = new Point(0, 0);\n  for (int i = 0; i < heights.length; i += 1) {\n    outline[2 * i + 1] = new Point(i * width, heights[i]);        // top-left of column i\n    outline[2 * i + 2] = new Point((i + 1) * width, heights[i]);  // top-right of column i\n  }\n  outline[outline.length - 1] = new Point(heights.length * width, 0);\n  return new Polygon(outline);\n}&quot;},{&quot;line&quot;:&quot;Region skylineRects(int width, int[] heights) { … }&quot;,&quot;code&quot;:&quot;Region skylineRects(int width, int[] heights) {\n  Region columns = new RectRegion(new Point(0, 0), width, heights[0]);\n  for (int i = 1; i < heights.length; i += 1) {\n    columns = new Union(columns,\n        new RectRegion(new Point(i * width, 0), width, heights[i]));\n  }\n  return columns;\n}&quot;},{&quot;line&quot;:&quot;int checkSkyline(int width, int[] heights) { … }&quot;,&quot;code&quot;:&quot;int checkSkyline(int width, int[] heights) {\n  Polygon outline = skyline(width, heights);\n  Region rects = skylineRects(width, heights);\n  int checks = 0;\n  for (int i = 0; i < 100; i += 1) {\n    for (int j = 0; j < 100; j += 1) {\n      Point p = new Point(-5 + i * 0.5, -5 + j * 0.5);\n      assertEquals(rects.contains(p), outline.contains(p), \&quot;at \&quot; + p);\n      checks += 1;\n    }\n  }\n  return checks;\n}&quot;},{&quot;line&quot;:&quot;int checkRandomSkylines(int count, int seed) { … }&quot;,&quot;code&quot;:&quot;int checkRandomSkylines(int count, int seed) {\n  Random random = new Random(seed);\n  int checks = 0;\n  for (int s = 0; s < count; s += 1) {\n    int width = 1 + random.nextInt(7);\n    int[] heights = new int[1 + random.nextInt(6)];\n    for (int i = 0; i < heights.length; i += 1) {\n      heights[i] = 1 + random.nextInt(40);\n    }\n    checks += checkSkyline(width, heights);\n  }\n  return checks;\n}&quot;},{&quot;line&quot;:&quot;void testsFromBefore() { … }&quot;,&quot;code&quot;:&quot;void testsFromBefore() {\n  Polygon lShape = new Polygon(new Point[] {\n      new Point(0, 0), new Point(0, 20), new Point(10, 20),\n      new Point(10, 10), new Point(20, 10), new Point(20, 0) });\n  assertEquals(true, lShape.contains(new Point(5, 5)));\n  assertEquals(false, lShape.contains(new Point(15, 15)));\n  // one in each 'leg' of the L\n  assertEquals(true, lShape.contains(new Point(5, 15)));   // vertical leg\n  assertEquals(true, lShape.contains(new Point(15, 5)));   // horizontal leg\n  // outside the L\n  assertEquals(false, lShape.contains(new Point(5, -5)));  // below\n  assertEquals(false, lShape.contains(new Point(-5, 5)));  // to the left\n  assertEquals(false, lShape.contains(new Point(25, 5)));  // outside to the right\n  assertEquals(false, lShape.contains(new Point(5, 25)));  // outside above\n  assertEquals(false, lShape.contains(new Point(25, 25))); // above and to the right\n  // on the outline counts as inside, like RectRegion and CircRegion\n  assertEquals(true, lShape.contains(new Point(0, 0)));    // corner\n  assertEquals(true, lShape.contains(new Point(10, 10)));  // the inside corner\n  assertEquals(true, lShape.contains(new Point(20, 10)));  // corner\n  assertEquals(true, lShape.contains(new Point(0, 10)));   // left edge\n  assertEquals(true, lShape.contains(new Point(10, 15)));  // edge beside the empty corner\n  assertEquals(true, lShape.contains(new Point(15, 10)));  // edge below the empty corner\n}&quot;}]" data-ai-lines="[19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48]" data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {}
+interface Region { boolean contains(Point p); }
+record RectRegion(Point corner, double width, double height) implements Region {
+  public boolean contains(Point p) {
+    return p.x() >= this.corner.x() &amp;&amp; p.x() &lt;= this.corner.x() + this.width
+        &amp;&amp; p.y() >= this.corner.y() &amp;&amp; p.y() &lt;= this.corner.y() + this.height;
+  }
+}
+record Union(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) || this.b.contains(p); }
+}
+// a right triangle with its square corner at (0, 0)
+record RampRegion(double width, double height) implements Region {
+  public boolean contains(Point p) {
+    return p.x() >= 0 &amp;&amp; p.y() >= 0
+        &amp;&amp; p.x() * this.height + p.y() * this.width &lt;= this.width * this.height;
+  }
+}
+record Polygon(Point[] outline) implements Region {
+  public boolean contains(Point p) {
+    int n = this.outline.length;
+    double totalAngle = 0;
+    // Look at each edge (a, b), wrapping from the last point back to the first
+    for (int i = 0, j = n - 1; i &lt; n; j = i, i += 1) {
+      Point a = this.outline[j];
+      Point b = this.outline[i];
+
+      // Points on the outline count as inside, like RectRegion and CircRegion
+      if (onSegment(a, b, p)) { return true; }
+
+      // Vectors from p to each end of the edge
+      double ax = a.x() - p.x(), ay = a.y() - p.y();
+      double bx = b.x() - p.x(), by = b.y() - p.y();
+
+      // Signed angle turned going from a to b, as seen from p.
+      // The cross product gives the sine part (and the direction of the turn),
+      // the dot product gives the cosine part. atan2 combines them into an
+      // angle between -π and π.
+      double cross = ax * by - ay * bx;
+      double dot = ax * bx + ay * by;
+      totalAngle += Math.atan2(cross, dot);
+    }
+    // Inside: about ±2π (one full turn, either direction). Outside: about 0.
+    // Comparing against π leaves plenty of room for rounding error.
+    return Math.abs(totalAngle) > Math.PI;
+  }
+
+  // Is p on the segment from a to b?
+  private static boolean onSegment(Point a, Point b, Point p) { … }
+
+  // the same outline, starting from point number start
+  Polygon startingAt(int start) {
+    Point[] result = new Point[this.outline.length];
+    for (int i = 0; i &lt; result.length; i += 1) {
+      result[i] = this.outline[(start + i) % result.length];
+    }
+    return new Polygon(result);
+  }
+  // the same outline, backwards
+  Polygon reversed() {
+    Point[] result = new Point[this.outline.length];
+    for (int i = 0; i &lt; result.length; i += 1) {
+      result[i] = this.outline[result.length - 1 - i];
+    }
+    return new Polygon(result);
+  }
+}
+
+// columns of the same width, standing side by side on the x-axis
+Polygon skyline(int width, int[] heights) { … }
+
+// the same columns, as one RectRegion each
+Region skylineRects(int width, int[] heights) { … }
+
+// ask both, at every point of a 100 by 100 grid
+int checkSkyline(int width, int[] heights) { … }
+
+int checkRandomSkylines(int count, int seed) { … }
+
+// every starting point, both directions
+int checkOutlines(Polygon shape) {
+  int checks = 0;
+  for (int start = 0; start &lt; shape.outline().length; start += 1) {
+    Polygon forwards = shape.startingAt(start);
+    Polygon backwards = forwards.reversed();
+    for (int i = 0; i &lt; 100; i += 1) {
+      for (int j = 0; j &lt; 100; j += 1) {
+        Point p = new Point(-5 + i * 0.5, -5 + j * 0.5);
+        boolean expected = shape.contains(p);
+        assertEquals(expected, forwards.contains(p));
+        assertEquals(expected, backwards.contains(p));
+        checks += 2;
+      }
+    }
+  }
+  return checks;
+}
+
+// the same ramp as a three-point Polygon, asked at every grid point
+int checkRamp(int width, int height) {
+  Polygon outline = new Polygon(new Point[] {
+      new Point(0, 0), new Point(width, 0), new Point(0, height) });
+  Region ramp = new RampRegion(width, height);
+  int checks = 0;
+  for (int i = 0; i &lt; 100; i += 1) {
+    for (int j = 0; j &lt; 100; j += 1) {
+      Point p = new Point(-5 + i * 0.5, -5 + j * 0.5);
+      assertEquals(ramp.contains(p), outline.contains(p), "at " + p);
+      checks += 1;
+    }
+  }
+  return checks;
+}
+
+int checkRandomRamps(int count, int seed) {
+  Random random = new Random(seed);
+  int checks = 0;
+  for (int r = 0; r &lt; count; r += 1) {
+    checks += checkRamp(1 + random.nextInt(40), 1 + random.nextInt(40));
+  }
+  return checks;
+}
+
+// the tests we wrote by hand for the L, a few steps ago
+void testsFromBefore() { … }
+
+void main() {
+  testsFromBefore();
+
+  assertArrayEquals(
+      new Point[] { new Point(0, 0), new Point(0, 3), new Point(2, 3), new Point(2, 5),
+                    new Point(4, 5), new Point(4, 2), new Point(6, 2), new Point(6, 0) },
+      skyline(2, new int[] { 3, 5, 2 }).outline());
+
+  Region rects = skylineRects(2, new int[] { 3, 5, 2 });
+  assertEquals(true, rects.contains(new Point(3, 4)));
+  assertEquals(false, rects.contains(new Point(1, 4)));
+  assertEquals(true, rects.contains(new Point(2, 4)));
+
+  Polygon tri = new Polygon(new Point[] { new Point(1, 1), new Point(4, 1), new Point(1, 3) });
+  assertArrayEquals(new Point[] { new Point(4, 1), new Point(1, 3), new Point(1, 1) },
+      tri.startingAt(1).outline());
+  assertArrayEquals(new Point[] { new Point(1, 3), new Point(4, 1), new Point(1, 1) },
+      tri.reversed().outline());
+
+  Region ramp = new RampRegion(20, 10);
+  assertEquals(true, ramp.contains(new Point(5, 2)));
+  assertEquals(true, ramp.contains(new Point(10, 5)));
+  assertEquals(false, ramp.contains(new Point(15, 5)));
+
+  int checks = checkSkyline(2, new int[] { 3, 5, 2 });
+  checks += checkSkyline(10, new int[] { 20, 10 });
+  checks += checkSkyline(2, new int[] { 8, 6, 4, 2 });
+  checks += checkSkyline(4, new int[] { 9, 9, 5 });
+  checks += checkRandomSkylines(20, 11);
+  Polygon trapezoid = new Polygon(new Point[] {
+      new Point(0, 0), new Point(5, 10), new Point(15, 10), new Point(20, 0) });
+  checks += checkOutlines(skyline(10, new int[] { 20, 10 }));
+  checks += checkOutlines(skyline(2, new int[] { 8, 6, 4, 2 }));
+  checks += checkOutlines(trapezoid);
+  checks += checkRamp(20, 10);
+  checks += checkRandomRamps(20, 12);
+  System.out.println(checks + " checks passed");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="ai-key">AI-written</span><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Whoa. Angles, <code>atan2</code>, cross products… it’s a completely different method. And everything still passes? All 850,000?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Every one, and the hand-written tests too. Do you understand this version?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>No! Less than the first one.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Me neither. Again, I’m sure I <strong>could</strong>, and it would be a good exercise, but it would take a while. And I get something <strong>immediately</strong> from our tests.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I see what you’re saying. Now we have something to trust other than the code. The examples we picked from the picture, the edge tests, the skylines against the rectangles, the outlines listed every which way, the ramps. Whatever code passes all of that can’t be <strong>that</strong> wrong.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s the point I wanted to reach. Our confidence grew a little with each kind of check, and it’s attached to the checks. So when the code changes, the confidence comes along.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I said it can’t be <strong>that</strong> wrong. Could it still be a little wrong?</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>The checks only speak for the shapes we tried. I’ll leave you with a little teaser. Here’s an outline that crosses itself, listed as <code>(0, 10)</code>, <code>(6, -8)</code>, <code>(-10, 3)</code>, <code>(10, 3)</code>, <code>(-6, -8)</code>:</p><div class="polygons"><div class="polygon"><svg style="overflow: visible; width: 8.458124553em; height: 7.68503937em; display: block" viewBox="0 0 93.039370079 84.535433071" width="93.039370079pt" height="84.535433071pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml"><g><g transform="translate(4 4)"><path fill="#60a5fa73" fill-rule="nonzero" stroke="#1d4ed8" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" d="M 0 0m 42.519685039 0l 25.511811024 76.535433071l -68.031496063 -46.771653543h 85.039370079l -68.031496063 46.771653543Z "/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(39.519685039 39.519685039)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/></g></g></svg><div class="polygon-label">a star, with a dot at <code>(0, 0)</code></div></div></div><p>I ran both versions on it. Ray casting says <code>(0, 0)</code> is outside the star. The angle version says it’s inside.</p></div></div><div class="exercise" data-kind="choice" data-seed="1649227630"><div class="stem">The two versions of <code>contains</code> agree on all 850,000 checks, and disagree about the middle of the star. What does that tell us?</div><ol class="choices"><li data-correct>None of our tests has an outline that crosses itself, and we never decided what <code>contains</code> should mean for one. That’s ours to decide. Then we add a test.</li><li>The angle version has a bug, and we should go back to ray casting.<div class="why">It could be wrong, if we decide the middle of a star is outside. Nothing we’ve written down says so yet.</div></li><li>Ray casting has a bug, and the angle version fixed it.<div class="why">It could be wrong, if we decide the middle of a star is inside. Nothing we’ve written down says so yet.</div></li><li>With that many checks passing, the two versions must agree everywhere.<div class="why">They agree on every point we checked. The star’s middle is a point we didn’t check, on a kind of shape we didn’t try.</div></li></ol></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So there’s always another kind of shape.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There is. Finding the next one we care about, deciding what should happen, and writing the check: that part stays our job.</div></div></article>
+<nav class="pagenav"><a class="prev" href="same-shape-different-outline.html">← Same Shape, Different Outline</a> <a class="next" href="../pict-library/pict-library.html">Pict Library Reference →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "dramatis-personai", "title": "Dramatis Personai", "current": 6, "steps": [{"title": "AI, Jargon, and Context", "slug": "asking-ai", "url": "asking-ai.html", "path": "/dramatis-personai/asking-ai.html"}, {"title": "Which Code to Generate", "slug": "codegen", "url": "codegen.html", "path": "/dramatis-personai/codegen.html"}, {"title": "Structuring Code Generation", "slug": "recipe-and-codegen", "url": "recipe-and-codegen.html", "path": "/dramatis-personai/recipe-and-codegen.html"}, {"title": "Methods from Tests (and Tests from Tests)", "slug": "methods-from-tests", "url": "methods-from-tests.html", "path": "/dramatis-personai/methods-from-tests.html"}, {"title": "A Program to Check a Program", "slug": "skylines", "url": "skylines.html", "path": "/dramatis-personai/skylines.html"}, {"title": "Same Shape, Different Outline", "slug": "same-shape-different-outline", "url": "same-shape-different-outline.html", "path": "/dramatis-personai/same-shape-different-outline.html"}, {"title": "Swapping the Code", "slug": "swapping-the-code", "url": "swapping-the-code.html", "path": "/dramatis-personai/swapping-the-code.html"}]}</script>
+<script src="../assets/runner.js?v=9ea023ee50dd"></script>
+<script src="../assets/exercise.js?v=8182a1702132"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

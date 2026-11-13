@@ -10,7 +10,7 @@
 
 (function () {
   const revealAll = new URLSearchParams(location.search).get('reveal') === 'all';
-  const TRIGGER = '.exercise, .runner[data-gate]';
+  const TRIGGER = '.exercise, .runner[data-gate], .wb-beat[data-gate], .speech.ai[data-gate]';
   // The live step's gating state; nav.js re-inits on a swap, so the
   // document-level listeners below always act on the current step.
   let ctx = null;
@@ -68,16 +68,24 @@
     let saved = null;
     try { saved = localStorage.getItem(key); } catch (e) { /* private mode */ }
     let passed = Math.min(parseInt(saved, 10) || 0, gates.length);
-    progress(passed);
 
     gates.forEach((g, i) => {
       if (i >= passed) g.nodes.forEach((n) => n.classList.add('gated'));
     });
     // What the frontier is still waiting for. A run comes first: a unit that
     // pairs a blocking run with a question asks for the run, then the answer.
-    const wantsRun = (t) => t.classList.contains('runner') || t.dataset.kind === 'code';
-    const need = (g) => (
-      g.triggers.some((t) => !g.engaged.has(t) && wantsRun(t)) ? 'run' : 'answer');
+    const isRun = (t) => t.classList.contains('runner') || t.classList.contains('wb-beat');
+    const wantsRun = (t) => isRun(t) || t.dataset.kind === 'code';
+    const isAi = (t) => t.matches('.speech.ai');
+    const need = (g) => {
+      const left = g.triggers.filter((t) => !g.engaged.has(t));
+      if (left.some(wantsRun)) return 'run';
+      return left.length && left.every(isAi) ? 'read' : 'answer';
+    };
+    const readToEnd = (t) => {
+      const b = t.querySelector('.bubble');
+      return !!b && b.clientHeight > 0 && b.scrollTop + b.clientHeight >= b.scrollHeight - 4;
+    };
     const frontier = () => {
       for (const g of gates) {
         g.unit.classList.remove('gate-frontier');
@@ -86,14 +94,17 @@
       }
       if (passed >= gates.length) return;
       const g = gates[passed];
-      const pendingRun = g.triggers.some((t) => !g.engaged.has(t) && t.classList.contains('runner'));
+      const pendingRun = g.triggers.some((t) => !g.engaged.has(t) && isRun(t));
       if (g.nodes.length || pendingRun) {
         g.unit.classList.add('gate-frontier');
         g.unit.setAttribute('data-gate-need', need(g));
         if (!g.nodes.length) g.unit.setAttribute('data-gate-last', '');
       }
+      const read = g.triggers.find((t) => isAi(t) && !g.engaged.has(t) && readToEnd(t));
+      if (read) queueMicrotask(() => engage(read));
     };
     frontier();
+    progress(passed);
     if (passed >= gates.length) markDone();
 
     function engage(trigger) {
@@ -116,7 +127,7 @@
       if (passed >= gates.length) markDone();
     }
 
-    ctx = { engage };
+    ctx = { engage, readToEnd, frontier };
   }
 
   // One-time delegated listeners, always acting on the live step's gates.
@@ -137,9 +148,17 @@
   // has now seen what the code does, which is the point of a run gate.
   document.addEventListener('run-done', (e) => {
     if (!ctx) return;
-    const widget = e.target.closest('.runner[data-gate]');
+    const widget = e.target.closest('.runner[data-gate], .wb-beat[data-gate]');
     if (widget) ctx.engage(widget);
   });
+
+  // A recorded AI answer opens once its scrolling body has been read to the end.
+  document.addEventListener('scroll', (e) => {
+    if (!ctx || !(e.target instanceof Element)) return;
+    const ai = e.target.closest('.speech.ai[data-gate]');
+    if (ai && ctx.readToEnd(ai)) ctx.engage(ai);
+  }, true);
+  window.addEventListener('load', () => { if (ctx) ctx.frontier(); });
 
   window.bookGates = { init };
   init(document);

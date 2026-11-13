@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methods from Tests (and Tests from Tests) — Dramatis Personai</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=c613f580a145">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Dramatis Personai</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Methods from Tests (and Tests from Tests)</h1>
+<article class="prose"><div class="workbench" hidden="hidden"></div><div class="runner" id="w1604551605" data-engine="java17" data-expect="compiles" data-ai-lines="[32,33,34,35,36,37,38,39]" data-echo data-label="Where we left off" data-start><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {}
+interface Region { boolean contains(Point p); }
+record RectRegion(Point corner, double width, double height) implements Region {
+  public boolean contains(Point p) {
+    return p.x() >= this.corner.x() &amp;&amp; p.x() &lt;= this.corner.x() + this.width
+        &amp;&amp; p.y() >= this.corner.y() &amp;&amp; p.y() &lt;= this.corner.y() + this.height;
+  }
+}
+record CircRegion(Point center, double radius) implements Region {
+  public boolean contains(Point p) {
+    double dx = p.x() - this.center.x();
+    double dy = p.y() - this.center.y();
+    return Math.sqrt(dx * dx + dy * dy) &lt;= this.radius;
+  }
+}
+record Union(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) || this.b.contains(p); }
+}
+record Intersect(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) &amp;&amp; this.b.contains(p); }
+}
+record Polygon(Point[] outline) {}
+
+Region lens = new Intersect(new CircRegion(new Point(0, 0), 2),
+                            new CircRegion(new Point(3, 0), 2));
+Region plus = new Union(new RectRegion(new Point(0, 2), 6, 2),
+                        new RectRegion(new Point(2, 0), 2, 6));
+
+Polygon lShape = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 20), new Point(10, 20),
+  new Point(10, 10), new Point(20, 10), new Point(20, 0) });
+
+Polygon trapezoid = new Polygon(new Point[] {
+  new Point(0, 0), new Point(5, 10), new Point(15, 10), new Point(20, 0) });
+
+Polygon staircase = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 8), new Point(2, 8),
+  new Point(2, 6), new Point(4, 6), new Point(4, 4),
+  new Point(6, 4), new Point(6, 2), new Point(8, 2),
+  new Point(8, 0) });
+
+void main() {
+  assertEquals(true, lens.contains(new Point(1.5, 0)));
+  assertEquals(false, lens.contains(new Point(-1, 0)));
+  assertEquals(true, plus.contains(new Point(3, 3)));
+  assertEquals(false, plus.contains(new Point(1, 1)));
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="ai-key">AI-written</span><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK, so how do we implement <code>contains</code> for Polygons? Or, I guess, how do we get AI to do it?</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>Let’s recall the recipe for a minute:</p><ol><li value="1">Define the data and write examples to make the representation clear</li><li value="2">Identify the method you want to write</li><li value="3">Write the method header and examples together to figure out what it’s <strong>supposed</strong> to do; placeholder values to make it run</li><li value="4">Implement the method body and check it against the examples.</li></ol><p>Which step?</p></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I guess we are on step 3?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right. What are some good examples of calling <code>contains</code> on <code>Polygon</code> that we can write as asserts?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm so I guess some points inside and outside the shape?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s think about a picture. Our L shape is actually a really good example. I think it’s useful to test <code>contains</code> inside three different “parts” of the L, and things that are outside it for a few different reasons:</div></div><div class="polygons"><div class="polygon"><svg style="overflow: visible; width: 16.83321403em; height: 16.83321403em; display: block" viewBox="0 0 185.165354331 185.165354331" width="185.165354331pt" height="185.165354331pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml"><g><g transform="translate(4 4)"><path fill="#60a5fa73" fill-rule="nonzero" stroke="#1d4ed8" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" d="M 0 0m 0 177.165354331v -141.732283465h 70.866141732v 70.866141732h 70.866141732v 70.866141732Z "/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(32.433070866 67.866141732)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(32.433070866 138.732283465)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(103.299212598 138.732283465)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(103.299212598 67.866141732)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(32.433070866 -3)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(174.165354331 138.732283465)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/></g></g></svg><div class="polygon-label"><code>lShape</code></div></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm should we also think about one that’s way far away to the top right? And negative points?</div></div><div class="polygons"><div class="polygon"><svg style="overflow: visible; width: 23.275590551em; height: 23.275590551em; display: block" viewBox="0 0 256.031496063 256.031496063" width="256.031496063pt" height="256.031496063pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml"><g><g transform="translate(4 4)"><path fill="#60a5fa73" fill-rule="nonzero" stroke="#1d4ed8" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" d="M 0 0m 35.433070866 212.598425197v -141.732283465h 70.866141732v 70.866141732h 70.866141732v 70.866141732Z "/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(67.866141732 103.299212598)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(67.866141732 174.165354331)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(138.732283465 174.165354331)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(138.732283465 103.299212598)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(67.866141732 32.433070866)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(209.598425197 174.165354331)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(245.031496063 -3)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(-3 245.031496063)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/></g></g></svg><div class="polygon-label"><code>lShape</code></div></div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great ideas. Now, notice that we just came up with these in “idea space”. I see a handful of tests, and we can probably ask an AI to do the typing for us. We’ll need to spot check that it actually did the work. I’ll show you a strategy I sometimes use: I put a comment in my code that says what to fill.</div></div><div class="runner" id="w3612181498" data-engine="java17" data-expect="assert" data-ai-lines="[36,37,38,39,40,41,42,43]" data-echo data-gate data-edit data-label="Tests to fill in"><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {}
+interface Region { boolean contains(Point p); }
+record RectRegion(Point corner, double width, double height) implements Region {
+  public boolean contains(Point p) {
+    return p.x() >= this.corner.x() &amp;&amp; p.x() &lt;= this.corner.x() + this.width
+        &amp;&amp; p.y() >= this.corner.y() &amp;&amp; p.y() &lt;= this.corner.y() + this.height;
+  }
+}
+record CircRegion(Point center, double radius) implements Region {
+  public boolean contains(Point p) {
+    double dx = p.x() - this.center.x();
+    double dy = p.y() - this.center.y();
+    return Math.sqrt(dx * dx + dy * dy) &lt;= this.radius;
+  }
+}
+record Union(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) || this.b.contains(p); }
+}
+record Intersect(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) &amp;&amp; this.b.contains(p); }
+}
+record Polygon(Point[] outline) implements Region {
+  public boolean contains(Point p) {
+    return false;
+  }
+}
+
+Region lens = new Intersect(new CircRegion(new Point(0, 0), 2),
+                            new CircRegion(new Point(3, 0), 2));
+Region plus = new Union(new RectRegion(new Point(0, 2), 6, 2),
+                        new RectRegion(new Point(2, 0), 2, 6));
+
+Polygon lShape = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 20), new Point(10, 20),
+  new Point(10, 10), new Point(20, 10), new Point(20, 0) });
+
+Polygon trapezoid = new Polygon(new Point[] {
+  new Point(0, 0), new Point(5, 10), new Point(15, 10), new Point(20, 0) });
+
+Polygon staircase = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 8), new Point(2, 8),
+  new Point(2, 6), new Point(4, 6), new Point(4, 4),
+  new Point(6, 4), new Point(6, 2), new Point(8, 2),
+  new Point(8, 0) });
+
+void main() {
+  assertEquals(true, lens.contains(new Point(1.5, 0)));
+  assertEquals(false, lens.contains(new Point(-1, 0)));
+  assertEquals(true, plus.contains(new Point(3, 3)));
+  assertEquals(false, plus.contains(new Point(1, 1)));
+
+  assertEquals(true, lShape.contains(new Point(5, 5)));
+  assertEquals(false, lShape.contains(new Point(15, 15)));
+  // FILL: Add more tests: one for each 'leg' of the L, one below, one to the
+  // left, one outside to the right, one outside above, and one all the way
+  // above and to the right
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="ai-key">AI-written</span><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Wait. Is that how <strong>this book</strong> gets written?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>…</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It’s bothering me that you’re not answering.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Moving on. Let’s see what the AI system does with this strategy, hm?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So I’d say “Fill in the tests marked with FILL in the program”?</div></div><div class="speech ai" data-ai="codegen/fill-tests" data-match="yes" data-gate><p class="ai-source">Given the program so far and ‘Fill in the tests marked with FILL in the program’ · Opus 5.5 · 2026-11-11 · <a href="../ai/codegen/fill-tests/provenance.txt">how this was made</a></p><div class="bubble"><p><span class="who">Claude:<span style="white-space: pre-wrap">&#x20;</span></span> Here are the filled-in tests. The L spans x 0–10 for y 0–20 (the vertical leg) and x 0–20 for y 0–10 (the horizontal leg).</p><pre><code data-lang="java">void <span style="color: #4b69c6">main</span>() {
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">true</span>, lens.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">1</span><span style="color: #b60157">.</span><span style="color: #b60157">5</span>, <span style="color: #b60157">0</span>)));
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">false</span>, lens.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #d73948">-</span><span style="color: #b60157">1</span>, <span style="color: #b60157">0</span>)));
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">true</span>, plus.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">3</span>, <span style="color: #b60157">3</span>)));
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">false</span>, plus.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">1</span>, <span style="color: #b60157">1</span>)));
+
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">true</span>, lShape.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">5</span>, <span style="color: #b60157">5</span>)));
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">false</span>, lShape.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">15</span>, <span style="color: #b60157">15</span>)));
+  <span style="color: #74747c">//</span><span style="color: #74747c"> one in each 'leg' of the L</span>
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">true</span>, lShape.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">5</span>, <span style="color: #b60157">15</span>)));   <span style="color: #74747c">//</span><span style="color: #74747c"> vertical leg</span>
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">true</span>, lShape.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">15</span>, <span style="color: #b60157">5</span>)));   <span style="color: #74747c">//</span><span style="color: #74747c"> horizontal leg</span>
+  <span style="color: #74747c">//</span><span style="color: #74747c"> outside the L</span>
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">false</span>, lShape.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">5</span>, <span style="color: #d73948">-</span><span style="color: #b60157">5</span>)));  <span style="color: #74747c">//</span><span style="color: #74747c"> below</span>
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">false</span>, lShape.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #d73948">-</span><span style="color: #b60157">5</span>, <span style="color: #b60157">5</span>)));  <span style="color: #74747c">//</span><span style="color: #74747c"> to the left</span>
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">false</span>, lShape.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">25</span>, <span style="color: #b60157">5</span>)));  <span style="color: #74747c">//</span><span style="color: #74747c"> outside to the right</span>
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">false</span>, lShape.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">5</span>, <span style="color: #b60157">25</span>)));  <span style="color: #74747c">//</span><span style="color: #74747c"> outside above</span>
+  <span style="color: #4b69c6">assertEquals</span>(<span style="color: #d73948">false</span>, lShape.<span style="color: #4b69c6">contains</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Point</span>(<span style="color: #b60157">25</span>, <span style="color: #b60157">25</span>))); <span style="color: #74747c">//</span><span style="color: #74747c"> above and to the right</span>
+}</code></pre><p><code>Polygon.contains</code> currently always returns <code>false</code>. So the <code>true</code> tests, including the existing <code>(5, 5)</code> test, will fail until it’s implemented, for example with ray casting. The <code>false</code> tests will pass now but will still be useful checks once it’s implemented.</p></div></div><div class="runner" id="w1776226900" data-engine="java17" data-expect="assert" data-ai-lines="[36,37,38,39,40,41,42,43,53,54,55,56,57,58,59,60,61]" data-echo data-gate data-edit data-label="Claude's tests"><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {}
+interface Region { boolean contains(Point p); }
+record RectRegion(Point corner, double width, double height) implements Region {
+  public boolean contains(Point p) {
+    return p.x() >= this.corner.x() &amp;&amp; p.x() &lt;= this.corner.x() + this.width
+        &amp;&amp; p.y() >= this.corner.y() &amp;&amp; p.y() &lt;= this.corner.y() + this.height;
+  }
+}
+record CircRegion(Point center, double radius) implements Region {
+  public boolean contains(Point p) {
+    double dx = p.x() - this.center.x();
+    double dy = p.y() - this.center.y();
+    return Math.sqrt(dx * dx + dy * dy) &lt;= this.radius;
+  }
+}
+record Union(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) || this.b.contains(p); }
+}
+record Intersect(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) &amp;&amp; this.b.contains(p); }
+}
+record Polygon(Point[] outline) implements Region {
+  public boolean contains(Point p) {
+    return false;
+  }
+}
+
+Region lens = new Intersect(new CircRegion(new Point(0, 0), 2),
+                            new CircRegion(new Point(3, 0), 2));
+Region plus = new Union(new RectRegion(new Point(0, 2), 6, 2),
+                        new RectRegion(new Point(2, 0), 2, 6));
+
+Polygon lShape = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 20), new Point(10, 20),
+  new Point(10, 10), new Point(20, 10), new Point(20, 0) });
+
+Polygon trapezoid = new Polygon(new Point[] {
+  new Point(0, 0), new Point(5, 10), new Point(15, 10), new Point(20, 0) });
+
+Polygon staircase = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 8), new Point(2, 8),
+  new Point(2, 6), new Point(4, 6), new Point(4, 4),
+  new Point(6, 4), new Point(6, 2), new Point(8, 2),
+  new Point(8, 0) });
+
+void main() {
+  assertEquals(true, lens.contains(new Point(1.5, 0)));
+  assertEquals(false, lens.contains(new Point(-1, 0)));
+  assertEquals(true, plus.contains(new Point(3, 3)));
+  assertEquals(false, plus.contains(new Point(1, 1)));
+
+  assertEquals(true, lShape.contains(new Point(5, 5)));
+  assertEquals(false, lShape.contains(new Point(15, 15)));
+  // one in each 'leg' of the L
+  assertEquals(true, lShape.contains(new Point(5, 15)));   // vertical leg
+  assertEquals(true, lShape.contains(new Point(15, 5)));   // horizontal leg
+  // outside the L
+  assertEquals(false, lShape.contains(new Point(5, -5)));  // below
+  assertEquals(false, lShape.contains(new Point(-5, 5)));  // to the left
+  assertEquals(false, lShape.contains(new Point(25, 5)));  // outside to the right
+  assertEquals(false, lShape.contains(new Point(5, 25)));  // outside above
+  assertEquals(false, lShape.contains(new Point(25, 25))); // above and to the right
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="ai-key">AI-written</span><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Wow!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Do they match the picture?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I think so… oh wait. We drew one down and to the left, it did one to the left and one down. I guess all of those are useful.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yeah, we could imagine trying to get a full sort of 4×4 grid of tests. There are some other categories we should test, too, that aren’t at all handled here. Can you think of any?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh! Boundary cases. Like stuff right on the line!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great, yeah we should probably check for things right on the edges. That could come up later when we pick <code>&lt;</code> or <code>&lt;=</code> for some comparisons, for example.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK we can add those. And wait a minute… what’s ray casting?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Oh good question. We’ll see if that comes up in the implementation. For now let’s get some edge tests in there. I’ll put them in, good job noticing. I’ll include a few corners and a few edges.</div></div><div class="runner" id="w1655796340" data-engine="java17" data-expect="assert" data-ai-lines="[36,37,38,39,40,41,42,43,53,54,55,56,57,58,59,60,61]" data-echo data-gate data-edit data-label="Edge tests"><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {}
+interface Region { boolean contains(Point p); }
+record RectRegion(Point corner, double width, double height) implements Region {
+  public boolean contains(Point p) {
+    return p.x() >= this.corner.x() &amp;&amp; p.x() &lt;= this.corner.x() + this.width
+        &amp;&amp; p.y() >= this.corner.y() &amp;&amp; p.y() &lt;= this.corner.y() + this.height;
+  }
+}
+record CircRegion(Point center, double radius) implements Region {
+  public boolean contains(Point p) {
+    double dx = p.x() - this.center.x();
+    double dy = p.y() - this.center.y();
+    return Math.sqrt(dx * dx + dy * dy) &lt;= this.radius;
+  }
+}
+record Union(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) || this.b.contains(p); }
+}
+record Intersect(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) &amp;&amp; this.b.contains(p); }
+}
+record Polygon(Point[] outline) implements Region {
+  public boolean contains(Point p) {
+    return false;
+  }
+}
+
+Region lens = new Intersect(new CircRegion(new Point(0, 0), 2),
+                            new CircRegion(new Point(3, 0), 2));
+Region plus = new Union(new RectRegion(new Point(0, 2), 6, 2),
+                        new RectRegion(new Point(2, 0), 2, 6));
+
+Polygon lShape = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 20), new Point(10, 20),
+  new Point(10, 10), new Point(20, 10), new Point(20, 0) });
+
+Polygon trapezoid = new Polygon(new Point[] {
+  new Point(0, 0), new Point(5, 10), new Point(15, 10), new Point(20, 0) });
+
+Polygon staircase = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 8), new Point(2, 8),
+  new Point(2, 6), new Point(4, 6), new Point(4, 4),
+  new Point(6, 4), new Point(6, 2), new Point(8, 2),
+  new Point(8, 0) });
+
+void main() {
+  assertEquals(true, lens.contains(new Point(1.5, 0)));
+  assertEquals(false, lens.contains(new Point(-1, 0)));
+  assertEquals(true, plus.contains(new Point(3, 3)));
+  assertEquals(false, plus.contains(new Point(1, 1)));
+
+  assertEquals(true, lShape.contains(new Point(5, 5)));
+  assertEquals(false, lShape.contains(new Point(15, 15)));
+  // one in each 'leg' of the L
+  assertEquals(true, lShape.contains(new Point(5, 15)));   // vertical leg
+  assertEquals(true, lShape.contains(new Point(15, 5)));   // horizontal leg
+  // outside the L
+  assertEquals(false, lShape.contains(new Point(5, -5)));  // below
+  assertEquals(false, lShape.contains(new Point(-5, 5)));  // to the left
+  assertEquals(false, lShape.contains(new Point(25, 5)));  // outside to the right
+  assertEquals(false, lShape.contains(new Point(5, 25)));  // outside above
+  assertEquals(false, lShape.contains(new Point(25, 25))); // above and to the right
+  // on the outline counts as inside, like RectRegion and CircRegion
+  assertEquals(true, lShape.contains(new Point(0, 0)));    // corner
+  assertEquals(true, lShape.contains(new Point(10, 10)));  // the inside corner
+  assertEquals(true, lShape.contains(new Point(20, 10)));  // corner
+  assertEquals(true, lShape.contains(new Point(0, 10)));   // left edge
+  assertEquals(true, lShape.contains(new Point(10, 15)));  // edge beside the empty corner
+  assertEquals(true, lShape.contains(new Point(15, 10)));  // edge below the empty corner
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="ai-key">AI-written</span><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>OK and we expect this to fail right now, because we just have the placeholder <code>false</code> in.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right. So the next big step is to get <code>contains</code> implemented. What do you think we should try for the prompt?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I say go for it. We have all these tests and examples. I trust it.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>OK, if you say so! Go for it.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>All right. “Implement the contains method for polygon in this code.”</div></div><div class="speech ai" data-ai="codegen/implement-contains" data-match="yes" data-gate><p class="ai-source">Given the program so far and ‘Implement the contains method for polygon in this code.’ · Opus 5.5 · 2026-11-11 · <a href="../ai/codegen/implement-contains/provenance.txt">how this was made</a></p><div class="bubble"><p><span class="who">Claude:<span style="white-space: pre-wrap">&#x20;</span></span> Here’s an implementation of <code>Polygon.contains</code> that uses <strong>ray casting</strong> (the even-odd rule), with a separate check so points on the outline count as inside:</p><pre><code data-lang="java">record <span style="color: #4b69c6">Polygon</span>(<span style="color: #4b69c6">Point</span><span style="color: #d73948">[]</span> outline) implements <span style="color: #4b69c6">Region</span> {
+  <span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">contains</span>(<span style="color: #4b69c6">Point</span> p) {
+    <span style="color: #d73948">int</span> n <span style="color: #d73948">=</span> <span style="color: #d73948">this</span>.outline.length;
+    <span style="color: #d73948">boolean</span> inside <span style="color: #d73948">=</span> <span style="color: #d73948">false</span>;
+    <span style="color: #74747c">//</span><span style="color: #74747c"> Look at each edge (a, b), wrapping from the last point back to the first</span>
+    <span style="color: #d73948">for</span> (<span style="color: #d73948">int</span> i <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>, j <span style="color: #d73948">=</span> n <span style="color: #d73948">-</span> <span style="color: #b60157">1</span>; i <span style="color: #d73948">&lt;</span> n; j <span style="color: #d73948">=</span> i, i <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>) {
+      <span style="color: #4b69c6">Point</span> a <span style="color: #d73948">=</span> <span style="color: #d73948">this</span>.outline[j];
+      <span style="color: #4b69c6">Point</span> b <span style="color: #d73948">=</span> <span style="color: #d73948">this</span>.outline[i];
+
+      <span style="color: #74747c">//</span><span style="color: #74747c"> Points on the outline count as inside, like RectRegion and CircRegion</span>
+      <span style="color: #d73948">if</span> (<span style="color: #4b69c6">onSegment</span>(a, b, p)) { <span style="color: #d73948">return</span> <span style="color: #d73948">true</span>; }
+
+      <span style="color: #74747c">//</span><span style="color: #74747c"> Cast a ray from p to the right and count how many edges it crosses.</span>
+      <span style="color: #74747c">//</span><span style="color: #74747c"> Only count edges that cross p's y value. Using strict > on both ends</span>
+      <span style="color: #74747c">//</span><span style="color: #74747c"> means a vertex exactly at p.y() is only counted once.</span>
+      <span style="color: #d73948">if</span> ((a.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">></span> p.<span style="color: #4b69c6">y</span>()) <span style="color: #d73948">!=</span> (b.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">></span> p.<span style="color: #4b69c6">y</span>())) {
+        <span style="color: #74747c">//</span><span style="color: #74747c"> x position where this edge crosses the line y = p.y()</span>
+        <span style="color: #d73948">double</span> xCross <span style="color: #d73948">=</span> a.<span style="color: #4b69c6">x</span>() <span style="color: #d73948">+</span> (p.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">-</span> a.<span style="color: #4b69c6">y</span>()) <span style="color: #d73948">*</span> (b.<span style="color: #4b69c6">x</span>() <span style="color: #d73948">-</span> a.<span style="color: #4b69c6">x</span>()) <span style="color: #d73948">/</span> (b.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">-</span> a.<span style="color: #4b69c6">y</span>());
+        <span style="color: #d73948">if</span> (p.<span style="color: #4b69c6">x</span>() <span style="color: #d73948">&lt;</span> xCross) { inside <span style="color: #d73948">=</span> <span style="color: #d73948">!</span>inside; }
+      }
+    }
+    <span style="color: #d73948">return</span> inside;
+  }
+
+  <span style="color: #74747c">//</span><span style="color: #74747c"> Is p on the segment from a to b?</span>
+  <span style="color: #d73948">private</span> <span style="color: #d73948">static</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">onSegment</span>(<span style="color: #4b69c6">Point</span> a, <span style="color: #4b69c6">Point</span> b, <span style="color: #4b69c6">Point</span> p) {
+    <span style="color: #74747c">//</span><span style="color: #74747c"> Cross product is 0 when a, b, and p are on the same line</span>
+    <span style="color: #d73948">double</span> cross <span style="color: #d73948">=</span> (b.<span style="color: #4b69c6">x</span>() <span style="color: #d73948">-</span> a.<span style="color: #4b69c6">x</span>()) <span style="color: #d73948">*</span> (p.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">-</span> a.<span style="color: #4b69c6">y</span>()) <span style="color: #d73948">-</span> (b.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">-</span> a.<span style="color: #4b69c6">y</span>()) <span style="color: #d73948">*</span> (p.<span style="color: #4b69c6">x</span>() <span style="color: #d73948">-</span> a.<span style="color: #4b69c6">x</span>());
+    <span style="color: #d73948">if</span> (cross <span style="color: #d73948">!=</span> <span style="color: #b60157">0</span>) { <span style="color: #d73948">return</span> <span style="color: #d73948">false</span>; }
+    <span style="color: #74747c">//</span><span style="color: #74747c"> p must also be between a and b</span>
+    <span style="color: #d73948">return</span> p.<span style="color: #4b69c6">x</span>() <span style="color: #d73948">>=</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">min</span>(a.<span style="color: #4b69c6">x</span>(), b.<span style="color: #4b69c6">x</span>()) <span style="color: #d73948">&amp;&amp;</span> p.<span style="color: #4b69c6">x</span>() <span style="color: #d73948">&lt;=</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">max</span>(a.<span style="color: #4b69c6">x</span>(), b.<span style="color: #4b69c6">x</span>())
+        <span style="color: #d73948">&amp;&amp;</span> p.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">>=</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">min</span>(a.<span style="color: #4b69c6">y</span>(), b.<span style="color: #4b69c6">y</span>()) <span style="color: #d73948">&amp;&amp;</span> p.<span style="color: #4b69c6">y</span>() <span style="color: #d73948">&lt;=</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">max</span>(a.<span style="color: #4b69c6">y</span>(), b.<span style="color: #4b69c6">y</span>());
+  }
+}</code></pre><p><strong>How it works</strong></p><ol><li><p><strong>Outline check.</strong> For each edge, <code>onSegment</code> tests whether <code>p</code> lies on it. The cross product is zero only when <code>p</code> is on the line through <code>a</code> and <code>b</code>. The bounds check then makes sure <code>p</code> is between them. This is why the tests for corners like <code>(10, 10)</code> and edges like <code>(10, 15)</code> return <code>true</code>.</p></li><li><p><strong>Ray casting.</strong> Picture a ray going from <code>p</code> to the right forever. Each time it crosses an edge, it moves from inside to outside or back again. An odd number of crossings means <code>p</code> is inside.</p><ul><li>The test <code>(a.y() > p.y()) != (b.y() > p.y())</code> keeps only edges that span <code>p</code>’s y value. Horizontal edges are skipped automatically, which also avoids dividing by zero in the <code>xCross</code> line.</li><li>Because the comparison is strict on both ends, a ray that passes exactly through a vertex is counted once, not twice.</li></ul></li></ol><p><strong>Checking one case by hand.</strong> For <code>(5, 15)</code> in <code>lShape</code>, only two edges span y = 15:</p><ul><li>the edge at x = 0, which is to the left of 5, so it doesn’t count;</li><li>the edge at x = 10, which is to the right, so it counts.</li></ul><p>That’s one crossing, which is odd, so the result is inside. For <code>(15, 15)</code>, both of those edges are to the left, giving zero crossings, so the result is outside.</p><p>The same approach works for any simple polygon, including concave ones like <code>lShape</code>, <code>staircase</code>, and <code>trapezoid</code>.</p><p>One caveat: the <code>cross != 0</code> test is exact. That works for the integer coordinates in these tests. With arbitrary decimal coordinates, rounding errors could make a point that is really on an edge fail the check. If that matters, you could compare <code>Math.abs(cross)</code> against a small tolerance instead.</p></div></div><div class="runner" id="w1527331837" data-engine="java17" data-expect="compiles" data-ai-lines="[22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,65,66,67,68,69,70,71,72,82,83,84,85,86,87,88,89,90]" data-echo data-gate data-edit data-label="Claude's contains"><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">record Point(double x, double y) {}
+interface Region { boolean contains(Point p); }
+record RectRegion(Point corner, double width, double height) implements Region {
+  public boolean contains(Point p) {
+    return p.x() >= this.corner.x() &amp;&amp; p.x() &lt;= this.corner.x() + this.width
+        &amp;&amp; p.y() >= this.corner.y() &amp;&amp; p.y() &lt;= this.corner.y() + this.height;
+  }
+}
+record CircRegion(Point center, double radius) implements Region {
+  public boolean contains(Point p) {
+    double dx = p.x() - this.center.x();
+    double dy = p.y() - this.center.y();
+    return Math.sqrt(dx * dx + dy * dy) &lt;= this.radius;
+  }
+}
+record Union(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) || this.b.contains(p); }
+}
+record Intersect(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) &amp;&amp; this.b.contains(p); }
+}
+record Polygon(Point[] outline) implements Region {
+  public boolean contains(Point p) {
+    int n = this.outline.length;
+    boolean inside = false;
+    // Look at each edge (a, b), wrapping from the last point back to the first
+    for (int i = 0, j = n - 1; i &lt; n; j = i, i += 1) {
+      Point a = this.outline[j];
+      Point b = this.outline[i];
+
+      // Points on the outline count as inside, like RectRegion and CircRegion
+      if (onSegment(a, b, p)) { return true; }
+
+      // Cast a ray from p to the right and count how many edges it crosses.
+      // Only count edges that cross p's y value. Using strict > on both ends
+      // means a vertex exactly at p.y() is only counted once.
+      if ((a.y() > p.y()) != (b.y() > p.y())) {
+        // x position where this edge crosses the line y = p.y()
+        double xCross = a.x() + (p.y() - a.y()) * (b.x() - a.x()) / (b.y() - a.y());
+        if (p.x() &lt; xCross) { inside = !inside; }
+      }
+    }
+    return inside;
+  }
+
+  // Is p on the segment from a to b?
+  private static boolean onSegment(Point a, Point b, Point p) {
+    // Cross product is 0 when a, b, and p are on the same line
+    double cross = (b.x() - a.x()) * (p.y() - a.y()) - (b.y() - a.y()) * (p.x() - a.x());
+    if (cross != 0) { return false; }
+    // p must also be between a and b
+    return p.x() >= Math.min(a.x(), b.x()) &amp;&amp; p.x() &lt;= Math.max(a.x(), b.x())
+        &amp;&amp; p.y() >= Math.min(a.y(), b.y()) &amp;&amp; p.y() &lt;= Math.max(a.y(), b.y());
+  }
+}
+
+Region lens = new Intersect(new CircRegion(new Point(0, 0), 2),
+                            new CircRegion(new Point(3, 0), 2));
+Region plus = new Union(new RectRegion(new Point(0, 2), 6, 2),
+                        new RectRegion(new Point(2, 0), 2, 6));
+
+Polygon lShape = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 20), new Point(10, 20),
+  new Point(10, 10), new Point(20, 10), new Point(20, 0) });
+
+Polygon trapezoid = new Polygon(new Point[] {
+  new Point(0, 0), new Point(5, 10), new Point(15, 10), new Point(20, 0) });
+
+Polygon staircase = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 8), new Point(2, 8),
+  new Point(2, 6), new Point(4, 6), new Point(4, 4),
+  new Point(6, 4), new Point(6, 2), new Point(8, 2),
+  new Point(8, 0) });
+
+void main() {
+  assertEquals(true, lens.contains(new Point(1.5, 0)));
+  assertEquals(false, lens.contains(new Point(-1, 0)));
+  assertEquals(true, plus.contains(new Point(3, 3)));
+  assertEquals(false, plus.contains(new Point(1, 1)));
+
+  assertEquals(true, lShape.contains(new Point(5, 5)));
+  assertEquals(false, lShape.contains(new Point(15, 15)));
+  // one in each 'leg' of the L
+  assertEquals(true, lShape.contains(new Point(5, 15)));   // vertical leg
+  assertEquals(true, lShape.contains(new Point(15, 5)));   // horizontal leg
+  // outside the L
+  assertEquals(false, lShape.contains(new Point(5, -5)));  // below
+  assertEquals(false, lShape.contains(new Point(-5, 5)));  // to the left
+  assertEquals(false, lShape.contains(new Point(25, 5)));  // outside to the right
+  assertEquals(false, lShape.contains(new Point(5, 25)));  // outside above
+  assertEquals(false, lShape.contains(new Point(25, 25))); // above and to the right
+  // on the outline counts as inside, like RectRegion and CircRegion
+  assertEquals(true, lShape.contains(new Point(0, 0)));    // corner
+  assertEquals(true, lShape.contains(new Point(10, 10)));  // the inside corner
+  assertEquals(true, lShape.contains(new Point(20, 10)));  // corner
+  assertEquals(true, lShape.contains(new Point(0, 10)));   // left edge
+  assertEquals(true, lShape.contains(new Point(10, 15)));  // edge beside the empty corner
+  assertEquals(true, lShape.contains(new Point(15, 10)));  // edge below the empty corner
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="ai-key">AI-written</span><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Whoa.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Huh. I don’t know that algorithm.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Really?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yeah. I don’t get what it’s doing.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span><strong>You</strong> don’t get what it’s doing?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>It mentions <a href="https://rosettacode.org/wiki/Ray-casting_algorithm">Ray Casting</a>, which when I look it up seems like a well-known algorithm. But I’m not familiar. It looks like it’s treating each pair of adjacent points as a line segment, and checking which ones are on a line with the given <code>Point</code>? But there’s a whole even-odd rule it talks about. Hm. Lots to learn I guess. I’m also nervous because it says that the trapezoid is concave, but it’s not, and it seems like concave vs. convex shapes matters here.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It passes all the tests, right?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Indeed! All the ones we thought of! And it seems plausible, and it references a real algorithm. For my learning, I want to study the code more. For getting confidence that it works… I’m partway there.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Why only partway?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Well, there’s a lot more we can do to get confidence.</div></div><div class="polygons"><div class="polygon"><svg style="overflow: visible; width: 18.508231926em; height: 16.188976378em; display: block" viewBox="0 0 203.590551181 178.078740157" width="203.590551181pt" height="178.078740157pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml"><g><g transform="translate(4 4)"><path fill="#60a5fa73" fill-rule="nonzero" stroke="#1d4ed8" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" d="M 0 0m 0 170.078740157v -170.078740157h 85.039370079v 85.039370079h 85.039370079v 85.039370079Z "/><path fill="none" stroke="#ea580c" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-dashoffset="0" stroke-dasharray="3 3" transform="translate(42.519685039 42.519685039)" d="M 0 0h 153.070866142"/><path fill="#ffffff" fill-rule="nonzero" stroke="#ea580c" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(82.039370079 39.519685039)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(39.519685039 39.519685039)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/></g></g></svg><div class="polygon-label"><code>(5, 15)</code>: 1 crossing, inside</div></div><div class="polygon"><svg style="overflow: visible; width: 22.470293486em; height: 16.188976378em; display: block" viewBox="0 0 247.173228346 178.078740157" width="247.173228346pt" height="178.078740157pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml"><g><g transform="translate(4 4)"><path fill="#60a5fa73" fill-rule="nonzero" stroke="#1d4ed8" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" d="M 0 0m 42.519685039 170.078740157v -170.078740157h 85.039370079v 85.039370079h 85.039370079v 85.039370079Z "/><path fill="none" stroke="#ea580c" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" stroke-dashoffset="0" stroke-dasharray="3 3" transform="translate(0 85.039370079)" d="M 0 0h 239.173228346"/><path fill="#ffffff" fill-rule="nonzero" stroke="#ea580c" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(39.519685039 82.039370079)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ffffff" fill-rule="nonzero" stroke="#ea580c" stroke-width="1.5" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(124.559055118 82.039370079)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/><path fill="#ea580c" fill-rule="nonzero" stroke="#ffffff" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" transform="translate(-3 82.039370079)" d="M 0 0m 0 3c 0 -1.655352 1.344648 -3 3 -3c 1.655352 0 3 1.344648 3 3c 0 1.655352 -1.344648 3 -3 3c -1.655352 0 -3 -1.344648 -3 -3"/></g></g></svg><div class="polygon-label"><code>(-5, 10)</code>: 2 crossings, outside</div></div></div><table><thead><tr><th>edge <code>a</code> to <code>b</code></th><th>one end above the ray?</th><th><code>xCross</code></th><th><code>p.x() &lt; xCross</code>?</th><th><code>inside</code> after</th></tr></thead><tbody><tr><td><code>(20, 0)</code> to <code>(0, 0)</code></td><td>no</td><td></td><td></td><td><code>false</code></td></tr><tr><td><code>(0, 0)</code> to <code>(0, 20)</code></td><td>yes</td><td><code>0</code></td><td>yes, flip</td><td><code>true</code></td></tr><tr><td><code>(0, 20)</code> to <code>(10, 20)</code></td><td>no</td><td></td><td></td><td><code>true</code></td></tr><tr><td><code>(10, 20)</code> to <code>(10, 10)</code></td><td>yes</td><td><code>10</code></td><td>yes, flip</td><td><code>false</code></td></tr><tr><td><code>(10, 10)</code> to <code>(20, 10)</code></td><td>no: it lies along the ray</td><td></td><td></td><td><code>false</code></td></tr><tr><td><code>(20, 10)</code> to <code>(20, 0)</code></td><td>no: it only touches the ray</td><td></td><td></td><td><code>false</code></td></tr></tbody></table></article>
+<nav class="pagenav"><a class="prev" href="recipe-and-codegen.html">← Structuring Code Generation</a> <a class="next" href="skylines.html">A Program to Check a Program →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "dramatis-personai", "title": "Dramatis Personai", "current": 3, "steps": [{"title": "AI, Jargon, and Context", "slug": "asking-ai", "url": "asking-ai.html", "path": "/dramatis-personai/asking-ai.html"}, {"title": "Which Code to Generate", "slug": "codegen", "url": "codegen.html", "path": "/dramatis-personai/codegen.html"}, {"title": "Structuring Code Generation", "slug": "recipe-and-codegen", "url": "recipe-and-codegen.html", "path": "/dramatis-personai/recipe-and-codegen.html"}, {"title": "Methods from Tests (and Tests from Tests)", "slug": "methods-from-tests", "url": "methods-from-tests.html", "path": "/dramatis-personai/methods-from-tests.html"}, {"title": "A Program to Check a Program", "slug": "skylines", "url": "skylines.html", "path": "/dramatis-personai/skylines.html"}, {"title": "Same Shape, Different Outline", "slug": "same-shape-different-outline", "url": "same-shape-different-outline.html", "path": "/dramatis-personai/same-shape-different-outline.html"}, {"title": "Swapping the Code", "slug": "swapping-the-code", "url": "swapping-the-code.html", "path": "/dramatis-personai/swapping-the-code.html"}]}</script>
+<script src="../assets/runner.js?v=9ea023ee50dd"></script>
+<script src="../assets/exercise.js?v=8182a1702132"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

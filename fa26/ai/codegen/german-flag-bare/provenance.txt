@@ -1,0 +1,94 @@
+AI recording codegen/german-flag-bare
+Model: claude-opus-5-5 (Opus 5.5)
+Generated: 2026-11-11T18:15:27.983Z
+Harness: Claude Code 2.1.322 (claude -p)
+Command: claude -p --model claude-opus-5-5 --system-prompt 'You are Claude, an AI assistant.' --tools '' --setting-sources '' --strict-mcp-config --mcp-config '{"mcpServers":{}}' --no-session-persistence --output-format stream-json --verbose < prompt
+Tools: none
+System prompt: "You are Claude, an AI assistant."
+Context besides the prompt: the system prompt above, plus what Claude Code adds (an SDK prefix, the account's email, and an environment block with the date and model name). No settings, CLAUDE.md, or MCP servers.
+Tokens: 543 in, 1227 out
+
+=== Prompt ===
+Write a Java program that creates an image of the German flag
+
+=== Response (verbatim) ===
+Here's a Java program that generates the German flag as a PNG. The flag has three equal horizontal bands of black, red, and gold, in the official 3:5 aspect ratio.
+
+```java
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+public class GermanFlag {
+
+    // Official colors (RGB approximations from the German federal government)
+    private static final Color BLACK = new Color(0x00, 0x00, 0x00);
+    private static final Color RED   = new Color(0xDD, 0x00, 0x00);
+    private static final Color GOLD  = new Color(0xFF, 0xCE, 0x00);
+
+    public static void main(String[] args) {
+        int width = 1000;                   // default width in pixels
+        String outputFile = "german_flag.png";
+
+        if (args.length >= 1) {
+            width = Integer.parseInt(args[0]);
+        }
+        if (args.length >= 2) {
+            outputFile = args[1];
+        }
+
+        int height = width * 3 / 5;         // official 3:5 aspect ratio
+
+        BufferedImage image = createFlag(width, height);
+
+        try {
+            ImageIO.write(image, "png", new File(outputFile));
+            System.out.println("Saved " + width + "x" + height + " flag to " + outputFile);
+        } catch (IOException e) {
+            System.err.println("Error writing image: " + e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    public static BufferedImage createFlag(int width, int height) {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = image.createGraphics();
+
+        // Compute band boundaries so the three bands fill the height exactly,
+        // even when height isn't divisible by 3.
+        int band1End = height / 3;
+        int band2End = 2 * height / 3;
+
+        g.setColor(BLACK);
+        g.fillRect(0, 0, width, band1End);
+
+        g.setColor(RED);
+        g.fillRect(0, band1End, width, band2End - band1End);
+
+        g.setColor(GOLD);
+        g.fillRect(0, band2End, width, height - band2End);
+
+        g.dispose();
+        return image;
+    }
+}
+```
+
+## How to run
+
+```bash
+javac GermanFlag.java
+java GermanFlag                     # creates german_flag.png at 1000x600
+java GermanFlag 500                 # creates a 500x300 flag
+java GermanFlag 1500 flag.png       # custom size and filename
+```
+
+## Notes
+
+- **Colors:** Black `#000000`, red `#DD0000`, and gold `#FFCE00` are commonly used RGB values for the official flag colors.
+- **Proportions:** The official ratio is height:width = 3:5, and the three bands have equal height.
+- **Uneven heights:** The band boundaries are computed as `height/3` and `2*height/3` rather than adding a fixed band height three times. That way, no rows are left blank at the bottom when the height isn't a multiple of 3.
+- **Dependencies:** It uses only the standard library (`java.awt` and `javax.imageio`). No graphical display is needed, so it also works on headless servers. If you run into AWT errors, add `-Djava.awt.headless=true`.

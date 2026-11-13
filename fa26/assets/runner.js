@@ -554,7 +554,7 @@
   // Paint a recording and report the run as finished, so gates and anything
   // else listening for run-done behave exactly as after a live run.
   function showCapture(widget, key, cap) {
-    const out = widget.querySelector('pre.out');
+    const out = outFor(widget);
     paintOutput(out, cap.text, CAPTURED, (n) =>
       new URL('../assets/prerender/' + key + '-' + n + '.png', document.baseURI).href);
     out.hidden = cap.text.trim() === '';
@@ -575,6 +575,10 @@
     }).join('\n');
   }
 
+  function outFor(widget) {
+    return widget.bookOutTarget ? widget.bookOutTarget() : widget.querySelector('pre.out');
+  }
+
   async function startRun(widget) {
     const shown = widget.querySelector('textarea').value;
     const source = unfold(widget, shown);
@@ -591,7 +595,7 @@
       widget,
       button: widget.querySelector('button.run'),
       state: widget.querySelector('.state'),
-      out: widget.querySelector('pre.out'),
+      out: outFor(widget),
     });
   }
 
@@ -780,13 +784,17 @@
     });
   }
 
-  function highlight(src, marks) {
+  function highlight(src, marks, ai) {
     const lines = tokenize(src);
     const html = lines.map((pieces, k) => {
-      if (!marks) return lineHtml(pieces, null);
+      const byAi = !!ai && ai.has(k);
+      if (!marks) {
+        if (!byAi) return lineHtml(pieces, null);
+        return '<span class="line ai">' + lineHtml(pieces, null) + '</span>';
+      }
       const mk = marks[k] || { same: false };
       const cls = 'line ' + (mk.same ? 'same' : 'new')
-        + (mk.deletedBefore ? ' del-before' : '');
+        + (mk.deletedBefore ? ' del-before' : '') + (byAi ? ' ai' : '');
       const ins = mk.same ? null : (mk.ins || null);
       return '<span class="' + cls + '">' + lineHtml(pieces, ins) + '</span>';
     }).join('\n');
@@ -805,10 +813,12 @@
     editor.append(hl, textarea);
     const original = textarea.value;
     const marks = before == null ? null : editMarks(widget, before, original);
+    const ai = widget.dataset.aiLines ? new Set(JSON.parse(widget.dataset.aiLines)) : null;
     // The edit marks describe the original listing; once the reader types,
     // the diff is against nothing and the marks go.
     const paint = () => {
-      hl.innerHTML = highlight(textarea.value, textarea.value === original ? marks : null)
+      const asWritten = textarea.value === original;
+      hl.innerHTML = highlight(textarea.value, asWritten ? marks : null, asWritten ? ai : null)
         .replace(/\{ \u2026 \}|\u2026/g, '<span class="fold">$&</span>');
     };
     const sync = () => { hl.scrollTop = textarea.scrollTop; hl.scrollLeft = textarea.scrollLeft; };
@@ -912,6 +922,6 @@
 
   // For other page scripts (exercise.js runs code exercises through it) and
   // the step router (nav.js re-hydrates swapped-in content).
-  window.bookRunner = { run, hydrate, stop: () => stopAll('stopped') };
+  window.bookRunner = { run, hydrate, unfold, stop: () => stopAll('stopped') };
   hydrate(document);
 })();

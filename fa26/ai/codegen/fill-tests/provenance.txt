@@ -1,0 +1,99 @@
+AI recording codegen/fill-tests
+Model: claude-opus-5-5 (Opus 5.5)
+Generated: 2026-11-11T22:58:20.030Z
+Harness: Claude Code 2.1.322 (claude -p)
+Command: claude -p --model claude-opus-5-5 --system-prompt 'You are Claude, an AI assistant.' --tools '' --setting-sources '' --strict-mcp-config --mcp-config '{"mcpServers":{}}' --no-session-persistence --output-format stream-json --verbose < prompt
+Tools: none
+System prompt: "You are Claude, an AI assistant."
+Context besides the prompt: the system prompt above, plus what Claude Code adds (an SDK prefix, the account's email, and an environment block with the date and model name). No settings, CLAUDE.md, or MCP servers.
+Tokens: 1547 in, 754 out
+Time: 9.0 s (API 8.6 s, 1 turns)
+
+=== Prompt ===
+```java
+record Point(double x, double y) {}
+interface Region { boolean contains(Point p); }
+record RectRegion(Point corner, double width, double height) implements Region {
+  public boolean contains(Point p) {
+    return p.x() >= this.corner.x() && p.x() <= this.corner.x() + this.width
+        && p.y() >= this.corner.y() && p.y() <= this.corner.y() + this.height;
+  }
+}
+record CircRegion(Point center, double radius) implements Region {
+  public boolean contains(Point p) {
+    double dx = p.x() - this.center.x();
+    double dy = p.y() - this.center.y();
+    return Math.sqrt(dx * dx + dy * dy) <= this.radius;
+  }
+}
+record Union(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) || this.b.contains(p); }
+}
+record Intersect(Region a, Region b) implements Region {
+  public boolean contains(Point p) { return this.a.contains(p) && this.b.contains(p); }
+}
+record Polygon(Point[] outline) implements Region {
+  public boolean contains(Point p) {
+    return false;
+  }
+}
+
+Region lens = new Intersect(new CircRegion(new Point(0, 0), 2),
+                            new CircRegion(new Point(3, 0), 2));
+Region plus = new Union(new RectRegion(new Point(0, 2), 6, 2),
+                        new RectRegion(new Point(2, 0), 2, 6));
+
+Polygon lShape = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 20), new Point(10, 20),
+  new Point(10, 10), new Point(20, 10), new Point(20, 0) });
+
+Polygon trapezoid = new Polygon(new Point[] {
+  new Point(0, 0), new Point(5, 10), new Point(15, 10), new Point(20, 0) });
+
+Polygon staircase = new Polygon(new Point[] {
+  new Point(0, 0), new Point(0, 8), new Point(2, 8),
+  new Point(2, 6), new Point(4, 6), new Point(4, 4),
+  new Point(6, 4), new Point(6, 2), new Point(8, 2),
+  new Point(8, 0) });
+
+void main() {
+  assertEquals(true, lens.contains(new Point(1.5, 0)));
+  assertEquals(false, lens.contains(new Point(-1, 0)));
+  assertEquals(true, plus.contains(new Point(3, 3)));
+  assertEquals(false, plus.contains(new Point(1, 1)));
+
+  assertEquals(true, lShape.contains(new Point(5, 5)));
+  assertEquals(false, lShape.contains(new Point(15, 15)));
+  // FILL: Add more tests: one for each 'leg' of the L, one below, one to the
+  // left, one outside to the right, one outside above, and one all the way
+  // above and to the right
+}
+```
+
+Fill in the tests marked with FILL in the program
+
+=== Response (verbatim) ===
+Here are the filled-in tests. The L spans x 0–10 for y 0–20 (the vertical leg) and x 0–20 for y 0–10 (the horizontal leg).
+
+```java
+void main() {
+  assertEquals(true, lens.contains(new Point(1.5, 0)));
+  assertEquals(false, lens.contains(new Point(-1, 0)));
+  assertEquals(true, plus.contains(new Point(3, 3)));
+  assertEquals(false, plus.contains(new Point(1, 1)));
+
+  assertEquals(true, lShape.contains(new Point(5, 5)));
+  assertEquals(false, lShape.contains(new Point(15, 15)));
+  // one in each 'leg' of the L
+  assertEquals(true, lShape.contains(new Point(5, 15)));   // vertical leg
+  assertEquals(true, lShape.contains(new Point(15, 5)));   // horizontal leg
+  // outside the L
+  assertEquals(false, lShape.contains(new Point(5, -5)));  // below
+  assertEquals(false, lShape.contains(new Point(-5, 5)));  // to the left
+  assertEquals(false, lShape.contains(new Point(25, 5)));  // outside to the right
+  assertEquals(false, lShape.contains(new Point(5, 25)));  // outside above
+  assertEquals(false, lShape.contains(new Point(25, 25))); // above and to the right
+}
+```
+
+`Polygon.contains` currently always returns `false`. So the `true` tests, including the existing `(5, 5)` test, will fail until it's implemented, for example with ray casting. The `false` tests will pass now but will still be useful checks once it's implemented.
