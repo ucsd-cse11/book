@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to throw — File I/O and Throwing Errors</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">File I/O and Throwing Errors</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Introduction to throw</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Professor, every program so far says <code>throws IOException</code> in <code>main</code> — and we just kept adding it. What does it actually mean?</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>It means “this method may throw an <code>IOException</code>”.</p><p>We can easily make Java stop on its own errors, like trying to read a missing file. What it can’t do is notice when the data is wrong. A weight of −0.2 is a perfectly good double as far as Java is concerned — only we humans know that our gear can’t weigh less than zero.</p></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So we have to stop the program ourselves?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly — and the statement that does it is <code>throw</code>:</div></div><pre><code data-lang="java"><span style="color: #d73948">throw</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">IllegalArgumentException</span>(<span style="color: #198810">"</span><span style="color: #198810">Gear weight cannot be negative: gloves weighs -0.2</span><span style="color: #198810">"</span>);</code></pre><div class="speech prof"><div class="bubble"><span class="who">Prof: </span><code>throw</code> stops the method right here and the rest of the code in the method never runs. <code>new<br>IllegalArgumentException(...)</code> is the exception object — the thing you throw. And the message in quotes is the part you control: say what went wrong, and with what value.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Let me see it in a program — a method that adds up the weight and refuses a negative one.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Here it is. <code>totalWeight</code> walks the list, and the moment it meets a negative weight it throws instead of adding:</div></div><div class="runner" id="w872162741" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="23" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+record Gear(String name, double weightKg) {}
+
+double totalWeight(ArrayList&lt;Gear> gear) {
+  double total = 0;
+  for (Gear g : gear) {
+    if (g.weightKg() &lt; 0) {
+      throw new IllegalArgumentException("Gear weight cannot be negative: " + g.name() + " weighs " + g.weightKg());
+    }
+    total = total + g.weightKg();
+  }
+  return total;
+}
+
+void main() {
+  ArrayList&lt;Gear> pack = new ArrayList&lt;Gear>();
+  pack.add(new Gear("tent", 2.5));
+  pack.add(new Gear("stove", 0.8));
+  pack.add(new Gear("rope", 3.1));
+  System.out.println("Total: " + totalWeight(pack) + " kg");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It printed the total. So with good data, the <code>throw</code> line just sits there and never runs?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right — <code>throw</code> only runs when the <code>if</code> says so. Now the same program with one bad weight:</div></div><div class="runner" id="w3850658032" data-engine="java17" data-expect="exception" data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+
+record Gear(String name, double weightKg) {}
+
+double totalWeight(ArrayList&lt;Gear> gear) {
+  double total = 0;
+  for (Gear g : gear) {
+    if (g.weightKg() &lt; 0) {
+      throw new IllegalArgumentException("Gear weight cannot be negative: " + g.name() + " weighs " + g.weightKg());
+    }
+    total = total + g.weightKg();
+  }
+  return total;
+}
+
+void main() {
+  ArrayList&lt;Gear> pack = new ArrayList&lt;Gear>();
+  pack.add(new Gear("tent", 2.5));
+  pack.add(new Gear("stove", 0.8));
+  pack.add(new Gear("gloves", -0.2));
+  pack.add(new Gear("rope", 3.1));
+  System.out.println("Total: " + totalWeight(pack) + " kg");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It stopped — and the total never printed.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s what throwing does: the method stops immediately, <strong>the lines after the <code>throw</code> don’t run</strong>, and the program ends with the exception’s type and message. The message is the whole point — without it, you’d just see a crash; with it, you see exactly which gear and which weight had an invalid value.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And <code>throws IOException</code> — that’s the same idea in the method header?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Same idea, but with a rule Java enforces. <code>throws</code> declares that a method may throw that type of exception — and for a <strong>checked exception</strong> like <code>IOException</code>, the compiler makes you declare it. A checked exception is something that can go wrong even when the code is correct, like the file not existing. The compiler won’t let you ignore it — the method either handles it or declares <code>throws</code>, and the decision travels up to whoever called it.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And <code>IllegalArgumentException</code>? <code>main</code> doesn’t declare that one.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right — that’s an <strong>unchecked exception</strong>, and those never have to be declared. An unchecked exception means something broke the rules the code expects: a method got a value it can’t use, or the data doesn’t fit the format. The program just stops with a message that says what’s wrong.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So now I can stop the program whenever the data doesn’t make sense — with a message that says what’s wrong.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Gosh, you’re getting good at this!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I think I understand, but this all seems a bit clunky. Is there an easier way to automatically check the data? Say, make <code>Gear</code> not allow negative weights at all? Didn’t we do something like that before? …</div></div></article>
+<nav class="pagenav"><a class="prev" href="file-writing.html">← Writing a File</a> <a class="next" href="constructor-checks.html">Checks in a constructor →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "files-and-throw", "title": "File I/O and Throwing Errors", "current": 3, "steps": [{"title": "File I/O", "slug": "files-intro", "url": "files-intro.html", "path": "/files-and-throw/files-intro.html"}, {"title": "Reading a File", "slug": "file-reading", "url": "file-reading.html", "path": "/files-and-throw/file-reading.html"}, {"title": "Writing a File", "slug": "file-writing", "url": "file-writing.html", "path": "/files-and-throw/file-writing.html"}, {"title": "Introduction to throw", "slug": "introduction-to-throw", "url": "introduction-to-throw.html", "path": "/files-and-throw/introduction-to-throw.html"}, {"title": "Checks in a constructor", "slug": "constructor-checks", "url": "constructor-checks.html", "path": "/files-and-throw/constructor-checks.html"}, {"title": "The Wrong Number of Fields", "slug": "wrong-number-of-fields", "url": "wrong-number-of-fields.html", "path": "/files-and-throw/wrong-number-of-fields.html"}, {"title": "Catching an Exception", "slug": "catching-an-exception", "url": "catching-an-exception.html", "path": "/files-and-throw/catching-an-exception.html"}, {"title": "Comparing Two Files", "slug": "comparing-files", "url": "comparing-files.html", "path": "/files-and-throw/comparing-files.html"}, {"title": "Practice: true or false", "slug": "practice", "url": "practice.html", "path": "/files-and-throw/practice.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=c635d32290be"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

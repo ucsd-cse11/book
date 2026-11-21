@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading a File — File I/O and Throwing Errors</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">File I/O and Throwing Errors</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Reading a File</h1>
+<article class="prose" data-fresh-files><div class="speech student"><div class="bubble"><span class="who">Student: </span>Okay, the list lives in <code>gear-list.txt</code> now. But how does Java get those pieces back out?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>With a <code>Scanner</code>. Two objects: a <code>File</code> names the file, and a <code>Scanner</code> reads from it:</div></div><pre><code data-lang="java"><span style="color: #4b69c6">File</span> file <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">File</span>(<span style="color: #198810">"</span><span style="color: #198810">gear-list.txt</span><span style="color: #198810">"</span>);
+<span style="color: #4b69c6">Scanner</span> input <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Scanner</span>(file);</code></pre><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>A <code>Scanner</code> reads piece by piece — a piece is a run of characters between spaces. <code>input.next()</code> hands you the next piece as text, <code>input.nextDouble()</code> reads the next piece as a number, and <code>input.hasNext()</code> answers <code>true</code> or <code>false</code>: is there another piece? So the loop is: while there’s another piece, read a name and a weight:</div></div><div class="runner" id="w2493931738" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  // gear-list.txt is set up for you, expand to see how …&quot;,&quot;code&quot;:&quot;  // gear-list.txt is set up for you, expand to see how\n  PrintWriter output = new PrintWriter(new File(\&quot;gear-list.txt\&quot;));\n  output.println(\&quot;tent 2.5\&quot;);\n  output.println(\&quot;stove 0.8\&quot;);\n  output.println(\&quot;rope 3.1\&quot;);\n  output.close();&quot;}]" data-echo data-gate><textarea class="code" rows="22" spellcheck="false" autocorrect="off" autocapitalize="off">import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg) {}
+
+void main() throws IOException {
+  // gear-list.txt is set up for you, expand to see how …
+
+  File file = new File("gear-list.txt");
+  Scanner input = new Scanner(file);
+  while (input.hasNext()) {
+    String name = input.next();
+    double weight = input.nextDouble();
+    Gear gear = new Gear(name, weight);
+    System.out.println(gear.name() + ": " + gear.weightKg() + " kg");
+  }
+  input.close();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So <code>hasNext()</code> is what stops the loop — it doesn’t know how many pieces there are, it just keeps asking “anotha one?”</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly. And <code>nextDouble()</code> does two jobs at once: it takes the next piece and turns it into a number. Everything from a file starts as text, so you have to convert the numbers yourself — <code>nextDouble()</code> and <code>nextInt()</code> do the converting for you. Isn’t that handy?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Yeah! And what about a name with a space in it, like “ice axe”?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>A space separates the pieces, so a name can’t have a space in this format — “ice axe” would read as two elements, and the second one isn’t a number, which would cause problems. So just keep names to one word for now!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Alrighty, and why do we need <code>input.close()</code> at the end?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>The <code>Scanner</code> keeps the file open until you close it. In a short program like this one, forgetting wouldn’t leak anything — the operating system takes the file back when the program ends. But a program that keeps running, or opens lots of files, can run out of open files if it never closes them. So close it every time, as a habit.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So for a <code>Scanner</code>, <code>close()</code> is mostly about being tidy?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Here, yes! But for a <code>PrintWriter</code> it’s different. Closing a <code>PrintWriter</code> also flushes out anything still waiting to be written, so that one really does matter at the end. You’ll see that when we talk about writing to files.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And what about <code>throws IOException</code> on <code>main</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Opening the file can fail — no such file, for instance. <code>new<br>Scanner(file)</code> throws a <code>FileNotFoundException</code>, which <strong>is</strong> an <code>IOException</code>, so <code>throws IOException</code> covers it. The full story comes when we get to <code>throw</code>. But first, let’s see if we can process a similar file with slightly different contents. For this exercise, we’ll also keep track of gear name, weight, and quantity (an integer).</div></div><h3 class="practice">Practice</h3><div class="innercise">Your turn. The file <code>gear-list.txt</code> has five lines, and each line has three pieces — a name, a weight, and a quantity. Fill in the three missing pieces so the program reads it back and prints each item.<div class="exercise" data-kind="code" data-seed="3941485670" data-prints="tent: 2.5 kg x1
+stove: 0.8 kg x1
+rope: 3.1 kg x2
+helmet: 1.2 kg x2
+boots: 1.8 kg x1" data-setup="java.io.PrintWriter output = new java.io.PrintWriter(new File(&quot;gear-list.txt&quot;));
+output.println(&quot;tent 2.5 1&quot;);
+output.println(&quot;stove 0.8 1&quot;);
+output.println(&quot;rope 3.1 2&quot;);
+output.println(&quot;helmet 1.2 2&quot;);
+output.println(&quot;boots 1.8 1&quot;);
+output.close();"><div class="cloze code">import java.io.File;<br>import java.io.IOException;<br>import java.util.Scanner;<br>import java.util.ArrayList;<br><br>record Gear(String name, double weightKg, int quantity) {}<br><br>void main() throws IOException {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>File file = new File("gear-list.txt");<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Scanner input = new Scanner(file);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>while (input.hasNext()) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>String name = <input class="blank" data-answer="input.next()" placeholder="the next piece as text" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>double weight = <input class="blank" data-answer="input.nextDouble()" placeholder="the next piece as a number" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>int quantity = <input class="blank" data-answer="input.nextInt()" placeholder="the next piece as a whole number" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>Gear gear = new Gear(name, weight, quantity);<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>System.out.println(gear.name() + ": " + gear.weightKg() + " kg x" + gear.quantity());<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>input.close();<br>}</div></div></div></article>
+<nav class="pagenav"><a class="prev" href="files-intro.html">← File I/O</a> <a class="next" href="file-writing.html">Writing a File →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "files-and-throw", "title": "File I/O and Throwing Errors", "current": 1, "steps": [{"title": "File I/O", "slug": "files-intro", "url": "files-intro.html", "path": "/files-and-throw/files-intro.html"}, {"title": "Reading a File", "slug": "file-reading", "url": "file-reading.html", "path": "/files-and-throw/file-reading.html"}, {"title": "Writing a File", "slug": "file-writing", "url": "file-writing.html", "path": "/files-and-throw/file-writing.html"}, {"title": "Introduction to throw", "slug": "introduction-to-throw", "url": "introduction-to-throw.html", "path": "/files-and-throw/introduction-to-throw.html"}, {"title": "Checks in a constructor", "slug": "constructor-checks", "url": "constructor-checks.html", "path": "/files-and-throw/constructor-checks.html"}, {"title": "The Wrong Number of Fields", "slug": "wrong-number-of-fields", "url": "wrong-number-of-fields.html", "path": "/files-and-throw/wrong-number-of-fields.html"}, {"title": "Catching an Exception", "slug": "catching-an-exception", "url": "catching-an-exception.html", "path": "/files-and-throw/catching-an-exception.html"}, {"title": "Comparing Two Files", "slug": "comparing-files", "url": "comparing-files.html", "path": "/files-and-throw/comparing-files.html"}, {"title": "Practice: true or false", "slug": "practice", "url": "practice.html", "path": "/files-and-throw/practice.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=c635d32290be"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

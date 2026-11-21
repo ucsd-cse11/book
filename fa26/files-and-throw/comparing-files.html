@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparing Two Files — File I/O and Throwing Errors</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">File I/O and Throwing Errors</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Comparing Two Files</h1>
+<article class="prose" data-fresh-files><div class="speech student"><div class="bubble"><span class="who">Student: </span>So now I have two files in the same format — the gear the trip requires, and the gear I’ve packed. How do I find what’s missing?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s read both files back, the same way you read one file in step 2 — then walk through the required list and ask, for each item, “is this one packed?”</div></div><div class="runner" id="w2820107978" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  // gear-list.txt and packedGear.txt are set up for you, expand to see how …&quot;,&quot;code&quot;:&quot;  // gear-list.txt and packedGear.txt are set up for you, expand to see how\n  PrintWriter requiredOut = new PrintWriter(new File(\&quot;gear-list.txt\&quot;));\n  requiredOut.println(\&quot;tent 2.5 1\&quot;);\n  requiredOut.println(\&quot;stove 0.8 1\&quot;);\n  requiredOut.println(\&quot;rope 3.1 2\&quot;);\n  requiredOut.close();\n  PrintWriter packedOut = new PrintWriter(new File(\&quot;packedGear.txt\&quot;));\n  packedOut.println(\&quot;tent 2.5 1\&quot;);\n  packedOut.println(\&quot;stove 0.8 1\&quot;);\n  packedOut.close();&quot;}]" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg, int quantity) {}
+
+void main() throws IOException {
+  // gear-list.txt and packedGear.txt are set up for you, expand to see how …
+
+  ArrayList&lt;Gear> required = new ArrayList&lt;>();
+  Scanner requiredInput = new Scanner(new File("gear-list.txt"));
+  while (requiredInput.hasNext()) {
+    String name = requiredInput.next();
+    double weight = requiredInput.nextDouble();
+    int quantity = requiredInput.nextInt();
+    required.add(new Gear(name, weight, quantity));
+  }
+  requiredInput.close();
+
+  ArrayList&lt;String> packedNames = new ArrayList&lt;>();
+  Scanner packedInput = new Scanner(new File("packedGear.txt"));
+  while (packedInput.hasNext()) {
+    packedNames.add(packedInput.next());
+    packedInput.nextDouble();
+    packedInput.nextInt();
+  }
+  packedInput.close();
+
+  for (Gear gear : required) {
+    if (!packedNames.contains(gear.name())) {
+      System.out.println("missing: " + gear.name());
+    }
+  }
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>The packed side only keeps the names — why not the weights too?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Because the question is “do I have a rope?”, not “how heavy is my rope?”. We check each piece using the same commands as step 2: <code>next()</code> reads the name, <code>nextDouble()</code> reads the weight, <code>nextInt()</code> reads the quantity, and <code>hasNext()</code> keeps the loop going while there’s another piece.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And <code>packedNames.contains(gear.name())</code> is the actual check?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right — remember that <code>.contains()</code> asks an <code>ArrayList</code> whether it holds a value, and answers <code>true</code> or <code>false</code>. So if this required gear is NOT in the packed list, say so.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So the whole chapter is basically just reading a file, writing a file, and handling errors?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s the idea! The required list and the packed list are both just files now, and the program tells you what’s missing before you leave! Safe travels!</div></div></article>
+<nav class="pagenav"><a class="prev" href="catching-an-exception.html">← Catching an Exception</a> <a class="next" href="practice.html">Practice: true or false →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "files-and-throw", "title": "File I/O and Throwing Errors", "current": 7, "steps": [{"title": "File I/O", "slug": "files-intro", "url": "files-intro.html", "path": "/files-and-throw/files-intro.html"}, {"title": "Reading a File", "slug": "file-reading", "url": "file-reading.html", "path": "/files-and-throw/file-reading.html"}, {"title": "Writing a File", "slug": "file-writing", "url": "file-writing.html", "path": "/files-and-throw/file-writing.html"}, {"title": "Introduction to throw", "slug": "introduction-to-throw", "url": "introduction-to-throw.html", "path": "/files-and-throw/introduction-to-throw.html"}, {"title": "Checks in a constructor", "slug": "constructor-checks", "url": "constructor-checks.html", "path": "/files-and-throw/constructor-checks.html"}, {"title": "The Wrong Number of Fields", "slug": "wrong-number-of-fields", "url": "wrong-number-of-fields.html", "path": "/files-and-throw/wrong-number-of-fields.html"}, {"title": "Catching an Exception", "slug": "catching-an-exception", "url": "catching-an-exception.html", "path": "/files-and-throw/catching-an-exception.html"}, {"title": "Comparing Two Files", "slug": "comparing-files", "url": "comparing-files.html", "path": "/files-and-throw/comparing-files.html"}, {"title": "Practice: true or false", "slug": "practice", "url": "practice.html", "path": "/files-and-throw/practice.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=c635d32290be"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

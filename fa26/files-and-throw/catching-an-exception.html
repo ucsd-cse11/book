@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catching an Exception — File I/O and Throwing Errors</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">File I/O and Throwing Errors</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Catching an Exception</h1>
+<article class="prose" data-fresh-files><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s talk about <code>try</code> and <code>catch</code>. Consider the following block of code — the reading lives in a little helper, <code>readPack</code>, so the throw and the <code>catch</code> aren’t in the same method:</div></div><div class="runner" id="w1410574565" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+// The reading lives in a helper. It can't answer a missing file —
+// it has nothing to fall back on — so it lets the exception travel
+// up with throws, and main decides what to do about it.
+ArrayList&lt;String> readPack(File file) throws IOException {
+  Scanner input = new Scanner(file);
+  ArrayList&lt;String> pack = new ArrayList&lt;>();
+  while (input.hasNext()) {
+    pack.add(input.next());
+  }
+  input.close();
+  return pack;
+}
+
+void main() {
+  ArrayList&lt;String> pack = new ArrayList&lt;>();
+  try {
+    File file = new File("pack-list.txt");
+    pack = readPack(file);
+  } catch (FileNotFoundException e) {
+    // No packing list yet - start with an empty pack.
+  } catch (IOException e) {
+    // Could not read the packing list - start with an empty pack.
+  }
+  System.out.println("Packing continues with " + pack.size() + " items.");
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So I think what’s happening here is that the risky lines of code go inside <code>try</code>, and each <code>catch</code> says what to do for each type of problem?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Careful with “risky” — almost any line can go wrong. What goes in <code>try</code> is code that can fail in a way we can’t rule out ahead of time, like a file that isn’t there, <strong>and</strong> that we have an answer for. Whenever a method calls code like that, it has a choice. It can decide the program still works without the file, or it can put <code>throws</code> on itself and let the exception travel up to its caller.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span><code>readPack</code> can’t answer — with no file, it has no list to return — so it declares <code>throws</code>. <code>main</code> can answer: no packing list means an empty pack. When <code>readPack</code> throws, Java skips the rest of the <code>try</code>, runs the first <code>catch</code> whose type matches, and then carries on after the <code>catch</code> blocks with <code>pack</code> still empty. That’s the whole point of catching: the program goes on, with a value that makes sense.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Also, notice the order of the <code>catch</code> blocks: we put the <code>FileNotFoundException</code> first and the <code>IOException</code> second. A missing file <strong>is</strong> an <code>IOException</code>, so if the general <code>catch</code> came first it would catch every missing file, and the specific one could never run. Java won’t even compile that order — the specific <code>catch</code> has to come first.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>The <code>catch</code> gets the exception as a parameter — <code>e</code> — and <code>e.getMessage()</code> gives you the message Java attached to it. You can print that when you want to tell the user what went wrong — but the message isn’t the handling. The handling is the value the program goes on with.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Wait — the <code>catch</code> is up in <code>main</code>, but the <code>throw</code> happens down in the <code>Scanner</code>, inside <code>readPack</code>. How far apart can those two be?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>As far apart as the call stack is tall. Here’s the stack at the moment <code>new Scanner(file)</code> throws. The <code>catch</code> that will handle it is two frames up, in <code>main</code>; <code>readPack</code> in between has no <code>catch</code>, so the exception passes straight through it — that’s what its <code>throws</code> said would happen:</div></div><div class="memory"><div class="mem-stack"><div class="mem-title">Names (the stack)</div><div class="frame"><div class="frame-head"><code>new Scanner(file)</code></div><div class="binding"><code>source = <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></code></div><div class="returns throws"><code>throws FileNotFoundException</code></div></div><div class="frame"><div class="frame-head"><code>readPack(file)</code></div><div class="binding"><code>file = <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></code></div><div class="returns throws"><code>throws FileNotFoundException</code></div></div><div class="frame"><div class="frame-head"><code>main()</code></div><div class="binding"><code>pack = <span class="addr" data-addr="@1001" style="--hue: 20">@1001</span></code></div><div class="binding"><code>file = <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></code></div><div class="returns catches"><code>catches FileNotFoundException</code></div></div><div class="frame"><div class="frame-head">top level</div></div></div><div class="mem-heap"><div class="mem-title">Heap</div><div class="slot-line"><code><span class="addr slot" data-addr="@1001" style="--hue: 20">@1001</span>: []</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1002" style="--hue: 157">@1002</span>: pack-list.txt</code></div></div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Here there’s one frame in between. In a real program there can be dozens — the <code>throw</code> happens in a helper, or a helper’s helper, and the exception climbs back up through every frame until it finds a <code>catch</code>. So an exception travels from the code that found the problem to the code that knows what to do about it. Isn’t that neat?</div></div><div class="innercise">The <code>readPack</code> program at the top of this step reads <code>pack-list.txt</code>, which does not exist.<div class="exercise" data-kind="choice" data-seed="1307902893"><div class="stem">Which catch block runs when the file <code>pack-list.txt</code> does not exist?</div><ol class="choices"><li data-correct>The <code>FileNotFoundException</code> one — it’s the first catch whose type matches, and the program goes on with an empty pack.</li><li><code>catch (IOException e)</code> — the general one, since a missing file is an <code>IOException</code>.<div class="why">The general <code>IOException</code> catch would match too, but Java runs the <strong>first</strong> matching catch — and the specific one comes first.</div></li><li>Neither — the program crashes, because the exception is thrown inside <code>try</code>.<div class="why">The exception is thrown while the <code>try</code> is running, which is exactly where a matching <code>catch</code> can handle it. The program carries on after the <code>catch</code>.</div></li></ol></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But now I have to remember <code>input.close()</code> again — and if the <code>try</code> throws halfway, the close never runs.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s the tidy way to write it: declare the <code>Scanner</code> inside the parentheses after <code>try</code>, and Java closes it for you, whether the block finishes normally or throws.</div></div><div class="runner" id="w3379253736" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  // gear-list.txt is set up for you, expand to see how …&quot;,&quot;code&quot;:&quot;  // gear-list.txt is set up for you, expand to see how\n  try {\n    PrintWriter output = new PrintWriter(new File(\&quot;gear-list.txt\&quot;));\n    output.println(\&quot;tent 2.5 1\&quot;);\n    output.println(\&quot;stove 0.8 1\&quot;);\n    output.println(\&quot;rope 3.1 2\&quot;);\n    output.close();\n  } catch (IOException e) { /* setup only — the catch below handles a missing file */ }&quot;}]" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg, int quantity) {}
+
+void main() {
+  // gear-list.txt is set up for you, expand to see how …
+
+  ArrayList&lt;Gear> pack = new ArrayList&lt;>();
+  File file = new File("gear-list.txt");
+
+  try (Scanner input = new Scanner(file)) {
+    while (input.hasNext()) {
+      String name = input.next();
+      double weight = input.nextDouble();
+      int quantity = input.nextInt();
+      pack.add(new Gear(name, weight, quantity));
+    }
+  } catch (FileNotFoundException e) {
+    // No gear list yet - start with an empty pack.
+  } catch (IOException e) {
+    // Something went wrong mid-read - go on with the gear we have so far.
+  }
+
+  System.out.println("Packing continues with " + pack.size() + " items.");
+
+  // Print all the gear
+  for (Gear gear : pack) {
+    System.out.println(gear.name() + ": " + gear.weightKg() + " kg x" + gear.quantity());
+  }
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Read <code>try (Scanner input = ...)</code> as: “open this, and close it when we’re done, no matter what.” This is called a <code>try</code>-with-resources statement, and it ensures that the resource is closed automatically, even if an exception occurs. You can read more about it in the <a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html">Java documentation</a>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So <code>main</code> had a choice too. It caught the exception, but could it have let it keep going instead, the way <code>readPack</code> did?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yes — here’s that second choice: a <code>main</code> that calls <code>readPack()</code> and catches nothing. It just puts <code>throws</code> on itself. When the file is there, it prints the pack; if it weren’t, the exception would travel all the way up and the program would stop with its message:</div></div><div class="runner" id="w4118138858" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  // trip-pack.txt is set up for you, expand to see how …&quot;,&quot;code&quot;:&quot;  // trip-pack.txt is set up for you, expand to see how\n  PrintWriter output = new PrintWriter(new File(\&quot;trip-pack.txt\&quot;));\n  output.println(\&quot;tent\&quot;);\n  output.println(\&quot;stove\&quot;);\n  output.println(\&quot;rope\&quot;);\n  output.close();&quot;}]" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+// The reading lives in a helper. It can't answer a missing file —
+// it has nothing to fall back on — so it lets the exception travel
+// up with throws, and main decides what to do about it.
+ArrayList&lt;String> readPack(File file) throws IOException {
+  Scanner input = new Scanner(file);
+  ArrayList&lt;String> pack = new ArrayList&lt;>();
+  while (input.hasNext()) {
+    pack.add(input.next());
+  }
+  input.close();
+  return pack;
+}
+
+void main() throws IOException {
+  // trip-pack.txt is set up for you, expand to see how …
+
+  File file = new File("trip-pack.txt");
+  ArrayList&lt;String> pack = readPack(file);
+  for (String item : pack) {
+    System.out.println(item);
+  }
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So that’s your whole workflow: reading, writing, throwing and catching exceptions. Now we’re ready to write a program that reads both the gear list you need on your trip and the gear you’ve already packed, and tells you what’s missing.</div></div></article>
+<nav class="pagenav"><a class="prev" href="wrong-number-of-fields.html">← The Wrong Number of Fields</a> <a class="next" href="comparing-files.html">Comparing Two Files →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "files-and-throw", "title": "File I/O and Throwing Errors", "current": 6, "steps": [{"title": "File I/O", "slug": "files-intro", "url": "files-intro.html", "path": "/files-and-throw/files-intro.html"}, {"title": "Reading a File", "slug": "file-reading", "url": "file-reading.html", "path": "/files-and-throw/file-reading.html"}, {"title": "Writing a File", "slug": "file-writing", "url": "file-writing.html", "path": "/files-and-throw/file-writing.html"}, {"title": "Introduction to throw", "slug": "introduction-to-throw", "url": "introduction-to-throw.html", "path": "/files-and-throw/introduction-to-throw.html"}, {"title": "Checks in a constructor", "slug": "constructor-checks", "url": "constructor-checks.html", "path": "/files-and-throw/constructor-checks.html"}, {"title": "The Wrong Number of Fields", "slug": "wrong-number-of-fields", "url": "wrong-number-of-fields.html", "path": "/files-and-throw/wrong-number-of-fields.html"}, {"title": "Catching an Exception", "slug": "catching-an-exception", "url": "catching-an-exception.html", "path": "/files-and-throw/catching-an-exception.html"}, {"title": "Comparing Two Files", "slug": "comparing-files", "url": "comparing-files.html", "path": "/files-and-throw/comparing-files.html"}, {"title": "Practice: true or false", "slug": "practice", "url": "practice.html", "path": "/files-and-throw/practice.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=c635d32290be"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

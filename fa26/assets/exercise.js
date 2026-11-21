@@ -209,7 +209,17 @@
           // Assertions are on, so a false one fails the run; Java's
           // AssertionError carries only the author's message, not the
           // predicate, so `instanceof` stays out of sight.
+          // Hidden setup (blanks(setup: ...)): statements that run before
+          // the reader's program, never shown in the cloze. Appended after
+          // the reader's code as a bare block, it runs as an instance
+          // initializer when the wrapper class is created, ahead of main().
+          // Checked exceptions are wrapped so author setup reads like
+          // ordinary statements.
           let source = assemble();
+          if (ex.dataset.setup) {
+            source += '\n{ try {\n' + ex.dataset.setup
+              + '\n} catch (Exception __setupErr) { throw new RuntimeException(__setupErr); } }\n';
+          }
           const msg = ex.dataset.check && (ex.dataset.checkMessage
             || 'That runs, but it is not what the exercise asks for.');
           if (ex.dataset.check) {

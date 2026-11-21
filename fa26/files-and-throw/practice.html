@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice: true or false — File I/O and Throwing Errors</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">File I/O and Throwing Errors</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Practice: true or false</h1>
+<article class="prose"><div class="innercise"><div class="exercise" data-kind="choice" data-seed="1234527912"><div class="stem"><code>input.next()</code> reads a whole line.</div><ol class="choices"><li>True<div class="why"><code>next()</code> reads one piece — the characters up to the next space. <code>nextLine()</code> is the one that reads a whole line.</div></li><li data-correct>False</li></ol></div></div><div class="innercise"><div class="exercise" data-kind="choice" data-seed="1428634689"><div class="stem"><code>input.hasNext()</code> answers <code>true</code> or <code>false</code> about whether there is another piece to read.</div><ol class="choices"><li data-correct>True</li><li>False<div class="why"><code>hasNext()</code> is the loop’s question: “another piece?” When it says <code>false</code>, the pieces are done.</div></li></ol></div></div><div class="innercise"><div class="exercise" data-kind="choice" data-seed="4290231700"><div class="stem">A <code>PrintWriter</code> writes to the file as soon as you call <code>println</code>, so you never need <code>close()</code>.</div><ol class="choices"><li>True<div class="why"><code>close()</code> finishes the file — forget it, and the last lines might never land.</div></li><li data-correct>False</li></ol></div></div><div class="innercise"><div class="exercise" data-kind="choice" data-seed="38122552"><div class="stem">A <code>throw</code> stops the method immediately; the lines after it don’t run.</div><ol class="choices"><li data-correct>True</li><li>False<div class="why"><code>throw</code> stops the method on the spot — the lines after it never run, and the total never gets printed. That’s what the gloves example in step 4 shows.</div></li></ol></div></div><div class="innercise"><div class="exercise" data-kind="choice" data-seed="1966320867"><div class="stem"><code>throw new IllegalArgumentException();</code> with no message is fine, because the exception type says enough.</div><ol class="choices"><li>True<div class="why">The type says what kind of problem it is, but the message says which gear and which value. Without it, the reader has to go find the <code>throw</code> to learn anything.</div></li><li data-correct>False</li></ol></div></div><div class="innercise"><div class="exercise" data-kind="choice" data-seed="436041551"><div class="stem">Calling <code>file.exists()</code> checks whether the file represented by <code>file</code> exists and returns a boolean indicating the result.</div><ol class="choices"><li data-correct>True</li><li>False<div class="why"><code>file.exists()</code> takes no arguments. The <code>File</code> object already represents a specific path. It returns <code>true</code> if a file or directory exists at that path, and <code>false</code> otherwise.</div></li></ol></div></div><div class="innercise"><div class="exercise" data-kind="choice" data-seed="2298365595"><div class="stem">A <code>catch</code> block runs only if the <code>try</code> block throws that kind of exception.</div><ol class="choices"><li data-correct>True</li><li>False<div class="why">If nothing throws in the <code>try</code>, the <code>catch</code> blocks are skipped and the program carries on after them.</div></li></ol></div></div></article>
+<nav class="pagenav"><a class="prev" href="comparing-files.html">← Comparing Two Files</a> <a class="next" href="../pict-library/pict-library.html">Pict Library Reference →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "files-and-throw", "title": "File I/O and Throwing Errors", "current": 8, "steps": [{"title": "File I/O", "slug": "files-intro", "url": "files-intro.html", "path": "/files-and-throw/files-intro.html"}, {"title": "Reading a File", "slug": "file-reading", "url": "file-reading.html", "path": "/files-and-throw/file-reading.html"}, {"title": "Writing a File", "slug": "file-writing", "url": "file-writing.html", "path": "/files-and-throw/file-writing.html"}, {"title": "Introduction to throw", "slug": "introduction-to-throw", "url": "introduction-to-throw.html", "path": "/files-and-throw/introduction-to-throw.html"}, {"title": "Checks in a constructor", "slug": "constructor-checks", "url": "constructor-checks.html", "path": "/files-and-throw/constructor-checks.html"}, {"title": "The Wrong Number of Fields", "slug": "wrong-number-of-fields", "url": "wrong-number-of-fields.html", "path": "/files-and-throw/wrong-number-of-fields.html"}, {"title": "Catching an Exception", "slug": "catching-an-exception", "url": "catching-an-exception.html", "path": "/files-and-throw/catching-an-exception.html"}, {"title": "Comparing Two Files", "slug": "comparing-files", "url": "comparing-files.html", "path": "/files-and-throw/comparing-files.html"}, {"title": "Practice: true or false", "slug": "practice", "url": "practice.html", "path": "/files-and-throw/practice.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=c635d32290be"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

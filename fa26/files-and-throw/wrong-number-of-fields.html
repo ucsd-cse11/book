@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Wrong Number of Fields — File I/O and Throwing Errors</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">File I/O and Throwing Errors</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>The Wrong Number of Fields</h1>
+<article class="prose" data-fresh-files><div class="speech student"><div class="bubble"><span class="who">Student: </span>So professor, I still have some questions about the reader in step 2. The reader reads piece by piece with <code>next()</code>. What if a line only has two pieces — say someone forgot the quantity?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span><code>next()</code> can’t see where a line ends — it just takes the next piece. So a line with 2 pieces wouldn’t crash where you’d expect: <code>nextInt()</code> would grab the first piece of the <strong>next</strong> line and complain it isn’t a number. To check a line’s shape, read the whole line at once with <code>nextLine()</code>, then scan just that line with a second <code>Scanner</code> — the same <code>next()</code>, <code>nextDouble()</code>, <code>nextInt()</code> from step 2, one line at a time.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span><code>new Scanner(line)</code> makes a <code>Scanner</code> that reads from that line instead of the file. Before each piece, ask <code>fields.hasNext()</code>: is there another piece? If not, throw, with the line in the message so you can find the typo. And ask once more after the third piece: if there’s still one there, the line has too many pieces — same throw. <code>fields</code> reads from a string, not a file, so there’s nothing to close.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So the rule is: check the shape of the data before you use it?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s the idea. We’d rather cause an error than let the program run on and give us wrong results — or crash somewhere confusing. Here’s the reader with the check, on a good file:</div></div><div class="runner" id="w287802409" data-engine="java17" data-expect="compiles" data-folds="[{&quot;line&quot;:&quot;  // gear-list.txt is set up for you, expand to see how …&quot;,&quot;code&quot;:&quot;  // gear-list.txt is set up for you, expand to see how\n  PrintWriter output = new PrintWriter(new File(\&quot;gear-list.txt\&quot;));\n  output.println(\&quot;tent 2.5 1\&quot;);\n  output.println(\&quot;rope 3.1 2\&quot;);\n  output.println(\&quot;stove 0.8 1\&quot;);\n  output.close();&quot;}]" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg, int quantity) {}
+
+void main() throws IOException {
+  // gear-list.txt is set up for you, expand to see how …
+
+  File file = new File("gear-list.txt");
+  Scanner input = new Scanner(file);
+  while (input.hasNextLine()) {
+    String line = input.nextLine();
+    Scanner fields = new Scanner(line);
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    String name = fields.next();
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    double weight = fields.nextDouble();
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    int quantity = fields.nextInt();
+    if (fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    Gear gear = new Gear(name, weight, quantity);
+    System.out.println(gear.name() + ": " + gear.weightKg() + " kg x" + gear.quantity());
+  }
+  input.close();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It printed all three. The checks just sat there.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right — on good data they never fire. Now let’s see what happens when we use the same reader on a file with one bad line:</div></div><div class="runner" id="w748256539" data-engine="java17" data-expect="exception" data-folds="[{&quot;line&quot;:&quot;  // gear-list.txt is set up for you, expand to see how …&quot;,&quot;code&quot;:&quot;  // gear-list.txt is set up for you, expand to see how\n  PrintWriter output = new PrintWriter(new File(\&quot;gear-list.txt\&quot;));\n  output.println(\&quot;tent 2.5 1\&quot;);\n  output.println(\&quot;rope 3.1\&quot;);\n  output.println(\&quot;stove 0.8 1\&quot;);\n  output.close();&quot;}]" data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg, int quantity) {}
+
+void main() throws IOException {
+  // gear-list.txt is set up for you, expand to see how …
+
+  File file = new File("gear-list.txt");
+  Scanner input = new Scanner(file);
+  while (input.hasNextLine()) {
+    String line = input.nextLine();
+    Scanner fields = new Scanner(line);
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    String name = fields.next();
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    double weight = fields.nextDouble();
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    int quantity = fields.nextInt();
+    if (fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    Gear gear = new Gear(name, weight, quantity);
+    System.out.println(
+      gear.name() + ": " + gear.weightKg() + " kg x" + gear.quantity());
+  }
+  input.close();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It stopped on the rope line, and the message says the line needs 3 pieces — and it shows the line.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s the benefit of <code>throw</code>: the error tells you which line caused the error and what’s wrong with that line, instead of a confusing crash somewhere else.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And speaking of crashing, what if I don’t want the program to crash at all? What if I want to handle the error gracefully instead?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>We can use a <code>try</code>-<code>catch</code> block!</div></div></article>
+<nav class="pagenav"><a class="prev" href="constructor-checks.html">← Checks in a constructor</a> <a class="next" href="catching-an-exception.html">Catching an Exception →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "files-and-throw", "title": "File I/O and Throwing Errors", "current": 5, "steps": [{"title": "File I/O", "slug": "files-intro", "url": "files-intro.html", "path": "/files-and-throw/files-intro.html"}, {"title": "Reading a File", "slug": "file-reading", "url": "file-reading.html", "path": "/files-and-throw/file-reading.html"}, {"title": "Writing a File", "slug": "file-writing", "url": "file-writing.html", "path": "/files-and-throw/file-writing.html"}, {"title": "Introduction to throw", "slug": "introduction-to-throw", "url": "introduction-to-throw.html", "path": "/files-and-throw/introduction-to-throw.html"}, {"title": "Checks in a constructor", "slug": "constructor-checks", "url": "constructor-checks.html", "path": "/files-and-throw/constructor-checks.html"}, {"title": "The Wrong Number of Fields", "slug": "wrong-number-of-fields", "url": "wrong-number-of-fields.html", "path": "/files-and-throw/wrong-number-of-fields.html"}, {"title": "Catching an Exception", "slug": "catching-an-exception", "url": "catching-an-exception.html", "path": "/files-and-throw/catching-an-exception.html"}, {"title": "Comparing Two Files", "slug": "comparing-files", "url": "comparing-files.html", "path": "/files-and-throw/comparing-files.html"}, {"title": "Practice: true or false", "slug": "practice", "url": "practice.html", "path": "/files-and-throw/practice.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=c635d32290be"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

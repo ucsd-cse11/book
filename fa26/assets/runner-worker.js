@@ -15,7 +15,10 @@
 //                            {type:'console', id, text}  live program output
 //                            {type:'result', id, ok, compileError, images}
 //                            {type:'closing'}       this worker is going away
-// (page -> worker):          {type:'run', id, source}
+// (page -> worker):          {type:'run', id, source, filesStep}
+//                              filesStep: the page path of a #step(files:
+//                              true), else null. The first run after it
+//                              changes empties /files/ (see runOne).
 //                            {type:'stop'}          close, whatever you are doing
 //
 // There is no way to interrupt a running Java program here: CheerpJ only
@@ -79,6 +82,11 @@ const encoder = new TextEncoder();
 
 const queue = [];
 let compiler = null;
+// The files step the last run belonged to. /files/ persists across runs,
+// tabs and reloads, so entering a files step (from another step, or in a
+// fresh worker, where this starts null) empties it first.
+let lastFilesStep = null;
+const FRESH_FILES = '--fresh-files'; // runner.js's wrapper looks for this
 
 async function compile(source) {
   addStringFile('/str/Program.java', encoder.encode(source));
@@ -107,7 +115,9 @@ async function runOne(job) {
     }
     job.post({ type: 'state', label: 'running…' });
     job.failed = false;
-    await cheerpjRunMain('__Main', RUN_CP);
+    const fresh = job.filesStep != null && job.filesStep !== lastFilesStep;
+    lastFilesStep = job.filesStep;
+    await cheerpjRunMain('__Main', RUN_CP, ...(fresh ? [FRESH_FILES] : []));
     activeRun = null;
     const images = await collectImages();
     job.post({ type: 'result', id: job.id, ok: !job.failed, compileError: false, images },
@@ -177,7 +187,7 @@ function onRunMessage(post) {
       return;
     }
     if (e.data.type !== 'run') return;
-    queue.push({ id: e.data.id, source: e.data.source, post });
+    queue.push({ id: e.data.id, source: e.data.source, filesStep: e.data.filesStep ?? null, post });
     drain();
   };
 }

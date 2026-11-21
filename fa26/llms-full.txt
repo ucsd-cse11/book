@@ -14812,6 +14812,810 @@ Student: So there’s always another kind of shape.
 
 Prof: There is. Finding the next one we care about, deciding what should happen, and writing the check: that part stays our job.
 
+# File I/O and Throwing Errors
+
+## [File I/O](files-and-throw/files-intro.html)
+
+Student: OK Professor, now that I know how to store data in lists of various lengths, I want to make a list of all the gear I need for my hiking expedition. I have a list of all the gear I need, and I want to make sure I pack everything.
+
+Prof: That sounds like a great idea. You could make a list of all the gear you need, and then check it off as you pack each item. But what if your list is really long?
+
+Student: Hmm, I guess I could make a really long list in my code, but that would be a lot of typing. What if I did something like this?
+
+```java
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg) {}
+
+void main() {
+  ArrayList<Gear> gear = new ArrayList<Gear>();
+  gear.add(new Gear("tent", 2.5));
+  gear.add(new Gear("stove", 0.8));
+  gear.add(new Gear("rope", 3.1));
+  System.out.println("Gear list size: " + gear.size());
+  // ... and two hundred more lines like these?
+}
+```
+
+Prof: You could do that, but you shouldn’t. This is a lot of typing, and it’s easy to make a typo. If you misspell “stove” as “stve”, the program will happily run, but you’ll never know that you forgot to pack your stove!
+
+Student: Yeah, I guess that would take forever. And if I misspell one piece of gear, I have to hunt through all that code to find it.
+
+Prof: Exactly. When the data is that big, it doesn’t belong inside the program at all. **It belongs in a file** — text that lives outside the program, in a file like `gear-list.txt`:
+
+```
+tent 2.5
+stove 0.8
+rope 3.1
+```
+
+Prof: When dealing with a lot of data, we want to keep it in a file, and have the program read it in when it runs, rather than hardcoding it.
+
+Student: So instead of typing the data into the code, the program reads it from the file?
+
+Prof: That’s the whole idea of this chapter! First we’ll read a file, then we’ll learn to write one. And at the end, we’ll write a program that reads two files — the gear an expedition requires, and the gear you’ve already packed — and tells you what’s missing!
+
+## [Reading a File](files-and-throw/file-reading.html)
+
+Student: Okay, the list lives in `gear-list.txt` now. But how does Java get those pieces back out?
+
+Prof: With a `Scanner`. Two objects: a `File` names the file, and a `Scanner` reads from it:
+
+```java
+File file = new File("gear-list.txt");
+Scanner input = new Scanner(file);
+```
+
+Prof: A `Scanner` reads piece by piece — a piece is a run of characters between spaces. `input.next()` hands you the next piece as text, `input.nextDouble()` reads the next piece as a number, and `input.hasNext()` answers `true` or `false`: is there another piece? So the loop is: while there’s another piece, read a name and a weight:
+
+```java
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg) {}
+
+void main() throws IOException {
+  // gear-list.txt is set up for you, expand to see how
+  PrintWriter output = new PrintWriter(new File("gear-list.txt"));
+  output.println("tent 2.5");
+  output.println("stove 0.8");
+  output.println("rope 3.1");
+  output.close();
+
+  File file = new File("gear-list.txt");
+  Scanner input = new Scanner(file);
+  while (input.hasNext()) {
+    String name = input.next();
+    double weight = input.nextDouble();
+    Gear gear = new Gear(name, weight);
+    System.out.println(gear.name() + ": " + gear.weightKg() + " kg");
+  }
+  input.close();
+}
+```
+
+Student: So `hasNext()` is what stops the loop — it doesn’t know how many pieces there are, it just keeps asking “anotha one?”
+
+Prof: Exactly. And `nextDouble()` does two jobs at once: it takes the next piece and turns it into a number. Everything from a file starts as text, so you have to convert the numbers yourself — `nextDouble()` and `nextInt()` do the converting for you. Isn’t that handy?
+
+Student: Yeah! And what about a name with a space in it, like “ice axe”?
+
+Prof: A space separates the pieces, so a name can’t have a space in this format — “ice axe” would read as two elements, and the second one isn’t a number, which would cause problems. So just keep names to one word for now!
+
+Student: Alrighty, and why do we need `input.close()` at the end?
+
+Prof: The `Scanner` keeps the file open until you close it. In a short program like this one, forgetting wouldn’t leak anything — the operating system takes the file back when the program ends. But a program that keeps running, or opens lots of files, can run out of open files if it never closes them. So close it every time, as a habit.
+
+Student: So for a `Scanner`, `close()` is mostly about being tidy?
+
+Prof: Here, yes! But for a `PrintWriter` it’s different. Closing a `PrintWriter` also flushes out anything still waiting to be written, so that one really does matter at the end. You’ll see that when we talk about writing to files.
+
+Student: And what about `throws IOException` on `main`?
+
+Prof: Opening the file can fail — no such file, for instance. `new Scanner(file)` throws a `FileNotFoundException`, which **is** an `IOException`, so `throws IOException` covers it. The full story comes when we get to `throw`. But first, let’s see if we can process a similar file with slightly different contents. For this exercise, we’ll also keep track of gear name, weight, and quantity (an integer).
+
+#### Practice
+
+Your turn. The file `gear-list.txt` has five lines, and each line has three pieces — a name, a weight, and a quantity. Fill in the three missing pieces so the program reads it back and prints each item.
+
+Exercise:
+
+```java
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg, int quantity) {}
+
+void main() throws IOException {
+  File file = new File("gear-list.txt");
+  Scanner input = new Scanner(file);
+  while (input.hasNext()) {
+    String name = ____;
+    double weight = ____;
+    int quantity = ____;
+    Gear gear = new Gear(name, weight, quantity);
+    System.out.println(gear.name() + ": " + gear.weightKg() + " kg x" + gear.quantity());
+  }
+  input.close();
+}
+```
+
+## [Writing a File](files-and-throw/file-writing.html)
+
+Student: Okay, so reading is a `Scanner` and `next`. Now for the gear I’ve already packed — how do I write that to a file?
+
+Prof: With a `PrintWriter`. Same `File` to name it — and `print` and `println` to write, just like `System.out`:
+
+```java
+File file = new File("packedGear.txt");
+PrintWriter output = new PrintWriter(file);
+output.println("tent 2.5");
+output.println("stove 0.8");
+output.close();
+```
+
+Prof: The `.println()` method writes the text to our file, which is stored in our `PrintWriter` object, and it automatically adds a newline at the end. The `close()` method finishes the file: if you forget it, the last lines might never land.
+
+Student: So I go through my packed gear and print one line per item?
+
+Prof: Exactly. One line per gear: name, space, weight. Let’s see it in action:
+
+```java
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg) {}
+
+void main() throws IOException {
+
+  // Write the packed gear to a file
+  File file = new File("packedGear.txt");
+  PrintWriter output = new PrintWriter(file);
+  output.println("tent 2.5");
+  output.println("stove 0.8");
+  output.close();
+
+  // Read it back to check
+  Scanner input = new Scanner(file);
+  while (input.hasNext()) {
+    String name = input.next();
+    double weight = input.nextDouble();
+    System.out.println("packed: " + name + " " + weight);
+  }
+  input.close();
+}
+```
+
+Student: You read it straight back — is that just to check it worked?
+
+Prof: That’s a good habit to get into; after you write a file, read it back and look at it. If the lines aren’t what you expected, you find out now, not three steps later when another program reads the file.
+
+Student: And `throws IOException` again, because writing can fail too?
+
+Prof: Exactly … writing can fail in a few ways. The folder that we’re trying to write to might not exist. This would throw an exception.
+
+Student: And what if we run out of space while trying to write to a file?
+
+Prof: Surprisingly, `PrintWriter` does not throw an `IOException` when a write operation fails. Instead, it internally records that an error occurred. That means your program could sneakily continue running without telling you the file wasn’t written to successfully! `PrintWriter` provides a method called `checkError()` that lets you ask whether a **writing error** occurred, but you’d have to call it explicitly to find out.
+
+Student: So we’ve talked about what happens when something goes wrong, but can we check for potential problems *before* trying to read or write a file? Like, how do I even know if a file exists?
+
+Prof: Great question! You can check with `file.exists()`. Be careful though, a `PrintWriter` replaces the file if it’s already there — it starts fresh.
+
+Prof: There’s one more catch…
+
+Student: Oh yeah?
+
+Prof: Just because a file exists doesn’t mean we can successfully read it! What if we don’t have permission? Or what if it’s a directory rather than a regular file?
+
+Even sneakier, what if the file gets deleted or moved *between* checking whether it exists and actually opening it?
+
+So we still need `throws IOException` or a try/catch block to handle the possibility that opening the file could fail.
+
+Prof: So here’s how we might check if the file exists or if any errors occur while writing to it:
+
+```java
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+void main() throws IOException {
+
+  File file = new File("packedGear.txt");
+
+  // Check whether we're about to overwrite an existing file
+  if (file.exists()) {
+    System.out.println("Overwriting existing " + file.getName());
+  }
+
+  // Create or overwrite the file
+  PrintWriter output = new PrintWriter(file);
+  output.println("tent 2.5");
+  output.println("stove 0.8");
+
+  // Check for any writing errors
+  if (output.checkError()) {
+    System.out.println("An error occurred while writing to " + file.getName());
+  }
+  output.close();
+}
+```
+
+Student: Great so now I have two files in the same format: the gear the trip requires, and the gear I’ve packed.
+
+Prof: And that’s the whole setup. Next, we make the program refuse bad data — starting with `throw` — and at the end of the chapter, we’ll read both files and print whatever the required list has that the packed list doesn’t: the missing gear.
+
+## [Introduction to throw](files-and-throw/introduction-to-throw.html)
+
+Student: Professor, every program so far says `throws IOException` in `main` — and we just kept adding it. What does it actually mean?
+
+Prof: It means “this method may throw an `IOException`”.
+
+We can easily make Java stop on its own errors, like trying to read a missing file. What it can’t do is notice when the data is wrong. A weight of −0.2 is a perfectly good double as far as Java is concerned — only we humans know that our gear can’t weigh less than zero.
+
+Student: So we have to stop the program ourselves?
+
+Prof: Exactly — and the statement that does it is `throw`:
+
+```java
+throw new IllegalArgumentException("Gear weight cannot be negative: gloves weighs -0.2");
+```
+
+Prof: `throw` stops the method right here and the rest of the code in the method never runs. `new IllegalArgumentException(...)` is the exception object — the thing you throw. And the message in quotes is the part you control: say what went wrong, and with what value.
+
+Student: Let me see it in a program — a method that adds up the weight and refuses a negative one.
+
+Prof: Here it is. `totalWeight` walks the list, and the moment it meets a negative weight it throws instead of adding:
+
+```java
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg) {}
+
+double totalWeight(ArrayList<Gear> gear) {
+  double total = 0;
+  for (Gear g : gear) {
+    if (g.weightKg() < 0) {
+      throw new IllegalArgumentException("Gear weight cannot be negative: " + g.name() + " weighs " + g.weightKg());
+    }
+    total = total + g.weightKg();
+  }
+  return total;
+}
+
+void main() {
+  ArrayList<Gear> pack = new ArrayList<Gear>();
+  pack.add(new Gear("tent", 2.5));
+  pack.add(new Gear("stove", 0.8));
+  pack.add(new Gear("rope", 3.1));
+  System.out.println("Total: " + totalWeight(pack) + " kg");
+}
+```
+
+Student: It printed the total. So with good data, the `throw` line just sits there and never runs?
+
+Prof: Right — `throw` only runs when the `if` says so. Now the same program with one bad weight:
+
+```java
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg) {}
+
+double totalWeight(ArrayList<Gear> gear) {
+  double total = 0;
+  for (Gear g : gear) {
+    if (g.weightKg() < 0) {
+      throw new IllegalArgumentException("Gear weight cannot be negative: " + g.name() + " weighs " + g.weightKg());
+    }
+    total = total + g.weightKg();
+  }
+  return total;
+}
+
+void main() {
+  ArrayList<Gear> pack = new ArrayList<Gear>();
+  pack.add(new Gear("tent", 2.5));
+  pack.add(new Gear("stove", 0.8));
+  pack.add(new Gear("gloves", -0.2));
+  pack.add(new Gear("rope", 3.1));
+  System.out.println("Total: " + totalWeight(pack) + " kg");
+}
+```
+
+Student: It stopped — and the total never printed.
+
+Prof: That’s what throwing does: the method stops immediately, **the lines after the `throw` don’t run**, and the program ends with the exception’s type and message. The message is the whole point — without it, you’d just see a crash; with it, you see exactly which gear and which weight had an invalid value.
+
+Student: And `throws IOException` — that’s the same idea in the method header?
+
+Prof: Same idea, but with a rule Java enforces. `throws` declares that a method may throw that type of exception — and for a **checked exception** like `IOException`, the compiler makes you declare it. A checked exception is something that can go wrong even when the code is correct, like the file not existing. The compiler won’t let you ignore it — the method either handles it or declares `throws`, and the decision travels up to whoever called it.
+
+Student: And `IllegalArgumentException`? `main` doesn’t declare that one.
+
+Prof: Right — that’s an **unchecked exception**, and those never have to be declared. An unchecked exception means something broke the rules the code expects: a method got a value it can’t use, or the data doesn’t fit the format. The program just stops with a message that says what’s wrong.
+
+Student: So now I can stop the program whenever the data doesn’t make sense — with a message that says what’s wrong.
+
+Prof: Gosh, you’re getting good at this!
+
+Student: I think I understand, but this all seems a bit clunky. Is there an easier way to automatically check the data? Say, make `Gear` not allow negative weights at all? Didn’t we do something like that before? …
+
+## [Checks in a constructor](files-and-throw/constructor-checks.html)
+
+Prof: Good memory! Yes, we can enforce that in the constructor of `Gear` itself, so that any attempt to create a `Gear` with a negative weight immediately throws an exception. That way, the data is always valid from the moment it’s created.
+
+Prof: Recall what we did with `Px.size` in chapter 10. The Pict records call it in their constructors, so no circle can ever have a negative radius.
+
+```java
+    /** A width, height, or radius: zero is fine (an empty picture), negative is not. */
+    static int size(String what, int v) {
+        if (v < 0) throw new IllegalArgumentException(what + " is negative: " + v);
+        return v;
+    }
+```
+
+[`Pict.java`, lines 88–92](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L88-L92)
+
+Prof: A circle hands its radius to `Px.size`, so no circle can ever have a negative radius:
+
+```java
+record Circle(int radius, Color color) implements Pict {
+    Circle { Px.size("radius", radius); }
+```
+
+[`Pict.java`, lines 142–143](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L142-L143)
+
+Student: So the check lives in the constructor — every circle gets checked when it’s made?
+
+Prof: Exactly. And we can do the same thing for `Gear`. `Gear { ... }` is the constructor — the code that runs every time someone writes `new Gear(...)`. Put the check there, and no gear can ever have a negative weight. Gear has a quantity now, like the step-2 exercise — the check only cares about the weight:
+
+```java
+record Gear(String name, double weightKg, int quantity) {
+  Gear {
+    if (weightKg < 0) {
+      throw new IllegalArgumentException(name + " is negative: " + weightKg);
+    }
+  }
+}
+```
+
+Student: There’s no `what` this time — the message just uses `name`.
+
+Prof: Right. `Px.size` needed a `what` because it checked any number. A `Gear` object already knows its own name. Same message shape, though: “gloves is negative: −0.2”.
+
+Student: And `totalWeight` doesn’t need its own check anymore?
+
+Prof: It doesn’t — a bad gear can never exist now, so there’s nothing for `totalWeight` to catch. Every later `new Gear(...)` gets the check for free — including all the ones we’ll build from file lines in the next steps. Next, what if a line in the file has the wrong number of pieces?
+
+## [The Wrong Number of Fields](files-and-throw/wrong-number-of-fields.html)
+
+Student: So professor, I still have some questions about the reader in step 2. The reader reads piece by piece with `next()`. What if a line only has two pieces — say someone forgot the quantity?
+
+Prof: `next()` can’t see where a line ends — it just takes the next piece. So a line with 2 pieces wouldn’t crash where you’d expect: `nextInt()` would grab the first piece of the **next** line and complain it isn’t a number. To check a line’s shape, read the whole line at once with `nextLine()`, then scan just that line with a second `Scanner` — the same `next()`, `nextDouble()`, `nextInt()` from step 2, one line at a time.
+
+Prof: `new Scanner(line)` makes a `Scanner` that reads from that line instead of the file. Before each piece, ask `fields.hasNext()`: is there another piece? If not, throw, with the line in the message so you can find the typo. And ask once more after the third piece: if there’s still one there, the line has too many pieces — same throw. `fields` reads from a string, not a file, so there’s nothing to close.
+
+Student: So the rule is: check the shape of the data before you use it?
+
+Prof: That’s the idea. We’d rather cause an error than let the program run on and give us wrong results — or crash somewhere confusing. Here’s the reader with the check, on a good file:
+
+```java
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg, int quantity) {}
+
+void main() throws IOException {
+  // gear-list.txt is set up for you, expand to see how
+  PrintWriter output = new PrintWriter(new File("gear-list.txt"));
+  output.println("tent 2.5 1");
+  output.println("rope 3.1 2");
+  output.println("stove 0.8 1");
+  output.close();
+
+  File file = new File("gear-list.txt");
+  Scanner input = new Scanner(file);
+  while (input.hasNextLine()) {
+    String line = input.nextLine();
+    Scanner fields = new Scanner(line);
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    String name = fields.next();
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    double weight = fields.nextDouble();
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    int quantity = fields.nextInt();
+    if (fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    Gear gear = new Gear(name, weight, quantity);
+    System.out.println(gear.name() + ": " + gear.weightKg() + " kg x" + gear.quantity());
+  }
+  input.close();
+}
+```
+
+Student: It printed all three. The checks just sat there.
+
+Prof: Right — on good data they never fire. Now let’s see what happens when we use the same reader on a file with one bad line:
+
+```java
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg, int quantity) {}
+
+void main() throws IOException {
+  // gear-list.txt is set up for you, expand to see how
+  PrintWriter output = new PrintWriter(new File("gear-list.txt"));
+  output.println("tent 2.5 1");
+  output.println("rope 3.1");
+  output.println("stove 0.8 1");
+  output.close();
+
+  File file = new File("gear-list.txt");
+  Scanner input = new Scanner(file);
+  while (input.hasNextLine()) {
+    String line = input.nextLine();
+    Scanner fields = new Scanner(line);
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    String name = fields.next();
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    double weight = fields.nextDouble();
+    if (!fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    int quantity = fields.nextInt();
+    if (fields.hasNext()) {
+      throw new IllegalArgumentException("Gear line needs 3 pieces: " + line);
+    }
+    Gear gear = new Gear(name, weight, quantity);
+    System.out.println(
+      gear.name() + ": " + gear.weightKg() + " kg x" + gear.quantity());
+  }
+  input.close();
+}
+```
+
+Student: It stopped on the rope line, and the message says the line needs 3 pieces — and it shows the line.
+
+Prof: That’s the benefit of `throw`: the error tells you which line caused the error and what’s wrong with that line, instead of a confusing crash somewhere else.
+
+Student: And speaking of crashing, what if I don’t want the program to crash at all? What if I want to handle the error gracefully instead?
+
+Prof: We can use a `try`-`catch` block!
+
+## [Catching an Exception](files-and-throw/catching-an-exception.html)
+
+Prof: Let’s talk about `try` and `catch`. Consider the following block of code — the reading lives in a little helper, `readPack`, so the throw and the `catch` aren’t in the same method:
+
+```java
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+// The reading lives in a helper. It can't answer a missing file —
+// it has nothing to fall back on — so it lets the exception travel
+// up with throws, and main decides what to do about it.
+ArrayList<String> readPack(File file) throws IOException {
+  Scanner input = new Scanner(file);
+  ArrayList<String> pack = new ArrayList<>();
+  while (input.hasNext()) {
+    pack.add(input.next());
+  }
+  input.close();
+  return pack;
+}
+
+void main() {
+  ArrayList<String> pack = new ArrayList<>();
+  try {
+    File file = new File("pack-list.txt");
+    pack = readPack(file);
+  } catch (FileNotFoundException e) {
+    // No packing list yet - start with an empty pack.
+  } catch (IOException e) {
+    // Could not read the packing list - start with an empty pack.
+  }
+  System.out.println("Packing continues with " + pack.size() + " items.");
+}
+```
+
+Student: So I think what’s happening here is that the risky lines of code go inside `try`, and each `catch` says what to do for each type of problem?
+
+Prof: Careful with “risky” — almost any line can go wrong. What goes in `try` is code that can fail in a way we can’t rule out ahead of time, like a file that isn’t there, **and** that we have an answer for. Whenever a method calls code like that, it has a choice. It can decide the program still works without the file, or it can put `throws` on itself and let the exception travel up to its caller.
+
+Prof: `readPack` can’t answer — with no file, it has no list to return — so it declares `throws`. `main` can answer: no packing list means an empty pack. When `readPack` throws, Java skips the rest of the `try`, runs the first `catch` whose type matches, and then carries on after the `catch` blocks with `pack` still empty. That’s the whole point of catching: the program goes on, with a value that makes sense.
+
+Prof: Also, notice the order of the `catch` blocks: we put the `FileNotFoundException` first and the `IOException` second. A missing file **is** an `IOException`, so if the general `catch` came first it would catch every missing file, and the specific one could never run. Java won’t even compile that order — the specific `catch` has to come first.
+
+Prof: The `catch` gets the exception as a parameter — `e` — and `e.getMessage()` gives you the message Java attached to it. You can print that when you want to tell the user what went wrong — but the message isn’t the handling. The handling is the value the program goes on with.
+
+Student: Wait — the `catch` is up in `main`, but the `throw` happens down in the `Scanner`, inside `readPack`. How far apart can those two be?
+
+Prof: As far apart as the call stack is tall. Here’s the stack at the moment `new Scanner(file)` throws. The `catch` that will handle it is two frames up, in `main`; `readPack` in between has no `catch`, so the exception passes straight through it — that’s what its `throws` said would happen:
+
+```
+Names (the stack)
+  new Scanner(file)
+    source = @1002
+    throws FileNotFoundException
+  readPack(file)
+    file = @1002
+    throws FileNotFoundException
+  main()
+    pack = @1001
+    file = @1002
+    catches FileNotFoundException
+  top level
+Heap
+  @1001: []
+  @1002: pack-list.txt
+```
+
+Prof: Here there’s one frame in between. In a real program there can be dozens — the `throw` happens in a helper, or a helper’s helper, and the exception climbs back up through every frame until it finds a `catch`. So an exception travels from the code that found the problem to the code that knows what to do about it. Isn’t that neat?
+
+The `readPack` program at the top of this step reads `pack-list.txt`, which does not exist.
+
+Exercise:
+
+Which catch block runs when the file `pack-list.txt` does not exist?
+
+Choose one:
+
+- `catch (IOException e)` — the general one, since a missing file is an `IOException`.
+- Neither — the program crashes, because the exception is thrown inside `try`.
+- The `FileNotFoundException` one — it’s the first catch whose type matches, and the program goes on with an empty pack.
+
+Student: But now I have to remember `input.close()` again — and if the `try` throws halfway, the close never runs.
+
+Prof: That’s the tidy way to write it: declare the `Scanner` inside the parentheses after `try`, and Java closes it for you, whether the block finishes normally or throws.
+
+```java
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg, int quantity) {}
+
+void main() {
+  // gear-list.txt is set up for you, expand to see how
+  try {
+    PrintWriter output = new PrintWriter(new File("gear-list.txt"));
+    output.println("tent 2.5 1");
+    output.println("stove 0.8 1");
+    output.println("rope 3.1 2");
+    output.close();
+  } catch (IOException e) { /* setup only — the catch below handles a missing file */ }
+
+  ArrayList<Gear> pack = new ArrayList<>();
+  File file = new File("gear-list.txt");
+
+  try (Scanner input = new Scanner(file)) {
+    while (input.hasNext()) {
+      String name = input.next();
+      double weight = input.nextDouble();
+      int quantity = input.nextInt();
+      pack.add(new Gear(name, weight, quantity));
+    }
+  } catch (FileNotFoundException e) {
+    // No gear list yet - start with an empty pack.
+  } catch (IOException e) {
+    // Something went wrong mid-read - go on with the gear we have so far.
+  }
+
+  System.out.println("Packing continues with " + pack.size() + " items.");
+
+  // Print all the gear
+  for (Gear gear : pack) {
+    System.out.println(gear.name() + ": " + gear.weightKg() + " kg x" + gear.quantity());
+  }
+}
+```
+
+Prof: Read `try (Scanner input = ...)` as: “open this, and close it when we’re done, no matter what.” This is called a `try`-with-resources statement, and it ensures that the resource is closed automatically, even if an exception occurs. You can read more about it in the [Java documentation](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html).
+
+Student: So `main` had a choice too. It caught the exception, but could it have let it keep going instead, the way `readPack` did?
+
+Prof: Yes — here’s that second choice: a `main` that calls `readPack()` and catches nothing. It just puts `throws` on itself. When the file is there, it prints the pack; if it weren’t, the exception would travel all the way up and the program would stop with its message:
+
+```java
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+// The reading lives in a helper. It can't answer a missing file —
+// it has nothing to fall back on — so it lets the exception travel
+// up with throws, and main decides what to do about it.
+ArrayList<String> readPack(File file) throws IOException {
+  Scanner input = new Scanner(file);
+  ArrayList<String> pack = new ArrayList<>();
+  while (input.hasNext()) {
+    pack.add(input.next());
+  }
+  input.close();
+  return pack;
+}
+
+void main() throws IOException {
+  // trip-pack.txt is set up for you, expand to see how
+  PrintWriter output = new PrintWriter(new File("trip-pack.txt"));
+  output.println("tent");
+  output.println("stove");
+  output.println("rope");
+  output.close();
+
+  File file = new File("trip-pack.txt");
+  ArrayList<String> pack = readPack(file);
+  for (String item : pack) {
+    System.out.println(item);
+  }
+}
+```
+
+Prof: So that’s your whole workflow: reading, writing, throwing and catching exceptions. Now we’re ready to write a program that reads both the gear list you need on your trip and the gear you’ve already packed, and tells you what’s missing.
+
+## [Comparing Two Files](files-and-throw/comparing-files.html)
+
+Student: So now I have two files in the same format — the gear the trip requires, and the gear I’ve packed. How do I find what’s missing?
+
+Prof: Let’s read both files back, the same way you read one file in step 2 — then walk through the required list and ask, for each item, “is this one packed?”
+
+```java
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg, int quantity) {}
+
+void main() throws IOException {
+  // gear-list.txt and packedGear.txt are set up for you, expand to see how
+  PrintWriter requiredOut = new PrintWriter(new File("gear-list.txt"));
+  requiredOut.println("tent 2.5 1");
+  requiredOut.println("stove 0.8 1");
+  requiredOut.println("rope 3.1 2");
+  requiredOut.close();
+  PrintWriter packedOut = new PrintWriter(new File("packedGear.txt"));
+  packedOut.println("tent 2.5 1");
+  packedOut.println("stove 0.8 1");
+  packedOut.close();
+
+  ArrayList<Gear> required = new ArrayList<>();
+  Scanner requiredInput = new Scanner(new File("gear-list.txt"));
+  while (requiredInput.hasNext()) {
+    String name = requiredInput.next();
+    double weight = requiredInput.nextDouble();
+    int quantity = requiredInput.nextInt();
+    required.add(new Gear(name, weight, quantity));
+  }
+  requiredInput.close();
+
+  ArrayList<String> packedNames = new ArrayList<>();
+  Scanner packedInput = new Scanner(new File("packedGear.txt"));
+  while (packedInput.hasNext()) {
+    packedNames.add(packedInput.next());
+    packedInput.nextDouble();
+    packedInput.nextInt();
+  }
+  packedInput.close();
+
+  for (Gear gear : required) {
+    if (!packedNames.contains(gear.name())) {
+      System.out.println("missing: " + gear.name());
+    }
+  }
+}
+```
+
+Student: The packed side only keeps the names — why not the weights too?
+
+Prof: Because the question is “do I have a rope?”, not “how heavy is my rope?”. We check each piece using the same commands as step 2: `next()` reads the name, `nextDouble()` reads the weight, `nextInt()` reads the quantity, and `hasNext()` keeps the loop going while there’s another piece.
+
+Student: And `packedNames.contains(gear.name())` is the actual check?
+
+Prof: Right — remember that `.contains()` asks an `ArrayList` whether it holds a value, and answers `true` or `false`. So if this required gear is NOT in the packed list, say so.
+
+Student: So the whole chapter is basically just reading a file, writing a file, and handling errors?
+
+Prof: That’s the idea! The required list and the packed list are both just files now, and the program tells you what’s missing before you leave! Safe travels!
+
+## [Practice: true or false](files-and-throw/practice.html)
+
+Exercise:
+
+`input.next()` reads a whole line.
+
+Choose one:
+
+- False
+- True
+
+Exercise:
+
+`input.hasNext()` answers `true` or `false` about whether there is another piece to read.
+
+Choose one:
+
+- True
+- False
+
+Exercise:
+
+A `PrintWriter` writes to the file as soon as you call `println`, so you never need `close()`.
+
+Choose one:
+
+- False
+- True
+
+Exercise:
+
+A `throw` stops the method immediately; the lines after it don’t run.
+
+Choose one:
+
+- True
+- False
+
+Exercise:
+
+`throw new IllegalArgumentException();` with no message is fine, because the exception type says enough.
+
+Choose one:
+
+- True
+- False
+
+Exercise:
+
+Calling `file.exists()` checks whether the file represented by `file` exists and returns a boolean indicating the result.
+
+Choose one:
+
+- True
+- False
+
+Exercise:
+
+A `catch` block runs only if the `try` block throws that kind of exception.
+
+Choose one:
+
+- True
+- False
+
 # Appendix: The Pict Library
 
 ## [Pict Library Reference](pict-library/pict-library.html)

@@ -180,8 +180,19 @@
   // wrapper reports it: a sentinel line on stderr (which the worker
   // swallows) and then the exception continues on its way, trace intact.
   const FAILED = '\u0001__FAILED__\u0001';
-  const GUARD_OPEN = 'class __Main { public static void main(String[] args) throws Throwable { try {';
-  const GUARD_CLOSE = ' } catch (Throwable t) { System.err.println("' + FAILED + '"); throw t; } } }\n';
+  // Fresh files (#step(files: true)): the worker passes FRESH_FILES as the
+  // run's argument on the first run after entering such a step, and the
+  // wrapper empties the program's working directory (/files/) before the
+  // student's class loads. Only top-level regular files go: the compiled
+  // classes and CheerpJ's own entries (dotfiles, its directories) stay.
+  const FRESH_FILES = '--fresh-files';
+  const GUARD_OPEN = 'class __Main { public static void main(String[] args) throws Throwable { try {'
+    + ' if (args.length > 0 && args[0].equals("' + FRESH_FILES + '")) __freshFiles();';
+  const GUARD_CLOSE = ' } catch (Throwable t) { System.err.println("' + FAILED + '"); throw t; } }'
+    + ' static void __freshFiles() {'
+    + ' java.io.File[] fs = new java.io.File("/files").listFiles(); if (fs == null) return;'
+    + ' for (java.io.File f : fs) { String n = f.getName();'
+    + ' if (f.isFile() && !n.startsWith(".") && !n.endsWith(".class")) f.delete(); } } }\n';
 
   const ECHO_MAIN = GUARD_OPEN
     + ' __Main.class.getClassLoader().setDefaultAssertionStatus(true);'
@@ -547,7 +558,11 @@
         buffer: '', resolve, nudge: 0, frame: 0,
       });
       state.textContent = warmupState || 'queued…';
-      ensureChannel().post({ type: 'run', id, source });
+      // A files step names itself, so the worker can tell a step being
+      // entered (empty /files/ first) from another run within it.
+      const fresh = widget && widget.closest('article[data-fresh-files]');
+      const filesStep = fresh ? location.pathname : null;
+      ensureChannel().post({ type: 'run', id, source, filesStep });
     });
   }
 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing a File — File I/O and Throwing Errors</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">File I/O and Throwing Errors</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Writing a File</h1>
+<article class="prose" data-fresh-files><div class="speech student"><div class="bubble"><span class="who">Student: </span>Okay, so reading is a <code>Scanner</code> and <code>next</code>. Now for the gear I’ve already packed — how do I write that to a file?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>With a <code>PrintWriter</code>. Same <code>File</code> to name it — and <code>print</code> and <code>println</code> to write, just like <code>System.out</code>:</div></div><pre><code data-lang="java"><span style="color: #4b69c6">File</span> file <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">File</span>(<span style="color: #198810">"</span><span style="color: #198810">packedGear.txt</span><span style="color: #198810">"</span>);
+<span style="color: #4b69c6">PrintWriter</span> output <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">PrintWriter</span>(file);
+output.<span style="color: #4b69c6">println</span>(<span style="color: #198810">"</span><span style="color: #198810">tent 2.5</span><span style="color: #198810">"</span>);
+output.<span style="color: #4b69c6">println</span>(<span style="color: #198810">"</span><span style="color: #198810">stove 0.8</span><span style="color: #198810">"</span>);
+output.<span style="color: #4b69c6">close</span>();</code></pre><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>The <code>.println()</code> method writes the text to our file, which is stored in our <code>PrintWriter</code> object, and it automatically adds a newline at the end. The <code>close()</code> method finishes the file: if you forget it, the last lines might never land.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So I go through my packed gear and print one line per item?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly. One line per gear: name, space, weight. Let’s see it in action:</div></div><div class="runner" id="w1002443690" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.ArrayList;
+
+record Gear(String name, double weightKg) {}
+
+void main() throws IOException {
+
+  // Write the packed gear to a file
+  File file = new File("packedGear.txt");
+  PrintWriter output = new PrintWriter(file);
+  output.println("tent 2.5");
+  output.println("stove 0.8");
+  output.close();
+
+  // Read it back to check
+  Scanner input = new Scanner(file);
+  while (input.hasNext()) {
+    String name = input.next();
+    double weight = input.nextDouble();
+    System.out.println("packed: " + name + " " + weight);
+  }
+  input.close();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>You read it straight back — is that just to check it worked?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s a good habit to get into; after you write a file, read it back and look at it. If the lines aren’t what you expected, you find out now, not three steps later when another program reads the file.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And <code>throws IOException</code> again, because writing can fail too?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly … writing can fail in a few ways. The folder that we’re trying to write to might not exist. This would throw an exception.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And what if we run out of space while trying to write to a file?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Surprisingly, <code>PrintWriter</code> does not throw an <code>IOException</code> when a write operation fails. Instead, it internally records that an error occurred. That means your program could sneakily continue running without telling you the file wasn’t written to successfully! <code>PrintWriter</code> provides a method called <code>checkError()</code> that lets you ask whether a <strong>writing error</strong> occurred, but you’d have to call it explicitly to find out.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So we’ve talked about what happens when something goes wrong, but can we check for potential problems <em>before</em> trying to read or write a file? Like, how do I even know if a file exists?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great question! You can check with <code>file.exists()</code>. Be careful though, a <code>PrintWriter</code> replaces the file if it’s already there — it starts fresh.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There’s one more catch…</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh yeah?</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>Just because a file exists doesn’t mean we can successfully read it! What if we don’t have permission? Or what if it’s a directory rather than a regular file?</p><p>Even sneakier, what if the file gets deleted or moved <em>between</em> checking whether it exists and actually opening it?</p><p>So we still need <code>throws IOException</code> or a try/catch block to handle the possibility that opening the file could fail.</p></div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>So here’s how we might check if the file exists or if any errors occur while writing to it:</div></div><div class="runner" id="w1992614483" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+void main() throws IOException {
+
+  File file = new File("packedGear.txt");
+
+  // Check whether we're about to overwrite an existing file
+  if (file.exists()) {
+    System.out.println("Overwriting existing " + file.getName());
+  }
+
+  // Create or overwrite the file
+  PrintWriter output = new PrintWriter(file);
+  output.println("tent 2.5");
+  output.println("stove 0.8");
+
+  // Check for any writing errors
+  if (output.checkError()) {
+    System.out.println("An error occurred while writing to " + file.getName());
+  }
+  output.close();
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Great so now I have two files in the same format: the gear the trip requires, and the gear I’ve packed.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>And that’s the whole setup. Next, we make the program refuse bad data — starting with <code>throw</code> — and at the end of the chapter, we’ll read both files and print whatever the required list has that the packed list doesn’t: the missing gear.</div></div></article>
+<nav class="pagenav"><a class="prev" href="file-reading.html">← Reading a File</a> <a class="next" href="introduction-to-throw.html">Introduction to throw →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "files-and-throw", "title": "File I/O and Throwing Errors", "current": 2, "steps": [{"title": "File I/O", "slug": "files-intro", "url": "files-intro.html", "path": "/files-and-throw/files-intro.html"}, {"title": "Reading a File", "slug": "file-reading", "url": "file-reading.html", "path": "/files-and-throw/file-reading.html"}, {"title": "Writing a File", "slug": "file-writing", "url": "file-writing.html", "path": "/files-and-throw/file-writing.html"}, {"title": "Introduction to throw", "slug": "introduction-to-throw", "url": "introduction-to-throw.html", "path": "/files-and-throw/introduction-to-throw.html"}, {"title": "Checks in a constructor", "slug": "constructor-checks", "url": "constructor-checks.html", "path": "/files-and-throw/constructor-checks.html"}, {"title": "The Wrong Number of Fields", "slug": "wrong-number-of-fields", "url": "wrong-number-of-fields.html", "path": "/files-and-throw/wrong-number-of-fields.html"}, {"title": "Catching an Exception", "slug": "catching-an-exception", "url": "catching-an-exception.html", "path": "/files-and-throw/catching-an-exception.html"}, {"title": "Comparing Two Files", "slug": "comparing-files", "url": "comparing-files.html", "path": "/files-and-throw/comparing-files.html"}, {"title": "Practice: true or false", "slug": "practice", "url": "practice.html", "path": "/files-and-throw/practice.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=c635d32290be"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checks in a constructor — File I/O and Throwing Errors</title>
+<link rel="stylesheet" href="../assets/book.css?v=a17ecd2af96d">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">File I/O and Throwing Errors</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Checks in a constructor</h1>
+<article class="prose"><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Good memory! Yes, we can enforce that in the constructor of <code>Gear</code> itself, so that any attempt to create a <code>Gear</code> with a negative weight immediately throws an exception. That way, the data is always valid from the moment it’s created.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Recall what we did with <code>Px.size</code> in chapter 10. The Pict records call it in their constructors, so no circle can ever have a negative radius.</div></div><div class="kit-quote" data-kit-path="Pict.java" data-match="L88-L92"><pre><code data-lang="java">    <span style="color: #74747c">/**</span><span style="color: #74747c"> A width, height, or radius: zero is fine (an empty picture), negative is not. </span><span style="color: #74747c">*/</span>
+    <span style="color: #d73948">static</span> <span style="color: #d73948">int</span> <span style="color: #4b69c6">size</span>(<span style="color: #4b69c6">String</span> what, <span style="color: #d73948">int</span> v) {
+        <span style="color: #d73948">if</span> (v <span style="color: #d73948">&lt;</span> <span style="color: #b60157">0</span>) <span style="color: #d73948">throw</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">IllegalArgumentException</span>(what <span style="color: #d73948">+</span> <span style="color: #198810">"</span><span style="color: #198810"> is negative: </span><span style="color: #198810">"</span> <span style="color: #d73948">+</span> v);
+        <span style="color: #d73948">return</span> v;
+    }</code></pre><p class="kit-quote-source"><a href="https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L88-L92"><code>Pict.java</code>, lines 88–92</a></p></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>A circle hands its radius to <code>Px.size</code>, so no circle can ever have a negative radius:</div></div><div class="kit-quote" data-kit-path="Pict.java" data-match="L142-L143"><pre><code data-lang="java">record <span style="color: #4b69c6">Circle</span>(<span style="color: #d73948">int</span> radius, <span style="color: #4b69c6">Color</span> color) implements <span style="color: #4b69c6">Pict</span> {
+    <span style="color: #4b69c6">Circle</span> { <span style="color: #4b69c6">Px</span>.<span style="color: #4b69c6">size</span>(<span style="color: #198810">"</span><span style="color: #198810">radius</span><span style="color: #198810">"</span>, radius); }</code></pre><p class="kit-quote-source"><a href="https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L142-L143"><code>Pict.java</code>, lines 142–143</a></p></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So the check lives in the constructor — every circle gets checked when it’s made?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly. And we can do the same thing for <code>Gear</code>. <code>Gear { ... }</code> is the constructor — the code that runs every time someone writes <code>new<br>Gear(...)</code>. Put the check there, and no gear can ever have a negative weight. Gear has a quantity now, like the step-2 exercise — the check only cares about the weight:</div></div><pre><code data-lang="java">record <span style="color: #4b69c6">Gear</span>(<span style="color: #4b69c6">String</span> name, <span style="color: #d73948">double</span> weightKg, <span style="color: #d73948">int</span> quantity) {
+  <span style="color: #4b69c6">Gear</span> {
+    <span style="color: #d73948">if</span> (weightKg <span style="color: #d73948">&lt;</span> <span style="color: #b60157">0</span>) {
+      <span style="color: #d73948">throw</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">IllegalArgumentException</span>(name <span style="color: #d73948">+</span> <span style="color: #198810">"</span><span style="color: #198810"> is negative: </span><span style="color: #198810">"</span> <span style="color: #d73948">+</span> weightKg);
+    }
+  }
+}</code></pre><div class="speech student"><div class="bubble"><span class="who">Student: </span>There’s no <code>what</code> this time — the message just uses <code>name</code>.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right. <code>Px.size</code> needed a <code>what</code> because it checked any number. A <code>Gear</code> object already knows its own name. Same message shape, though: “gloves is negative: −0.2”.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>And <code>totalWeight</code> doesn’t need its own check anymore?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>It doesn’t — a bad gear can never exist now, so there’s nothing for <code>totalWeight</code> to catch. Every later <code>new Gear(...)</code> gets the check for free — including all the ones we’ll build from file lines in the next steps. Next, what if a line in the file has the wrong number of pieces?</div></div></article>
+<nav class="pagenav"><a class="prev" href="introduction-to-throw.html">← Introduction to throw</a> <a class="next" href="wrong-number-of-fields.html">The Wrong Number of Fields →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "files-and-throw", "title": "File I/O and Throwing Errors", "current": 4, "steps": [{"title": "File I/O", "slug": "files-intro", "url": "files-intro.html", "path": "/files-and-throw/files-intro.html"}, {"title": "Reading a File", "slug": "file-reading", "url": "file-reading.html", "path": "/files-and-throw/file-reading.html"}, {"title": "Writing a File", "slug": "file-writing", "url": "file-writing.html", "path": "/files-and-throw/file-writing.html"}, {"title": "Introduction to throw", "slug": "introduction-to-throw", "url": "introduction-to-throw.html", "path": "/files-and-throw/introduction-to-throw.html"}, {"title": "Checks in a constructor", "slug": "constructor-checks", "url": "constructor-checks.html", "path": "/files-and-throw/constructor-checks.html"}, {"title": "The Wrong Number of Fields", "slug": "wrong-number-of-fields", "url": "wrong-number-of-fields.html", "path": "/files-and-throw/wrong-number-of-fields.html"}, {"title": "Catching an Exception", "slug": "catching-an-exception", "url": "catching-an-exception.html", "path": "/files-and-throw/catching-an-exception.html"}, {"title": "Comparing Two Files", "slug": "comparing-files", "url": "comparing-files.html", "path": "/files-and-throw/comparing-files.html"}, {"title": "Practice: true or false", "slug": "practice", "url": "practice.html", "path": "/files-and-throw/practice.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=c635d32290be"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>
