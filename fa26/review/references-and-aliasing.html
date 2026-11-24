@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>References and Aliasing — Review</title>
+<link rel="stylesheet" href="../assets/book.css?v=529d778837f2">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Review</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<div class="ai-banner">The questions in this section were mostly AI-generated, then reviewed by course staff.</div>
+<h1>References and Aliasing</h1>
+<article class="prose"><div class="innercise"><pre><code data-lang="java">record <span style="color: #4b69c6">Menu</span>(<span style="color: #d73948">int</span><span style="color: #d73948">[]</span> pricesCents) {
+  <span style="color: #d73948">int</span><span style="color: #d73948">[]</span> <span style="color: #4b69c6">discounted</span>() {
+    <span style="color: #d73948">int</span><span style="color: #d73948">[]</span> result <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #d73948">int</span>[pricesCents.length];
+    <span style="color: #d73948">int</span> index <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;
+    <span style="color: #d73948">for</span>(<span style="color: #d73948">int</span> p<span style="color: #d73948">:</span> pricesCents) {
+      result[index] <span style="color: #d73948">=</span> p <span style="color: #d73948">*</span> <span style="color: #b60157">90</span> <span style="color: #d73948">/</span> <span style="color: #b60157">100</span>;
+      index <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>;
+    }
+    <span style="color: #d73948">return</span> result;
+  }
+  void <span style="color: #4b69c6">discountInPlace</span>() {
+    <span style="color: #d73948">int</span> index <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;
+    <span style="color: #d73948">for</span>(<span style="color: #d73948">int</span> p<span style="color: #d73948">:</span> pricesCents) {
+      pricesCents[index] <span style="color: #d73948">=</span> p <span style="color: #d73948">*</span> <span style="color: #b60157">90</span> <span style="color: #d73948">/</span> <span style="color: #b60157">100</span>;
+      index <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>;
+    }
+  }
+}
+<span style="color: #d73948">int</span><span style="color: #d73948">[]</span> regular <span style="color: #d73948">=</span> { <span style="color: #b60157">2000</span>, <span style="color: #b60157">1000</span> };
+<span style="color: #4b69c6">Menu</span> lunch <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Menu</span>(regular);
+<span style="color: #4b69c6">Menu</span> dinner <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Menu</span>(lunch.<span style="color: #4b69c6">discounted</span>());
+void <span style="color: #4b69c6">main</span>() {
+  lunch.<span style="color: #4b69c6">discountInPlace</span>();
+}</code></pre><div class="exercise" data-kind="blanks" data-seed="877425624"><div class="stem">Java hands out references in the order objects are created, starting at <code class="ptr">@1001</code>. Fill in the memory picture for when <code>main</code> finishes.</div><div class="cloze code">Names<br>top level: regular = @1001, lunch = @1002, dinner =<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>@1002</option><option>@1003</option><option data-correct>@1004</option></select><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>lunch.discounted() on @1002, returns<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>@1001</option><option data-correct>@1003</option></select><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>main()<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>lunch.discountInPlace() on<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>@1001</option><option data-correct>@1002</option><option>@1004</option></select><br><br>Heap<br>@1001:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>[2000, 1000]</option><option data-correct>[1800, 900]</option><option>[1620, 810]</option></select><br>@1002: Menu[pricesCents=@1001]<br>@1003:<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>[2000, 1000]</option><option data-correct>[1800, 900]</option><option>[1620, 810]</option></select><br>@1004: Menu[pricesCents=<select class="blank code"><option>@1001</option><option data-correct>@1003</option></select>]</div></div><div class="exercise" data-kind="blanks" data-seed="4266895366"><div class="stem">Still at the end of <code>main</code>, what does each expression produce?</div><div class="cloze code">lunch == dinner<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span><select class="blank code"><option>true</option><option data-correct>false</option></select><br>lunch.equals(dinner)<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span><select class="blank code"><option>true</option><option data-correct>false</option></select><br>regular == lunch.pricesCents<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span><select class="blank code"><option data-correct>true</option><option>false</option></select><br>Arrays.equals(regular, dinner.pricesCents)<span style="white-space: pre-wrap">&#x20;&#x20;</span><select class="blank code"><option data-correct>true</option><option>false</option></select></div></div></div><div class="exercise" data-kind="choice" data-seed="689025093"><div class="stem"><p>What is <code>q.likes</code> when <code>main</code> finishes?</p><pre><code data-lang="java"><span style="color: #d73948">class</span> <span style="color: #4b69c6">Post</span> {
+  <span style="color: #4b69c6">String</span> user;
+  <span style="color: #4b69c6">String</span> message;
+  <span style="color: #d73948">int</span> likes;
+  <span style="color: #4b69c6">Post</span>(<span style="color: #4b69c6">String</span> user, <span style="color: #4b69c6">String</span> message, <span style="color: #d73948">int</span> likes) {
+    <span style="color: #d73948">this</span>.user <span style="color: #d73948">=</span> user;
+    <span style="color: #d73948">this</span>.message <span style="color: #d73948">=</span> message;
+    <span style="color: #d73948">this</span>.likes <span style="color: #d73948">=</span> likes;
+  }
+  <span style="color: #d73948">void</span> <span style="color: #4b69c6">like</span>() {
+    <span style="color: #d73948">this</span>.likes <span style="color: #d73948">=</span> likes <span style="color: #d73948">+</span> <span style="color: #b60157">1</span>;
+  }
+}
+void <span style="color: #4b69c6">boost</span>(<span style="color: #4b69c6">Post</span> post) {
+  post.<span style="color: #4b69c6">like</span>();
+  post.<span style="color: #4b69c6">like</span>();
+}
+<span style="color: #4b69c6">Post</span> p <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Post</span>(<span style="color: #198810">"</span><span style="color: #198810">joe</span><span style="color: #198810">"</span>, <span style="color: #198810">"</span><span style="color: #198810">CSE-PACE next Tuesday!</span><span style="color: #198810">"</span>, <span style="color: #b60157">22</span>);
+<span style="color: #4b69c6">Post</span> q <span style="color: #d73948">=</span> p;
+void <span style="color: #4b69c6">main</span>() {
+  <span style="color: #4b69c6">boost</span>(q);
+  p.<span style="color: #4b69c6">like</span>();
+}</code></pre></div><ol class="choices"><li data-correct><code>25</code></li><li><code>24</code><div class="why"><code>Post q = p;</code> copies the reference, not the object, so <code>p.like()</code> changes the one <code>Post</code> that <code>q</code> also names.</div></li><li><code>22</code><div class="why"><code>boost</code>’s <code>post</code> holds the same reference as <code>q</code>. Its two calls to <code>like</code> change the one <code>Post</code> there is.</div></li><li><code>23</code><div class="why">All three calls to <code>like</code> reach the same object: two through <code>post</code>, one through <code>p</code>.</div></li></ol></div></article>
+<nav class="pagenav"><a class="prev" href="arrays-and-loops.html">← Arrays and Loops</a> <a class="next" href="interfaces-and-recursive-data.html">Interfaces and Recursive Data →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "review", "title": "Review", "current": 3, "steps": [{"title": "Values, Records, and Methods", "slug": "values-records-methods", "url": "values-records-methods.html", "path": "/review/values-records-methods.html"}, {"title": "Printing, Returning, and Tests", "slug": "printing-and-tests", "url": "printing-and-tests.html", "path": "/review/printing-and-tests.html"}, {"title": "Arrays and Loops", "slug": "arrays-and-loops", "url": "arrays-and-loops.html", "path": "/review/arrays-and-loops.html"}, {"title": "References and Aliasing", "slug": "references-and-aliasing", "url": "references-and-aliasing.html", "path": "/review/references-and-aliasing.html"}, {"title": "Interfaces and Recursive Data", "slug": "interfaces-and-recursive-data", "url": "interfaces-and-recursive-data.html", "path": "/review/interfaces-and-recursive-data.html"}, {"title": "Classes, Constructors, and Equality", "slug": "classes", "url": "classes.html", "path": "/review/classes.html"}, {"title": "Inheritance and Dispatch", "slug": "inheritance-and-dispatch", "url": "inheritance-and-dispatch.html", "path": "/review/inheritance-and-dispatch.html"}, {"title": "Collections and Choosing a Representation", "slug": "collections-and-choices", "url": "collections-and-choices.html", "path": "/review/collections-and-choices.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=eb88944ef9ea"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

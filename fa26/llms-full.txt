@@ -15616,6 +15616,1808 @@ Choose one:
 - True
 - False
 
+# More Patterns
+
+## [Stopping When You're Done](more-patterns/early-return.html)
+
+Student: Professor, I noticed that a program I wrote is doing too much work.
+
+Prof: Too much work?
+
+Student: Yeah, I wrote a kind of best-so-far loop, I think, but it’s really more of a “found so far” loop:
+
+```java
+boolean anyContains(String[] words, String part) {
+  boolean found = false;
+  for (String w : words) {
+    System.out.println("checking " + w);
+    if (w.contains(part)) {
+      found = true;
+    }
+  }
+  return found;
+}
+String[] animals = { "cat", "dog", "bird", "fish" };
+boolean b = anyContains(animals, "a");
+```
+
+Prof: Looks like it works, right?
+
+Student: Sure, but look at the printout. It is **also** looking at `"dog"` and `"bird"` and `"fish"`. How can I make it not do that?
+
+Prof: Ah, you want an early return.
+
+Student: An early return?
+
+Prof: Once you have found a matching string, you want the method to return, it sounds like. So instead of updating `found = true`, you can just directly `return` there:
+
+Student: Like this?
+
+```java
+boolean anyContains(String[] words, String part) {
+  boolean found = false;
+  for (String w : words) {
+    System.out.println("checking " + w);
+    if (w.contains(part)) {
+      return true;
+    }
+  }
+  return found;
+}
+String[] animals = { "cat", "dog", "bird", "fish" };
+boolean b = anyContains(animals, "a");
+```
+
+Student: Oh, and now only `"cat"` prints. Yeah, that’s what I wanted. Wait, now the `found` variable is really weird, right? Nothing sets it.
+
+Prof: That’s right – I don’t think you need it anymore.
+
+Student: But what will I return at the end?
+
+Prof: What was the value in `found`?
+
+Student: So I just return `false`?
+
+Prof: Makes sense to me – if the loop runs through all the elements without any containing `part`, then return `false`. The loop **would have returned** if any element matched, so if control reaches the end of the loop, returning `false` is correct.
+
+Student: Huh, that seems a lot simpler.
+
+```java
+boolean anyContains(String[] words, String part) {
+  for (String w : words) {
+    System.out.println("checking " + w);
+    if (w.contains(part)) {
+      return true;
+    }
+  }
+  return false;
+}
+String[] animals = { "cat", "dog", "bird", "fish" };
+boolean b = anyContains(animals, "a");
+```
+
+Prof: I’d call this a search loop. It searches for something matching a pattern, and stops as soon as it finds it and returns `true`. You could return other values, too, like using `return w` in the loop to return the found string. That would change the return value, and you’d need to think through what the final `return` should be.
+
+It’s also using an important idea called an early return. That’s a `return` statement that runs in the middle of a loop or other block of code. A `return` **always** immediately exits the current method with the given return value. So the rest of the loop, or any later statements, never run.
+
+Student: Neat, a search loop with an early return. Is it faster?
+
+Prof: Yeah, you could say we just “optimized” your program a little bit – we made it take fewer steps for some kinds of inputs. Nice work!
+
+#### Practice
+
+Here are two methods that search an array for a string containing `part`. One uses an early return. The other keeps a found-so-far variable and returns it after the loop.
+
+```java
+String withReturn(String[] words, String part) {
+  for (String w : words) {
+    if (w.contains(part)) {
+      return w;
+    }
+  }
+  return "";
+}
+
+String withFlag(String[] words, String part) {
+  String found = "";
+  for (String w : words) {
+    if (w.contains(part)) {
+      found = w;
+    }
+  }
+  return found;
+}
+```
+
+Exercise:
+
+For which arrays do `withReturn(words, "a")` and `withFlag(words, "a")` return **different** strings? Select all that apply.
+
+Choose all that apply:
+
+- `{ "cat", "bat", "dog" }`
+- `{ "cat", "dog", "bird" }`
+- `{ "bat", "cat" }`
+- `{ "dog", "bird", "bat" }`
+- `{ "dog", "bird", "fish" }`
+
+Now write an array of your own that makes them disagree.
+
+Exercise:
+
+```java
+String withReturn(String[] words, String part) {
+  for (String w : words) {
+    if (w.contains(part)) {
+      return w;
+    }
+  }
+  return "";
+}
+String withFlag(String[] words, String part) {
+  String found = "";
+  for (String w : words) {
+    if (w.contains(part)) {
+      found = w;
+    }
+  }
+  return found;
+}
+____
+String first = withReturn(words, "a");
+String last = withFlag(words, "a");
+```
+
+## [Off the Edge](more-patterns/in-grid.html)
+
+Student: Professor, I heard about a cool image idea that I wanted to try implementing.
+
+Prof: What is it?
+
+Student: It was called a “box blur”. It’s supposed to sort of smooth out an image, make it blurry-looking. It sounded cool.
+
+Prof: Did you hear how it’s supposed to work?
+
+Student: It’s supposed to take the average of a bunch of pixels. Like the ones around a spot.
+
+Prof: Oh intersting.
+
+Student: Here’s my code, it has a bug:
+
+```java
+import java.awt.Color;
+Color averageAround(Raster raster, int col, int row) {
+  int r = 0, g = 0, b = 0;
+  for(int dRow = -1; dRow <= 1; dRow += 1) {
+    for(int dCol = -1; dCol <= 1; dCol += 1) {
+      Color c = raster.colorAt(col + dCol, row + dRow);
+      r += c.getRed();
+      g += c.getGreen();
+      b += c.getBlue();
+    }
+  }
+  return new Color(r / 9, g / 9, b / 9);
+}
+Raster boxBlur(Raster raster) {
+  Color[][] blurred = new Color[raster.height()][raster.width()];
+  for(int row = 1; row < raster.height(); row += 1) {
+    for(int col = 1; col < raster.width(); col += 1) {
+      System.out.println("blurring col " + col + ", row " + row);
+      blurred[row][col] = averageAround(raster, col, row);
+    }
+  }
+  return new Raster(blurred);
+}
+Color[][] tiny = {
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE },
+  { Color.WHITE, Color.BLACK, Color.BLACK, Color.WHITE },
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE }
+};
+Raster tinyBlur = boxBlur(new Raster(tiny));
+```
+
+Student: It is definitely blurring stuff, but it has an error.
+
+Prof: I see – and you did a really useful thing by putting in a print statement.
+
+Student: Yeah, so it’s definitely failing when `col` is 3.
+
+Prof: Right, and which method is it failing in?
+
+Student: In `boxBlur`, right?
+
+Prof: Can you be more specific than that?
+
+Student: Oh, I guess `averageAround`? Oh, should I stop the loop earlier?
+
+Prof: Maybe! How would that work?
+
+Student: Well I’d make the loop check `< raster.height() - 1`, and same for `width`.
+
+Prof: Let’s try it!
+
+```java
+import java.awt.Color;
+Color averageAround(Raster raster, int col, int row) {
+  int r = 0, g = 0, b = 0;
+  for(int dRow = -1; dRow <= 1; dRow += 1) {
+    for(int dCol = -1; dCol <= 1; dCol += 1) {
+      Color c = raster.colorAt(col + dCol, row + dRow);
+      r += c.getRed();
+      g += c.getGreen();
+      b += c.getBlue();
+    }
+  }
+  return new Color(r / 9, g / 9, b / 9);
+}
+Raster boxBlur(Raster raster) {
+  Color[][] blurred = new Color[raster.height()][raster.width()];
+  for(int row = 1; row < raster.height() - 1; row += 1) {
+    for(int col = 1; col < raster.width() - 1; col += 1) {
+      System.out.println("blurring col " + col + ", row " + row);
+      blurred[row][col] = averageAround(raster, col, row);
+    }
+  }
+  return new Raster(blurred);
+}
+Color[][] tiny = {
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE },
+  { Color.WHITE, Color.BLACK, Color.BLACK, Color.WHITE },
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE }
+};
+Raster tinyBlur = boxBlur(new Raster(tiny));
+```
+
+Student: It’s still wrong. Hm. It says `pixels[0][0]` is `null`. And wait, is that happening in the `Raster` constructor?
+
+Prof: Indeed, good reading of the stack trace. Let’s imagine the memory diagram right before the loop – what’s in the elements of the `blurred` array?
+
+Student: It was just initialized, so nothing?
+
+Prof: There’s always a value there, and reference types’ default value is…
+
+Student: Oh `null`. Oh! So somehow one of them isn’t getting filled in by the loop.
+
+Prof: Right, in particular the one at `[0][0]`.
+
+Student: Is that because my loop starts at 1? But I had to make it be that to not go out of bounds.
+
+Prof: First of all, good job. To be clear, the issue is that the grid looks like
+
+```
+[null, null, null, null]
+[null, GRAY, GRAY, null]
+[null, null, null, null]
+```
+
+When it’s passed into the `Raster` constructor. It’s worth being precise about that. Your code avoids the edges because `averageAround` would go out of bounds on those edges.
+
+Student: Yeah, I see now.
+
+Prof: Could you make it so when you’re at an edge, the program just averages the pixels that are **in bounds** and **around** the pixel?
+
+Student: Oh I see, so we’d change that loop. It would need a condition to skip the elements that are out of bounds… oh and also we’d sometimes not divide by
+
+1. Like a corner only has 3, other edges have 5 pixels around them. So…
+
+```java
+Color averageAround(Raster raster, int col, int row) {
+  int r = 0, g = 0, b = 0, total = 0;
+  for(int dRow = -1; dRow <= 1; dRow += 1) {
+    for(int dCol = -1; dCol <= 1; dCol += 1) {
+      if(col + dCol >= raster.width() || col + dCol < 0) { continue; }
+      if(row + dRow >= raster.height() || row + dRow < 0) { continue; }
+      Color c = raster.colorAt(col + dCol, row + dRow);
+      r += c.getRed();
+      g += c.getGreen();
+      b += c.getBlue();
+      total += 1;
+    }
+  }
+  return new Color(r / total, g / total, b / total);
+}
+```
+
+Prof: What else needs to change?
+
+Student: That’s it, right? Oh wait now do I change the ranges in the whole blur loop?
+
+Prof: Right, now it can safely blur at `[0][0]` because it won’t go out of bounds for that `row` and `col`.
+
+Student: Ah I get it
+
+```java
+import java.awt.Color;
+Color averageAround(Raster raster, int col, int row) {
+  int r = 0, g = 0, b = 0, total = 0;
+  for(int dRow = -1; dRow <= 1; dRow += 1) {
+    for(int dCol = -1; dCol <= 1; dCol += 1) {
+      if(col + dCol >= raster.width() || col + dCol < 0) { continue; }
+      if(row + dRow >= raster.height() || row + dRow < 0) { continue; }
+      Color c = raster.colorAt(col + dCol, row + dRow);
+      r += c.getRed();
+      g += c.getGreen();
+      b += c.getBlue();
+      total += 1;
+    }
+  }
+  return new Color(r / total, g / total, b / total);
+}
+Raster boxBlur(Raster raster) {
+  Color[][] blurred = new Color[raster.height()][raster.width()];
+  for(int row = 0; row < raster.height(); row += 1) {
+    for(int col = 0; col < raster.width(); col += 1) {
+      blurred[row][col] = averageAround(raster, col, row);
+    }
+  }
+  return new Raster(blurred);
+}
+Color[][] tiny = {
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE },
+  { Color.WHITE, Color.BLACK, Color.BLACK, Color.WHITE },
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE }
+};
+Raster tinyBlur = boxBlur(new Raster(tiny));
+```
+
+Prof: This is an example of in-bounds grid processing. It’s pretty common in games and graphical applications. You need special rules for what happens with pixels or grid positions on edges; here we just have fewer to average. In other settings you might treat edges as walls for collisions or make other decisions; the key thing is to not look at out of bounds elements, and pick what the behavior ought to be around the border.
+
+#### Practice
+
+Exercise:
+
+`tiny` is 4 pixels wide and 3 tall. How many pixels does the finished `averageAround` average at each position? That is the value of `total` when its loops finish.
+
+```java
+averageAround(raster, 1, 1)    total is ____
+averageAround(raster, 0, 0)    total is ____
+averageAround(raster, 1, 0)    total is ____
+averageAround(raster, 3, 2)    total is ____
+```
+
+The two bounds checks can move into a method of their own. Fill in `inBounds` so that it returns `true` exactly when `(col, row)` is a position in `raster`.
+
+Exercise:
+
+```java
+import java.awt.Color;
+boolean inBounds(Raster raster, int col, int row) {
+  return ____;
+}
+Color averageAround(Raster raster, int col, int row) {
+  int r = 0, g = 0, b = 0, total = 0;
+  for(int dRow = -1; dRow <= 1; dRow += 1) {
+    for(int dCol = -1; dCol <= 1; dCol += 1) {
+      if(!inBounds(raster, col + dCol, row + dRow)) { continue; }
+      Color c = raster.colorAt(col + dCol, row + dRow);
+      r += c.getRed();
+      g += c.getGreen();
+      b += c.getBlue();
+      total += 1;
+    }
+  }
+  return new Color(r / total, g / total, b / total);
+}
+Raster boxBlur(Raster raster) {
+  Color[][] blurred = new Color[raster.height()][raster.width()];
+  for(int row = 0; row < raster.height(); row += 1) {
+    for(int col = 0; col < raster.width(); col += 1) {
+      blurred[row][col] = averageAround(raster, col, row);
+    }
+  }
+  return new Raster(blurred);
+}
+Color[][] tiny = {
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE },
+  { Color.WHITE, Color.BLACK, Color.BLACK, Color.WHITE },
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE }
+};
+Raster small = new Raster(tiny);
+Raster smallBlur = boxBlur(small);
+```
+
+## [Accumulators on Recursive Data](more-patterns/accumulator.html)
+
+Prof: OK I’ve got a challenge for you.
+
+Student: Alright, I’m game.
+
+Prof: Here’s a way of laying out folders and docs:
+
+```java
+interface DriveItem { }
+record Doc(String name, int sizeKb) implements DriveItem { }
+record Folder(String name, DriveItem[] contents) implements DriveItem { }
+
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+```
+
+Prof: Add a method to it that creates an `ArrayList<String>` containing a **numbered list** of the doc names. Like on `drive` above it should produce:
+
+```
+["1. resume", "2. cat", "3. dog", "4. todo"]
+```
+
+Student: Hmm, I think that is pretty straightforward…
+
+```java
+import java.util.ArrayList;
+interface DriveItem {
+  ArrayList<String> numbered();
+}
+record Doc(String name, int sizeKb) implements DriveItem {
+  public ArrayList<String> numbered() {
+    ArrayList<String> lines = new ArrayList<String>();
+    lines.add(lines.size() + ". " + name);
+    return lines;
+  }
+}
+record Folder(String name, DriveItem[] contents) implements DriveItem {
+  public ArrayList<String> numbered() {
+    ArrayList<String> lines = new ArrayList<String>();
+    for (DriveItem item : contents) {
+      lines.addAll(item.numbered());
+    }
+    return lines;
+  }
+}
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+ArrayList<String> lines = drive.numbered();
+```
+
+Student: Wait they are all zero. Huh? I thought they’d get the current size of `lines` and count up. Do I need a `+ 1` or something?
+
+Prof: Great start, you remembered the template for recursive methods really well. You will need that `+ 1`, but the bigger issue is that **every** `Doc` creates a new empty list when `numbered()` is called, so the size is always 0. It isn’t referring to the `lines` in `Folder`’s `numbered()`.
+
+Student: Oh hm. So what do I do? I’m honestly a little stuck here.
+
+Prof: There’s a big hint in the `Pict` library. We had to do something a little bit similar in `draw` – rather than make a **new** `Graphics2D` in every `Circle` or `Rect`, we passed one around:
+
+```java
+record Circle(int radius, Color color) implements Pict {
+    // ...
+    public void draw(Graphics2D g, int x, int y) {
+        g.setColor(this.color);
+        g.fillOval(x, y, 2 * this.radius, 2 * this.radius);
+    }
+}
+// ...
+record Beside(Pict left, Pict right) implements Pict {
+    // ...
+    public void draw(Graphics2D g, int x, int y) {
+        int centerY = this.height() / 2;
+        this.left.draw(g, x, y + centerY - this.left.height() / 2);
+        this.right.draw(g, x + this.left.width(), y + centerY - this.right.height() / 2);
+    }
+}
+```
+
+[`Pict.java`, lines 142–248](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L142-L248)
+
+Student: Huh, so here do we pass an `ArrayList<String>` around?
+
+Prof: Exactly.
+
+Student: But won’t that change the signature of `numbered()`? Like it needs another argument now, but the interface one takes no arguments.
+
+Prof: Good observation! Let’s add the argument for now and then see what we can do.
+
+```java
+import java.util.ArrayList;
+interface DriveItem {
+  ArrayList<String> numbered(ArrayList<String> lines);
+}
+record Doc(String name, int sizeKb) implements DriveItem {
+  public ArrayList<String> numbered(ArrayList<String> lines) {
+    lines.add((lines.size() + 1) + ". " + name);
+    return lines;
+  }
+}
+record Folder(String name, DriveItem[] contents) implements DriveItem {
+  public ArrayList<String> numbered(ArrayList<String> lines) {
+    for (DriveItem item : contents) {
+      lines.addAll(item.numbered(lines));
+    }
+    return lines;
+  }
+}
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+ArrayList<String> lines = drive.numbered(new ArrayList<>());
+```
+
+Student: Like that? It’s really weird, like I’m returning and using the same list all over? That can’t be right at all. That’s so many numbers.
+
+Prof: Believe it or not, you’re way closer to the solution now! So what’s happening here is things are getting added over and over in the loop. It turns out, in this method, the **result** gets built up **in the parameter `lines`**. So I find this method easier to understand if we make it return `void`.
+
+Student: But it needs to return an `ArrayList<String>`, that would make it nothing like `numbered`!
+
+Prof: Right, we’ll recover that behavior. For now, let’s make it return `void`, and the **only** places where `add` happens should be in the `Doc` version of the method. Also, name the list you give as an argument so we can see it after.
+
+Student: Like this?
+
+```java
+import java.util.ArrayList;
+interface DriveItem {
+  void numbered(ArrayList<String> lines);
+}
+record Doc(String name, int sizeKb) implements DriveItem {
+  public void numbered(ArrayList<String> lines) {
+    lines.add((lines.size() + 1) + ". " + name);
+  }
+}
+record Folder(String name, DriveItem[] contents) implements DriveItem {
+  public void numbered(ArrayList<String> lines) {
+    for (DriveItem item : contents) {
+      item.numbered(lines);
+    }
+  }
+}
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+ArrayList<String> lines = new ArrayList<String>();
+void main() {
+  drive.numbered(lines);
+}
+```
+
+Student: Oh, wow, that worked?
+
+Prof: Let’s look at the calls over time and think about where the `add` calls happened:
+
+```
+Names (the stack), over time →
+  top level
+    drive = @1008
+    lines = @1009
+    main()
+      drive.numbered(lines) on @1008
+        lines = @1009
+        item.numbered(lines) on @1001
+          lines = @1009
+          lines.add("1. resume") on @1009
+        item.numbered(lines) on @1005
+          lines = @1009
+          item.numbered(lines) on @1002
+            lines = @1009
+            lines.add("2. cat") on @1009
+          item.numbered(lines) on @1003
+            lines = @1009
+            lines.add("3. dog") on @1009
+        item.numbered(lines) on @1006
+          lines = @1009
+          lines.add("4. todo") on @1009
+Heap
+  @1001: Doc[name=resume, sizeKb=40]
+  @1002: Doc[name=cat, sizeKb=300]
+  @1003: Doc[name=dog, sizeKb=280]
+  @1004: [@1002, @1003]
+  @1005: Folder[name=photos, contents=@1004]
+  @1006: Doc[name=todo, sizeKb=12]
+  @1007: [@1001, @1005, @1006]
+  @1008: Folder[name=My Drive, contents=@1007]
+  @1009: [1. resume, 2. cat, 3. dog, 4. todo]
+```
+
+Student: I get it! So the recursion follows the folder and file structure, and we end up adding each doc in order. And `lines` is `@1009` in every call, so it’s aliasing: they are all adding to the same list.
+
+Prof: That’s right!
+
+Student: But how do we get back the behavior we wanted for the original `numbered` signature?
+
+Prof: Here’s what Pict did.
+
+```java
+default Raster render() {
+    // ...
+    var img = new BufferedImage(width(), height(), BufferedImage.TYPE_INT_ARGB);
+    var g = img.createGraphics();
+    // ...
+    draw(g, 0, 0);
+    g.dispose();
+    return Raster.fromBufferedImage(img);
+}
+```
+
+[`Pict.java`, lines 35–45](https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L35-L45)
+
+Student: Ah, so we can add this:
+
+```java
+interface DriveItem {
+  void numbered(ArrayList<String> lines);
+  default ArrayList<String> numbered() {
+    ArrayList<String> lines = new ArrayList<String>();
+    numbered(lines);
+    return lines;
+  }
+}
+```
+
+Prof: Just so. This is called the accumulator pattern. Sometimes we need to pass along an argument through a recursive structure, rather than trying to return the answer. It’s the same idea as the running-sum and best-so-far accumulators from our loops. Those were local variables, but every call gets its own locals, so here the accumulator has to be passed along. We build it up in the argument position, and that position is called an accumulator parameter!
+
+Student: Neat, I can feel the knowledge accumulating!
+
+Prof: Wow, um, maybe leave the puns to me.
+
+#### Practice
+
+Exercise:
+
+The student’s first version made a new list in every `numbered()` call. How many `ArrayList` objects did `drive.numbered()` create in that version?
+
+Answer: ____
+
+Exercise:
+
+How many `ArrayList` objects does `drive.numbered()` create in the final version, with the `default` method?
+
+Answer: ____
+
+`bigDocs(minKb)` should make a numbered list of only the docs that are at least `minKb` in size. On `drive`, `bigDocs(100)` should produce `["1. cat", "2. dog"]`. Fill in the two method bodies.
+
+Exercise:
+
+```java
+import java.util.ArrayList;
+interface DriveItem {
+  void bigDocs(int minKb, ArrayList<String> lines);
+  default ArrayList<String> bigDocs(int minKb) {
+    ArrayList<String> lines = new ArrayList<String>();
+    bigDocs(minKb, lines);
+    return lines;
+  }
+}
+record Doc(String name, int sizeKb) implements DriveItem {
+  public void bigDocs(int minKb, ArrayList<String> lines) {
+    ____
+  }
+}
+record Folder(String name, DriveItem[] contents) implements DriveItem {
+  public void bigDocs(int minKb, ArrayList<String> lines) {
+    for (DriveItem item : contents) {
+      ____
+    }
+  }
+}
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+ArrayList<String> big = drive.bigDocs(100);
+```
+
+## [Two Ways to Recur](more-patterns/which-direction.html)
+
+Student: I’m having trouble with a program where I followed the recipe.
+
+Prof: Oh? Interesting, show me what’s up.
+
+Student: OK so I wanted to have `Post`s that could have replies, but also keep track of what they replied to. So I started with:
+
+```java
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList<Post> replies;
+  Post replyTo;
+}
+```
+
+Student: My plan was to set it up so when you make a reply, it gets added to the `replies` list of what it’s replying to, and also stores it as `replyTo`.
+
+Prof: That makes sense to me! What’s the problem?
+
+Student: Well, I set it up with replies and likes here:
+
+```java
+import java.util.ArrayList;
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList<Post> replies;
+  Post replyTo;
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+    this.replies = new ArrayList<Post>();
+    this.replyTo = null;
+  }
+  void like() {
+    this.likes = this.likes + 1;
+  }
+  Post reply(String user, String message) {
+    Post r = new Post(user, message);
+    r.replyTo = this;
+    this.replies.add(r);
+    return r;
+  }
+  int totalLikes() { /* TODO */ return 0; }
+}
+```
+
+Student: Then I wanted to try and write this `totalLikes` method.
+
+Prof: So far so good…
+
+Student: So the template should look something like this, right? Where we call `totalLikes` on all the fields that are recursive:
+
+```java
+int totalLikes() {
+  ... this.replyTo.totalLikes() ...
+  for(Post p: this.replies) {
+    ... p.totalLikes() ...
+  }
+}
+```
+
+Prof: Ah, I think I see where this is going. Let’s see what happens when you use that template in your program:
+
+```java
+import java.util.ArrayList;
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList<Post> replies;
+  Post replyTo;
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+    this.replies = new ArrayList<Post>();
+    this.replyTo = null;
+  }
+  void like() {
+    this.likes = this.likes + 1;
+  }
+  Post reply(String user, String message) {
+    Post r = new Post(user, message);
+    r.replyTo = this;
+    this.replies.add(r);
+    return r;
+  }
+  int totalLikes() {
+    int total = this.likes;
+    if (this.replyTo != null) {
+      total += this.replyTo.totalLikes();
+    }
+    for (Post r : this.replies) {
+      total += r.totalLikes();
+    }
+    return total;
+  }
+}
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int total;
+void main() {
+  Post ada = original.reply("ada", "I'll be there");
+  Post grace = original.reply("grace", "Is there pizza?");
+  Post thanks = ada.reply("joe", "Great, see you then");
+  original.like();
+  original.like();
+  ada.like();
+  grace.like();
+  grace.like();
+  grace.like();
+  thanks.like();
+  total = original.totalLikes();
+}
+```
+
+Student: What’s an `ArithmeticException`? And why does it print `totalLikes` so many times?
+
+Prof: That’s a great question. Let’s think about the stack at a few different points during the call to `original.totalLikes()`. Here’s the state right before that call:
+
+```
+Names (the stack)
+  main()
+    ada = @1003
+    grace = @1005
+    thanks = @1007
+  top level
+    original = @1001
+    total = 0
+Heap
+  @1001: Post[user=joe, message=CSE-PACE next Tuesday!, likes=2, replies=@1002, replyTo=null]
+  @1002: [@1003, @1005]
+  @1003: Post[user=ada, message=I'll be there, likes=1, replies=@1004, replyTo=@1001]
+  @1004: [@1007]
+  @1005: Post[user=grace, message=Is there pizza?, likes=3, replies=@1006, replyTo=@1001]
+  @1006: []
+  @1007: Post[user=joe, message=Great, see you then, likes=1, replies=@1008, replyTo=@1003]
+  @1008: []
+```
+
+Prof: Now, let’s think about what happens in `totalLikes()` for that reference. What gets called?
+
+Student: Well, `replyTo` is `null`, so the first part doesn’t happen. So it goes into the loop, it has two replies, so it calls the `totalLikes()` method with `@1003`, which is the `ada` one.
+
+Prof: Right. And what happens in that call?
+
+Student: Well the `replyTo` is non-`null`, it refers to `@1001`, so it calls `totalLikes` again. That just looks like recursion.
+
+Prof: Let’s look at the stack carefully at that point – it’s going to process exactly the same data on `@1001` again!
+
+```
+Names (the stack)
+  this.replyTo.totalLikes() on @1001
+    total = 2
+    r = @1003
+  r.totalLikes() on @1003
+    total = 1
+  original.totalLikes() on @1001
+    total = 2
+    r = @1003
+  main()
+    ada = @1003
+    grace = @1005
+    thanks = @1007
+  top level
+    original = @1001
+    total = 0
+Heap
+  @1001: Post[user=joe, message=CSE-PACE next Tuesday!, likes=2, replies=@1002, replyTo=null]
+  @1002: [@1003, @1005]
+  @1003: Post[user=ada, message=I'll be there, likes=1, replies=@1004, replyTo=@1001]
+  @1004: [@1007]
+  @1005: Post[user=grace, message=Is there pizza?, likes=3, replies=@1006, replyTo=@1001]
+  @1006: []
+  @1007: Post[user=joe, message=Great, see you then, likes=1, replies=@1008, replyTo=@1003]
+  @1008: []
+```
+
+Student: Wait, it’s going to keep going back and forth between `@1001` and `@1003`? Why?
+
+Prof: That’s just what the code does – it keeps going into the loop for the calls on `@1001`, and finding the `replyTo` field on `@1003`, which calls back to `@1001`.
+
+Student: So it’s like an infinite loop, but with recursion?
+
+Prof: Right. We call it unbounded recursion or infinite recursion. It ends when the stack runs out. In this book that gets reported as an `ArithmeticException`, in your terminal it would report as a `StackOverflowError`. It happens when a method calls back to itself with the same arguments, and nothing has changed to stop it from doing the same calls again.
+
+Student: So how do we write `totalLikes` if the normal recipe doesn’t work?
+
+Prof: I think we need to say more what we **want** `totalLikes` to do! I think there are two different total likes definitions we could mean.
+
+Student: Two different ones?
+
+Prof: Right – do we want to know the likes **in this post and its replies**, or **in this post and the posts it is replying to**? Does it go “down” through all the replies, or “up” through what it is replying to?
+
+Student: Hmm, and what changes?
+
+Prof: Well, going through the replies only recurs on the `replies` field. Going the other way recurs only through the `replyTo` field.
+
+A base case is a call that makes no more recursive calls. Use the memory picture above.
+
+Exercise:
+
+Going **down** through `replies`, which posts are base cases? Select all that apply.
+
+Choose all that apply:
+
+- `thanks`, `@1007`
+- `grace`, `@1005`
+- `original`, `@1001`
+- `ada`, `@1003`
+
+Exercise:
+
+Going **up** through `replyTo`, which post is the base case?
+
+Choose one:
+
+- `ada`, `@1003`
+- `grace`, `@1005`
+- `thanks`, `@1007`
+- `original`, `@1001`
+
+Prof: Here’s the “down” direction:
+
+```java
+import java.util.ArrayList;
+class Post {
+  String user;
+  String message;
+  int likes;
+  ArrayList<Post> replies;
+  Post replyTo;
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.likes = 0;
+    this.replies = new ArrayList<Post>();
+    this.replyTo = null;
+  }
+  void like() {
+    this.likes = this.likes + 1;
+  }
+  Post reply(String user, String message) {
+    Post r = new Post(user, message);
+    r.replyTo = this;
+    this.replies.add(r);
+    return r;
+  }
+  int threadLikes() {
+    int total = this.likes;
+    for (Post r : this.replies) {
+      total += r.threadLikes();
+    }
+    return total;
+  }
+}
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+int wholeThread;
+int adasThread;
+void main() {
+  Post ada = original.reply("ada", "I'll be there");
+  Post grace = original.reply("grace", "Is there pizza?");
+  Post thanks = ada.reply("joe", "Great, see you then");
+  original.like();
+  original.like();
+  ada.like();
+  grace.like();
+  grace.like();
+  grace.like();
+  thanks.like();
+  wholeThread = original.threadLikes();
+  adasThread = ada.threadLikes();
+}
+```
+
+Student: I see, so that doesn’t even look at `original` for the `ada` case.
+
+Prof: Right! Can you think about what the other direction looks like?
+
+Student: Maybe like this?
+
+```java
+int likesAbove() {
+  if (this.replyTo == null) {
+    return this.likes;
+  }
+  return this.likes + this.replyTo.likesAbove();
+}
+```
+
+Prof: Yup, you got it. So there are really **two templates** for this data definition. One for going up a thread of replies, and one for going down:
+
+```java
+// down, through replies
+... down() {
+  ... this.likes ...
+  for (Post r : this.replies) {
+    ... r.down() ...
+  }
+}
+
+// up, through replyTo
+... up() {
+  if (this.replyTo == null) {
+    ... this.likes ...
+  }
+  ... this.likes ... this.replyTo.up() ...
+}
+```
+
+## [More Patterns in Summary](more-patterns/summary.html)
+
+Exercise:
+
+How many `checking` lines does this print?
+
+```java
+boolean anyContains(String[] words, String part) {
+  for (String w : words) {
+    System.out.println("checking " + w);
+    if (w.contains(part)) {
+      return true;
+    }
+  }
+  return false;
+}
+String[] animals = { "dog", "cat", "bird", "fish" };
+boolean b = anyContains(animals, "a");
+```
+
+Answer: ____
+
+Exercise:
+
+Fill in `firstLongerThan` so it returns the first word with more than `n` characters, or `""` if there is none. Use an early return.
+
+```java
+String firstLongerThan(String[] words, int n) {
+  for (String w : words) {
+    ____
+  }
+  return ____;
+}
+String[] animals = { "cat", "dog", "bird", "fish" };
+String first = firstLongerThan(animals, 3);
+```
+
+Exercise:
+
+A `Raster` is 5 pixels wide and 4 tall. With the in-bounds version of `averageAround`, how many pixels are averaged by `averageAround(raster, 4, 2)`?
+
+Answer: ____
+
+Exercise:
+
+`folders()` should make a numbered list of the **folder** names in a drive, a folder before the folders inside it. On `drive` it should produce `["1. My Drive", "2. photos"]`. Fill in the two holes in `Folder`.
+
+```java
+import java.util.ArrayList;
+interface DriveItem {
+  void folders(ArrayList<String> lines);
+  default ArrayList<String> folders() {
+    ArrayList<String> lines = new ArrayList<String>();
+    folders(lines);
+    return lines;
+  }
+}
+record Doc(String name, int sizeKb) implements DriveItem {
+  public void folders(ArrayList<String> lines) { }
+}
+record Folder(String name, DriveItem[] contents) implements DriveItem {
+  public void folders(ArrayList<String> lines) {
+    ____
+    for (DriveItem item : contents) {
+      ____
+    }
+  }
+}
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+ArrayList<String> names = drive.folders();
+```
+
+Exercise:
+
+A `Post` has a `replies` list and a `replyTo` field, as in this chapter. Which method never finishes when it is called on a post that has a reply?
+
+Choose one:
+
+- ```java
+  int count() {
+    int total = 1;
+    for (Post r : this.replies) { total += r.count(); }
+    return total;
+  }
+  ```
+- ```java
+  int count() {
+    if (this.replyTo == null) { return 1; }
+    return 1 + this.replyTo.count();
+  }
+  ```
+- ```java
+  int count() {
+    int total = 1;
+    if (this.replyTo != null) { total += this.replyTo.count(); }
+    for (Post r : this.replies) { total += r.count(); }
+    return total;
+  }
+  ```
+
+Exercise:
+
+`countBelow()` counts the posts below this one: its replies, their replies, and so on. `depth()` counts the posts above it. Fill in the recursive call in each.
+
+```java
+import java.util.ArrayList;
+class Post {
+  String user;
+  String message;
+  ArrayList<Post> replies;
+  Post replyTo;
+  Post(String user, String message) {
+    this.user = user;
+    this.message = message;
+    this.replies = new ArrayList<Post>();
+    this.replyTo = null;
+  }
+  Post reply(String user, String message) {
+    Post r = new Post(user, message);
+    r.replyTo = this;
+    this.replies.add(r);
+    return r;
+  }
+  int countBelow() {
+    int total = 0;
+    for (Post r : this.replies) {
+      total += 1 + ____;
+    }
+    return total;
+  }
+  int depth() {
+    if (this.replyTo == null) {
+      return 0;
+    }
+    return 1 + ____;
+  }
+}
+Post original = new Post("joe", "CSE-PACE next Tuesday!");
+Post ada = original.reply("ada", "I'll be there");
+Post grace = original.reply("grace", "Is there pizza?");
+Post thanks = ada.reply("joe", "Great, see you then");
+int below = original.countBelow();
+int above = thanks.depth();
+```
+
+# Review
+
+The questions in this section were mostly AI-generated, then reviewed by course staff.
+
+## [Values, Records, and Methods](review/values-records-methods.html)
+
+Exercise:
+
+What does each expression evaluate to? (Write a `double` with its decimal point.)
+
+`7 / 2` is ____
+`7 / 2.0` is ____
+`"7" + 2` is ____
+`"Ada".length() + 1` is ____
+
+Exercise:
+
+Add `isBefore` to `Time`: it says whether this time comes earlier in the day than `other`. Fill in its header and its body to match the calls at the bottom.
+
+```java
+record Time(int hour, int minute) {
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
+  ____ {
+    return ____;
+  }
+}
+Time lecture = new Time(9, 30);
+Time lab = new Time(14, 0);
+boolean lectureFirst = lecture.isBefore(lab);
+boolean labFirst = lab.isBefore(lecture);
+```
+
+Exercise:
+
+Work these out by hand.
+
+```java
+record Subscription(String name, int priceCents, int trialMonths) {
+  int costAfter(int months) {
+    return Math.max(0, months - trialMonths) * priceCents;
+  }
+}
+Subscription disney = new Subscription("Disney+", 2100, 1);
+```
+
+`disney.costAfter(3)` is ____
+`disney.costAfter(1)` is ____
+`disney.costAfter(0)` is ____
+The type of `disney.name` is [String / void / Subscription / int]
+
+## [Printing, Returning, and Tests](review/printing-and-tests.html)
+
+Exercise:
+
+What does running this file print?
+
+```java
+record Time(int hour, int minute) {
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
+  void report() {
+    System.out.println(hour + ":" + minute);
+  }
+}
+void main() {
+  Time t = new Time(13, 5);
+  t.toMinutes();
+  t.report();
+}
+```
+
+Choose one:
+
+- ```
+  785
+  13:5
+  ```
+- ```
+  13:5
+  ```
+- Nothing
+- ```
+  785
+  ```
+
+Exercise:
+
+`Time` has this method:
+
+```java
+int minutesBetween(Time other) {
+  return Math.abs(toMinutes() - other.toMinutes());
+}
+```
+
+Which of these tests pass? Select all that do.
+
+Choose all that apply:
+
+- `assertEquals(new Time(1, 30), new Time(0, 90));`
+- `assertEquals(1, new Time(23, 59).minutesBetween(new Time(0, 0)));`
+- `assertEquals(new Time(9, 0), new Time(9, 0));`
+- `assertEquals(90, new Time(9, 0).minutesBetween(new Time(10, 30)));`
+- `assertEquals(30, new Time(8, 45).minutesBetween(new Time(8, 15)));`
+
+Exercise:
+
+Fill in the expected values so every test passes.
+
+```java
+record CartItem(String name, int priceCents) {
+  int priceWithDiscount(int percentOff) {
+    return priceCents * (100 - percentOff) / 100;
+  }
+  CartItem discounted(int percentOff) {
+    return new CartItem(name, priceWithDiscount(percentOff));
+  }
+}
+void main() {
+  CartItem mug = new CartItem("mug", 1000);
+  assertEquals(____, mug.priceWithDiscount(25));
+  assertEquals(____, mug.priceWithDiscount(0));
+  assertEquals(____, mug.discounted(10));
+  System.out.println("All tests succeeded!");
+}
+```
+
+## [Arrays and Loops](review/arrays-and-loops.html)
+
+Exercise:
+
+After this runs, what is each one?
+
+```java
+int[] scores = { 4, 9, 8 };
+int total = 0;
+int count = 0;
+for(int s: scores) {
+  if(s > 5) { count += 1; }
+  total += s;
+}
+```
+
+`total` is ____
+`count` is ____
+`total / count` is ____
+`scores.length` is ____
+
+Exercise:
+
+Write the body of `cheapest`, which returns the lowest price on the menu.
+
+```java
+record Menu(int[] pricesCents) {
+  int cheapest() {
+____
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu lunch = new Menu(regular);
+int low = lunch.cheapest();
+```
+
+Exercise:
+
+With these seats, what is each one?
+
+```java
+boolean[] top = { true, false, true, true, true, true };
+boolean[] middle = { true, false, false, false, true };
+boolean[] bottom = { true, true, false, false };
+boolean[][] seats = { top, middle, bottom };
+```
+
+`seats.length` is ____
+`seats[2].length` is ____
+`seats[1][4]` is [an ArrayIndexOutOfBoundsException / true / false]
+`seats[0][1]` is [an ArrayIndexOutOfBoundsException / true / false]
+`seats[2][4]` is [an ArrayIndexOutOfBoundsException / true / false]
+
+## [References and Aliasing](review/references-and-aliasing.html)
+
+```java
+record Menu(int[] pricesCents) {
+  int[] discounted() {
+    int[] result = new int[pricesCents.length];
+    int index = 0;
+    for(int p: pricesCents) {
+      result[index] = p * 90 / 100;
+      index += 1;
+    }
+    return result;
+  }
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000 };
+Menu lunch = new Menu(regular);
+Menu dinner = new Menu(lunch.discounted());
+void main() {
+  lunch.discountInPlace();
+}
+```
+
+Exercise:
+
+Java hands out references in the order objects are created, starting at `@1001`. Fill in the memory picture for when `main` finishes.
+
+```java
+Names
+top level: regular = @1001, lunch = @1002, dinner = [@1003 / @1002 / @1004]
+  lunch.discounted() on @1002, returns [@1001 / @1003]
+  main()
+    lunch.discountInPlace() on [@1001 / @1002 / @1004]
+
+Heap
+@1001: [[1800, 900] / [2000, 1000] / [1620, 810]]
+@1002: Menu[pricesCents=@1001]
+@1003: [[1800, 900] / [2000, 1000] / [1620, 810]]
+@1004: Menu[pricesCents=[@1001 / @1003]]
+```
+
+Exercise:
+
+Still at the end of `main`, what does each expression produce?
+
+```java
+lunch == dinner                             [true / false]
+lunch.equals(dinner)                        [true / false]
+regular == lunch.pricesCents                [true / false]
+Arrays.equals(regular, dinner.pricesCents)  [true / false]
+```
+
+Exercise:
+
+What is `q.likes` when `main` finishes?
+
+```java
+class Post {
+  String user;
+  String message;
+  int likes;
+  Post(String user, String message, int likes) {
+    this.user = user;
+    this.message = message;
+    this.likes = likes;
+  }
+  void like() {
+    this.likes = likes + 1;
+  }
+}
+void boost(Post post) {
+  post.like();
+  post.like();
+}
+Post p = new Post("joe", "CSE-PACE next Tuesday!", 22);
+Post q = p;
+void main() {
+  boost(q);
+  p.like();
+}
+```
+
+Choose one:
+
+- `25`
+- `22`
+- `23`
+- `24`
+
+## [Interfaces and Recursive Data](review/interfaces-and-recursive-data.html)
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+record LargerThan(int minWidth, int minHeight) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth && img.height() >= this.minHeight;
+  }
+}
+record And(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) && this.right.matches(img);
+  }
+}
+record Or(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) || this.right.matches(img);
+  }
+}
+record Not(ImageQuery query) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return !this.query.matches(img);
+  }
+}
+```
+
+Exercise:
+
+Which of these lines compile? Select all that do.
+
+Choose all that apply:
+
+- `ImageQuery either = new Or("png", "jpg");`
+- `ImageQuery any = new ImageQuery();`
+- `HasExtension h = new Not(new HasExtension("png"));`
+- `ImageQuery q = new HasExtension("png");`
+- `ImageQuery both = new And(new LargerThan(600, 400), new Not(new HasExtension("gif")));`
+
+Exercise:
+
+With
+
+```java
+ImageData cat = new ImageData("cat sleeping", "png", 640, 480);
+ImageQuery q = new And(new Not(new HasExtension("jpg")),
+                       new Or(new LargerThan(800, 600), new HasExtension("png")));
+```
+
+`q.matches(cat)` is [true / false]
+Counting the first one, the number of calls of `matches` that run for `q.matches(cat)` is ____
+
+Exercise:
+
+Fill in `reposts`, which says how many times a post was reposted on the way from the regular post it started from.
+
+```java
+interface Post {
+  int reposts();
+}
+record Repost(String message, Post original) implements Post {
+  public int reposts() {
+    return ____;
+  }
+}
+record RegularPost(String message) implements Post {
+  public int reposts() {
+    return ____;
+  }
+}
+Post reg = new RegularPost("Hello world!");
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+int regReposts = reg.reposts();
+int rReposts = r.reposts();
+```
+
+## [Classes, Constructors, and Equality](review/classes.html)
+
+Exercise:
+
+Here is `Time` as a class. Fill in the first constructor, make the second one call the first with `0` minutes, and call the `static` method to get the number of minutes in `2` hours.
+
+```java
+class Time {
+  int hour;
+  int minute;
+  Time(int hour, int minute) {
+____
+  }
+  Time(int hour) {
+    ____
+  }
+  static int minutesIn(int hours) {
+    return hours * 60;
+  }
+  int toMinutes() {
+    return minutesIn(hour) + minute;
+  }
+}
+Time noon = new Time(12);
+int twoHours = ____;
+```
+
+Exercise:
+
+What does each one evaluate to? (Write a `double` with its decimal point.)
+
+`(int) 3.99` is ____
+`(double) 7 / 2` is ____
+`(double) (7 / 2)` is ____
+`7 / 2 * 2.0` is ____
+`Integer.parseInt("12") + 1` is ____
+
+Exercise:
+
+With these definitions, all in one file:
+
+```java
+record PointR(double x, double y) { }
+class PointC {
+  double x;
+  double y;
+  PointC(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+PointR r1 = new PointR(1, 2);
+PointR r2 = new PointR(1, 2);
+PointC c1 = new PointC(1, 2);
+PointC c2 = new PointC(1, 2);
+PointC c3 = c1;
+```
+
+`r1.equals(r2)` is [false / true]
+`r1 == r2` is [false / true]
+`c1.equals(c2)` is [false / true]
+`c1.equals(c3)` is [false / true]
+After `c1.x = 5;` runs in `main`, `c3.x` is [1.0 / 5.0]
+Writing `r1.x = 5;` in `main` [doesn't compile / makes a new PointR / changes r1]
+
+## [Inheritance and Dispatch](review/inheritance-and-dispatch.html)
+
+Exercise:
+
+With these classes and `Place p = new Park("Balboa Park", 32.7341, -117.1446, 1200);`
+
+```java
+interface Place {
+  String pinLabel();
+  boolean onScreen(double south, double north, double west, double east);
+}
+class Location implements Place {
+  double lat;
+  double lng;
+  Location(double lat, double lng) {
+    this.lat = lat;
+    this.lng = lng;
+  }
+  public String pinLabel() { return "Unknown Location"; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south && lat <= north && lng >= west && lng <= east;
+  }
+}
+class Park extends Location {
+  String name;
+  int acres;
+  Park(String name, double lat, double lng, int acres) {
+    super(lat, lng);
+    this.name = name;
+    this.acres = acres;
+  }
+  @Override
+  public String pinLabel() { return name + " (" + acres + " acres)"; }
+}
+class BusStop extends Location {
+  int route;
+  BusStop(int route, double lat, double lng) {
+    super(lat, lng);
+    this.route = route;
+  }
+  @Override
+  public String pinLabel() { return "Bus " + route; }
+}
+```
+
+`p.pinLabel()` runs the one in [Location / Place / Park]
+`p.onScreen(32, 33, -118, -117)` runs the one in [Location / Place / Park] and returns [true / false]
+`p instanceof Location` is [true / false]
+`p.acres` [crashes with a ClassCastException / is 1200 / doesn't compile]
+`((Park) p).acres` [crashes with a ClassCastException / is 1200 / doesn't compile]
+`((BusStop) p).route` [crashes with a ClassCastException / is 0 / doesn't compile]
+
+Exercise:
+
+Add a new kind of post, `LinkPost`, which also holds a `url`. Its preview looks like `@ana: Notes (cse11.org) | 3 likes`.
+
+```java
+interface Post {
+  String preview();
+  String snippet();
+}
+abstract class Message implements Post {
+  String username;
+  String message;
+  int likes;
+  Message(String username, String message, int likes) {
+    this.username = username;
+    this.message = message;
+    this.likes = likes;
+  }
+  public abstract String preview();
+  public String snippet() {
+    if (message.length() <= 10) { return "@" + username + ": " + message; }
+    return "@" + username + ": " + message.substring(0, 10) + "...";
+  }
+}
+class TextPost extends Message {
+  boolean edited;
+  TextPost(String username, String message, int likes, boolean edited) {
+    super(username, message, likes);
+    this.edited = edited;
+  }
+  public String preview() {
+    String text = "@" + username + ": " + message;
+    if (edited) { text = text + " (edited)"; }
+    return text + " | " + likes + " likes";
+  }
+}
+class LinkPost ____ {
+  String url;
+  LinkPost(String username, String message, int likes, String url) {
+____
+  }
+  public String preview() {
+    String text = ____;
+    return text + " | " + likes + " likes";
+  }
+}
+Post link = new LinkPost("ana", "Notes", 3, "cse11.org");
+String linkPreview = link.preview();
+String linkSnippet = link.snippet();
+```
+
+Exercise:
+
+With those classes and
+
+```java
+Post[] feed = {
+  new TextPost("cse11", "Exam moved to Friday", 12, false),
+  new LinkPost("ana", "Notes", 3, "cse11.org"),
+};
+```
+
+`feed[0].preview()` returns [@cse11: Exam moved to Friday | 12 likes / @cse11: Exam moved... / @cse11: Exam moved to Friday (edited) | 12 likes]
+`feed[1].snippet()` runs the one in [LinkPost / Post / Message] and returns [@ana: Notes... / @ana: Notes (cse11.org) / @ana: Notes]
+`feed[1].likes` [doesn't compile / crashes when it runs / is 3]
+`new Message("ana", "Notes", 3)` [doesn't compile / crashes when it runs / makes a Message]
+
+## [Collections and Choosing a Representation](review/collections-and-choices.html)
+
+Exercise:
+
+Which type fits each piece of data best?
+
+The usernames that liked a post, where nobody can like twice and the order doesn’t matter: [String[] / HashMap<String, Integer> / HashSet<String> / ArrayList<String>]
+A post’s replies, in the order they arrived, with more arriving over time: [HashSet<Post> / Post[] / ArrayList<Post> / HashMap<String, Post>]
+The seats of a theater, which are free or taken, in rows that never change: [HashSet<Boolean> / boolean[][] / HashMap<Integer, Boolean> / ArrayList<Boolean>]
+Finding a student’s `Student` record from their id: [ArrayList<Student> / HashMap<String, Student> / HashSet<Student> / Student[]]
+
+Exercise:
+
+Finish the loop so `likesByUser` maps each user to the total likes across all of their posts.
+
+```java
+import java.util.ArrayList;
+import java.util.HashMap;
+
+class Post {
+  String user;
+  String message;
+  int likes;
+  Post(String user, String message, int likes) {
+    this.user = user;
+    this.message = message;
+    this.likes = likes;
+  }
+}
+ArrayList<Post> feed = new ArrayList<Post>();
+HashMap<String, Integer> likesByUser = new HashMap<String, Integer>();
+void main() {
+  feed.add(new Post("joe", "CSE-PACE next Tuesday!", 22));
+  feed.add(new Post("ana", "Free pizza in the CSE lobby", 40));
+  feed.add(new Post("joe", "Exam moved to Friday", 8));
+  for (Post p : feed) {
+    likesByUser.put(____, ____);
+  }
+  System.out.println(likesByUser.get("joe"));
+  System.out.println(likesByUser.get("ana"));
+  System.out.println(likesByUser.size());
+}
+```
+
+Exercise:
+
+After this runs, what is each one?
+
+```java
+ArrayList<String> a = new ArrayList<String>();
+a.add("x");
+a.add("y");
+a.add("z");
+ArrayList<String> b = a;
+b.remove(0);
+a.add("w");
+```
+
+`a.size()` is ____
+`a.get(0)` is ____
+`b.size()` is ____
+`b.get(2)` is ____
+
+Exercise:
+
+You ask an AI assistant for a `Menu` method that “returns the cheapest price on the menu,” and it writes this:
+
+```java
+int cheapest() {
+  int best = pricesCents[0];
+  for(int p: pricesCents) {
+    if(p < best) { best = p; }
+  }
+  return best;
+}
+```
+
+The code assumes something about a `Menu` that the request never said. What?
+
+Choose one:
+
+- Every price is more than `0`
+- The prices are in order from lowest to highest
+- No two prices are the same
+- The menu has at least one price
+
 # Appendix: The Pict Library
 
 ## [Pict Library Reference](pict-library/pict-library.html)

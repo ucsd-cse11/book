@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Values, Records, and Methods — Review</title>
+<link rel="stylesheet" href="../assets/book.css?v=529d778837f2">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Review</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<div class="ai-banner">The questions in this section were mostly AI-generated, then reviewed by course staff.</div>
+<h1>Values, Records, and Methods</h1>
+<article class="prose"><div class="exercise" data-kind="blanks" data-seed="791092846"><div class="stem">What does each expression evaluate to? (Write a <code>double</code> with its decimal point.)</div><div class="cloze"><code>7 / 2</code> is <input class="blank code" data-answer="3"><br><code>7 / 2.0</code> is <input class="blank code" data-answer="3.5"><br><code>"7" + 2</code> is <input class="blank code" data-answer="&quot;72&quot;|72"><br><code>"Ada".length() + 1</code> is <input class="blank code" data-answer="4"></div></div><div class="exercise" data-kind="code" data-seed="2386846500" data-echo data-check="lectureFirst &amp;&amp; !labFirst &amp;&amp; !lecture.isBefore(lecture) &amp;&amp; new Time(9, 5).isBefore(new Time(9, 30))" data-check-message="That runs, but 9:30 is before 14:00, 14:00 is not before 9:30, and no time is before itself."><div class="stem">Add <code>isBefore</code> to <code>Time</code>: it says whether this time comes earlier in the day than <code>other</code>. Fill in its header and its body to match the calls at the bottom.</div><div class="cloze code">record Time(int hour, int minute) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int toMinutes() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return hour * 60 + minute;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span><input class="blank" data-answer="boolean isBefore(Time other)" spellcheck="false" autocorrect="off" autocapitalize="off"> {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="toMinutes() < other.toMinutes()" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>Time lecture = new Time(9, 30);<br>Time lab = new Time(14, 0);<br>boolean lectureFirst = lecture.isBefore(lab);<br>boolean labFirst = lab.isBefore(lecture);</div></div><div class="exercise" data-kind="blanks" data-seed="2056904927"><div class="stem"><p>Work these out by hand.</p><pre><code data-lang="java">record <span style="color: #4b69c6">Subscription</span>(<span style="color: #4b69c6">String</span> name, <span style="color: #d73948">int</span> priceCents, <span style="color: #d73948">int</span> trialMonths) {
+  <span style="color: #d73948">int</span> <span style="color: #4b69c6">costAfter</span>(<span style="color: #d73948">int</span> months) {
+    <span style="color: #d73948">return</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">max</span>(<span style="color: #b60157">0</span>, months <span style="color: #d73948">-</span> trialMonths) <span style="color: #d73948">*</span> priceCents;
+  }
+}
+<span style="color: #4b69c6">Subscription</span> disney <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Subscription</span>(<span style="color: #198810">"</span><span style="color: #198810">Disney+</span><span style="color: #198810">"</span>, <span style="color: #b60157">2100</span>, <span style="color: #b60157">1</span>);</code></pre></div><div class="cloze"><code>disney.costAfter(3)</code> is <input class="blank code" data-answer="4200"><br><code>disney.costAfter(1)</code> is <input class="blank code" data-answer="0"><br><code>disney.costAfter(0)</code> is <input class="blank code" data-answer="0"><br>The type of <code>disney.name</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>int</option><option data-correct>String</option><option>Subscription</option><option>void</option></select></div></div></article>
+<nav class="pagenav"><a class="prev" href="../more-patterns/summary.html">← More Patterns in Summary</a> <a class="next" href="printing-and-tests.html">Printing, Returning, and Tests →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "review", "title": "Review", "current": 0, "steps": [{"title": "Values, Records, and Methods", "slug": "values-records-methods", "url": "values-records-methods.html", "path": "/review/values-records-methods.html"}, {"title": "Printing, Returning, and Tests", "slug": "printing-and-tests", "url": "printing-and-tests.html", "path": "/review/printing-and-tests.html"}, {"title": "Arrays and Loops", "slug": "arrays-and-loops", "url": "arrays-and-loops.html", "path": "/review/arrays-and-loops.html"}, {"title": "References and Aliasing", "slug": "references-and-aliasing", "url": "references-and-aliasing.html", "path": "/review/references-and-aliasing.html"}, {"title": "Interfaces and Recursive Data", "slug": "interfaces-and-recursive-data", "url": "interfaces-and-recursive-data.html", "path": "/review/interfaces-and-recursive-data.html"}, {"title": "Classes, Constructors, and Equality", "slug": "classes", "url": "classes.html", "path": "/review/classes.html"}, {"title": "Inheritance and Dispatch", "slug": "inheritance-and-dispatch", "url": "inheritance-and-dispatch.html", "path": "/review/inheritance-and-dispatch.html"}, {"title": "Collections and Choosing a Representation", "slug": "collections-and-choices", "url": "collections-and-choices.html", "path": "/review/collections-and-choices.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=eb88944ef9ea"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

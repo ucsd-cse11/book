@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrays and Loops — Review</title>
+<link rel="stylesheet" href="../assets/book.css?v=529d778837f2">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Review</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<div class="ai-banner">The questions in this section were mostly AI-generated, then reviewed by course staff.</div>
+<h1>Arrays and Loops</h1>
+<article class="prose"><div class="exercise" data-kind="blanks" data-seed="4042510170"><div class="stem"><p>After this runs, what is each one?</p><pre><code data-lang="java"><span style="color: #d73948">int</span><span style="color: #d73948">[]</span> scores <span style="color: #d73948">=</span> { <span style="color: #b60157">4</span>, <span style="color: #b60157">9</span>, <span style="color: #b60157">8</span> };
+<span style="color: #d73948">int</span> total <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;
+<span style="color: #d73948">int</span> count <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;
+<span style="color: #d73948">for</span>(<span style="color: #d73948">int</span> s<span style="color: #d73948">:</span> scores) {
+  <span style="color: #d73948">if</span>(s <span style="color: #d73948">></span> <span style="color: #b60157">5</span>) { count <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>; }
+  total <span style="color: #d73948">+=</span> s;
+}</code></pre></div><div class="cloze"><code>total</code> is <input class="blank code" data-answer="21"><br><code>count</code> is <input class="blank code" data-answer="2"><br><code>total / count</code> is <input class="blank code" data-answer="10"><br><code>scores.length</code> is <input class="blank code" data-answer="3"></div></div><div class="exercise" data-kind="code" data-seed="3490515928" data-echo data-check="low == 500 &amp;&amp; new Menu(new int[]{ 300, 900 }).cheapest() == 300 &amp;&amp; new Menu(new int[]{ 700 }).cheapest() == 700" data-check-message="That runs, but lunch.cheapest() should be 500, and the lowest price can be anywhere in the array."><div class="stem">Write the body of <code>cheapest</code>, which returns the lowest price on the menu.</div><div class="cloze code">record Menu(int[] pricesCents) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int cheapest() {<br><textarea class="blank" data-answer="    int best = pricesCents[0];
+    for(int p: pricesCents) {
+      if(p < best) { best = p; }
+    }
+    return best;" rows="6" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>int[] regular = { 2000, 1000, 500, 800 };<br>Menu lunch = new Menu(regular);<br>int low = lunch.cheapest();</div></div><div class="exercise" data-kind="blanks" data-seed="3385124814"><div class="stem"><p>With these seats, what is each one?</p><pre><code data-lang="java"><span style="color: #d73948">boolean</span><span style="color: #d73948">[]</span> top <span style="color: #d73948">=</span> { <span style="color: #d73948">true</span>, <span style="color: #d73948">false</span>, <span style="color: #d73948">true</span>, <span style="color: #d73948">true</span>, <span style="color: #d73948">true</span>, <span style="color: #d73948">true</span> };
+<span style="color: #d73948">boolean</span><span style="color: #d73948">[]</span> middle <span style="color: #d73948">=</span> { <span style="color: #d73948">true</span>, <span style="color: #d73948">false</span>, <span style="color: #d73948">false</span>, <span style="color: #d73948">false</span>, <span style="color: #d73948">true</span> };
+<span style="color: #d73948">boolean</span><span style="color: #d73948">[]</span> bottom <span style="color: #d73948">=</span> { <span style="color: #d73948">true</span>, <span style="color: #d73948">true</span>, <span style="color: #d73948">false</span>, <span style="color: #d73948">false</span> };
+<span style="color: #d73948">boolean</span><span style="color: #d73948">[]</span><span style="color: #d73948">[]</span> seats <span style="color: #d73948">=</span> { top, middle, bottom };</code></pre></div><div class="cloze"><code>seats.length</code> is <input class="blank code" data-answer="3"><br><code>seats[2].length</code> is <input class="blank code" data-answer="4"><br><code>seats[1][4]</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>true</option><option>false</option><option>an ArrayIndexOutOfBoundsException</option></select><br><code>seats[0][1]</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>true</option><option data-correct>false</option><option>an ArrayIndexOutOfBoundsException</option></select><br><code>seats[2][4]</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>true</option><option>false</option><option data-correct>an ArrayIndexOutOfBoundsException</option></select></div></div></article>
+<nav class="pagenav"><a class="prev" href="printing-and-tests.html">← Printing, Returning, and Tests</a> <a class="next" href="references-and-aliasing.html">References and Aliasing →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "review", "title": "Review", "current": 2, "steps": [{"title": "Values, Records, and Methods", "slug": "values-records-methods", "url": "values-records-methods.html", "path": "/review/values-records-methods.html"}, {"title": "Printing, Returning, and Tests", "slug": "printing-and-tests", "url": "printing-and-tests.html", "path": "/review/printing-and-tests.html"}, {"title": "Arrays and Loops", "slug": "arrays-and-loops", "url": "arrays-and-loops.html", "path": "/review/arrays-and-loops.html"}, {"title": "References and Aliasing", "slug": "references-and-aliasing", "url": "references-and-aliasing.html", "path": "/review/references-and-aliasing.html"}, {"title": "Interfaces and Recursive Data", "slug": "interfaces-and-recursive-data", "url": "interfaces-and-recursive-data.html", "path": "/review/interfaces-and-recursive-data.html"}, {"title": "Classes, Constructors, and Equality", "slug": "classes", "url": "classes.html", "path": "/review/classes.html"}, {"title": "Inheritance and Dispatch", "slug": "inheritance-and-dispatch", "url": "inheritance-and-dispatch.html", "path": "/review/inheritance-and-dispatch.html"}, {"title": "Collections and Choosing a Representation", "slug": "collections-and-choices", "url": "collections-and-choices.html", "path": "/review/collections-and-choices.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=eb88944ef9ea"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

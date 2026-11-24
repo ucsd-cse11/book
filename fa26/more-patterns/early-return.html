@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stopping When You&#x27;re Done — More Patterns</title>
+<link rel="stylesheet" href="../assets/book.css?v=529d778837f2">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">More Patterns</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Stopping When You&#x27;re Done</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Professor, I noticed that a program I wrote is doing too much work.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Too much work?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Yeah, I wrote a kind of best-so-far loop, I think, but it’s really more of a “found so far” loop:</div></div><div class="runner" id="w929012727" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="13" spellcheck="false" autocorrect="off" autocapitalize="off">boolean anyContains(String[] words, String part) {
+  boolean found = false;
+  for (String w : words) {
+    System.out.println("checking " + w);
+    if (w.contains(part)) {
+      found = true;
+    }
+  }
+  return found;
+}
+String[] animals = { "cat", "dog", "bird", "fish" };
+boolean b = anyContains(animals, "a");</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Looks like it works, right?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Sure, but look at the printout. It is <strong>also</strong> looking at <code>"dog"</code> and <code>"bird"</code> and <code>"fish"</code>. How can I make it not do that?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Ah, you want an early return.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>An early return?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Once you have found a matching string, you want the method to return, it sounds like. So instead of updating <code>found = true</code>, you can just directly <code>return</code> there:</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Like this?</div></div><div class="runner" id="w106499218" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="13" spellcheck="false" autocorrect="off" autocapitalize="off">boolean anyContains(String[] words, String part) {
+  boolean found = false;
+  for (String w : words) {
+    System.out.println("checking " + w);
+    if (w.contains(part)) {
+      return true;
+    }
+  }
+  return found;
+}
+String[] animals = { "cat", "dog", "bird", "fish" };
+boolean b = anyContains(animals, "a");</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh, and now only <code>"cat"</code> prints. Yeah, that’s what I wanted. Wait, now the <code>found</code> variable is really weird, right? Nothing sets it.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right – I don’t think you need it anymore.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But what will I return at the end?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What was the value in <code>found</code>?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>So I just return <code>false</code>?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Makes sense to me – if the loop runs through all the elements without any containing <code>part</code>, then return <code>false</code>. The loop <strong>would have returned</strong> if any element matched, so if control reaches the end of the loop, returning <code>false</code> is correct.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Huh, that seems a lot simpler.</div></div><div class="runner" id="w3532767710" data-engine="java17" data-expect="compiles" data-echo data-gate data-edit><textarea class="code" rows="12" spellcheck="false" autocorrect="off" autocapitalize="off">boolean anyContains(String[] words, String part) {
+  for (String w : words) {
+    System.out.println("checking " + w);
+    if (w.contains(part)) {
+      return true;
+    }
+  }
+  return false;
+}
+String[] animals = { "cat", "dog", "bird", "fish" };
+boolean b = anyContains(animals, "a");</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>I’d call this a <dfn class="term" data-term="search loop" id="term-search-loop-1">search loop</dfn>. It searches for something matching a pattern, and stops as soon as it finds it and returns <code>true</code>. You could return other values, too, like using <code>return w</code> in the loop to return the found string. That would change the return value, and you’d need to think through what the final <code>return</code> should be.</p><p>It’s also using an important idea called an <dfn class="term" data-term="early return" id="term-early-return-1">early return</dfn>. That’s a <code>return</code> statement that runs in the middle of a loop or other block of code. A <code>return</code> <strong>always</strong> immediately exits the current method with the given return value. So the rest of the loop, or any later statements, never run.</p></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Neat, a search loop with an early return. Is it faster?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Yeah, you could say we just “optimized” your program a little bit – we made it take fewer steps for some kinds of inputs. Nice work!</div></div><h3 class="practice">Practice</h3><div class="innercise"><p>Here are two methods that search an array for a string containing <code>part</code>. One uses an early return. The other keeps a found-so-far variable and returns it after the loop.</p><pre><code data-lang="java"><span style="color: #4b69c6">String</span> <span style="color: #4b69c6">withReturn</span>(<span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> words, <span style="color: #4b69c6">String</span> part) {
+  <span style="color: #d73948">for</span> (<span style="color: #4b69c6">String</span> w <span style="color: #d73948">:</span> words) {
+    <span style="color: #d73948">if</span> (w.<span style="color: #4b69c6">contains</span>(part)) {
+      <span style="color: #d73948">return</span> w;
+    }
+  }
+  <span style="color: #d73948">return</span> <span style="color: #198810">"</span><span style="color: #198810">"</span>;
+}
+
+<span style="color: #4b69c6">String</span> <span style="color: #4b69c6">withFlag</span>(<span style="color: #4b69c6">String</span><span style="color: #d73948">[]</span> words, <span style="color: #4b69c6">String</span> part) {
+  <span style="color: #4b69c6">String</span> found <span style="color: #d73948">=</span> <span style="color: #198810">"</span><span style="color: #198810">"</span>;
+  <span style="color: #d73948">for</span> (<span style="color: #4b69c6">String</span> w <span style="color: #d73948">:</span> words) {
+    <span style="color: #d73948">if</span> (w.<span style="color: #4b69c6">contains</span>(part)) {
+      found <span style="color: #d73948">=</span> w;
+    }
+  }
+  <span style="color: #d73948">return</span> found;
+}</code></pre><div class="exercise" data-kind="choice" data-seed="2765720552" data-multi><div class="stem">For which arrays do <code>withReturn(words, "a")</code> and <code>withFlag(words, "a")</code> return <strong>different</strong> strings? Select all that apply.</div><ol class="choices"><li data-correct><code>{ "cat", "bat", "dog" }</code><div class="why"><code>withReturn</code> stops at <code>"cat"</code>. <code>withFlag</code> keeps going and overwrites <code>found</code> with <code>"bat"</code>.</div></li><li data-correct><code>{ "bat", "cat" }</code><div class="why"><code>withReturn</code> gives <code>"bat"</code>, the first match; <code>withFlag</code> gives <code>"cat"</code>, the last.</div></li><li><code>{ "cat", "dog", "bird" }</code><div class="why">Only <code>"cat"</code> contains <code>"a"</code>, so the first match and the last match are the same string.</div></li><li><code>{ "dog", "bird", "bat" }</code><div class="why">Only <code>"bat"</code> matches. It is last, so <code>withReturn</code> checks every word too, and both return <code>"bat"</code>.</div></li><li><code>{ "dog", "bird", "fish" }</code><div class="why">Nothing matches, so both reach the end of the loop and return <code>""</code>.</div></li></ol></div><p>Now write an array of your own that makes them disagree.</p><div class="exercise" data-kind="code" data-seed="2964925612" data-echo data-check="!first.equals(last)" data-check-message="That runs, but both methods return the same string for your array."><div class="cloze code">String withReturn(String[] words, String part) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>for (String w : words) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>if (w.contains(part)) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>return w;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>return "";<br>}<br>String withFlag(String[] words, String part) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>String found = "";<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>for (String w : words) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>if (w.contains(part)) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>found = w;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>return found;<br>}<br><input class="blank" data-answer="String[] words = { &quot;cat&quot;, &quot;bat&quot; };" spellcheck="false" autocorrect="off" autocapitalize="off"><br>String first = withReturn(words, "a");<br>String last = withFlag(words, "a");</div></div></div></article>
+<nav class="pagenav"><a class="prev" href="../files-and-throw/practice.html">← Practice: true or false</a> <a class="next" href="in-grid.html">Off the Edge →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "more-patterns", "title": "More Patterns", "current": 0, "steps": [{"title": "Stopping When You're Done", "slug": "early-return", "url": "early-return.html", "path": "/more-patterns/early-return.html"}, {"title": "Off the Edge", "slug": "in-grid", "url": "in-grid.html", "path": "/more-patterns/in-grid.html"}, {"title": "Accumulators on Recursive Data", "slug": "accumulator", "url": "accumulator.html", "path": "/more-patterns/accumulator.html"}, {"title": "Two Ways to Recur", "slug": "which-direction", "url": "which-direction.html", "path": "/more-patterns/which-direction.html"}, {"title": "More Patterns in Summary", "slug": "summary", "url": "summary.html", "path": "/more-patterns/summary.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=eb88944ef9ea"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

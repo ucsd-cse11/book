@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interfaces and Recursive Data — Review</title>
+<link rel="stylesheet" href="../assets/book.css?v=529d778837f2">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Review</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<div class="ai-banner">The questions in this section were mostly AI-generated, then reviewed by course staff.</div>
+<h1>Interfaces and Recursive Data</h1>
+<article class="prose"><div class="innercise"><pre><code data-lang="java">record <span style="color: #4b69c6">ImageData</span>(<span style="color: #4b69c6">String</span> keywords, <span style="color: #4b69c6">String</span> fileType, <span style="color: #d73948">int</span> width, <span style="color: #d73948">int</span> height) {}
+
+<span style="color: #d73948">interface</span> <span style="color: #4b69c6">ImageQuery</span> {
+  <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">matches</span>(<span style="color: #4b69c6">ImageData</span> img);
+}
+record <span style="color: #4b69c6">HasExtension</span>(<span style="color: #4b69c6">String</span> ext) implements <span style="color: #4b69c6">ImageQuery</span> {
+  <span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">matches</span>(<span style="color: #4b69c6">ImageData</span> img) {
+    <span style="color: #d73948">return</span> img.<span style="color: #4b69c6">fileType</span>().<span style="color: #4b69c6">equals</span>(<span style="color: #d73948">this</span>.ext);
+  }
+}
+record <span style="color: #4b69c6">LargerThan</span>(<span style="color: #d73948">int</span> minWidth, <span style="color: #d73948">int</span> minHeight) implements <span style="color: #4b69c6">ImageQuery</span> {
+  <span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">matches</span>(<span style="color: #4b69c6">ImageData</span> img) {
+    <span style="color: #d73948">return</span> img.<span style="color: #4b69c6">width</span>() <span style="color: #d73948">>=</span> <span style="color: #d73948">this</span>.minWidth <span style="color: #d73948">&amp;&amp;</span> img.<span style="color: #4b69c6">height</span>() <span style="color: #d73948">>=</span> <span style="color: #d73948">this</span>.minHeight;
+  }
+}
+record <span style="color: #4b69c6">And</span>(<span style="color: #4b69c6">ImageQuery</span> left, <span style="color: #4b69c6">ImageQuery</span> right) implements <span style="color: #4b69c6">ImageQuery</span> {
+  <span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">matches</span>(<span style="color: #4b69c6">ImageData</span> img) {
+    <span style="color: #d73948">return</span> <span style="color: #d73948">this</span>.left.<span style="color: #4b69c6">matches</span>(img) <span style="color: #d73948">&amp;&amp;</span> <span style="color: #d73948">this</span>.right.<span style="color: #4b69c6">matches</span>(img);
+  }
+}
+record <span style="color: #4b69c6">Or</span>(<span style="color: #4b69c6">ImageQuery</span> left, <span style="color: #4b69c6">ImageQuery</span> right) implements <span style="color: #4b69c6">ImageQuery</span> {
+  <span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">matches</span>(<span style="color: #4b69c6">ImageData</span> img) {
+    <span style="color: #d73948">return</span> <span style="color: #d73948">this</span>.left.<span style="color: #4b69c6">matches</span>(img) <span style="color: #d73948">||</span> <span style="color: #d73948">this</span>.right.<span style="color: #4b69c6">matches</span>(img);
+  }
+}
+record <span style="color: #4b69c6">Not</span>(<span style="color: #4b69c6">ImageQuery</span> query) implements <span style="color: #4b69c6">ImageQuery</span> {
+  <span style="color: #d73948">public</span> <span style="color: #d73948">boolean</span> <span style="color: #4b69c6">matches</span>(<span style="color: #4b69c6">ImageData</span> img) {
+    <span style="color: #d73948">return</span> <span style="color: #d73948">!</span><span style="color: #d73948">this</span>.query.<span style="color: #4b69c6">matches</span>(img);
+  }
+}</code></pre><div class="exercise" data-kind="choice" data-seed="336218824" data-multi><div class="stem">Which of these lines compile? Select all that do.</div><ol class="choices"><li data-correct><code>ImageQuery q = new HasExtension("png");</code><div class="why"><code>HasExtension</code> implements <code>ImageQuery</code>, so it can be stored under that type.</div></li><li><code>HasExtension h = new Not(new HasExtension("png"));</code><div class="why">A <code>Not</code> is an <code>ImageQuery</code>, but it is not a <code>HasExtension</code>.</div></li><li data-correct><code>ImageQuery both = new And(new LargerThan(600, 400), new Not(new HasExtension("gif")));</code><div class="why">Both fields of <code>And</code> are <code>ImageQuery</code>s, and <code>LargerThan</code> and <code>Not</code> each implement it.</div></li><li><code>ImageQuery any = new ImageQuery();</code><div class="why">An interface has no constructor. Only the records that implement it can be built.</div></li><li><code>ImageQuery either = new Or("png", "jpg");</code><div class="why"><code>Or</code>’s fields are <code>ImageQuery</code>s, and a <code>String</code> isn’t one.</div></li></ol></div><div class="exercise" data-kind="blanks" data-seed="672694448"><div class="stem"><p>With</p><pre><code data-lang="java"><span style="color: #4b69c6">ImageData</span> cat <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">ImageData</span>(<span style="color: #198810">"</span><span style="color: #198810">cat sleeping</span><span style="color: #198810">"</span>, <span style="color: #198810">"</span><span style="color: #198810">png</span><span style="color: #198810">"</span>, <span style="color: #b60157">640</span>, <span style="color: #b60157">480</span>);
+<span style="color: #4b69c6">ImageQuery</span> q <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">And</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">Not</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">HasExtension</span>(<span style="color: #198810">"</span><span style="color: #198810">jpg</span><span style="color: #198810">"</span>)),
+                       <span style="color: #d73948">new</span> <span style="color: #4b69c6">Or</span>(<span style="color: #d73948">new</span> <span style="color: #4b69c6">LargerThan</span>(<span style="color: #b60157">800</span>, <span style="color: #b60157">600</span>), <span style="color: #d73948">new</span> <span style="color: #4b69c6">HasExtension</span>(<span style="color: #198810">"</span><span style="color: #198810">png</span><span style="color: #198810">"</span>)));</code></pre></div><div class="cloze"><code>q.matches(cat)</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>true</option><option>false</option></select><br>Counting the first one, the number of calls of <code>matches</code> that run for <code>q.matches(cat)</code> is <input class="blank" data-answer="6"></div></div></div><div class="exercise" data-kind="code" data-seed="2981868438" data-echo data-check="reg.reposts() == 0 &amp;&amp; r.reposts() == 2 &amp;&amp; new Repost(&quot;look&quot;, r).reposts() == 3" data-check-message="That runs, but r.reposts() should be 2, and a regular post has 0 reposts."><div class="stem">Fill in <code>reposts</code>, which says how many times a post was reposted on the way from the regular post it started from.</div><div class="cloze code">interface Post {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int reposts();<br>}<br>record Repost(String message, Post original) implements Post {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public int reposts() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="1 + original.reposts()|original.reposts() + 1" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>record RegularPost(String message) implements Post {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public int reposts() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return <input class="blank" data-answer="0" spellcheck="false" autocorrect="off" autocapitalize="off">;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>Post reg = new RegularPost("Hello world!");<br>Post r = new Repost("what he said",<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>new Repost("what she said",<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>new RegularPost("I love to post")));<br>int regReposts = reg.reposts();<br>int rReposts = r.reposts();</div></div></article>
+<nav class="pagenav"><a class="prev" href="references-and-aliasing.html">← References and Aliasing</a> <a class="next" href="classes.html">Classes, Constructors, and Equality →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "review", "title": "Review", "current": 4, "steps": [{"title": "Values, Records, and Methods", "slug": "values-records-methods", "url": "values-records-methods.html", "path": "/review/values-records-methods.html"}, {"title": "Printing, Returning, and Tests", "slug": "printing-and-tests", "url": "printing-and-tests.html", "path": "/review/printing-and-tests.html"}, {"title": "Arrays and Loops", "slug": "arrays-and-loops", "url": "arrays-and-loops.html", "path": "/review/arrays-and-loops.html"}, {"title": "References and Aliasing", "slug": "references-and-aliasing", "url": "references-and-aliasing.html", "path": "/review/references-and-aliasing.html"}, {"title": "Interfaces and Recursive Data", "slug": "interfaces-and-recursive-data", "url": "interfaces-and-recursive-data.html", "path": "/review/interfaces-and-recursive-data.html"}, {"title": "Classes, Constructors, and Equality", "slug": "classes", "url": "classes.html", "path": "/review/classes.html"}, {"title": "Inheritance and Dispatch", "slug": "inheritance-and-dispatch", "url": "inheritance-and-dispatch.html", "path": "/review/inheritance-and-dispatch.html"}, {"title": "Collections and Choosing a Representation", "slug": "collections-and-choices", "url": "collections-and-choices.html", "path": "/review/collections-and-choices.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=eb88944ef9ea"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

@@ -1,0 +1,633 @@
+# Review
+
+The questions in this section were mostly AI-generated, then reviewed by course staff.
+
+## [Values, Records, and Methods](values-records-methods.html)
+
+Exercise:
+
+What does each expression evaluate to? (Write a `double` with its decimal point.)
+
+`7 / 2` is ____
+`7 / 2.0` is ____
+`"7" + 2` is ____
+`"Ada".length() + 1` is ____
+
+Exercise:
+
+Add `isBefore` to `Time`: it says whether this time comes earlier in the day than `other`. Fill in its header and its body to match the calls at the bottom.
+
+```java
+record Time(int hour, int minute) {
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
+  ____ {
+    return ____;
+  }
+}
+Time lecture = new Time(9, 30);
+Time lab = new Time(14, 0);
+boolean lectureFirst = lecture.isBefore(lab);
+boolean labFirst = lab.isBefore(lecture);
+```
+
+Exercise:
+
+Work these out by hand.
+
+```java
+record Subscription(String name, int priceCents, int trialMonths) {
+  int costAfter(int months) {
+    return Math.max(0, months - trialMonths) * priceCents;
+  }
+}
+Subscription disney = new Subscription("Disney+", 2100, 1);
+```
+
+`disney.costAfter(3)` is ____
+`disney.costAfter(1)` is ____
+`disney.costAfter(0)` is ____
+The type of `disney.name` is [String / void / Subscription / int]
+
+## [Printing, Returning, and Tests](printing-and-tests.html)
+
+Exercise:
+
+What does running this file print?
+
+```java
+record Time(int hour, int minute) {
+  int toMinutes() {
+    return hour * 60 + minute;
+  }
+  void report() {
+    System.out.println(hour + ":" + minute);
+  }
+}
+void main() {
+  Time t = new Time(13, 5);
+  t.toMinutes();
+  t.report();
+}
+```
+
+Choose one:
+
+- ```
+  785
+  13:5
+  ```
+- ```
+  13:5
+  ```
+- Nothing
+- ```
+  785
+  ```
+
+Exercise:
+
+`Time` has this method:
+
+```java
+int minutesBetween(Time other) {
+  return Math.abs(toMinutes() - other.toMinutes());
+}
+```
+
+Which of these tests pass? Select all that do.
+
+Choose all that apply:
+
+- `assertEquals(new Time(1, 30), new Time(0, 90));`
+- `assertEquals(1, new Time(23, 59).minutesBetween(new Time(0, 0)));`
+- `assertEquals(new Time(9, 0), new Time(9, 0));`
+- `assertEquals(90, new Time(9, 0).minutesBetween(new Time(10, 30)));`
+- `assertEquals(30, new Time(8, 45).minutesBetween(new Time(8, 15)));`
+
+Exercise:
+
+Fill in the expected values so every test passes.
+
+```java
+record CartItem(String name, int priceCents) {
+  int priceWithDiscount(int percentOff) {
+    return priceCents * (100 - percentOff) / 100;
+  }
+  CartItem discounted(int percentOff) {
+    return new CartItem(name, priceWithDiscount(percentOff));
+  }
+}
+void main() {
+  CartItem mug = new CartItem("mug", 1000);
+  assertEquals(____, mug.priceWithDiscount(25));
+  assertEquals(____, mug.priceWithDiscount(0));
+  assertEquals(____, mug.discounted(10));
+  System.out.println("All tests succeeded!");
+}
+```
+
+## [Arrays and Loops](arrays-and-loops.html)
+
+Exercise:
+
+After this runs, what is each one?
+
+```java
+int[] scores = { 4, 9, 8 };
+int total = 0;
+int count = 0;
+for(int s: scores) {
+  if(s > 5) { count += 1; }
+  total += s;
+}
+```
+
+`total` is ____
+`count` is ____
+`total / count` is ____
+`scores.length` is ____
+
+Exercise:
+
+Write the body of `cheapest`, which returns the lowest price on the menu.
+
+```java
+record Menu(int[] pricesCents) {
+  int cheapest() {
+____
+  }
+}
+int[] regular = { 2000, 1000, 500, 800 };
+Menu lunch = new Menu(regular);
+int low = lunch.cheapest();
+```
+
+Exercise:
+
+With these seats, what is each one?
+
+```java
+boolean[] top = { true, false, true, true, true, true };
+boolean[] middle = { true, false, false, false, true };
+boolean[] bottom = { true, true, false, false };
+boolean[][] seats = { top, middle, bottom };
+```
+
+`seats.length` is ____
+`seats[2].length` is ____
+`seats[1][4]` is [an ArrayIndexOutOfBoundsException / true / false]
+`seats[0][1]` is [an ArrayIndexOutOfBoundsException / true / false]
+`seats[2][4]` is [an ArrayIndexOutOfBoundsException / true / false]
+
+## [References and Aliasing](references-and-aliasing.html)
+
+```java
+record Menu(int[] pricesCents) {
+  int[] discounted() {
+    int[] result = new int[pricesCents.length];
+    int index = 0;
+    for(int p: pricesCents) {
+      result[index] = p * 90 / 100;
+      index += 1;
+    }
+    return result;
+  }
+  void discountInPlace() {
+    int index = 0;
+    for(int p: pricesCents) {
+      pricesCents[index] = p * 90 / 100;
+      index += 1;
+    }
+  }
+}
+int[] regular = { 2000, 1000 };
+Menu lunch = new Menu(regular);
+Menu dinner = new Menu(lunch.discounted());
+void main() {
+  lunch.discountInPlace();
+}
+```
+
+Exercise:
+
+Java hands out references in the order objects are created, starting at `@1001`. Fill in the memory picture for when `main` finishes.
+
+```java
+Names
+top level: regular = @1001, lunch = @1002, dinner = [@1003 / @1002 / @1004]
+  lunch.discounted() on @1002, returns [@1001 / @1003]
+  main()
+    lunch.discountInPlace() on [@1001 / @1002 / @1004]
+
+Heap
+@1001: [[1800, 900] / [2000, 1000] / [1620, 810]]
+@1002: Menu[pricesCents=@1001]
+@1003: [[1800, 900] / [2000, 1000] / [1620, 810]]
+@1004: Menu[pricesCents=[@1001 / @1003]]
+```
+
+Exercise:
+
+Still at the end of `main`, what does each expression produce?
+
+```java
+lunch == dinner                             [true / false]
+lunch.equals(dinner)                        [true / false]
+regular == lunch.pricesCents                [true / false]
+Arrays.equals(regular, dinner.pricesCents)  [true / false]
+```
+
+Exercise:
+
+What is `q.likes` when `main` finishes?
+
+```java
+class Post {
+  String user;
+  String message;
+  int likes;
+  Post(String user, String message, int likes) {
+    this.user = user;
+    this.message = message;
+    this.likes = likes;
+  }
+  void like() {
+    this.likes = likes + 1;
+  }
+}
+void boost(Post post) {
+  post.like();
+  post.like();
+}
+Post p = new Post("joe", "CSE-PACE next Tuesday!", 22);
+Post q = p;
+void main() {
+  boost(q);
+  p.like();
+}
+```
+
+Choose one:
+
+- `25`
+- `22`
+- `23`
+- `24`
+
+## [Interfaces and Recursive Data](interfaces-and-recursive-data.html)
+
+```java
+record ImageData(String keywords, String fileType, int width, int height) {}
+
+interface ImageQuery {
+  boolean matches(ImageData img);
+}
+record HasExtension(String ext) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.fileType().equals(this.ext);
+  }
+}
+record LargerThan(int minWidth, int minHeight) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return img.width() >= this.minWidth && img.height() >= this.minHeight;
+  }
+}
+record And(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) && this.right.matches(img);
+  }
+}
+record Or(ImageQuery left, ImageQuery right) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return this.left.matches(img) || this.right.matches(img);
+  }
+}
+record Not(ImageQuery query) implements ImageQuery {
+  public boolean matches(ImageData img) {
+    return !this.query.matches(img);
+  }
+}
+```
+
+Exercise:
+
+Which of these lines compile? Select all that do.
+
+Choose all that apply:
+
+- `ImageQuery either = new Or("png", "jpg");`
+- `ImageQuery any = new ImageQuery();`
+- `HasExtension h = new Not(new HasExtension("png"));`
+- `ImageQuery q = new HasExtension("png");`
+- `ImageQuery both = new And(new LargerThan(600, 400), new Not(new HasExtension("gif")));`
+
+Exercise:
+
+With
+
+```java
+ImageData cat = new ImageData("cat sleeping", "png", 640, 480);
+ImageQuery q = new And(new Not(new HasExtension("jpg")),
+                       new Or(new LargerThan(800, 600), new HasExtension("png")));
+```
+
+`q.matches(cat)` is [true / false]
+Counting the first one, the number of calls of `matches` that run for `q.matches(cat)` is ____
+
+Exercise:
+
+Fill in `reposts`, which says how many times a post was reposted on the way from the regular post it started from.
+
+```java
+interface Post {
+  int reposts();
+}
+record Repost(String message, Post original) implements Post {
+  public int reposts() {
+    return ____;
+  }
+}
+record RegularPost(String message) implements Post {
+  public int reposts() {
+    return ____;
+  }
+}
+Post reg = new RegularPost("Hello world!");
+Post r = new Repost("what he said",
+          new Repost("what she said",
+            new RegularPost("I love to post")));
+int regReposts = reg.reposts();
+int rReposts = r.reposts();
+```
+
+## [Classes, Constructors, and Equality](classes.html)
+
+Exercise:
+
+Here is `Time` as a class. Fill in the first constructor, make the second one call the first with `0` minutes, and call the `static` method to get the number of minutes in `2` hours.
+
+```java
+class Time {
+  int hour;
+  int minute;
+  Time(int hour, int minute) {
+____
+  }
+  Time(int hour) {
+    ____
+  }
+  static int minutesIn(int hours) {
+    return hours * 60;
+  }
+  int toMinutes() {
+    return minutesIn(hour) + minute;
+  }
+}
+Time noon = new Time(12);
+int twoHours = ____;
+```
+
+Exercise:
+
+What does each one evaluate to? (Write a `double` with its decimal point.)
+
+`(int) 3.99` is ____
+`(double) 7 / 2` is ____
+`(double) (7 / 2)` is ____
+`7 / 2 * 2.0` is ____
+`Integer.parseInt("12") + 1` is ____
+
+Exercise:
+
+With these definitions, all in one file:
+
+```java
+record PointR(double x, double y) { }
+class PointC {
+  double x;
+  double y;
+  PointC(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+PointR r1 = new PointR(1, 2);
+PointR r2 = new PointR(1, 2);
+PointC c1 = new PointC(1, 2);
+PointC c2 = new PointC(1, 2);
+PointC c3 = c1;
+```
+
+`r1.equals(r2)` is [false / true]
+`r1 == r2` is [false / true]
+`c1.equals(c2)` is [false / true]
+`c1.equals(c3)` is [false / true]
+After `c1.x = 5;` runs in `main`, `c3.x` is [1.0 / 5.0]
+Writing `r1.x = 5;` in `main` [doesn't compile / makes a new PointR / changes r1]
+
+## [Inheritance and Dispatch](inheritance-and-dispatch.html)
+
+Exercise:
+
+With these classes and `Place p = new Park("Balboa Park", 32.7341, -117.1446, 1200);`
+
+```java
+interface Place {
+  String pinLabel();
+  boolean onScreen(double south, double north, double west, double east);
+}
+class Location implements Place {
+  double lat;
+  double lng;
+  Location(double lat, double lng) {
+    this.lat = lat;
+    this.lng = lng;
+  }
+  public String pinLabel() { return "Unknown Location"; }
+  public boolean onScreen(double south, double north, double west, double east) {
+    return lat >= south && lat <= north && lng >= west && lng <= east;
+  }
+}
+class Park extends Location {
+  String name;
+  int acres;
+  Park(String name, double lat, double lng, int acres) {
+    super(lat, lng);
+    this.name = name;
+    this.acres = acres;
+  }
+  @Override
+  public String pinLabel() { return name + " (" + acres + " acres)"; }
+}
+class BusStop extends Location {
+  int route;
+  BusStop(int route, double lat, double lng) {
+    super(lat, lng);
+    this.route = route;
+  }
+  @Override
+  public String pinLabel() { return "Bus " + route; }
+}
+```
+
+`p.pinLabel()` runs the one in [Location / Place / Park]
+`p.onScreen(32, 33, -118, -117)` runs the one in [Location / Place / Park] and returns [true / false]
+`p instanceof Location` is [true / false]
+`p.acres` [crashes with a ClassCastException / is 1200 / doesn't compile]
+`((Park) p).acres` [crashes with a ClassCastException / is 1200 / doesn't compile]
+`((BusStop) p).route` [crashes with a ClassCastException / is 0 / doesn't compile]
+
+Exercise:
+
+Add a new kind of post, `LinkPost`, which also holds a `url`. Its preview looks like `@ana: Notes (cse11.org) | 3 likes`.
+
+```java
+interface Post {
+  String preview();
+  String snippet();
+}
+abstract class Message implements Post {
+  String username;
+  String message;
+  int likes;
+  Message(String username, String message, int likes) {
+    this.username = username;
+    this.message = message;
+    this.likes = likes;
+  }
+  public abstract String preview();
+  public String snippet() {
+    if (message.length() <= 10) { return "@" + username + ": " + message; }
+    return "@" + username + ": " + message.substring(0, 10) + "...";
+  }
+}
+class TextPost extends Message {
+  boolean edited;
+  TextPost(String username, String message, int likes, boolean edited) {
+    super(username, message, likes);
+    this.edited = edited;
+  }
+  public String preview() {
+    String text = "@" + username + ": " + message;
+    if (edited) { text = text + " (edited)"; }
+    return text + " | " + likes + " likes";
+  }
+}
+class LinkPost ____ {
+  String url;
+  LinkPost(String username, String message, int likes, String url) {
+____
+  }
+  public String preview() {
+    String text = ____;
+    return text + " | " + likes + " likes";
+  }
+}
+Post link = new LinkPost("ana", "Notes", 3, "cse11.org");
+String linkPreview = link.preview();
+String linkSnippet = link.snippet();
+```
+
+Exercise:
+
+With those classes and
+
+```java
+Post[] feed = {
+  new TextPost("cse11", "Exam moved to Friday", 12, false),
+  new LinkPost("ana", "Notes", 3, "cse11.org"),
+};
+```
+
+`feed[0].preview()` returns [@cse11: Exam moved to Friday | 12 likes / @cse11: Exam moved... / @cse11: Exam moved to Friday (edited) | 12 likes]
+`feed[1].snippet()` runs the one in [LinkPost / Post / Message] and returns [@ana: Notes... / @ana: Notes (cse11.org) / @ana: Notes]
+`feed[1].likes` [doesn't compile / crashes when it runs / is 3]
+`new Message("ana", "Notes", 3)` [doesn't compile / crashes when it runs / makes a Message]
+
+## [Collections and Choosing a Representation](collections-and-choices.html)
+
+Exercise:
+
+Which type fits each piece of data best?
+
+The usernames that liked a post, where nobody can like twice and the order doesn’t matter: [String[] / HashMap<String, Integer> / HashSet<String> / ArrayList<String>]
+A post’s replies, in the order they arrived, with more arriving over time: [HashSet<Post> / Post[] / ArrayList<Post> / HashMap<String, Post>]
+The seats of a theater, which are free or taken, in rows that never change: [HashSet<Boolean> / boolean[][] / HashMap<Integer, Boolean> / ArrayList<Boolean>]
+Finding a student’s `Student` record from their id: [ArrayList<Student> / HashMap<String, Student> / HashSet<Student> / Student[]]
+
+Exercise:
+
+Finish the loop so `likesByUser` maps each user to the total likes across all of their posts.
+
+```java
+import java.util.ArrayList;
+import java.util.HashMap;
+
+class Post {
+  String user;
+  String message;
+  int likes;
+  Post(String user, String message, int likes) {
+    this.user = user;
+    this.message = message;
+    this.likes = likes;
+  }
+}
+ArrayList<Post> feed = new ArrayList<Post>();
+HashMap<String, Integer> likesByUser = new HashMap<String, Integer>();
+void main() {
+  feed.add(new Post("joe", "CSE-PACE next Tuesday!", 22));
+  feed.add(new Post("ana", "Free pizza in the CSE lobby", 40));
+  feed.add(new Post("joe", "Exam moved to Friday", 8));
+  for (Post p : feed) {
+    likesByUser.put(____, ____);
+  }
+  System.out.println(likesByUser.get("joe"));
+  System.out.println(likesByUser.get("ana"));
+  System.out.println(likesByUser.size());
+}
+```
+
+Exercise:
+
+After this runs, what is each one?
+
+```java
+ArrayList<String> a = new ArrayList<String>();
+a.add("x");
+a.add("y");
+a.add("z");
+ArrayList<String> b = a;
+b.remove(0);
+a.add("w");
+```
+
+`a.size()` is ____
+`a.get(0)` is ____
+`b.size()` is ____
+`b.get(2)` is ____
+
+Exercise:
+
+You ask an AI assistant for a `Menu` method that “returns the cheapest price on the menu,” and it writes this:
+
+```java
+int cheapest() {
+  int best = pricesCents[0];
+  for(int p: pricesCents) {
+    if(p < best) { best = p; }
+  }
+  return best;
+}
+```
+
+The code assumes something about a `Menu` that the request never said. What?
+
+Choose one:
+
+- Every price is more than `0`
+- The prices are in order from lowest to highest
+- No two prices are the same
+- The menu has at least one price

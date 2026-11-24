@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Off the Edge — More Patterns</title>
+<link rel="stylesheet" href="../assets/book.css?v=529d778837f2">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">More Patterns</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Off the Edge</h1>
+<article class="prose"><div class="speech student"><div class="bubble"><span class="who">Student: </span>Professor, I heard about a cool image idea that I wanted to try implementing.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What is it?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It was called a “box blur”. It’s supposed to sort of smooth out an image, make it blurry-looking. It sounded cool.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Did you hear how it’s supposed to work?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It’s supposed to take the average of a bunch of pixels. Like the ones around a spot.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Oh intersting.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Here’s my code, it has a bug:</div></div><div class="runner" id="w2177203961" data-engine="java17" data-expect="exception" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.awt.Color;
+Color averageAround(Raster raster, int col, int row) {
+  int r = 0, g = 0, b = 0;
+  for(int dRow = -1; dRow &lt;= 1; dRow += 1) {
+    for(int dCol = -1; dCol &lt;= 1; dCol += 1) {
+      Color c = raster.colorAt(col + dCol, row + dRow);
+      r += c.getRed();
+      g += c.getGreen();
+      b += c.getBlue();
+    }
+  }
+  return new Color(r / 9, g / 9, b / 9);
+}
+Raster boxBlur(Raster raster) {
+  Color[][] blurred = new Color[raster.height()][raster.width()];
+  for(int row = 1; row &lt; raster.height(); row += 1) {
+    for(int col = 1; col &lt; raster.width(); col += 1) {
+      System.out.println("blurring col " + col + ", row " + row);
+      blurred[row][col] = averageAround(raster, col, row);
+    }
+  }
+  return new Raster(blurred);
+}
+Color[][] tiny = {
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE },
+  { Color.WHITE, Color.BLACK, Color.BLACK, Color.WHITE },
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE }
+};
+Raster tinyBlur = boxBlur(new Raster(tiny));</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It is definitely blurring stuff, but it has an error.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>I see – and you did a really useful thing by putting in a print statement.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Yeah, so it’s definitely failing when <code>col</code> is 3.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, and which method is it failing in?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>In <code>boxBlur</code>, right?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Can you be more specific than that?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh, I guess <code>averageAround</code>? Oh, should I stop the loop earlier?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Maybe! How would that work?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Well I’d make the loop check <code>&lt; raster.height() - 1</code>, and same for <code>width</code>.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s try it!</div></div><div class="runner" id="w341899921" data-engine="java17" data-expect="exception" data-folds="[{&quot;line&quot;:&quot;Color averageAround(Raster raster, int col, int row) { … }&quot;,&quot;code&quot;:&quot;Color averageAround(Raster raster, int col, int row) {\n  int r = 0, g = 0, b = 0;\n  for(int dRow = -1; dRow <= 1; dRow += 1) {\n    for(int dCol = -1; dCol <= 1; dCol += 1) {\n      Color c = raster.colorAt(col + dCol, row + dRow);\n      r += c.getRed();\n      g += c.getGreen();\n      b += c.getBlue();\n    }\n  }\n  return new Color(r / 9, g / 9, b / 9);\n}&quot;}]" data-echo data-gate><textarea class="code" rows="19" spellcheck="false" autocorrect="off" autocapitalize="off">import java.awt.Color;
+Color averageAround(Raster raster, int col, int row) { … }
+Raster boxBlur(Raster raster) {
+  Color[][] blurred = new Color[raster.height()][raster.width()];
+  for(int row = 1; row &lt; raster.height() - 1; row += 1) {
+    for(int col = 1; col &lt; raster.width() - 1; col += 1) {
+      System.out.println("blurring col " + col + ", row " + row);
+      blurred[row][col] = averageAround(raster, col, row);
+    }
+  }
+  return new Raster(blurred);
+}
+Color[][] tiny = {
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE },
+  { Color.WHITE, Color.BLACK, Color.BLACK, Color.WHITE },
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE }
+};
+Raster tinyBlur = boxBlur(new Raster(tiny));</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="unfold" title="Show the folded code">Unfold</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It’s still wrong. Hm. It says <code>pixels[0][0]</code> is <code>null</code>. And wait, is that happening in the <code>Raster</code> constructor?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Indeed, good reading of the stack trace. Let’s imagine the memory diagram right before the loop – what’s in the elements of the <code>blurred</code> array?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>It was just initialized, so nothing?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There’s always a value there, and reference types’ default value is…</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh <code>null</code>. Oh! So somehow one of them isn’t getting filled in by the loop.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, in particular the one at <code>[0][0]</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Is that because my loop starts at 1? But I had to make it be that to not go out of bounds.</div></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>First of all, good job. To be clear, the issue is that the grid looks like</p><pre><code>[null, null, null, null]
+[null, GRAY, GRAY, null]
+[null, null, null, null]</code></pre><p>When it’s passed into the <code>Raster</code> constructor. It’s worth being precise about that. Your code avoids the edges because <code>averageAround</code> would go out of bounds on those edges.</p></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Yeah, I see now.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Could you make it so when you’re at an edge, the program just averages the pixels that are <strong>in bounds</strong> and <strong>around</strong> the pixel?</div></div><div class="speech student"><div class="bubble"><p><span class="who">Student: </span>Oh I see, so we’d change that loop. It would need a condition to skip the elements that are out of bounds… oh and also we’d sometimes not divide by</p><ol><li value="9">Like a corner only has 3, other edges have 5 pixels around them. So…</li></ol><pre><code data-lang="java"><span style="color: #4b69c6">Color</span> <span style="color: #4b69c6">averageAround</span>(<span style="color: #4b69c6">Raster</span> raster, <span style="color: #d73948">int</span> col, <span style="color: #d73948">int</span> row) {
+  <span style="color: #d73948">int</span> r <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>, g <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>, b <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>, total <span style="color: #d73948">=</span> <span style="color: #b60157">0</span>;
+  <span style="color: #d73948">for</span>(<span style="color: #d73948">int</span> dRow <span style="color: #d73948">=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>; dRow <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">1</span>; dRow <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>) {
+    <span style="color: #d73948">for</span>(<span style="color: #d73948">int</span> dCol <span style="color: #d73948">=</span> <span style="color: #d73948">-</span><span style="color: #b60157">1</span>; dCol <span style="color: #d73948">&lt;=</span> <span style="color: #b60157">1</span>; dCol <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>) {
+      <span style="color: #d73948">if</span>(col <span style="color: #d73948">+</span> dCol <span style="color: #d73948">>=</span> raster.<span style="color: #4b69c6">width</span>() <span style="color: #d73948">||</span> col <span style="color: #d73948">+</span> dCol <span style="color: #d73948">&lt;</span> <span style="color: #b60157">0</span>) { <span style="color: #d73948">continue</span>; }
+      <span style="color: #d73948">if</span>(row <span style="color: #d73948">+</span> dRow <span style="color: #d73948">>=</span> raster.<span style="color: #4b69c6">height</span>() <span style="color: #d73948">||</span> row <span style="color: #d73948">+</span> dRow <span style="color: #d73948">&lt;</span> <span style="color: #b60157">0</span>) { <span style="color: #d73948">continue</span>; }
+      <span style="color: #4b69c6">Color</span> c <span style="color: #d73948">=</span> raster.<span style="color: #4b69c6">colorAt</span>(col <span style="color: #d73948">+</span> dCol, row <span style="color: #d73948">+</span> dRow);
+      r <span style="color: #d73948">+=</span> c.<span style="color: #4b69c6">getRed</span>();
+      g <span style="color: #d73948">+=</span> c.<span style="color: #4b69c6">getGreen</span>();
+      b <span style="color: #d73948">+=</span> c.<span style="color: #4b69c6">getBlue</span>();
+      total <span style="color: #d73948">+=</span> <span style="color: #b60157">1</span>;
+    }
+  }
+  <span style="color: #d73948">return</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Color</span>(r <span style="color: #d73948">/</span> total, g <span style="color: #d73948">/</span> total, b <span style="color: #d73948">/</span> total);
+}</code></pre></div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>What else needs to change?</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>That’s it, right? Oh wait now do I change the ranges in the whole blur loop?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, now it can safely blur at <code>[0][0]</code> because it won’t go out of bounds for that <code>row</code> and <code>col</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Ah I get it</div></div><div class="runner" id="w1413892922" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.awt.Color;
+Color averageAround(Raster raster, int col, int row) {
+  int r = 0, g = 0, b = 0, total = 0;
+  for(int dRow = -1; dRow &lt;= 1; dRow += 1) {
+    for(int dCol = -1; dCol &lt;= 1; dCol += 1) {
+      if(col + dCol >= raster.width() || col + dCol &lt; 0) { continue; }
+      if(row + dRow >= raster.height() || row + dRow &lt; 0) { continue; }
+      Color c = raster.colorAt(col + dCol, row + dRow);
+      r += c.getRed();
+      g += c.getGreen();
+      b += c.getBlue();
+      total += 1;
+    }
+  }
+  return new Color(r / total, g / total, b / total);
+}
+Raster boxBlur(Raster raster) {
+  Color[][] blurred = new Color[raster.height()][raster.width()];
+  for(int row = 0; row &lt; raster.height(); row += 1) {
+    for(int col = 0; col &lt; raster.width(); col += 1) {
+      blurred[row][col] = averageAround(raster, col, row);
+    }
+  }
+  return new Raster(blurred);
+}
+Color[][] tiny = {
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE },
+  { Color.WHITE, Color.BLACK, Color.BLACK, Color.WHITE },
+  { Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE }
+};
+Raster tinyBlur = boxBlur(new Raster(tiny));</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>This is an example of <dfn class="term" data-term="in-bounds" id="term-in-bounds-1">in-bounds</dfn> grid processing. It’s pretty common in games and graphical applications. You need special rules for what happens with pixels or grid positions on edges; here we just have fewer to average. In other settings you might treat edges as walls for collisions or make other decisions; the key thing is to not look at out of bounds elements, and pick what the behavior ought to be around the border.</div></div><h3 class="practice">Practice</h3><div class="innercise"><div class="exercise" data-kind="blanks" data-seed="1159985917"><div class="stem"><code>tiny</code> is 4 pixels wide and 3 tall. How many pixels does the finished <code>averageAround</code> average at each position? That is the value of <code>total</code> when its loops finish.</div><div class="cloze code">averageAround(raster, 1, 1)<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>total is <input class="blank" data-answer="9" spellcheck="false" autocorrect="off" autocapitalize="off"><br>averageAround(raster, 0, 0)<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>total is <input class="blank" data-answer="4" spellcheck="false" autocorrect="off" autocapitalize="off"><br>averageAround(raster, 1, 0)<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>total is <input class="blank" data-answer="6" spellcheck="false" autocorrect="off" autocapitalize="off"><br>averageAround(raster, 3, 2)<span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>total is <input class="blank" data-answer="4" spellcheck="false" autocorrect="off" autocapitalize="off"></div></div><p>The two bounds checks can move into a method of their own. Fill in <code>inBounds</code> so that it returns <code>true</code> exactly when <code>(col, row)</code> is a position in <code>raster</code>.</p><div class="exercise" data-kind="code" data-seed="687114779" data-echo data-check="inBounds(small, 0, 0) &amp;&amp; inBounds(small, 3, 2) &amp;&amp; !inBounds(small, 4, 2) &amp;&amp; !inBounds(small, 3, 3) &amp;&amp; !inBounds(small, -1, 0) &amp;&amp; !inBounds(small, 0, -1)" data-check-message="That runs, but inBounds gives the wrong answer for at least one position."><div class="cloze code">import java.awt.Color;<br>boolean inBounds(Raster raster, int col, int row) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>return <input class="blank" data-answer="col >= 0 &amp;&amp; col < raster.width() &amp;&amp; row >= 0 &amp;&amp; row < raster.height()" spellcheck="false" autocorrect="off" autocapitalize="off">;<br>}<br>Color averageAround(Raster raster, int col, int row) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int r = 0, g = 0, b = 0, total = 0;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>for(int dRow = -1; dRow &lt;= 1; dRow += 1) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>for(int dCol = -1; dCol &lt;= 1; dCol += 1) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>if(!inBounds(raster, col + dCol, row + dRow)) { continue; }<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>Color c = raster.colorAt(col + dCol, row + dRow);<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>r += c.getRed();<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>g += c.getGreen();<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>b += c.getBlue();<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>total += 1;<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>return new Color(r / total, g / total, b / total);<br>}<br>Raster boxBlur(Raster raster) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Color[][] blurred = new Color[raster.height()][raster.width()];<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>for(int row = 0; row &lt; raster.height(); row += 1) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>for(int col = 0; col &lt; raster.width(); col += 1) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span>blurred[row][col] = averageAround(raster, col, row);<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>return new Raster(blurred);<br>}<br>Color[][] tiny = {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>{ Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE },<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>{ Color.WHITE, Color.BLACK, Color.BLACK, Color.WHITE },<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>{ Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE }<br>};<br>Raster small = new Raster(tiny);<br>Raster smallBlur = boxBlur(small);</div></div></div></article>
+<nav class="pagenav"><a class="prev" href="early-return.html">← Stopping When You&#x27;re Done</a> <a class="next" href="accumulator.html">Accumulators on Recursive Data →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "more-patterns", "title": "More Patterns", "current": 1, "steps": [{"title": "Stopping When You're Done", "slug": "early-return", "url": "early-return.html", "path": "/more-patterns/early-return.html"}, {"title": "Off the Edge", "slug": "in-grid", "url": "in-grid.html", "path": "/more-patterns/in-grid.html"}, {"title": "Accumulators on Recursive Data", "slug": "accumulator", "url": "accumulator.html", "path": "/more-patterns/accumulator.html"}, {"title": "Two Ways to Recur", "slug": "which-direction", "url": "which-direction.html", "path": "/more-patterns/which-direction.html"}, {"title": "More Patterns in Summary", "slug": "summary", "url": "summary.html", "path": "/more-patterns/summary.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=eb88944ef9ea"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

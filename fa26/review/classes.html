@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classes, Constructors, and Equality — Review</title>
+<link rel="stylesheet" href="../assets/book.css?v=529d778837f2">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Review</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<div class="ai-banner">The questions in this section were mostly AI-generated, then reviewed by course staff.</div>
+<h1>Classes, Constructors, and Equality</h1>
+<article class="prose"><div class="exercise" data-kind="code" data-seed="3104247948" data-echo data-check="noon.hour == 12 &amp;&amp; noon.minute == 0 &amp;&amp; twoHours == 120 &amp;&amp; new Time(9, 30).toMinutes() == 570" data-check-message="That runs, but noon should be 12:00, twoHours should be 120, and new Time(9, 30) should hold 9 and 30."><div class="stem">Here is <code>Time</code> as a class. Fill in the first constructor, make the second one call the first with <code>0</code> minutes, and call the <code>static</code> method to get the number of minutes in <code>2</code> hours.</div><div class="cloze code">class Time {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int hour;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int minute;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Time(int hour, int minute) {<br><textarea class="blank" data-answer="    this.hour = hour;
+    this.minute = minute;" rows="3" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>Time(int hour) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span><input class="blank" data-answer="this(hour, 0);" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>static int minutesIn(int hours) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return hours * 60;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int toMinutes() {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return minutesIn(hour) + minute;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>Time noon = new Time(12);<br>int twoHours = <input class="blank" data-answer="Time.minutesIn(2)" spellcheck="false" autocorrect="off" autocapitalize="off">;<br></div></div><div class="exercise" data-kind="blanks" data-seed="4234136232"><div class="stem">What does each one evaluate to? (Write a <code>double</code> with its decimal point.)</div><div class="cloze"><code>(int) 3.99</code> is <input class="blank code" data-answer="3"><br><code>(double) 7 / 2</code> is <input class="blank code" data-answer="3.5"><br><code>(double) (7 / 2)</code> is <input class="blank code" data-answer="3.0"><br><code>7 / 2 * 2.0</code> is <input class="blank code" data-answer="6.0"><br><code>Integer.parseInt("12") + 1</code> is <input class="blank code" data-answer="13"></div></div><div class="exercise" data-kind="blanks" data-seed="1278301462"><div class="stem"><p>With these definitions, all in one file:</p><pre><code data-lang="java">record <span style="color: #4b69c6">PointR</span>(<span style="color: #d73948">double</span> x, <span style="color: #d73948">double</span> y) { }
+<span style="color: #d73948">class</span> <span style="color: #4b69c6">PointC</span> {
+  <span style="color: #d73948">double</span> x;
+  <span style="color: #d73948">double</span> y;
+  <span style="color: #4b69c6">PointC</span>(<span style="color: #d73948">double</span> x, <span style="color: #d73948">double</span> y) {
+    <span style="color: #d73948">this</span>.x <span style="color: #d73948">=</span> x;
+    <span style="color: #d73948">this</span>.y <span style="color: #d73948">=</span> y;
+  }
+}
+<span style="color: #4b69c6">PointR</span> r1 <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">PointR</span>(<span style="color: #b60157">1</span>, <span style="color: #b60157">2</span>);
+<span style="color: #4b69c6">PointR</span> r2 <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">PointR</span>(<span style="color: #b60157">1</span>, <span style="color: #b60157">2</span>);
+<span style="color: #4b69c6">PointC</span> c1 <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">PointC</span>(<span style="color: #b60157">1</span>, <span style="color: #b60157">2</span>);
+<span style="color: #4b69c6">PointC</span> c2 <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">PointC</span>(<span style="color: #b60157">1</span>, <span style="color: #b60157">2</span>);
+<span style="color: #4b69c6">PointC</span> c3 <span style="color: #d73948">=</span> c1;</code></pre></div><div class="cloze"><code>r1.equals(r2)</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>true</option><option>false</option></select><br><code>r1 == r2</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>true</option><option data-correct>false</option></select><br><code>c1.equals(c2)</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>true</option><option data-correct>false</option></select><br><code>c1.equals(c3)</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option data-correct>true</option><option>false</option></select><br>After <code>c1.x = 5;</code> runs in <code>main</code>, <code>c3.x</code> is<span style="white-space: pre-wrap">&#x20;</span><select class="blank code"><option>1.0</option><option data-correct>5.0</option></select><br>Writing <code>r1.x = 5;</code> in <code>main</code><span style="white-space: pre-wrap">&#x20;</span><select class="blank"><option>changes r1</option><option>makes a new PointR</option><option data-correct>doesn't compile</option></select></div></div></article>
+<nav class="pagenav"><a class="prev" href="interfaces-and-recursive-data.html">← Interfaces and Recursive Data</a> <a class="next" href="inheritance-and-dispatch.html">Inheritance and Dispatch →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "review", "title": "Review", "current": 5, "steps": [{"title": "Values, Records, and Methods", "slug": "values-records-methods", "url": "values-records-methods.html", "path": "/review/values-records-methods.html"}, {"title": "Printing, Returning, and Tests", "slug": "printing-and-tests", "url": "printing-and-tests.html", "path": "/review/printing-and-tests.html"}, {"title": "Arrays and Loops", "slug": "arrays-and-loops", "url": "arrays-and-loops.html", "path": "/review/arrays-and-loops.html"}, {"title": "References and Aliasing", "slug": "references-and-aliasing", "url": "references-and-aliasing.html", "path": "/review/references-and-aliasing.html"}, {"title": "Interfaces and Recursive Data", "slug": "interfaces-and-recursive-data", "url": "interfaces-and-recursive-data.html", "path": "/review/interfaces-and-recursive-data.html"}, {"title": "Classes, Constructors, and Equality", "slug": "classes", "url": "classes.html", "path": "/review/classes.html"}, {"title": "Inheritance and Dispatch", "slug": "inheritance-and-dispatch", "url": "inheritance-and-dispatch.html", "path": "/review/inheritance-and-dispatch.html"}, {"title": "Collections and Choosing a Representation", "slug": "collections-and-choices", "url": "collections-and-choices.html", "path": "/review/collections-and-choices.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=eb88944ef9ea"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

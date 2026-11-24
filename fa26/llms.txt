@@ -21,6 +21,8 @@ By Joe Politz, Rachel Lim, Sunwoo Kim, Gerald Soosairaj, and Niema Moshiri
 - [Collections and Generics](collections-and-generics/chapter.txt): Building collections of objects
 - [Dramatis Personai](dramatis-personai/chapter.txt): The cast grows
 - [File I/O and Throwing Errors](files-and-throw/chapter.txt): Reading and writing files and throwing errors when something goes wrong.
+- [More Patterns](more-patterns/chapter.txt)
+- [Review](review/chapter.txt): Practice questions across the whole book
 - [Appendix: The Pict Library](pict-library/chapter.txt): Pict constructors and methods
 - [Appendix: Working on Your Own Computer](your-own-computer/chapter.txt): The kit: the Pict library, JUnit, and a Codespace
 - [Credits](credits/chapter.txt): Citations, references, and inspiration for the book

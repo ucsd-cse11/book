@@ -344,6 +344,7 @@ body.toc .subtitle { opacity: .75; }
   font-size: .9rem; opacity: .85;
   border-left: 3px solid var(--wrong); padding-left: .6rem; margin-top: .2rem;
 }
+.exercise .choices li[data-correct] .why { border-left-color: var(--right); }
 .exercise .choices li.show-why .why, .exercise.revealed .why { display: block; }
 .exercise select.blank, .exercise input.blank {
   font: inherit; padding: .15rem .4rem; margin: 0 .2rem;

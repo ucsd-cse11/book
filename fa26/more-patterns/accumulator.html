@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accumulators on Recursive Data — More Patterns</title>
+<link rel="stylesheet" href="../assets/book.css?v=529d778837f2">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">More Patterns</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<h1>Accumulators on Recursive Data</h1>
+<article class="prose"><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>OK I’ve got a challenge for you.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Alright, I’m game.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Here’s a way of laying out folders and docs:</div></div><div class="runner" id="w583852894" data-engine="java17" data-expect="compiles" data-echo><textarea class="code" rows="13" spellcheck="false" autocorrect="off" autocapitalize="off">interface DriveItem { }
+record Doc(String name, int sizeKb) implements DriveItem { }
+record Folder(String name, DriveItem[] contents) implements DriveItem { }
+
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech prof"><div class="bubble"><p><span class="who">Prof: </span>Add a method to it that creates an <code>ArrayList&lt;String></code> containing a <strong>numbered list</strong> of the doc names. Like on <code>drive</code> above it should produce:</p><pre><code>["1. resume", "2. cat", "3. dog", "4. todo"]</code></pre></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Hmm, I think that is pretty straightforward…</div></div><div class="runner" id="w3491873380" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+interface DriveItem {
+  ArrayList&lt;String> numbered();
+}
+record Doc(String name, int sizeKb) implements DriveItem {
+  public ArrayList&lt;String> numbered() {
+    ArrayList&lt;String> lines = new ArrayList&lt;String>();
+    lines.add(lines.size() + ". " + name);
+    return lines;
+  }
+}
+record Folder(String name, DriveItem[] contents) implements DriveItem {
+  public ArrayList&lt;String> numbered() {
+    ArrayList&lt;String> lines = new ArrayList&lt;String>();
+    for (DriveItem item : contents) {
+      lines.addAll(item.numbered());
+    }
+    return lines;
+  }
+}
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+ArrayList&lt;String> lines = drive.numbered();</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Wait they are all zero. Huh? I thought they’d get the current size of <code>lines</code> and count up. Do I need a <code>+ 1</code> or something?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Great start, you remembered the template for recursive methods really well. You will need that <code>+ 1</code>, but the bigger issue is that <strong>every</strong> <code>Doc</code> creates a new empty list when <code>numbered()</code> is called, so the size is always 0. It isn’t referring to the <code>lines</code> in <code>Folder</code>’s <code>numbered()</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh hm. So what do I do? I’m honestly a little stuck here.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>There’s a big hint in the <code>Pict</code> library. We had to do something a little bit similar in <code>draw</code> – rather than make a <strong>new</strong> <code>Graphics2D</code> in every <code>Circle</code> or <code>Rect</code>, we passed one around:</div></div><div class="kit-quote" data-kit-path="Pict.java" data-match="L142-L248"><pre><code data-lang="java">record <span style="color: #4b69c6">Circle</span>(<span style="color: #d73948">int</span> radius, <span style="color: #4b69c6">Color</span> color) implements <span style="color: #4b69c6">Pict</span> {
+    <span style="color: #74747c">//</span><span style="color: #74747c"> ...</span>
+    <span style="color: #d73948">public</span> void <span style="color: #4b69c6">draw</span>(<span style="color: #4b69c6">Graphics2D</span> g, <span style="color: #d73948">int</span> x, <span style="color: #d73948">int</span> y) {
+        g.<span style="color: #4b69c6">setColor</span>(<span style="color: #d73948">this</span>.color);
+        g.<span style="color: #4b69c6">fillOval</span>(x, y, <span style="color: #b60157">2</span> <span style="color: #d73948">*</span> <span style="color: #d73948">this</span>.radius, <span style="color: #b60157">2</span> <span style="color: #d73948">*</span> <span style="color: #d73948">this</span>.radius);
+    }
+}
+<span style="color: #74747c">//</span><span style="color: #74747c"> ...</span>
+record <span style="color: #4b69c6">Beside</span>(<span style="color: #4b69c6">Pict</span> left, <span style="color: #4b69c6">Pict</span> right) implements <span style="color: #4b69c6">Pict</span> {
+    <span style="color: #74747c">//</span><span style="color: #74747c"> ...</span>
+    <span style="color: #d73948">public</span> void <span style="color: #4b69c6">draw</span>(<span style="color: #4b69c6">Graphics2D</span> g, <span style="color: #d73948">int</span> x, <span style="color: #d73948">int</span> y) {
+        <span style="color: #d73948">int</span> centerY <span style="color: #d73948">=</span> <span style="color: #d73948">this</span>.<span style="color: #4b69c6">height</span>() <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>;
+        <span style="color: #d73948">this</span>.left.<span style="color: #4b69c6">draw</span>(g, x, y <span style="color: #d73948">+</span> centerY <span style="color: #d73948">-</span> <span style="color: #d73948">this</span>.left.<span style="color: #4b69c6">height</span>() <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>);
+        <span style="color: #d73948">this</span>.right.<span style="color: #4b69c6">draw</span>(g, x <span style="color: #d73948">+</span> <span style="color: #d73948">this</span>.left.<span style="color: #4b69c6">width</span>(), y <span style="color: #d73948">+</span> centerY <span style="color: #d73948">-</span> <span style="color: #d73948">this</span>.right.<span style="color: #4b69c6">height</span>() <span style="color: #d73948">/</span> <span style="color: #b60157">2</span>);
+    }
+}</code></pre><p class="kit-quote-source"><a href="https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L142-L248"><code>Pict.java</code>, lines 142–248</a></p></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Huh, so here do we pass an <code>ArrayList&lt;String></code> around?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Exactly.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But won’t that change the signature of <code>numbered()</code>? Like it needs another argument now, but the interface one takes no arguments.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Good observation! Let’s add the argument for now and then see what we can do.</div></div><div class="runner" id="w1111435391" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+interface DriveItem {
+  ArrayList&lt;String> numbered(ArrayList&lt;String> lines);
+}
+record Doc(String name, int sizeKb) implements DriveItem {
+  public ArrayList&lt;String> numbered(ArrayList&lt;String> lines) {
+    lines.add((lines.size() + 1) + ". " + name);
+    return lines;
+  }
+}
+record Folder(String name, DriveItem[] contents) implements DriveItem {
+  public ArrayList&lt;String> numbered(ArrayList&lt;String> lines) {
+    for (DriveItem item : contents) {
+      lines.addAll(item.numbered(lines));
+    }
+    return lines;
+  }
+}
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+ArrayList&lt;String> lines = drive.numbered(new ArrayList&lt;>());</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Like that? It’s really weird, like I’m returning and using the same list all over? That can’t be right at all. That’s so many numbers.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Believe it or not, you’re way closer to the solution now! So what’s happening here is things are getting added over and over in the loop. It turns out, in this method, the <strong>result</strong> gets built up <strong>in the parameter <code>lines</code></strong>. So I find this method easier to understand if we make it return <code>void</code>.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But it needs to return an <code>ArrayList&lt;String></code>, that would make it nothing like <code>numbered</code>!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Right, we’ll recover that behavior. For now, let’s make it return <code>void</code>, and the <strong>only</strong> places where <code>add</code> happens should be in the <code>Doc</code> version of the method. Also, name the list you give as an argument so we can see it after.</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Like this?</div></div><div class="runner" id="w8046068" data-engine="java17" data-expect="compiles" data-echo data-gate><textarea class="code" rows="24" spellcheck="false" autocorrect="off" autocapitalize="off">import java.util.ArrayList;
+interface DriveItem {
+  void numbered(ArrayList&lt;String> lines);
+}
+record Doc(String name, int sizeKb) implements DriveItem {
+  public void numbered(ArrayList&lt;String> lines) {
+    lines.add((lines.size() + 1) + ". " + name);
+  }
+}
+record Folder(String name, DriveItem[] contents) implements DriveItem {
+  public void numbered(ArrayList&lt;String> lines) {
+    for (DriveItem item : contents) {
+      item.numbered(lines);
+    }
+  }
+}
+DriveItem drive = new Folder("My Drive", new DriveItem[] {
+  new Doc("resume", 40),
+  new Folder("photos", new DriveItem[] {
+    new Doc("cat", 300),
+    new Doc("dog", 280)
+  }),
+  new Doc("todo", 12)
+});
+ArrayList&lt;String> lines = new ArrayList&lt;String>();
+void main() {
+  drive.numbered(lines);
+}</textarea><div class="bar"><button class="run">Run ▶</button><button class="stop" title="Give up on this run">Stop ■</button><button class="revert" title="Restore the original code">Revert</button><span class="state"></span></div><pre class="out" hidden="hidden"></pre></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Oh, wow, that worked?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Let’s look at the calls over time and think about where the <code>add</code> calls happened:</div></div><div class="memory flame"><div class="mem-title">Names (the stack), over time →</div><div class="flame-chart"><div class="flame-grid" style="--cols: 4; --rows: 6"><div class="frame" data-frame="0" data-parent style="grid-column: 1 / span 4; grid-row: 6; --span: 4"><div class="frame-inner"><div class="frame-head">top level</div><div class="binding"><code>drive = <span class="addr" data-addr="@1008" style="--hue: 259">@1008</span></code></div><div class="binding"><code>lines = <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></code></div></div></div><div class="frame" data-frame="1" data-parent="0" style="grid-column: 1 / span 4; grid-row: 5; --span: 4"><div class="frame-inner"><div class="frame-head"><code>main()</code></div></div></div><div class="frame" data-frame="2" data-parent="1" style="grid-column: 1 / span 4; grid-row: 4; --span: 4"><div class="frame-inner"><div class="frame-head"><code>drive.numbered(lines)</code> on <span class="addr" data-addr="@1008" style="--hue: 259">@1008</span></div><div class="binding"><code>lines = <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></code></div></div></div><div class="frame" data-frame="3" data-parent="2" style="grid-column: 1 / span 1; grid-row: 3; --span: 1"><div class="frame-inner"><div class="frame-head"><code>item.numbered(lines)</code> on <span class="addr" data-addr="@1001" style="--hue: 20">@1001</span></div><div class="binding"><code>lines = <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></code></div></div></div><div class="frame" data-frame="4" data-parent="3" style="grid-column: 1 / span 1; grid-row: 2; --span: 1"><div class="frame-inner"><div class="frame-head"><code>lines.add("1. resume")</code> on <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></div></div></div><div class="frame" data-frame="1003" data-parent="2" style="grid-column: 2 / span 2; grid-row: 3; --span: 2"><div class="frame-inner"><div class="frame-head"><code>item.numbered(lines)</code> on <span class="addr" data-addr="@1005" style="--hue: 208">@1005</span></div><div class="binding"><code>lines = <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></code></div></div></div><div class="frame" data-frame="1004" data-parent="1003" style="grid-column: 2 / span 1; grid-row: 2; --span: 1"><div class="frame-inner"><div class="frame-head"><code>item.numbered(lines)</code> on <span class="addr" data-addr="@1002" style="--hue: 157">@1002</span></div><div class="binding"><code>lines = <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></code></div></div></div><div class="frame" data-frame="1005" data-parent="1004" style="grid-column: 2 / span 1; grid-row: 1; --span: 1"><div class="frame-inner"><div class="frame-head"><code>lines.add("2. cat")</code> on <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></div></div></div><div class="frame" data-frame="2004" data-parent="1003" style="grid-column: 3 / span 1; grid-row: 2; --span: 1"><div class="frame-inner"><div class="frame-head"><code>item.numbered(lines)</code> on <span class="addr" data-addr="@1003" style="--hue: 294">@1003</span></div><div class="binding"><code>lines = <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></code></div></div></div><div class="frame" data-frame="2005" data-parent="2004" style="grid-column: 3 / span 1; grid-row: 1; --span: 1"><div class="frame-inner"><div class="frame-head"><code>lines.add("3. dog")</code> on <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></div></div></div><div class="frame" data-frame="3003" data-parent="2" style="grid-column: 4 / span 1; grid-row: 3; --span: 1"><div class="frame-inner"><div class="frame-head"><code>item.numbered(lines)</code> on <span class="addr" data-addr="@1006" style="--hue: 345">@1006</span></div><div class="binding"><code>lines = <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></code></div></div></div><div class="frame" data-frame="3004" data-parent="3003" style="grid-column: 4 / span 1; grid-row: 2; --span: 1"><div class="frame-inner"><div class="frame-head"><code>lines.add("4. todo")</code> on <span class="addr" data-addr="@1009" style="--hue: 36">@1009</span></div></div></div></div></div><div class="mem-heap"><div class="mem-title">Heap</div><div class="slot-line"><code><span class="addr slot" data-addr="@1001" style="--hue: 20">@1001</span>: Doc[name=resume, sizeKb=40]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1002" style="--hue: 157">@1002</span>: Doc[name=cat, sizeKb=300]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1003" style="--hue: 294">@1003</span>: Doc[name=dog, sizeKb=280]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1004" style="--hue: 71">@1004</span>: [<span class="addr" data-addr="@1002" style="--hue: 157">@1002</span>, <span class="addr" data-addr="@1003" style="--hue: 294">@1003</span>]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1005" style="--hue: 208">@1005</span>: Folder[name=photos, contents=<span class="addr" data-addr="@1004" style="--hue: 71">@1004</span>]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1006" style="--hue: 345">@1006</span>: Doc[name=todo, sizeKb=12]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1007" style="--hue: 122">@1007</span>: [<span class="addr" data-addr="@1001" style="--hue: 20">@1001</span>, <span class="addr" data-addr="@1005" style="--hue: 208">@1005</span>, <span class="addr" data-addr="@1006" style="--hue: 345">@1006</span>]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1008" style="--hue: 259">@1008</span>: Folder[name=My Drive, contents=<span class="addr" data-addr="@1007" style="--hue: 122">@1007</span>]</code></div><div class="slot-line"><code><span class="addr slot" data-addr="@1009" style="--hue: 36">@1009</span>: [1. resume, 2. cat, 3. dog, 4. todo]</code></div></div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>I get it! So the recursion follows the folder and file structure, and we end up adding each doc in order. And <code>lines</code> is <code>@1009</code> in every call, so it’s <span class="term" data-term="aliasing" id="term-aliasing-3">aliasing</span>: they are all adding to the same list.</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>That’s right!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>But how do we get back the behavior we wanted for the original <code>numbered</code> signature?</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Here’s what Pict did.</div></div><div class="kit-quote" data-kit-path="Pict.java" data-match="L35-L45"><pre><code data-lang="java"><span style="color: #d73948">default</span> <span style="color: #4b69c6">Raster</span> <span style="color: #4b69c6">render</span>() {
+    <span style="color: #74747c">//</span><span style="color: #74747c"> ...</span>
+    <span style="color: #d73948">var</span> img <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">BufferedImage</span>(<span style="color: #4b69c6">width</span>(), <span style="color: #4b69c6">height</span>(), <span style="color: #4b69c6">BufferedImage</span>.<span style="color: #b60157">TYPE_INT_ARGB</span>);
+    <span style="color: #d73948">var</span> g <span style="color: #d73948">=</span> img.<span style="color: #4b69c6">createGraphics</span>();
+    <span style="color: #74747c">//</span><span style="color: #74747c"> ...</span>
+    <span style="color: #4b69c6">draw</span>(g, <span style="color: #b60157">0</span>, <span style="color: #b60157">0</span>);
+    g.<span style="color: #4b69c6">dispose</span>();
+    <span style="color: #d73948">return</span> <span style="color: #4b69c6">Raster</span>.<span style="color: #4b69c6">fromBufferedImage</span>(img);
+}</code></pre><p class="kit-quote-source"><a href="https://github.com/ucsd-cse11/kit/blob/fa26/Pict.java#L35-L45"><code>Pict.java</code>, lines 35–45</a></p></div><div class="speech student"><div class="bubble"><p><span class="who">Student: </span>Ah, so we can add this:</p><pre><code data-lang="java"><span style="color: #d73948">interface</span> <span style="color: #4b69c6">DriveItem</span> {
+  <span style="color: #d73948">void</span> <span style="color: #4b69c6">numbered</span>(<span style="color: #4b69c6">ArrayList</span>&lt;<span style="color: #4b69c6">String</span>> lines);
+  <span style="color: #d73948">default</span> <span style="color: #4b69c6">ArrayList</span>&lt;<span style="color: #4b69c6">String</span>> <span style="color: #4b69c6">numbered</span>() {
+    <span style="color: #4b69c6">ArrayList</span>&lt;<span style="color: #4b69c6">String</span>> lines <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">ArrayList</span>&lt;<span style="color: #4b69c6">String</span>>();
+    <span style="color: #4b69c6">numbered</span>(lines);
+    <span style="color: #d73948">return</span> lines;
+  }
+}</code></pre></div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Just so. This is called the <span class="term" data-term="accumulator" id="term-accumulator-2">accumulator</span> pattern. Sometimes we need to pass along an argument through a recursive structure, rather than trying to return the answer. It’s the same idea as the running-sum and best-so-far accumulators from our loops. Those were local variables, but every call gets its own locals, so here the accumulator has to be passed along. We build it up in the argument position, and that position is called an <dfn class="term" data-term="accumulator parameter" id="term-accumulator-parameter-1">accumulator parameter</dfn>!</div></div><div class="speech student"><div class="bubble"><span class="who">Student: </span>Neat, I can feel the knowledge accumulating!</div></div><div class="speech prof"><div class="bubble"><span class="who">Prof: </span>Wow, um, maybe leave the puns to me.</div></div><h3 class="practice">Practice</h3><div class="innercise"><div class="exercise" data-kind="number" data-seed="2773400448"><div class="stem">The student’s first version made a new list in every <code>numbered()</code> call. How many <code>ArrayList</code> objects did <code>drive.numbered()</code> create in that version?</div><p><input class="blank num" data-answer="6" data-tolerance="0"></p></div><div class="exercise" data-kind="number" data-seed="2698833968"><div class="stem">How many <code>ArrayList</code> objects does <code>drive.numbered()</code> create in the final version, with the <code>default</code> method?</div><p><input class="blank num" data-answer="1" data-tolerance="0"></p></div><p><code>bigDocs(minKb)</code> should make a numbered list of only the docs that are at least <code>minKb</code> in size. On <code>drive</code>, <code>bigDocs(100)</code> should produce <code>["1. cat", "2. dog"]</code>. Fill in the two method bodies.</p><div class="exercise" data-kind="code" data-seed="3648395870" data-echo data-check="big.equals(java.util.List.of(&quot;1. cat&quot;, &quot;2. dog&quot;)) &amp;&amp; drive.bigDocs(0).size() == 4 &amp;&amp; drive.bigDocs(0).get(3).equals(&quot;4. todo&quot;)" data-check-message="That runs, but bigDocs(100) should be [1. cat, 2. dog], and bigDocs(0) should number all four docs."><div class="cloze code">import java.util.ArrayList;<br>interface DriveItem {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>void bigDocs(int minKb, ArrayList&lt;String> lines);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>default ArrayList&lt;String> bigDocs(int minKb) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>ArrayList&lt;String> lines = new ArrayList&lt;String>();<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>bigDocs(minKb, lines);<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return lines;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>record Doc(String name, int sizeKb) implements DriveItem {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public void bigDocs(int minKb, ArrayList&lt;String> lines) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span><textarea class="blank" data-answer="if (sizeKb >= minKb) {
+      lines.add((lines.size() + 1) + &quot;. &quot; + name);
+    }" rows="4" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea><br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>record Folder(String name, DriveItem[] contents) implements DriveItem {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>public void bigDocs(int minKb, ArrayList&lt;String> lines) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>for (DriveItem item : contents) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;</span><input class="blank" data-answer="item.bigDocs(minKb, lines);" spellcheck="false" autocorrect="off" autocapitalize="off"><br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>DriveItem drive = new Folder("My Drive", new DriveItem[] {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>new Doc("resume", 40),<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>new Folder("photos", new DriveItem[] {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>new Doc("cat", 300),<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>new Doc("dog", 280)<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}),<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>new Doc("todo", 12)<br>});<br>ArrayList&lt;String> big = drive.bigDocs(100);</div></div></div></article>
+<nav class="pagenav"><a class="prev" href="in-grid.html">← Off the Edge</a> <a class="next" href="which-direction.html">Two Ways to Recur →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "more-patterns", "title": "More Patterns", "current": 2, "steps": [{"title": "Stopping When You're Done", "slug": "early-return", "url": "early-return.html", "path": "/more-patterns/early-return.html"}, {"title": "Off the Edge", "slug": "in-grid", "url": "in-grid.html", "path": "/more-patterns/in-grid.html"}, {"title": "Accumulators on Recursive Data", "slug": "accumulator", "url": "accumulator.html", "path": "/more-patterns/accumulator.html"}, {"title": "Two Ways to Recur", "slug": "which-direction", "url": "which-direction.html", "path": "/more-patterns/which-direction.html"}, {"title": "More Patterns in Summary", "slug": "summary", "url": "summary.html", "path": "/more-patterns/summary.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=eb88944ef9ea"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

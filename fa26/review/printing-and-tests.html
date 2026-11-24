@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Printing, Returning, and Tests — Review</title>
+<link rel="stylesheet" href="../assets/book.css?v=529d778837f2">
+<link rel="alternate" type="text/plain" href="chapter.txt" title="Plain text of this chapter">
+<meta name="book-runner" content="runner-worker.js?bookc=bookc.9f4493ee2ad9.jar&amp;ecj=ecj.a9a969911a55.jar&amp;platform17=platform17.861ccdb555ae.jar&amp;pict17=pict17.649712f24c6b.jar&amp;v=1cc93f8c9974">
+</head>
+<body>
+<header>
+  <a class="home" href="../index.html">☰ Contents</a>
+  <span class="crumb">Review</span>
+  <nav class="stepbar" aria-label="Steps in this section" hidden></nav>
+</header>
+<main>
+<div class="ai-banner">The questions in this section were mostly AI-generated, then reviewed by course staff.</div>
+<h1>Printing, Returning, and Tests</h1>
+<article class="prose"><div class="exercise" data-kind="choice" data-seed="977626992"><div class="stem"><p>What does running this file print?</p><pre><code data-lang="java">record <span style="color: #4b69c6">Time</span>(<span style="color: #d73948">int</span> hour, <span style="color: #d73948">int</span> minute) {
+  <span style="color: #d73948">int</span> <span style="color: #4b69c6">toMinutes</span>() {
+    <span style="color: #d73948">return</span> hour <span style="color: #d73948">*</span> <span style="color: #b60157">60</span> <span style="color: #d73948">+</span> minute;
+  }
+  void <span style="color: #4b69c6">report</span>() {
+    <span style="color: #4b69c6">System</span>.out.<span style="color: #4b69c6">println</span>(hour <span style="color: #d73948">+</span> <span style="color: #198810">"</span><span style="color: #198810">:</span><span style="color: #198810">"</span> <span style="color: #d73948">+</span> minute);
+  }
+}
+void <span style="color: #4b69c6">main</span>() {
+  <span style="color: #4b69c6">Time</span> t <span style="color: #d73948">=</span> <span style="color: #d73948">new</span> <span style="color: #4b69c6">Time</span>(<span style="color: #b60157">13</span>, <span style="color: #b60157">5</span>);
+  t.<span style="color: #4b69c6">toMinutes</span>();
+  t.<span style="color: #4b69c6">report</span>();
+}</code></pre></div><ol class="choices"><li data-correct><pre><code>13:5</code></pre></li><li><pre><code>785
+13:5</code></pre><div class="why"><code>t.toMinutes()</code> returns <code>785</code> to <code>main</code>, and <code>main</code> does nothing with it. Only <code>System.out.println</code> prints.</div></li><li><pre><code>785</code></pre><div class="why"><code>toMinutes</code> returns its answer without printing it. The one <code>println</code> that runs is in <code>report</code>.</div></li><li>Nothing<div class="why"><code>report</code> is <code>void</code>, so it returns nothing, but its <code>println</code> still runs when <code>main</code> calls it.</div></li></ol></div><div class="exercise" data-kind="choice" data-seed="3084445902" data-multi><div class="stem"><p><code>Time</code> has this method:</p><pre><code data-lang="java"><span style="color: #d73948">int</span> <span style="color: #4b69c6">minutesBetween</span>(<span style="color: #4b69c6">Time</span> other) {
+  <span style="color: #d73948">return</span> <span style="color: #4b69c6">Math</span>.<span style="color: #4b69c6">abs</span>(<span style="color: #4b69c6">toMinutes</span>() <span style="color: #d73948">-</span> other.<span style="color: #4b69c6">toMinutes</span>());
+}</code></pre><p>Which of these tests pass? Select all that do.</p></div><ol class="choices"><li data-correct><code>assertEquals(90, new Time(9, 0).minutesBetween(new Time(10, 30)));</code><div class="why"><code>630 - 540</code> is <code>90</code>.</div></li><li data-correct><code>assertEquals(30, new Time(8, 45).minutesBetween(new Time(8, 15)));</code><div class="why"><code>Math.abs</code> makes the order of the two times not matter.</div></li><li><code>assertEquals(1, new Time(23, 59).minutesBetween(new Time(0, 0)));</code><div class="why">The method subtracts minutes since midnight, <code>1439 - 0</code>. It doesn’t know that 23:59 and 0:00 are a minute apart across midnight.</div></li><li data-correct><code>assertEquals(new Time(9, 0), new Time(9, 0));</code><div class="why"><code>assertEquals</code> uses <code>equals</code>, and a record’s <code>equals</code> compares the fields.</div></li><li><code>assertEquals(new Time(1, 30), new Time(0, 90));</code><div class="why">Both are 90 minutes after midnight, but the fields differ: <code>1</code> and <code>30</code> against <code>0</code> and <code>90</code>.</div></li></ol></div><div class="exercise" data-kind="code" data-seed="1893479611" data-prints="All tests succeeded!"><div class="stem">Fill in the expected values so every test passes.</div><div class="cloze code">record CartItem(String name, int priceCents) {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>int priceWithDiscount(int percentOff) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return priceCents * (100 - percentOff) / 100;<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>CartItem discounted(int percentOff) {<br><span style="white-space: pre-wrap">&#x20;&#x20;&#x20;&#x20;</span>return new CartItem(name, priceWithDiscount(percentOff));<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>}<br>}<br>void main() {<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>CartItem mug = new CartItem("mug", 1000);<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>assertEquals(<input class="blank" data-answer="750" spellcheck="false" autocorrect="off" autocapitalize="off">, mug.priceWithDiscount(25));<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>assertEquals(<input class="blank" data-answer="1000" spellcheck="false" autocorrect="off" autocapitalize="off">, mug.priceWithDiscount(0));<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>assertEquals(<input class="blank" data-answer="new CartItem(&quot;mug&quot;, 900)" spellcheck="false" autocorrect="off" autocapitalize="off">, mug.discounted(10));<br><span style="white-space: pre-wrap">&#x20;&#x20;</span>System.out.println("All tests succeeded!");<br>}<br></div></div></article>
+<nav class="pagenav"><a class="prev" href="values-records-methods.html">← Values, Records, and Methods</a> <a class="next" href="arrays-and-loops.html">Arrays and Loops →</a></nav>
+</main>
+<footer><a href="../glossary.html">Glossary</a> · <a class="plain-text" href="chapter.txt" type="text/plain">Plain text of this chapter</a> · Fall 2026 rewrite · runs Java in your browser via
+<a href="https://cheerpj.com">CheerpJ</a> (Leaning Technologies)</footer>
+<script type="application/x-steps">{"section": "review", "title": "Review", "current": 1, "steps": [{"title": "Values, Records, and Methods", "slug": "values-records-methods", "url": "values-records-methods.html", "path": "/review/values-records-methods.html"}, {"title": "Printing, Returning, and Tests", "slug": "printing-and-tests", "url": "printing-and-tests.html", "path": "/review/printing-and-tests.html"}, {"title": "Arrays and Loops", "slug": "arrays-and-loops", "url": "arrays-and-loops.html", "path": "/review/arrays-and-loops.html"}, {"title": "References and Aliasing", "slug": "references-and-aliasing", "url": "references-and-aliasing.html", "path": "/review/references-and-aliasing.html"}, {"title": "Interfaces and Recursive Data", "slug": "interfaces-and-recursive-data", "url": "interfaces-and-recursive-data.html", "path": "/review/interfaces-and-recursive-data.html"}, {"title": "Classes, Constructors, and Equality", "slug": "classes", "url": "classes.html", "path": "/review/classes.html"}, {"title": "Inheritance and Dispatch", "slug": "inheritance-and-dispatch", "url": "inheritance-and-dispatch.html", "path": "/review/inheritance-and-dispatch.html"}, {"title": "Collections and Choosing a Representation", "slug": "collections-and-choices", "url": "collections-and-choices.html", "path": "/review/collections-and-choices.html"}]}</script>
+<script src="../assets/runner.js?v=2487f094e75d"></script>
+<script src="../assets/exercise.js?v=eb88944ef9ea"></script>
+<script src="../assets/memory.js?v=9140cd491dbf"></script>
+<script src="../assets/trace.js?v=a349e52d2634"></script>
+<script src="../assets/workbench.js?v=afd16912f153"></script>
+<script src="../assets/gate.js?v=fc55b9c9604b"></script>
+<script src="../assets/report.js?v=91dda006717d"></script>
+<script src="../assets/glossary.js?v=32545e604629"></script>
+<script src="../assets/nav.js?v=2be28d3a3b8b"></script>
+</body>
+</html>

@@ -130,7 +130,7 @@
             if (want !== got) ok = false;
             li.classList.remove('right', 'wrong');
             if (got) li.classList.add(want ? 'right' : 'wrong');
-            li.classList.toggle('show-why', got && !want);
+            li.classList.toggle('show-why', got);
           }
           return ok;
         },
